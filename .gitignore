@@ -25,6 +25,7 @@ lib/env/env.dart
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
@@ -62,6 +63,7 @@ lib/env/env.dart
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/.last_build_id
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
