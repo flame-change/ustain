@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:aroundus_app/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/env/env.dart';
+import 'package:aroundus_app/module/authentication/authentication.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';

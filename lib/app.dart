@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app_view.dart';
-import 'authentication/authentication.dart';
+import 'module/authentication/authentication.dart';
 import 'repositories/repositories.dart';
 
 class App extends StatelessWidget {
