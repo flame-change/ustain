@@ -1,4 +1,5 @@
-import 'package:aroundus_app/module/authentication/authentication.dart';
+
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 

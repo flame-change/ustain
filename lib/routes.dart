@@ -1,11 +1,14 @@
 
 import 'package:flutter/widgets.dart';
 
-import 'models/home/home.dart';
-import 'models/splash/splash.dart';
+import 'modules/authentication/login_home/view/view.dart';
+import 'modules/splash/splash.dart';
+
+
+
 
 
 final Map<String, WidgetBuilder> routes = {
   SplashPage.routeName: (context) => SplashPage(),
-  HomeScreen.routeName: (context) => HomeScreen(),
+  LoginHomeScreen.routeName: (context) => LoginHomeScreen(),
 };
