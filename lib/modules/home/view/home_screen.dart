@@ -1,4 +1,3 @@
-
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +34,6 @@ class _HomeScreen extends State<HomeScreen> {
       BlocProvider(
         create: (context) => BlocProvider.of<AuthenticationBloc>(context),
       ),
-    ], child: HomePage());
+    ], child: Scaffold(appBar: AppBar(), body: HomePage()));
   }
 }

@@ -122,16 +122,16 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      // var accessToken = prefs.getString('accessToken');
 
       var response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
-        options: Options(headers: {
-          Headers.contentTypeHeader: Headers.jsonContentType,
-          HttpHeaders.authorizationHeader: "Bearer $accessToken",
-        }),
+        // options: Options(headers: {
+        //   Headers.contentTypeHeader: Headers.jsonContentType,
+        //   HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        // }),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
