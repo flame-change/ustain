@@ -35,6 +35,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
       appBar: AppBar(),
       body: PageWire(
           child: BlocListener<SignupCubit, SignupState>(
+        bloc: BlocProvider.of<SignupCubit>(context),
         listener: (context, state) async {
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
@@ -77,19 +78,18 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
               _signupCubit!.unverifiedFlagFalse();
             });
           }
-          if(state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-            var bloc = BlocProvider.of(context);
-            logger.d(bloc);
+          if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
+            // var bloc = BlocProvider.of(context);
+            // logger.d(bloc);
 
-            // Navigator.pushAndRemoveUntil(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (_) => MultiBlocProvider(providers: [
-            //               BlocProvider.value(
-            //                 value: BlocProvider.of(context),
-            //               ),
-            //             ], child: SignupForm())),
-            //     ModalRoute.withName('signup_form_page'));
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider<SignupCubit>.value(
+                      value:
+                          BlocProvider.of<SignupCubit>(context, listen: true),
+                      child: SignupForm()),
+                ),
+                (route) => false);
           }
         },
         child: Column(
@@ -104,8 +104,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
   }
 }
 
-class PhoneNumberInputField extends StatelessWidget{
-
+class PhoneNumberInputField extends StatelessWidget {
   String _updatePhoneNumber = '';
 
   @override
@@ -133,10 +132,14 @@ class PhoneNumberInputField extends StatelessWidget{
                       ? () {
                           if (state.phoneNumberVerifyStatus !=
                               VerifyStatus.init) {
-                            context.read<SignupCubit>().phoneNumberVerifyRequest();
+                            context
+                                .read<SignupCubit>()
+                                .phoneNumberVerifyRequest();
                             context.read<SignupCubit>().republishAuth();
                           } else {
-                            context.read<SignupCubit>().phoneNumberVerifyRequest();
+                            context
+                                .read<SignupCubit>()
+                                .phoneNumberVerifyRequest();
                           }
                         }
                       : null,

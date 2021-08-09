@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app_view.dart';
 import 'modules/authentication/bloc/authentication_bloc.dart';
+import 'modules/authentication/signup/cubit/signup_cubit.dart';
 import 'repositories/repositories.dart';
 
 class App extends StatelessWidget {
@@ -29,6 +30,9 @@ class App extends StatelessWidget {
               AuthenticationBloc(
                   authenticationRepository: authenticationRepository,
                   userRepository: userRepository)),
+                  BlocProvider<SignupCubit>(
+                  create: (context) => SignupCubit(authenticationRepository),
+                  )
     ], child: AppView()));
   }
 }

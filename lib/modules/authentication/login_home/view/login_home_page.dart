@@ -40,11 +40,10 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => BlocProvider(
-                              create: (_) => SignupCubit(RepositoryProvider.of<
-                                  AuthenticationRepository>(context)),
-                              child: PhoneVerifyPage(),
-                            )));
+                      builder: (_) => BlocProvider.value(
+                          value: BlocProvider.of<SignupCubit>(context),
+                          child: PhoneVerifyPage()),
+                    ));
                 // Navigator.pushNamed(context, 'phone_verify_page',
                 //     arguments: SignupCubit(
                 //         RepositoryProvider.of<AuthenticationRepository>(
