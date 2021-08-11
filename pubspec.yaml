@@ -36,10 +36,14 @@ dependencies:
   formz: ^0.4.0
   shared_preferences: ^2.0.6
   cupertino_icons: ^1.0.2
+  sizer: ^2.0.13
+  freezed: ^0.14.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  freezed:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sizer/sizer.dart';
 
-import 'models/splash/splash.dart';
-import 'module/authentication/authentication.dart';
+import 'modules/authentication/bloc/authentication_bloc.dart';
+import 'modules/splash/splash.dart';
 import 'repositories/authentication_repository/authentication_repository.dart';
 import 'support/style/theme.dart';
 
@@ -22,30 +23,32 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        DioClient.authenticationBloc =
-            BlocProvider.of<AuthenticationBloc>(context);
+    return Sizer(builder: (context, orientation, deviceType) {
+      return MaterialApp(
+        theme: theme,
+        navigatorKey: _navigatorKey,
+        builder: (context, child) {
+          DioClient.authenticationBloc =
+              BlocProvider.of<AuthenticationBloc>(context);
 
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          //set desired text scale factor here
-          child: buildMultiBlocListener(child!),
-        );
-      },
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('ko', 'KR'),
-        const Locale('en', 'US'),
-      ],
-      initialRoute: SplashPage.routeName,
-      routes: routes,
-    );
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            //set desired text scale factor here
+            child: buildMultiBlocListener(child!),
+          );
+        },
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('ko', 'KR'),
+          const Locale('en', 'US'),
+        ],
+        initialRoute: SplashPage.routeName,
+        routes: routes,
+      );
+    });
   }
 
   MultiBlocListener buildMultiBlocListener(Widget child) {
@@ -58,12 +61,12 @@ class _AppViewState extends State<AppView> {
             //       AgreeScreen.routeName, (route) => false);
             //   break;
             case AuthenticationStatus.authenticated:
-              _navigator!.pushNamedAndRemoveUntil(
-                  'home_screen', (route) => false);
+              _navigator!
+                  .pushNamedAndRemoveUntil('home_screen', (route) => false);
               break;
             case AuthenticationStatus.unauthenticated:
               _navigator!.pushNamedAndRemoveUntil(
-                  'home_screen', (route) => false);
+                  'login_home_screen', (route) => false);
               break;
             default:
               break;

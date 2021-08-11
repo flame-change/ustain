@@ -8,7 +8,7 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    logger.i('onCreate -- ${bloc.runtimeType}');
+    print('onCreate -- ${bloc.runtimeType}');
   }
 
   @override
@@ -27,5 +27,17 @@ class MyBlocObserver extends BlocObserver {
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
     logger.i('onClose -- ${bloc.runtimeType}');
+  }
+
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    logger.i('onEvent -- ${bloc.runtimeType} $event}');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    logger.i('onTransition -- ${bloc.runtimeType} $transition}');
   }
 }

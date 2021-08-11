@@ -1,7 +1,8 @@
-import 'package:aroundus_app/models/home/home.dart';
-import 'package:aroundus_app/module/authentication/authentication.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../home.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = 'home_screen';
@@ -15,10 +16,10 @@ class HomeScreen extends StatefulWidget {
   }
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreen();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreen extends State<HomeScreen> {
   late AuthenticationBloc _authenticationBloc;
 
   @override
@@ -33,6 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
       BlocProvider(
         create: (context) => BlocProvider.of<AuthenticationBloc>(context),
       ),
-    ], child: HomePage());
+    ], child: Scaffold(appBar: AppBar(), body: HomePage()));
   }
 }

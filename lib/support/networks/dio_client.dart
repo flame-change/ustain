@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:aroundus_app/env/env.dart';
-import 'package:aroundus_app/module/authentication/authentication.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -122,16 +122,16 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      // var accessToken = prefs.getString('accessToken');
 
       var response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
-        options: Options(headers: {
-          Headers.contentTypeHeader: Headers.jsonContentType,
-          HttpHeaders.authorizationHeader: "Bearer $accessToken",
-        }),
+        // options: Options(headers: {
+        //   Headers.contentTypeHeader: Headers.jsonContentType,
+        //   HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        // }),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
