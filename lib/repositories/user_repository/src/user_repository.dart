@@ -1,18 +1,31 @@
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
+import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
+import 'package:aroundus_app/support/networks/network_exceptions.dart';
+
+class UserGetFailure implements Exception {}
 
 class UserRepository {
   final DioClient _dioClient;
 
   UserRepository(this._dioClient);
 
-  User? _user;
+  Future<ApiResult<User>> getUser() async {
+    try {
+      var response = await _dioClient.getWithAuth('/api/v1/user/profile/');
 
-  Future<User?> getUser() async {
-    if (_user != null) return _user;
-    return Future.delayed(
-      const Duration(milliseconds: 300),
-      () => _user = User("const Uuid().v4()"),
-    );
+      return ApiResult.success(data: User(
+        phone: response['phone'],
+        email: response['email'],
+        // "name": response['name'],
+        // "profileArticle": response['profileArticle'],
+        sexChoices: response['sexChoices'],
+        birthday: response['birthday'],
+        categories: response['categories'],
+      ),
+      );
+    } on Exception {
+      throw UserGetFailure();
+    }
   }
 }

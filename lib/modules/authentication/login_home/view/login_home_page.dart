@@ -1,4 +1,6 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
+import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/view/phone_verify_page.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
@@ -54,10 +56,17 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
             Text(" | "),
             InkWell(
               onTap: () {
-                print("일반 로그인");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => BlocProvider(
+                          create: (_) => SignInCubit(RepositoryProvider.of<
+                              AuthenticationRepository>(context)),
+                          child: SignInPage(),
+                        )));
               },
               child: Text("일반 로그인"),
-            )
+            ),
           ],
         )
       ],

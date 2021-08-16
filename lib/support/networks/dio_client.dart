@@ -52,15 +52,10 @@ class DioClient {
   ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
 
       var response = await _dio.get(
         uri,
         queryParameters: queryParameters,
-        options: Options(headers: {
-          Headers.contentTypeHeader: Headers.jsonContentType,
-          HttpHeaders.authorizationHeader: "Bearer $accessToken",
-        }),
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
@@ -87,7 +82,7 @@ class DioClient {
   ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.put(
         uri,
@@ -121,17 +116,10 @@ class DioClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      // var accessToken = prefs.getString('accessToken');
-
       var response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
-        // options: Options(headers: {
-        //   Headers.contentTypeHeader: Headers.jsonContentType,
-        //   HttpHeaders.authorizationHeader: "Bearer $accessToken",
-        // }),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -157,7 +145,7 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.patch(
         uri,
@@ -190,7 +178,7 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.delete(
         uri,
@@ -221,7 +209,7 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessTokenBeauTalk');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.get(
         uri,
@@ -256,7 +244,7 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.post(
         uri,
@@ -292,7 +280,7 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var accessToken = prefs.getString('accessToken');
+      var accessToken = prefs.getString('access');
 
       var response = await _dio.post(
         uri,
