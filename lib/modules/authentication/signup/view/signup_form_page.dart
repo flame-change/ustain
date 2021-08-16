@@ -29,7 +29,6 @@ class _SignupFormState extends State<SignupForm> {
         body: PageWire(
           child: BlocListener<SignupCubit, SignupState>(
             listener: (context, state) async {
-              logger.d("phoneToken ${state.phoneToken}");
               // if (state.status.isSubmissionFailure) {
               //   Scaffold.of(context)
               //     ..hideCurrentSnackBar()

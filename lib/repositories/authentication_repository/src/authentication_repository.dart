@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
@@ -17,18 +19,21 @@ class AuthenticationRepository {
 
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
-    yield AuthenticationStatus.unauthenticated;
+
+    String? accessToken = await getAccessToken();
+    logger.d("Stream<AuthenticationStatus> get status");
+    logger.i(accessToken!);
+
+    if (accessToken != null) {
+      yield AuthenticationStatus.authenticated;
+    } else {
+      yield AuthenticationStatus.unauthenticated;
+    }
     yield* _controller.stream;
   }
 
-  Future<void> logIn({
-    required String username,
-    required String password,
-  }) async {
-    await Future.delayed(
-      const Duration(milliseconds: 300),
-      () => _controller.add(AuthenticationStatus.authenticated),
-    );
+  Future<void> logIn() async {
+    _controller.add(AuthenticationStatus.authenticated);
   }
 
   void logOut() {
@@ -37,7 +42,7 @@ class AuthenticationRepository {
 
   void dispose() => _controller.close();
 
-  Future<ApiResult<bool>> requestPhoneVerifier({
+  Future<ApiResult<Map>> requestPhoneVerifier({
     required String phoneNumber,
   }) async {
     try {
@@ -45,10 +50,10 @@ class AuthenticationRepository {
       var response =
           await _dioClient.post('/api/v1/user/phone-verifier/', data: body);
       return ApiResult.success(
-        data: true,
+        data: response['phone'],
       );
     } catch (e) {
-      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e),);
     }
   }
 
@@ -129,10 +134,37 @@ class AuthenticationRepository {
         "passwordConfirm": passwordConfirm
       });
 
-      var response = await _dioClient.post('/api/v1/user/register/', data: body);
+      var response =
+          await _dioClient.post('/api/v1/user/register/', data: body);
       return ApiResult.success(data: response);
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<Map>> signIn(
+      {required String email, required String password}) async {
+    try {
+      String body = json.encode({
+        "email": email,
+        "password": password,
+      });
+
+      logger.d(body);
+
+      var response = await _dioClient.post('/api/v1/user/login/', data: body);
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<String?> getAccessToken() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.getString('access');
+    } on Exception {
+      logger.d(Error);
     }
   }
 }

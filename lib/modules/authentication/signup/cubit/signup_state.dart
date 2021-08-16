@@ -38,7 +38,7 @@ class SignupState extends Equatable {
   final bool agreeMarketing;
   final bool? isDupCheckedSnsId;
   final bool? isDupCheckedNickName;
-  final String errorMessage;
+  final String? errorMessage;
   final VerifyStatus phoneNumberVerifyStatus;
   final VerifyNumber verifyNumber;
   final bool success;
@@ -62,7 +62,7 @@ class SignupState extends Equatable {
         agreeMarketing,
         // isDupCheckedSnsId,
         // isDupCheckedNickName,
-        errorMessage,
+        // errorMessage,
         phoneNumberVerifyStatus,
         verifyNumber,
         success,

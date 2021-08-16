@@ -6,6 +6,7 @@ import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'signup_state.dart';
 
@@ -27,23 +28,27 @@ class SignupCubit extends Cubit<SignupState> {
   Future<void> phoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
     emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
-    ApiResult<bool> apiResult =
-        await _authenticationRepository.requestPhoneVerifier(
+    ApiResult<Map> apiResult = await _authenticationRepository
+        .requestPhoneVerifier(
       phoneNumber: state.phoneNumber.value,
     );
-    apiResult.when(success: (bool? isVerified) {
+    apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(errorMessage: error!.toString()));
+      if(error!=null) {
+        emit(state.copyWith(
+            errorMessage: NetworkExceptions.getErrorMessage(
+                NetworkExceptions.defaultError('phone-already-in-use'))));
+      }
     });
   }
 
   Future<void> confirmVerifierCode() async {
     if (!state.phoneNumber.valid) return;
     ApiResult<String> apiResult =
-        await _authenticationRepository.confirmVerifierCode(
-            phoneNumber: state.phoneNumber.value,
-            code: state.verifyNumber.value);
+    await _authenticationRepository.confirmVerifierCode(
+        phoneNumber: state.phoneNumber.value,
+        code: state.verifyNumber.value);
     apiResult.when(success: (String? phoneToken) {
       emit(state.copyWith(
           phoneNumberVerifyStatus: VerifyStatus.verified,
@@ -76,13 +81,13 @@ class SignupCubit extends Cubit<SignupState> {
       verifyCode: state.verifyNumber.value,
     );
     apiResult.when(success: (String? token) {
-      print("token $token");
       emit(state.copyWith(
           phoneNumberVerifyStatus: VerifyStatus.verified, phoneToken: token));
-     logger.d("${state.phoneToken}");
-
+      logger.d("${state.phoneToken}");
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith( phoneNumberVerifyStatus: VerifyStatus.unverified, unverifiedFlag: true, errorMessage: error.toString()));
+      emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.unverified,
+          unverifiedFlag: true,
+          errorMessage: error.toString()));
     });
   }
 
@@ -116,11 +121,13 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(unverifiedFlag: false));
   }
 
+
+  // MARK -- 이메일 중복 확인용 Cubit
   Future<void> emailVerifyRequest() async {
     if (!state.email.valid) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    ApiResult<String> apiResult =
-        await _authenticationRepository.emailVerifyRequest(
+    ApiResult<String> apiResult = await _authenticationRepository
+        .emailVerifyRequest(
       email: state.email.value,
     );
     apiResult.when(success: (String? email) {
@@ -189,7 +196,7 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
     ApiResult<String> apiResult =
-        await _authenticationRepository.emailAuthCheck(
+    await _authenticationRepository.emailAuthCheck(
       email: state.email.value,
       password: state.password.value,
     );
@@ -204,13 +211,14 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   Future<void> signUpFormSubmitted(SignupState _state) async {
-
     print("signUpFormSubmitted $state");
     print("signUpFormSubmitted ${state.phoneToken}");
     if (!state.email.valid ||
         !state.password.valid ||
         !state.phoneNumber.valid ||
         state.phoneToken == null) return;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     ApiResult<Map> apiResult = await _authenticationRepository.signUp(
@@ -221,8 +229,11 @@ class SignupCubit extends Cubit<SignupState> {
       phoneToken: state.phoneToken!,
     );
 
-    apiResult.when(success: (Map? email) {
+    apiResult.when(success: (Map? response) {
+      prefs.setString('access', response!['access']);
+      prefs.setString('refresh', response['refresh']);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      _authenticationRepository.logIn();
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
         status: FormzStatus.submissionFailure,
@@ -231,7 +242,7 @@ class SignupCubit extends Cubit<SignupState> {
     });
   }
 
-  void phoneTokenInit(String phoneToken){
+  void phoneTokenInit(String phoneToken) {
     emit(state.copyWith(phoneToken: phoneToken));
   }
 }

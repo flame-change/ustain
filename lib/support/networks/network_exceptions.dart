@@ -148,12 +148,36 @@ abstract class NetworkExceptions with _$NetworkExceptions {
     }, unableToProcess: () {
       errorMessage = "Unable to process the data";
     }, defaultError: (String error) {
-      errorMessage = error;
+      errorMessage = getErrorMessageCode(error);
     }, formatException: () {
       errorMessage = "Unexpected error occurred";
     }, notAcceptable: () {
       errorMessage = "Not acceptable";
     });
     return errorMessage;
+  }
+
+  static String getErrorMessageCode(String errorMessageCode) {
+    print(
+        ']-----] getErrorMessageFromCode::errorMessageCode [-----[ $errorMessageCode');
+    if (errorMessageCode != null) {
+      switch (errorMessageCode) {
+        case 'weak-password':
+          return "보안에 취약한 비밀번호 입니다.";
+        case 'email-already-in-use':
+          return "이미 가입되어있는 이메일 입니다.";
+        case 'email-useable':
+          return "사용 가능한 이메일 입니다.";
+        case 'nickname-already-in-use':
+          return "이미 사용중인 닉네임 입니다.";
+        case 'phone-already-in-use':
+          return "이미 사용중인 휴대폰번호 입니다.";
+        case 'nickname-useable':
+          return "사용 가능한 닉네임 입니다.";
+        default:
+          return "네트워크 오류입니다 관리자에 문의 부탁드립니다.";
+      }
+    }
+    return 'errorMessageCode';
   }
 }

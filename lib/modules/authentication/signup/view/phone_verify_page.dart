@@ -37,6 +37,13 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
           child: BlocListener<SignupCubit, SignupState>(
         bloc: BlocProvider.of<SignupCubit>(context),
         listener: (context, state) async {
+          if(state.errorMessage!=null){
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text(state.errorMessage!)),
+              );
+          }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
               Scaffold.of(context)
