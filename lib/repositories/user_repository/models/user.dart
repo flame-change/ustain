@@ -1,12 +1,33 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  const User(this.id);
+  const User({ this.email,
+    this.phone,
+    this.name,
+    this.profileArticle,
+    this.birthday,
+    this.sexChoices,
+    this.categories});
 
-  final String id;
+  final String? phone;
+  final String? email;
+  final String? name;
+  final String? profileArticle;
+  final String? sexChoices;
+  final String? birthday; // 자료형 확인
+  final List<dynamic>? categories;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props =>
+      [
+        // phone,
+        // email,
+        // name!,
+        // profileArticle!,
+        // sexChoices!,
+        // birthday!,
+        // categories!
+      ];
 
-  static const empty = User('-');
+  static const empty = User();
 }
