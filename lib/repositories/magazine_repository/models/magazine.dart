@@ -22,4 +22,14 @@ class Magazine extends Equatable {
   List<Object?> get props => [id, title, isLike, category, bannerImage, content];
 }
 
-enum Category { vegetarian, animals, ecosystem, people }
+enum MagazineCategory { all, vegetarian, animals, ecosystem, people }
+
+extension MagazineCategoryToString on MagazineCategory {
+  String get name {
+    return ["전체보기","비건", "동물보호", "환경보호", "인권보호"][this.index];
+  }
+
+  String get toValue {
+    return ["", "vegetarian", "animals", "ecosystem", "people"][this.index];
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_page.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
         body: BlocProvider(
             create: (_) => MagazineCubit(
                 RepositoryProvider.of<MagazineRepository>(context)),
-            child: MagazineHomePage()),
+            child: PageWire(child: MagazineHomePage())),
         bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.magazine));
   }
 }
