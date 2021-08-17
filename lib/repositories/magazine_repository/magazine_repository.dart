@@ -1,0 +1,1 @@
+export 'src/magazine_repository.dart';
