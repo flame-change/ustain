@@ -42,4 +42,14 @@ class MagazineRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<Map>> updateLike(int id) async {
+    try{
+      var response = await _dioClient.put('/api/v1/magazine/detail/$id/update-like/');
+
+      return ApiResult.success(data: response);
+    } catch (e){
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }

@@ -8,21 +8,21 @@ part of 'magazine_detail.dart';
 
 MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
   return MagazineDetail(
-    (json['categories'] as List<dynamic>?)
+    categories: (json['categories'] as List<dynamic>?)
         ?.map((e) => _$enumDecode(_$MagazineCategoryEnumMap, e))
         .toList(),
-    json['bannerImage'] as String?,
-    json['id'] as int?,
-    json['content'] as String?,
-    json['title'] as String?,
-    json['hit'] as int?,
-    json['createdAt'] as String?,
-    json['updatedAt'] as String?,
-    json['commentsBanned'] as bool?,
-    json['likeUserCount'] as int?,
-    json['isLike'] as bool?,
-    json['totalComments'] as int?,
-    json['isScrapped'] as bool?,
+    bannerImage: json['bannerImage'] as String?,
+    id: json['id'] as int?,
+    content: json['content'] as String?,
+    title: json['title'] as String?,
+    hit: json['hit'] as int?,
+    createdAt: json['createdAt'] as String?,
+    updatedAt: json['updatedAt'] as String?,
+    commentsBanned: json['commentsBanned'] as bool?,
+    likeUserCount: json['likeUserCount'] as int?,
+    isLike: json['isLike'] as bool?,
+    totalComments: json['totalComments'] as int?,
+    isScrapped: json['isScrapped'] as bool?,
   );
 }
 

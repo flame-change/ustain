@@ -7,7 +7,8 @@ part 'magazine_detail.g.dart';
 
 @JsonSerializable()
 class MagazineDetail extends Equatable {
-  const MagazineDetail(this.categories,
+  const MagazineDetail({
+      this.categories,
       this.bannerImage,
       this.id,
       this.content,
@@ -19,7 +20,7 @@ class MagazineDetail extends Equatable {
       this.likeUserCount,
       this.isLike,
       this.totalComments,
-      this.isScrapped);
+      this.isScrapped});
 
   final List<MagazineCategory>? categories;
   final String? bannerImage;
@@ -41,8 +42,7 @@ class MagazineDetail extends Equatable {
   Map<String, dynamic> toJson() => _$MagazineDetailToJson(this);
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         categories,
         bannerImage,
         id,
@@ -57,4 +57,35 @@ class MagazineDetail extends Equatable {
         totalComments,
         isScrapped
       ];
+
+  MagazineDetail copyWith(
+      {List<MagazineCategory>? categories,
+      String? bannerImage,
+      int? id,
+      String? content,
+      String? title,
+      int? hit,
+      String? createdAt,
+      String? updatedAt,
+      bool? commentsBanned,
+      int? likeUserCount,
+      bool? isLike,
+      int? totalComments,
+      bool? isScrapped}) {
+    return MagazineDetail(
+      categories: categories ?? this.categories,
+      bannerImage: bannerImage ?? this.bannerImage,
+      id: id ?? this.id,
+      content: content ?? this.content,
+      title: title ?? this.title,
+      hit: hit ?? this.hit,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      commentsBanned: commentsBanned ?? this.commentsBanned,
+      likeUserCount: likeUserCount ?? this.likeUserCount,
+      isLike: isLike ?? this.isLike,
+      totalComments: totalComments ?? this.totalComments,
+      isScrapped: isScrapped ?? this.isScrapped,
+    );
+  }
 }

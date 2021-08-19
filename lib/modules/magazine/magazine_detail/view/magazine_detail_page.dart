@@ -30,11 +30,22 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MagazineDetailCubit, MagazineDetailState>(
+      buildWhen: (pre, cur) {
+        return pre.magazineDetail != cur.magazineDetail;
+      },
         builder: (context, state) {
       if (state.isLoaded) {
         return Scaffold(
           appBar: AppBar(
             title: Text("${state.magazineDetail!.title}"),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              _magazineDetailCubit.updateLike(state.magazineDetail!.id!);
+            },
+            child: state.magazineDetail!.isLike!
+                ? Icon(Icons.favorite_border)
+                : Icon(Icons.favorite),
           ),
           body: SingleChildScrollView(
             child: Column(

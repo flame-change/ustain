@@ -15,14 +15,25 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
   final MagazineRepository _magazineRepository;
 
   Future<void> getMagazineDetail(int id) async {
-    ApiResult<MagazineDetail> apiResult = await _magazineRepository.getMagazineDetail(id);
+    ApiResult<MagazineDetail> apiResult =
+        await _magazineRepository.getMagazineDetail(id);
 
     apiResult.when(success: (MagazineDetail? magazineDetail) {
       emit(state.copyWith(
-        magazineDetail: magazineDetail!,
-        isLoading: false,
-        isLoaded: true
-      ));
+          magazineDetail: magazineDetail!, isLoading: false, isLoaded: true));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> updateLike(int id) async {
+    ApiResult<Map> apiResult = await _magazineRepository.updateLike(id);
+
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+          magazineDetail:
+              state.magazineDetail!.copyWith(isLike: mapResponse!["isLike"])));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
