@@ -11,7 +11,7 @@ class Magazine extends Equatable {
   final int? id;
   final String? title;
   final bool? isLike;
-  final List<String>? category;
+  final List<MagazineCategory>? category;
   final String? bannerImage;
   final String? content;
 

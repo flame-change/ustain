@@ -1,5 +1,9 @@
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
+import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +26,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
     _magazineCubit.getMagazinesByCategory(MagazineCategory.all);
+    _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
   }
 
@@ -39,10 +44,10 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
         controller: _scrollController,
         child: BlocBuilder<MagazineCubit, MagazineState>(
           builder: (context, state) {
-            if (state.isLoaded && state.magazines != null) {
+            if (state.isLoaded && state.todaysMaagazines != null) {
               return Wrap(runSpacing: 15, children: [
                 // 오늘의 매거진
-                TodaysMagazine(),
+                TodaysMagazine(state.todaysMaagazines!),
 
                 // 모아보기
                 Column(
@@ -72,36 +77,46 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                       runSpacing: 10,
                       children: List.generate(
                           state.magazines!.length,
-                          (index) => Container(
-                                width: 100.w,
-                                height: 30.h,
-                                color: Colors.black38,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.network(
-                                      state.magazines![index].bannerImage!,
-                                      height: 20.h,
-                                      width: 100.w,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    Text(
-                                      state.magazines![index].title!,
-                                      style: TextStyle(fontSize: 20.sp),
-                                    ),
-                                    Text(
-                                      "매거진 내용 최대 두 줄",
-                                      maxLines: 2,
-                                    ),
-                                  ],
+                          (index) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (_) => BlocProvider<MagazineDetailCubit>(
+                                    create: (context) => MagazineDetailCubit(
+                                        RepositoryProvider.of<MagazineRepository>(context)),
+                                    child: MagazineDetailPage(state.magazines![index].id!)),
+                              ));
+                            },
+                            child: Container(
+                                  width: 100.w,
+                                  height: 30.h,
+                                  color: Colors.black38,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Image.network(
+                                        state.magazines![index].bannerImage!,
+                                        height: 20.h,
+                                        width: 100.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      Text(
+                                        state.magazines![index].title!,
+                                        style: TextStyle(fontSize: 20.sp),
+                                      ),
+                                      Text(
+                                        "매거진 내용 최대 두 줄",
+                                        maxLines: 2,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              )),
+                          )),
                     )
                   ],
                 ),
               ]);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Container(height: 100.h,child: Center(child: CircularProgressIndicator()));
             }
           },
         ));

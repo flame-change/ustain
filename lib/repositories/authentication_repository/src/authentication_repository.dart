@@ -22,7 +22,6 @@ class AuthenticationRepository {
 
     String? accessToken = await getAccessToken();
     logger.d("Stream<AuthenticationStatus> get status");
-    logger.i(accessToken!);
 
     if (accessToken != null) {
       yield AuthenticationStatus.authenticated;
