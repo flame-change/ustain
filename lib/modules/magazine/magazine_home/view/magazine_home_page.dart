@@ -66,7 +66,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                     // TODO 카테고리들 스크롤링 뷰
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 3.h,
+                      height: 5.h,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: categoryTitle(),
@@ -127,6 +127,7 @@ List<Widget> categoryTitle() {
   return List<Widget>.generate(
       MagazineCategory.values.length,
       (index) => Container(
+        alignment: Alignment.center,
             margin: EdgeInsets.only(right: 5),
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(

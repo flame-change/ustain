@@ -19,76 +19,128 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
     with SingleTickerProviderStateMixin {
   int get _id => this.widget.id;
   late MagazineDetailCubit _magazineDetailCubit;
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
+
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+      _magazineDetailCubit.hideNavigation(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MagazineDetailCubit, MagazineDetailState>(
-      buildWhen: (pre, cur) {
-        return pre.magazineDetail != cur.magazineDetail;
-      },
-        builder: (context, state) {
-      if (state.isLoaded) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("${state.magazineDetail!.title}"),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _magazineDetailCubit.updateLike(state.magazineDetail!.id!);
-            },
-            child: state.magazineDetail!.isLike!
-                ? Icon(Icons.favorite_border)
-                : Icon(Icons.favorite),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 50.h,
-                  width: 100.w,
-                  child: Image.network(
-                    "${state.magazineDetail!.bannerImage}",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                PageWire(
+    return BlocSelector<MagazineDetailCubit, MagazineDetailState,
+            MagazineDetail?>(
+        selector: (state) => state.magazineDetail,
+        builder: (context, magazineDetail) {
+          if (magazineDetail != null) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("${magazineDetail.title}"),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  _magazineDetailCubit.updateLike(magazineDetail.id!);
+                },
+                child: magazineDetail.isLike!
+                    ? Icon(Icons.favorite_border)
+                    : Icon(Icons.favorite),
+              ),
+              bottomSheet: BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
+                selector: (state) {
+                  return !state.isHide;
+                },
+                builder: (context, isHide) {
+                  _magazineDetailCubit.hideNavigation(true);
+                  return Visibility(
+                    visible: !isHide,
                     child: Container(
-                  width: 100.w,
-                  padding: EdgeInsets.only(top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "매거진 제목",
-                        style: TextStyle(
-                            fontSize: 25.sp, fontWeight: FontWeight.bold),
+                      color: Colors.lightBlue,
+                      height: 10.h,
+                      width: 100.w,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.w,
                       ),
-                      Text("매거진 부제목: 매거진의 부제목",
-                          style: TextStyle(fontSize: 20.sp)),
-                      getCategories(state.magazineDetail!.categories!),
-                      Text("${state.magazineDetail!.createdAt!}"),
-                      Divider(),
-                      Html(
-                        data: state.magazineDetail!.content!,
-                      )
-                    ],
-                  ),
-                ))
-              ],
-            ),
-          ),
-        );
-      } else {
-        return Scaffold(body: Center(child: CircularProgressIndicator()));
-      }
-    });
+                      child: Wrap(
+                        runAlignment: WrapAlignment.center,
+                        spacing: 10,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.share,
+                                semanticLabel: "공유",
+                              ),
+                              Text("공유"),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.comment,
+                                semanticLabel: "댓글",
+                              ),
+                              Text("댓글"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              body: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 50.h,
+                      width: 100.w,
+                      child: Image.network(
+                        "${magazineDetail.bannerImage}",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    PageWire(
+                        child: Container(
+                      width: 100.w,
+                      padding: EdgeInsets.only(top: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "매거진 제목",
+                            style: TextStyle(
+                                fontSize: 25.sp, fontWeight: FontWeight.bold),
+                          ),
+                          Text("매거진 부제목: 매거진의 부제목",
+                              style: TextStyle(fontSize: 20.sp)),
+                          getCategories(magazineDetail.categories!),
+                          Text("${magazineDetail.createdAt!}"),
+                          Divider(),
+                          Html(
+                            data: magazineDetail.content!,
+                          )
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+        });
   }
 }
 

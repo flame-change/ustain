@@ -10,7 +10,7 @@ part 'magazine_detail_state.dart';
 
 class MagazineDetailCubit extends Cubit<MagazineDetailState> {
   MagazineDetailCubit(this._magazineRepository)
-      : super(const MagazineDetailState(isLoading: true, isLoaded: false));
+      : super(const MagazineDetailState(isLoading: true, isLoaded: false, isHide: false));
 
   final MagazineRepository _magazineRepository;
 
@@ -38,5 +38,11 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
     });
+  }
+
+  void hideNavigation(bool isHide) {
+    emit(state.copyWith(
+      isHide: isHide
+    ));
   }
 }

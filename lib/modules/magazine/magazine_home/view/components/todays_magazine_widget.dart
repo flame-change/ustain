@@ -1,7 +1,5 @@
-import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class TodaysMagazine extends StatefulWidget {
@@ -55,18 +53,19 @@ class _TodaysMagazineState extends State<TodaysMagazine> with SingleTickerProvid
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.only(right: 10),
-                  width: 60.w,
+                  width: 65.w,
                   color: Colors.black38,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     children: [
-                      Container(
-                          height: 20.h,
-                          width: 100.w,
-                          child: Image.network(
-                            _todaysMaagazines[index].bannerImage!,
-                            fit: BoxFit.cover,
-                          )),
+                      Flexible(
+                        flex: 3,
+                        child: Image.network(
+                          _todaysMaagazines[index].bannerImage!,
+                          width: 65.w,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       Container(
                           width: 100.w,
                           padding: EdgeInsets.only(top: 10),
@@ -75,7 +74,7 @@ class _TodaysMagazineState extends State<TodaysMagazine> with SingleTickerProvid
                             children: [
                               Text(
                                 _todaysMaagazines[index].title!,
-                                style: TextStyle(fontSize: 15.sp),
+                                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                   "${_todaysMaagazines[index].title!} 설명",
