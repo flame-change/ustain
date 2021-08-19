@@ -3,6 +3,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:sizer/sizer.dart';
 
 class MagazineDetailPage extends StatefulWidget {
@@ -35,38 +36,42 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
           appBar: AppBar(
             title: Text("${state.magazineDetail!.title}"),
           ),
-          body: Column(
-            children: [
-              Container(
-                height: 50.h,
-                width: 100.w,
-                child: Image.network(
-                  "${state.magazineDetail!.bannerImage}",
-                  fit: BoxFit.cover,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: 50.h,
+                  width: 100.w,
+                  child: Image.network(
+                    "${state.magazineDetail!.bannerImage}",
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              PageWire(
-                  child: Container(
-                width: 100.w,
-                padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "매거진 제목",
-                      style: TextStyle(
-                          fontSize: 25.sp, fontWeight: FontWeight.bold),
-                    ),
-                    Text("매거진 부제목: 매거진의 부제목",
-                        style: TextStyle(fontSize: 20.sp)),
-                    getCategories(state.magazineDetail!.categories!),
-                    Text("${state.magazineDetail!.createdAt!}"),
-                    Divider(),
-
-                  ],
-                ),
-              ))
-            ],
+                PageWire(
+                    child: Container(
+                  width: 100.w,
+                  padding: EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "매거진 제목",
+                        style: TextStyle(
+                            fontSize: 25.sp, fontWeight: FontWeight.bold),
+                      ),
+                      Text("매거진 부제목: 매거진의 부제목",
+                          style: TextStyle(fontSize: 20.sp)),
+                      getCategories(state.magazineDetail!.categories!),
+                      Text("${state.magazineDetail!.createdAt!}"),
+                      Divider(),
+                      Html(
+                        data: state.magazineDetail!.content!,
+                      )
+                    ],
+                  ),
+                ))
+              ],
+            ),
           ),
         );
       } else {
