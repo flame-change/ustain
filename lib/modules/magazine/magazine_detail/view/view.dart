@@ -1,0 +1,1 @@
+export 'magazine_detail_page.dart';
