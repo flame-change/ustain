@@ -25,8 +25,8 @@ class MagazineRepository {
   Future<ApiResult<PageResponse>> getMagazinesByCategory(
       String categoriesList) async {
     try {
+      // TODO Page 처리
       var response = await _dioClient.get('/api/v1/magazine/list/?page=1&categories=[$categoriesList]');
-      
       return ApiResult.success(data: PageResponse.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -62,4 +62,14 @@ class MagazineRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<PageResponse>> getMagazineComments(int id) async {
+    try {
+      // TODO Page 처리
+      var response = await _dioClient.getWithAuth('/api/v1/magazine/detail/$id/reviews/?page=1');
+      return ApiResult.success(data: PageResponse.fromJson(response));
+  } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+  }
+}
 }
