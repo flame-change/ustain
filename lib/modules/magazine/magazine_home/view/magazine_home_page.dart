@@ -80,10 +80,12 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                           (index) => GestureDetector(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(
-                                builder: (_) => BlocProvider<MagazineDetailCubit>(
-                                    create: (context) => MagazineDetailCubit(
-                                        RepositoryProvider.of<MagazineRepository>(context)),
-                                    child: MagazineDetailPage(state.magazines![index].id!)),
+                                builder: (_) => MultiBlocProvider(providers: [
+                                  BlocProvider<MagazineDetailCubit>(
+                                      create: (context) => MagazineDetailCubit(
+                                          RepositoryProvider.of<MagazineRepository>(context)),
+                                     )
+                                ], child: MagazineDetailPage(state.magazines![index].id!)),
                               ));
                             },
                             child: Container(

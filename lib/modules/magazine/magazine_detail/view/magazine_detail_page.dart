@@ -45,64 +45,8 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
               appBar: AppBar(
                 title: Text("${magazineDetail.title}"),
               ),
-              floatingActionButton: BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
-                selector: (state) => state.isLike!,
-                builder: (context, isLike) {
-                  return FloatingActionButton(
-                    onPressed: () {
-                      _magazineDetailCubit.updateIsLike(magazineDetail.id!);
-                    },
-                    child: isLike
-                        ? Icon(Icons.favorite_border)
-                        : Icon(Icons.favorite),
-                  );
-                },
-              ),
-              bottomSheet: BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
-                selector: (state) {
-                  return !state.isHide;
-                },
-                builder: (context, isHide) {
-                  _magazineDetailCubit.hideNavigation(true);
-                  return Visibility(
-                    visible: !isHide,
-                    child: Container(
-                      color: Colors.lightBlue,
-                      height: 10.h,
-                      width: 100.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 5.w,
-                      ),
-                      child: Wrap(
-                        runAlignment: WrapAlignment.center,
-                        spacing: 10,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.share,
-                                semanticLabel: "공유",
-                              ),
-                              Text("공유"),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.comment,
-                                semanticLabel: "댓글",
-                              ),
-                              Text("댓글"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+              floatingActionButton: magazineLikeButton(magazineDetail.id!),
+              bottomNavigationBar: magazineBottomNavigator(magazineDetail.id!),
               body: SingleChildScrollView(
                 controller: _scrollController,
                 child: Column(

@@ -3,6 +3,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
+import 'package:aroundus_app/support/networks/page_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,7 @@ part 'magazine_detail_state.dart';
 
 class MagazineDetailCubit extends Cubit<MagazineDetailState> {
   MagazineDetailCubit(this._magazineRepository)
-      : super(const MagazineDetailState(isLoading: true, isLoaded: false, isHide: false));
+      : super(const MagazineDetailState(isLoading: true, isLoaded: false, isHide: true));
 
   final MagazineRepository _magazineRepository;
 
@@ -60,4 +61,5 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
       isHide: isHide
     ));
   }
+
 }
