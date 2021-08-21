@@ -20,9 +20,7 @@ MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
     updatedAt: json['updatedAt'] as String?,
     commentsBanned: json['commentsBanned'] as bool?,
     likeUserCount: json['likeUserCount'] as int?,
-    isLike: json['isLike'] as bool?,
     totalComments: json['totalComments'] as int?,
-    isScrapped: json['isScrapped'] as bool?,
   );
 }
 
@@ -40,9 +38,7 @@ Map<String, dynamic> _$MagazineDetailToJson(MagazineDetail instance) =>
       'updatedAt': instance.updatedAt,
       'commentsBanned': instance.commentsBanned,
       'likeUserCount': instance.likeUserCount,
-      'isLike': instance.isLike,
       'totalComments': instance.totalComments,
-      'isScrapped': instance.isScrapped,
     };
 
 K _$enumDecode<K, V>(

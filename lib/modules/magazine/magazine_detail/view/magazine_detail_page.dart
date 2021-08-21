@@ -26,7 +26,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
     super.initState();
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
-
+    _magazineDetailCubit.getIsLike(_id);
     _scrollController.addListener(_onScroll);
   }
 
@@ -45,13 +45,18 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
               appBar: AppBar(
                 title: Text("${magazineDetail.title}"),
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  _magazineDetailCubit.updateLike(magazineDetail.id!);
+              floatingActionButton: BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
+                selector: (state) => state.isLike!,
+                builder: (context, isLike) {
+                  return FloatingActionButton(
+                    onPressed: () {
+                      _magazineDetailCubit.updateIsLike(magazineDetail.id!);
+                    },
+                    child: isLike
+                        ? Icon(Icons.favorite_border)
+                        : Icon(Icons.favorite),
+                  );
                 },
-                child: magazineDetail.isLike!
-                    ? Icon(Icons.favorite_border)
-                    : Icon(Icons.favorite),
               ),
               bottomSheet: BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
                 selector: (state) {

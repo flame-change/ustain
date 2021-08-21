@@ -27,13 +27,28 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
     });
   }
 
-  Future<void> updateLike(int id) async {
+  Future<void> getIsLike(int id) async {
+    ApiResult<Map> apiResult = await _magazineRepository.getIsLike(id);
+
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+          isLike: mapResponse!["isLike"]
+      )
+      );
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> updateIsLike(int id) async {
     ApiResult<Map> apiResult = await _magazineRepository.updateLike(id);
 
     apiResult.when(success: (Map? mapResponse) {
       emit(state.copyWith(
-          magazineDetail:
-              state.magazineDetail!.copyWith(isLike: mapResponse!["isLike"])));
+        isLike: mapResponse!["isLike"]
+      )
+      );
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));

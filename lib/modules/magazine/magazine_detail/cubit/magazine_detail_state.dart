@@ -6,6 +6,7 @@ class MagazineDetailState extends Equatable {
     required this.isLoading,
     this.error,
     this.magazineDetail,
+    this.isLike,
     required this.isHide
   });
 
@@ -14,23 +15,26 @@ class MagazineDetailState extends Equatable {
   final NetworkExceptions? error;
   final MagazineDetail? magazineDetail;
   final bool isHide;
+  final bool? isLike;
 
   @override
-  List<Object?> get props => [magazineDetail, error, isLoaded, isLoading, isHide];
+  List<Object?> get props => [magazineDetail, error, isLoaded, isLoading, isHide, isLike];
 
   MagazineDetailState copyWith(
       {MagazineDetail? magazineDetail,
       NetworkExceptions? error,
       bool? isLoading,
       bool? isLoaded,
-      bool? isHide
+      bool? isHide,
+      bool? isLike,
       }) {
     return MagazineDetailState(
         magazineDetail: magazineDetail ?? this.magazineDetail,
         error: error ?? this.error,
         isLoaded: isLoaded ?? this.isLoaded,
         isLoading: isLoading ?? this.isLoading,
-        isHide: isHide ?? this.isHide
+        isHide: isHide ?? this.isHide,
+        isLike: isLike ?? this.isLike,
     );
   }
 }

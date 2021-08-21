@@ -18,9 +18,8 @@ class MagazineDetail extends Equatable {
       this.updatedAt,
       this.commentsBanned,
       this.likeUserCount,
-      this.isLike,
       this.totalComments,
-      this.isScrapped});
+  });
 
   final List<MagazineCategory>? categories;
   final String? bannerImage;
@@ -32,9 +31,7 @@ class MagazineDetail extends Equatable {
   final String? updatedAt;
   final bool? commentsBanned;
   final int? likeUserCount;
-  final bool? isLike;
   final int? totalComments;
-  final bool? isScrapped;
 
   factory MagazineDetail.fromJson(Map<String, dynamic> json) =>
       _$MagazineDetailFromJson(json);
@@ -53,9 +50,7 @@ class MagazineDetail extends Equatable {
         updatedAt,
         commentsBanned,
         likeUserCount,
-        isLike,
         totalComments,
-        isScrapped
       ];
 
   MagazineDetail copyWith(
@@ -69,9 +64,8 @@ class MagazineDetail extends Equatable {
       String? updatedAt,
       bool? commentsBanned,
       int? likeUserCount,
-      bool? isLike,
-      int? totalComments,
-      bool? isScrapped}) {
+      int? totalComments
+      }) {
     return MagazineDetail(
       categories: categories ?? this.categories,
       bannerImage: bannerImage ?? this.bannerImage,
@@ -83,9 +77,7 @@ class MagazineDetail extends Equatable {
       updatedAt: updatedAt ?? this.updatedAt,
       commentsBanned: commentsBanned ?? this.commentsBanned,
       likeUserCount: likeUserCount ?? this.likeUserCount,
-      isLike: isLike ?? this.isLike,
       totalComments: totalComments ?? this.totalComments,
-      isScrapped: isScrapped ?? this.isScrapped,
     );
   }
 }
