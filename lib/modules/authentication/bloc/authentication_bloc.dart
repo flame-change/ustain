@@ -9,6 +9,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'authentication_event.dart';
+
 part 'authentication_state.dart';
 
 class AuthenticationBloc
@@ -26,8 +27,7 @@ class AuthenticationBloc
 
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
-  late StreamSubscription<AuthenticationStatus>
-      _authenticationStatusSubscription;
+  late StreamSubscription<AuthenticationStatus>  _authenticationStatusSubscription;
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -62,7 +62,7 @@ class AuthenticationBloc
       case AuthenticationStatus.unauthenticated:
         return const AuthenticationState.unauthenticated();
       case AuthenticationStatus.authenticated:
-        AuthenticationState? status =  await _tryGetUser();
+        AuthenticationState? status = await _tryGetUser();
         return status!;
       default:
         return const AuthenticationState.unknown();
@@ -72,14 +72,14 @@ class AuthenticationBloc
   Future<AuthenticationState?> _tryGetUser() async {
     try {
       ApiResult<User> apiResult = await _userRepository.getUser();
-      AuthenticationState authenticationState = AuthenticationState.unauthenticated();
-      apiResult.when(
-          success: (User? user) {
-            authenticationState = AuthenticationState.authenticated(user!);
-          },
-          failure: (NetworkExceptions? error) {
-            authenticationState = AuthenticationState.unauthenticated();
-          });
+      AuthenticationState authenticationState =
+          AuthenticationState.unauthenticated();
+      apiResult.when(success: (User? user) {
+        authenticationState = AuthenticationState.authenticated(user!);
+      }, failure: (NetworkExceptions? error) {
+        authenticationState = AuthenticationState.unauthenticated();
+      });
+
       return authenticationState;
     } on Exception {
       _authenticationRepository.logOut();

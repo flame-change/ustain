@@ -45,11 +45,12 @@ class DioClient {
 
   Future<dynamic> get(
     String uri,
+      {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
-  ) async {
+  }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -73,13 +74,14 @@ class DioClient {
 
   Future<dynamic> put(
     String uri,
+      {
     data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
-  ) async {
+  }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var accessToken = prefs.getString('access');

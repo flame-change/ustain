@@ -50,14 +50,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ? Colors.black
                   : Color(0xFFB6B6B6),
               menu: MenuState.home.name,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, 'home_screen', (route) => false);
+              },
             ),
             IconButtonWidget(
               changedColor: MenuState.magazine == widget.selectedMenu
                   ? Colors.black
                   : Color(0xFFB6B6B6),
               menu: MenuState.magazine.name,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, 'magazine_home_screen', (route) => false);
+              },
             ),
             IconButtonWidget(
               changedColor: MenuState.store == widget.selectedMenu

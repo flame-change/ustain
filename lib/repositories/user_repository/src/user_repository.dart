@@ -15,10 +15,11 @@ class UserRepository {
       var response = await _dioClient.getWithAuth('/api/v1/user/profile/');
 
       return ApiResult.success(data: User(
+        groups: response['groups'],
         phone: response['phone'],
         email: response['email'],
-        // "name": response['name'],
-        // "profileArticle": response['profileArticle'],
+        name: response['name'],
+        profileArticle: response['profileArticle'],
         sexChoices: response['sexChoices'],
         birthday: response['birthday'],
         categories: response['categories'],
