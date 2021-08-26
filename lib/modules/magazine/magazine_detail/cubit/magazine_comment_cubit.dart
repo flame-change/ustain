@@ -34,4 +34,66 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
       emit(state.copyWith(error: error));
     });
   }
+
+  Future<void> requestMagazineComment(
+      int magazineId, String replyContent, int? replyId) async {
+    Map<String, dynamic> body = {
+      "content": replyContent,
+      "magazines": magazineId,
+      "reply": replyId
+    };
+    ApiResult<Map> apiResult = await _magazineRepository.requestMagazineComment(body);
+
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+        comments: state.comments! + [MagazineComment.fromJson(mapResponse!["data"])]
+      ));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> deleteMagazineComment(MagazineComment comment) async {
+    ApiResult<Map> apiResult = await _magazineRepository.deleteMagazineComment(comment.id);
+
+    apiResult.when(
+        success: (Map? mapResponse) {
+          List<MagazineComment> comments = state.comments!.map((e) => e).toList();
+
+          if(state.comments!.contains(comment)){
+            comments.remove(comment);
+          } else {
+            for(var i=0; i<comments.length; i++){
+              if(comments[i].reply!.contains(comment)){
+                comments[i].reply!.remove(comment);
+                break;
+              }
+            }
+          }
+
+          emit(state.copyWith(
+              comments: comments
+          ));
+        },
+        failure: (NetworkExceptions? error) {
+          logger.w("error $error!");
+          emit(state.copyWith(error: error));
+        });
+  }
+
+  Future<void> updateMagazineComment(int magazineId, String content) async {
+    ApiResult<Map> apiResult = await _magazineRepository.updateMagazineComment(magazineId, content);
+
+    apiResult.when(
+        success: (Map? mapResponse) {
+          emit(state.copyWith(
+            // comments:
+          ));
+        },
+        failure: (NetworkExceptions? error) {
+          logger.w("error $error!");
+          emit(state.copyWith(error: error));
+        });
+  }
 }

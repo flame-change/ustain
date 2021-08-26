@@ -26,17 +26,18 @@ class MagazineRepository {
       String categoriesList) async {
     try {
       // TODO Page 처리
-      var response = await _dioClient.get('/api/v1/magazine/list/?page=1&categories=[$categoriesList]');
+      var response = await _dioClient
+          .get('/api/v1/magazine/list/?page=1&categories=[$categoriesList]');
       return ApiResult.success(data: PageResponse.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 
-
   Future<ApiResult<MagazineDetail>> getMagazineDetail(int id) async {
     try {
-      var response = await _dioClient.getWithAuth('/api/v1/magazine/detail/$id');
+      var response =
+          await _dioClient.getWithAuth('/api/v1/magazine/detail/$id');
       return ApiResult.success(data: MagazineDetail.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -44,21 +45,23 @@ class MagazineRepository {
   }
 
   Future<ApiResult<Map>> getIsLike(int id) async {
-    try{
-      var response = await _dioClient.getWithAuth('/api/v1/magazine/detail/$id/update-like/');
+    try {
+      var response = await _dioClient
+          .getWithAuth('/api/v1/magazine/detail/$id/update-like/');
 
       return ApiResult.success(data: response);
-    } catch (e){
+    } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 
   Future<ApiResult<Map>> updateLike(int id) async {
-    try{
-      var response = await _dioClient.put('/api/v1/magazine/detail/$id/update-like/');
+    try {
+      var response =
+          await _dioClient.put('/api/v1/magazine/detail/$id/update-like/');
 
       return ApiResult.success(data: response);
-    } catch (e){
+    } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
@@ -66,10 +69,46 @@ class MagazineRepository {
   Future<ApiResult<PageResponse>> getMagazineComments(int id) async {
     try {
       // TODO Page 처리
-      var response = await _dioClient.getWithAuth('/api/v1/magazine/detail/$id/reviews/?page=1');
+      var response = await _dioClient
+          .getWithAuth('/api/v1/magazine/detail/$id/reviews/?page=1');
       return ApiResult.success(data: PageResponse.fromJson(response));
-  } catch (e) {
+    } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
   }
-}
+
+  Future<ApiResult<Map>> requestMagazineComment(Map<String, dynamic> body) async {
+    try {
+      var response = await _dioClient.postWithAuth('/api/v1/magazine/detail/reviews/review-create/', data: body);
+
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<Map>> deleteMagazineComment(int commentId) async {
+    try {
+      var response = await _dioClient.delete('/api/v1/magazine/detail/$commentId/review/delete/');
+
+      return ApiResult.success(data: null);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<Map>> updateMagazineComment(int commentId, String content) async {
+    try {
+      Map<String, dynamic> body = {
+        "content": content
+      };
+
+      var response = await _dioClient.put('/api/v1/magazine/detail/$commentId/review/update/', data: body);
+
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
 }
