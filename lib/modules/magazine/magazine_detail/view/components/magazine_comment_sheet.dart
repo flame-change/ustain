@@ -56,34 +56,38 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
             List<MagazineComment>?>(
           selector: (state) => state.comments,
           builder: (context, comments) {
+            print("re build");
+
             if (comments != null) {
               return Column(
                 children: [
                   Flexible(
                     flex: 9,
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) => Column(
-                        children: [
-                          commentTile(comments[index]),
-                          comments[index].reply != null
-                              ? Column(
-                                  children: List.generate(
-                                    comments[index].reply!.length,
-                                    (i) => Padding(
-                                      padding: EdgeInsets.only(left: 5.w),
-                                      child: commentTile(comments[index].reply![i]),
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(height: 0)
-                        ],
-                      ),
-                    ),
+                    child: comments.isNotEmpty
+                        ? ListView.builder(
+                            controller: _scrollController,
+                            itemCount: comments.length,
+                            itemBuilder: (context, index) => Column(
+                              children: [
+                                commentTile(comments[index]),
+                                comments[index].reply != null
+                                    ? Column(
+                                        children: List.generate(
+                                          comments[index].reply!.length,
+                                          (i) => Padding(
+                                            padding: EdgeInsets.only(left: 5.w),
+                                            child: commentTile(
+                                                comments[index].reply![i]),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(height: 0)
+                              ],
+                            ),
+                          )
+                        : Center(heightFactor: 100.h, child: Text("댓글이 없습니다.")),
                   ),
-                  Flexible(
-                      child: messageWidget())
+                  Flexible(child: messageWidget())
                 ],
               );
             } else {
@@ -98,9 +102,18 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
   Widget commentTile(MagazineComment comment) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Text("${comment.id}"),
-      // leading: Image.network('https://via.placeholder.com/80'),
-      title: Text("${comment.name} // ${comment.content}"),
+      // leading: Text("${comment.id}"),
+      leading: Image.network('https://via.placeholder.com/80'),
+      title: RichText(
+        text: TextSpan(
+            style: TextStyle(color: Colors.black),
+            children: [
+          TextSpan(
+              text: "${comment.name} ",
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          TextSpan(text: "${comment.content}"),
+        ]),
+      ),
       trailing: user!.name == comment.name
           ? InkWell(
               onTap: () {
@@ -120,11 +133,8 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
               focusNode.requestFocus();
 
               setState(() {
-                _messageController.text = "@"+comment.name!+" ";
                 editComment = comment;
-                print("답글달기 - editComment $editComment");
               });
-
             },
             child: Text("답글 달기"),
           )
@@ -139,31 +149,37 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
         child: TextFormField(
             focusNode: focusNode,
             controller: _messageController,
-            onChanged: (value){
+            onChanged: (value) {
               print(value);
             },
             decoration: InputDecoration(
+                prefixText:
+                    editComment != null ? "@" + editComment!.name! + " " : "",
                 suffixIcon: MaterialButton(
-              onPressed: () {
-                if(editComment != null) {
-                  String editContent = _messageController.text.trim();
+                  onPressed: () {
+                    if (editComment != null) {
+                      String editContent = _messageController.text.trim();
 
-                  editContent = editContent.replaceAll("@"+editComment!.name!+" ", "");
-                  print("editContent $editContent");
-                  _magazineCommentCubit.requestMagazineComment(_magazineId, editContent, editComment!.parent==null?editComment!.id: editComment!.parent);
-
-                } else {
-                  _magazineCommentCubit.requestMagazineComment(_magazineId, _messageController.text, null);
-                }
-              },
-              minWidth: 60,
-              height: 60,
-              color: Colors.grey,
-              child: Icon(
-                Icons.send,
-                size: 25,
-                color: Colors.white,
-              ),
-            ))));
+                      _messageController.clear();
+                      _magazineCommentCubit.requestMagazineComment(
+                          _magazineId,
+                          editContent,
+                          editComment!.parent == null
+                              ? editComment!.id
+                              : editComment!.parent);
+                    } else {
+                      _magazineCommentCubit.requestMagazineComment(
+                          _magazineId, _messageController.text, null);
+                    }
+                  },
+                  minWidth: 60,
+                  height: 60,
+                  color: Colors.grey,
+                  child: Icon(
+                    Icons.send,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ))));
   }
 }

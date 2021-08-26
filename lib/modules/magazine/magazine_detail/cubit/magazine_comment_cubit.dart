@@ -46,8 +46,8 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
         await _magazineRepository.requestMagazineComment(body);
 
     apiResult.when(success: (Map? mapResponse) {
-
-      MagazineComment newComment = MagazineComment.fromJson(mapResponse!["data"]);
+      MagazineComment newComment =
+          MagazineComment.fromJson(mapResponse!["data"]);
       List<MagazineComment> comments;
 
       if (replyId == null) {
@@ -57,8 +57,10 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
         // 답글인 경우
         print("답글");
 
-        comments = state.comments!.map((comment) => comment.id == replyId
-                ? comment.copyWith(reply: comment.reply! + [newComment]) : comment)
+        comments = state.comments!
+            .map((comment) => comment.id == replyId
+                ? comment.copyWith(reply: comment.reply! + [newComment])
+                : comment)
             .toList();
       }
 
@@ -69,24 +71,25 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
     });
   }
 
-  Future<void> deleteMagazineComment(MagazineComment comment) async {
+  Future<void> deleteMagazineComment(MagazineComment deleteComment) async {
     ApiResult<Map> apiResult =
-        await _magazineRepository.deleteMagazineComment(comment.id!);
+        await _magazineRepository.deleteMagazineComment(deleteComment.id!);
 
     apiResult.when(success: (Map? mapResponse) {
-      List<MagazineComment> comments = state.comments!.map((e) => e).toList();
+      List<MagazineComment>? comments;
 
-      if (state.comments!.contains(comment)) {
-        comments.remove(comment);
+      // 삭제하려는 댓글이 답글이 아닌 경우
+      if (state.comments!.contains(deleteComment)) {
+        comments = state.comments!.map((e) => e.copyWith()).toList();
+        comments.remove(deleteComment);
       } else {
-        for (var i = 0; i < comments.length; i++) {
-          if (comments[i].reply!.contains(comment)) {
-            comments[i].reply!.remove(comment);
-            break;
-          }
-        }
+        // 삭제하려는 댓글이 답글인 경우
+        comments = state.comments!
+            .map((comment) => comment.reply!.indexOf(deleteComment) != -1
+                ? comment.reply!.removeAt(comment.reply!.indexOf(deleteComment))
+                : comment)
+            .toList();
       }
-
       emit(state.copyWith(comments: comments));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
@@ -94,6 +97,7 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
     });
   }
 
+/* 댓글 편집 기능 보류
   Future<void> updateMagazineComment(int magazineId, String content) async {
     ApiResult<Map> apiResult =
         await _magazineRepository.updateMagazineComment(magazineId, content);
@@ -107,4 +111,5 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
       emit(state.copyWith(error: error));
     });
   }
+   */
 }
