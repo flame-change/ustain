@@ -8,14 +8,17 @@ part of 'magazine_comment.dart';
 
 MagazineComment _$MagazineCommentFromJson(Map<String, dynamic> json) {
   return MagazineComment(
-    json['id'] as int?,
-    json['content'] as String?,
-    json['magazines'] as int?,
-    json['user'] as int?,
-    json['name'] as String?,
-    json['reply'] as int?,
-    json['createdAt'] as String?,
+    json['id'] as int,
+    json['content'] as String,
+    json['magazines'] as int,
+    json['user'] as String,
+    json['name'] as String,
+    (json['reply'] as List<dynamic>?)
+        ?.map((e) => MagazineComment.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['createdAt'] as String,
     json['updatedAt'] as String?,
+    json['parent'] as int?,
   );
 }
 
@@ -29,4 +32,5 @@ Map<String, dynamic> _$MagazineCommentToJson(MagazineComment instance) =>
       'reply': instance.reply,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'parent': instance.parent,
     };
