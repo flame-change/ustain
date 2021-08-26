@@ -44,7 +44,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
         controller: _scrollController,
         child: BlocBuilder<MagazineCubit, MagazineState>(
           builder: (context, state) {
-            if (state.isLoaded && state.todaysMaagazines != null) {
+            if (state.todaysMaagazines != null && state.magazines != null) {
               return Wrap(runSpacing: 15, children: [
                 // 오늘의 매거진
                 TodaysMagazine(state.todaysMaagazines!),

@@ -6,14 +6,18 @@ Widget magazineLikeButton(int id) {
   return BlocSelector<MagazineDetailCubit, MagazineDetailState, bool>(
     selector: (state) => state.isLike!,
     builder: (context, isLike) {
-      return FloatingActionButton(
-        onPressed: () {
-          context.read<MagazineDetailCubit>().updateIsLike(id);
-        },
-        child: isLike
-            ? Icon(Icons.favorite_border)
-            : Icon(Icons.favorite),
-      );
+       if (isLike != null){
+         return FloatingActionButton(
+          onPressed: () {
+            context.read<MagazineDetailCubit>().updateIsLike(id);
+          },
+          child: isLike
+              ? Icon(Icons.favorite_border)
+              : Icon(Icons.favorite),
+        );
+      } else {
+         return SizedBox(height: 0);
+       }
     },
   );
 }
