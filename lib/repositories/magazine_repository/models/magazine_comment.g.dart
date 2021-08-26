@@ -8,17 +8,17 @@ part of 'magazine_comment.dart';
 
 MagazineComment _$MagazineCommentFromJson(Map<String, dynamic> json) {
   return MagazineComment(
-    json['id'] as int,
-    json['content'] as String,
-    json['magazines'] as int,
-    json['user'] as String,
-    json['name'] as String,
-    (json['reply'] as List<dynamic>?)
+    id: json['id'] as int?,
+    content: json['content'] as String?,
+    magazines: json['magazines'] as int?,
+    user: json['user'] as String?,
+    name: json['name'] as String?,
+    reply: (json['reply'] as List<dynamic>?)
         ?.map((e) => MagazineComment.fromJson(e as Map<String, dynamic>))
         .toList(),
-    json['createdAt'] as String,
-    json['updatedAt'] as String?,
-    json['parent'] as int?,
+    createdAt: json['createdAt'] as String?,
+    updatedAt: json['updatedAt'] as String?,
+    parent: json['parent'] as int?,
   );
 }
 

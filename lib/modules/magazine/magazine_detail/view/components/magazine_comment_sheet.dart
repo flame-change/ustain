@@ -1,8 +1,6 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_comment_cubit.dart';
-import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
-import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
@@ -22,10 +20,16 @@ class MagazineCommentSheet extends StatefulWidget {
 
 class _MagazineCommentSheetState extends State<MagazineCommentSheet>
     with SingleTickerProviderStateMixin {
-  int get _id => this.widget.id;
+  int get _magazineId => this.widget.id;
 
   late MagazineCommentCubit _magazineCommentCubit;
   late User? user;
+
+  final TextEditingController _messageController = TextEditingController();
+  final _scrollController = ScrollController();
+
+  FocusNode focusNode = FocusNode();
+  MagazineComment? editComment;
 
   @override
   void initState() {
@@ -33,7 +37,14 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
     user = context.read<AuthenticationBloc>().state.user;
 
     _magazineCommentCubit = BlocProvider.of<MagazineCommentCubit>(context);
-    _magazineCommentCubit.getMagazineComments(_id);
+    _magazineCommentCubit.getMagazineComments(_magazineId);
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    focusNode.unfocus();
+    editComment = null;
+    _messageController.clear();
   }
 
   @override
@@ -41,7 +52,8 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
     return Container(
       height: 85.h,
       child: PageWire(
-        child: BlocSelector<MagazineCommentCubit, MagazineCommentState, List<MagazineComment>?>(
+        child: BlocSelector<MagazineCommentCubit, MagazineCommentState,
+            List<MagazineComment>?>(
           selector: (state) => state.comments,
           builder: (context, comments) {
             if (comments != null) {
@@ -50,19 +62,18 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                   Flexible(
                     flex: 9,
                     child: ListView.builder(
+                      controller: _scrollController,
                       itemCount: comments.length,
                       itemBuilder: (context, index) => Column(
                         children: [
-                          commentTile(_magazineCommentCubit, comments[index], user!),
+                          commentTile(comments[index]),
                           comments[index].reply != null
                               ? Column(
                                   children: List.generate(
                                     comments[index].reply!.length,
                                     (i) => Padding(
                                       padding: EdgeInsets.only(left: 5.w),
-                                      child: commentTile(_magazineCommentCubit,
-                                          comments[index].reply![i],
-                                          user!),
+                                      child: commentTile(comments[index].reply![i]),
                                     ),
                                   ),
                                 )
@@ -71,7 +82,8 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                       ),
                     ),
                   ),
-                  Flexible(child: messageWidget(_id, _magazineCommentCubit))
+                  Flexible(
+                      child: messageWidget())
                 ],
               );
             } else {
@@ -82,66 +94,76 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
       ),
     );
   }
-}
 
-Widget commentTile(MagazineCommentCubit magazineCommentCubit, MagazineComment comment, User user) {
-  return ListTile(
-    contentPadding: EdgeInsets.zero,
-    leading: Image.network('https://via.placeholder.com/80'),
-    title: Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Text("${comment.name}"),
-        ),
-        Text("${comment.content}")
-      ],
-    ),
-    trailing: user.name == comment.name
-        ? Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        InkWell(
-          onTap: () {},
-          child: Text("편집"),
-        ),
-        InkWell(
-          onTap: () {
-            magazineCommentCubit.deleteMagazineComment(comment);
-          },
-          child: Text("삭제"),
-        )
-      ],
-    )
-        : SizedBox(
-            height: 0,
-          ),
-    // TODO 날짜 유틸 후 수정
-    subtitle: Text("July 26"),
-  );
-}
-
-Widget messageWidget(
-    int magazineId, MagazineCommentCubit _magazineCommentCubit) {
-  final TextEditingController _messageController = TextEditingController();
-
-  return Container(
-      width: 100.w,
-      child: TextFormField(
-          controller: _messageController,
-          decoration: InputDecoration(
-              suffixIcon: MaterialButton(
-            onPressed: () {
-              _magazineCommentCubit.requestMagazineComment(
-                  magazineId, _messageController.text, null);
-            },
-            minWidth: 60,
-            height: 60,
-            color: Colors.grey,
-            child: Icon(
-              Icons.send,
-              size: 25,
-              color: Colors.white,
+  Widget commentTile(MagazineComment comment) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Text("${comment.id}"),
+      // leading: Image.network('https://via.placeholder.com/80'),
+      title: Text("${comment.name} // ${comment.content}"),
+      trailing: user!.name == comment.name
+          ? InkWell(
+              onTap: () {
+                _magazineCommentCubit.deleteMagazineComment(comment);
+              },
+              child: Text("삭제"),
+            )
+          : SizedBox(
+              height: 0,
             ),
-          ))));
+      // TODO 날짜 유틸 후 수정
+      subtitle: Row(
+        children: [
+          Text("July 26"),
+          InkWell(
+            onTap: () {
+              focusNode.requestFocus();
+
+              setState(() {
+                _messageController.text = "@"+comment.name!+" ";
+                editComment = comment;
+                print("답글달기 - editComment $editComment");
+              });
+
+            },
+            child: Text("답글 달기"),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget messageWidget() {
+    return Container(
+        width: 100.w,
+        child: TextFormField(
+            focusNode: focusNode,
+            controller: _messageController,
+            onChanged: (value){
+              print(value);
+            },
+            decoration: InputDecoration(
+                suffixIcon: MaterialButton(
+              onPressed: () {
+                if(editComment != null) {
+                  String editContent = _messageController.text.trim();
+
+                  editContent = editContent.replaceAll("@"+editComment!.name!+" ", "");
+                  print("editContent $editContent");
+                  _magazineCommentCubit.requestMagazineComment(_magazineId, editContent, editComment!.parent==null?editComment!.id: editComment!.parent);
+
+                } else {
+                  _magazineCommentCubit.requestMagazineComment(_magazineId, _messageController.text, null);
+                }
+              },
+              minWidth: 60,
+              height: 60,
+              color: Colors.grey,
+              child: Icon(
+                Icons.send,
+                size: 25,
+                color: Colors.white,
+              ),
+            ))));
+  }
 }

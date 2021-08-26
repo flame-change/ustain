@@ -40,14 +40,29 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
     Map<String, dynamic> body = {
       "content": replyContent,
       "magazines": magazineId,
-      "reply": replyId
+      "parent": replyId
     };
-    ApiResult<Map> apiResult = await _magazineRepository.requestMagazineComment(body);
+    ApiResult<Map> apiResult =
+        await _magazineRepository.requestMagazineComment(body);
 
     apiResult.when(success: (Map? mapResponse) {
-      emit(state.copyWith(
-        comments: state.comments! + [MagazineComment.fromJson(mapResponse!["data"])]
-      ));
+
+      MagazineComment newComment = MagazineComment.fromJson(mapResponse!["data"]);
+      List<MagazineComment> comments;
+
+      if (replyId == null) {
+        // 댓글인 경우 (답글 X)
+        comments = state.comments! + [newComment];
+      } else {
+        // 답글인 경우
+        print("답글");
+
+        comments = state.comments!.map((comment) => comment.id == replyId
+                ? comment.copyWith(reply: comment.reply! + [newComment]) : comment)
+            .toList();
+      }
+
+      emit(state.copyWith(comments: comments));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
@@ -55,45 +70,41 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
   }
 
   Future<void> deleteMagazineComment(MagazineComment comment) async {
-    ApiResult<Map> apiResult = await _magazineRepository.deleteMagazineComment(comment.id);
+    ApiResult<Map> apiResult =
+        await _magazineRepository.deleteMagazineComment(comment.id!);
 
-    apiResult.when(
-        success: (Map? mapResponse) {
-          List<MagazineComment> comments = state.comments!.map((e) => e).toList();
+    apiResult.when(success: (Map? mapResponse) {
+      List<MagazineComment> comments = state.comments!.map((e) => e).toList();
 
-          if(state.comments!.contains(comment)){
-            comments.remove(comment);
-          } else {
-            for(var i=0; i<comments.length; i++){
-              if(comments[i].reply!.contains(comment)){
-                comments[i].reply!.remove(comment);
-                break;
-              }
-            }
+      if (state.comments!.contains(comment)) {
+        comments.remove(comment);
+      } else {
+        for (var i = 0; i < comments.length; i++) {
+          if (comments[i].reply!.contains(comment)) {
+            comments[i].reply!.remove(comment);
+            break;
           }
+        }
+      }
 
-          emit(state.copyWith(
-              comments: comments
-          ));
-        },
-        failure: (NetworkExceptions? error) {
-          logger.w("error $error!");
-          emit(state.copyWith(error: error));
-        });
+      emit(state.copyWith(comments: comments));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
   }
 
   Future<void> updateMagazineComment(int magazineId, String content) async {
-    ApiResult<Map> apiResult = await _magazineRepository.updateMagazineComment(magazineId, content);
+    ApiResult<Map> apiResult =
+        await _magazineRepository.updateMagazineComment(magazineId, content);
 
-    apiResult.when(
-        success: (Map? mapResponse) {
-          emit(state.copyWith(
-            // comments:
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+          // comments:
           ));
-        },
-        failure: (NetworkExceptions? error) {
-          logger.w("error $error!");
-          emit(state.copyWith(error: error));
-        });
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
   }
 }
