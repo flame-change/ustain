@@ -40,9 +40,6 @@ class App extends StatelessWidget {
           BlocProvider<SignupCubit>(
             create: (context) => SignupCubit(authenticationRepository),
           ),
-          BlocProvider<FindingAccountCubit>(
-            create: (context) => FindingAccountCubit(authenticationRepository),
-          ),
         ], child: AppView()));
   }
 }

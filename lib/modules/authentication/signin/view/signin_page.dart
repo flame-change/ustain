@@ -1,4 +1,8 @@
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_email_page.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,10 +45,9 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               children: [
                 Container(
-                  alignment: Alignment.center,
-                  height: 10.h,
-                    child: Text("다시 만나서 반가워요! 😊")
-                ),
+                    alignment: Alignment.center,
+                    height: 10.h,
+                    child: Text("다시 만나서 반가워요! 😊")),
                 _emailInput(),
                 _passwordInput(),
                 MaterialButton(
@@ -61,14 +64,34 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, 'finding_email_page');
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider<FindingAccountCubit>(
+                                create: (context) => FindingAccountCubit(
+                                    RepositoryProvider.of<AuthenticationRepository>(context),
+                                ),
+                                child: FindingEmailPage(),
+                              ),
+                            ));
                       },
                       child: Text("이메일 찾기"),
                     ),
                     Text(" | "),
                     InkWell(
-                      onTap: (){},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider<FindingAccountCubit>(
+                                create: (context) => FindingAccountCubit(
+                                  RepositoryProvider.of<AuthenticationRepository>(context),
+                                ),
+                                child: FindingPassWordPage(),
+                              ),
+                            ));
+                      },
                       child: Text("비밀번호 찾기"),
                     ),
                   ],

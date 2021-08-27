@@ -18,5 +18,5 @@ final Map<String, WidgetBuilder> routes = {
   MagazineHomeScreen.routeName: (context) => MagazineHomeScreen(),
   MagazineHomePage.routeName: (context) => MagazineHomePage(),
   FindingEmailPage.routeName: (context) => FindingEmailPage(),
-
+  FindingPassWordResultPage.routeName: (context) => FindingPassWordResultPage(),
 };

@@ -206,4 +206,20 @@ class AuthenticationRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<Map>> requestFindingPasswordVerifier({
+    required String email,
+  }) async {
+    try {
+      String body = json.encode({"email": email});
+      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      return ApiResult.success(
+        data: response,
+      );
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
 }
