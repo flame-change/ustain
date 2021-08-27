@@ -1,7 +1,11 @@
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
 import 'package:aroundus_app/modules/authentication/signup/models/email.dart';
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class FindingEmailResultPage extends StatefulWidget {
@@ -38,7 +42,21 @@ class _FindingEmailResultPageState extends State<FindingEmailResultPage>
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       'login_home_screen', (route) => false);
                 }),
-            PlainButton(text: "비밀번호 찾기", onPressed: () {}),
+            MaterialButton(
+              minWidth: 100.w,
+              color: Colors.grey,
+              child: Text("비밀번호 찾기"),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => BlocProvider<FindingAccountCubit>(
+                      create: (context) => FindingAccountCubit(
+                        RepositoryProvider.of<AuthenticationRepository>(
+                            context),
+                      ),
+                      child: FindingPassWordPage(),
+                    ),
+                  ));
+                }),
           ],
         ),
       ),

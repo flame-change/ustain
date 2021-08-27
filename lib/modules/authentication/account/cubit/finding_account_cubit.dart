@@ -90,4 +90,31 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
     ));
   }
 
+  void emailChanged(String value) {
+    final email = Email.dirty(value);
+    emit(state.copyWith(
+      email: email,
+      status: Formz.validate([
+        email,
+      ]),
+    ));
+  }
+
+  Future<void> findingPasswordEmailVerifyRequest() async {
+    if (!state.email.valid) return;
+
+    emit(state.copyWith(emailVerifyStatus: VerifyStatus.request));
+
+    ApiResult<Map> apiResult = await _authenticationRepository.requestFindingPasswordVerifier(email: state.email.value,);
+
+    apiResult.when(success: (Map? response) {
+      emit(state.copyWith(emailVerifyStatus: VerifyStatus.request));
+    }, failure: (NetworkExceptions? error) {
+      if(error!=null) {
+        emit(state.copyWith(
+            errorMessage: NetworkExceptions.getErrorMessage(
+                NetworkExceptions.defaultError('email-already-in-use'))));
+      }
+    });
+  }
 }

@@ -8,7 +8,9 @@ class FindingAccountState extends Equatable {
     this.status = FormzStatus.pure,
     this.phoneNumber = const PhoneNumber.pure(),
     this.phoneNumberVerifyStatus = VerifyStatus.init,
+    this.emailVerifyStatus = VerifyStatus.init,
     this.verifyNumber = const VerifyNumber.pure(),
+    this.emailVerifyNumber = const VerifyNumber.pure(),
 
     this.republishFlag = false,
     this.expiredFlag = false,
@@ -24,7 +26,9 @@ class FindingAccountState extends Equatable {
   final FormzStatus status;
   final PhoneNumber phoneNumber;
   final VerifyStatus phoneNumberVerifyStatus;
+  final VerifyStatus emailVerifyStatus;
   final VerifyNumber verifyNumber;
+  final VerifyNumber emailVerifyNumber;
   final bool republishFlag;
   final bool expiredFlag;
   final bool unverifiedFlag;
@@ -41,7 +45,9 @@ class FindingAccountState extends Equatable {
         status,
         phoneNumber,
         phoneNumberVerifyStatus,
+        emailVerifyStatus,
         verifyNumber,
+        emailVerifyNumber,
         republishFlag,
         expiredFlag,
         unverifiedFlag,
@@ -53,7 +59,9 @@ class FindingAccountState extends Equatable {
     FormzStatus? status,
     PhoneNumber? phoneNumber,
     VerifyStatus? phoneNumberVerifyStatus,
+    VerifyStatus? emailVerifyStatus,
     VerifyNumber? verifyNumber,
+    VerifyNumber? emailVerifyNumber,
     String? errorMessage,
     bool? republishFlag,
     bool? expiredFlag,
@@ -67,9 +75,10 @@ class FindingAccountState extends Equatable {
         confirmedPassword: confirmedPassword ?? this.confirmedPassword,
         status: status ?? this.status,
         phoneNumber: phoneNumber ?? this.phoneNumber,
-        phoneNumberVerifyStatus:
-        phoneNumberVerifyStatus ?? this.phoneNumberVerifyStatus,
+        phoneNumberVerifyStatus: phoneNumberVerifyStatus ?? this.phoneNumberVerifyStatus,
+        emailVerifyStatus: emailVerifyStatus ?? this.emailVerifyStatus,
         verifyNumber: verifyNumber ?? this.verifyNumber,
+        emailVerifyNumber: emailVerifyNumber ?? this.emailVerifyNumber,
         errorMessage: errorMessage ?? this.errorMessage,
         republishFlag: republishFlag ?? this.republishFlag,
         expiredFlag: expiredFlag ?? this.expiredFlag,
