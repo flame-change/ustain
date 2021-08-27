@@ -35,7 +35,9 @@ class AuthenticationRepository {
     _controller.add(AuthenticationStatus.authenticated);
   }
 
-  void logOut() {
+  void logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("access");
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 
@@ -52,7 +54,9 @@ class AuthenticationRepository {
         data: response['phone'],
       );
     } catch (e) {
-      return ApiResult.failure(error: NetworkExceptions.getDioException(e),);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
     }
   }
 
@@ -164,6 +168,58 @@ class AuthenticationRepository {
       return prefs.getString('access');
     } on Exception {
       logger.d(Error);
+    }
+  }
+
+  Future<ApiResult<Map>> requestFindingEmailPhoneVerifier({
+    required String phoneNumber,
+  }) async {
+    try {
+      String body = json.encode({"phone": phoneNumber});
+      var response =
+      await _dioClient.post('/api/v1/user/email-found/phone-verifier/', data: body);
+      return ApiResult.success(
+        data: response['phone'],
+      );
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<String>> findingEmailVerifyCode({
+    required String phoneNumber,
+    required String verifyCode,
+  }) async {
+    try {
+      String body = json.encode({
+        "phone": phoneNumber,
+        "code": verifyCode,
+      });
+      var response = await _dioClient
+          .post('/api/v1/user/email-found/phone-verifier/confirm/', data: body);
+      return ApiResult.success(
+        data: response['email'],
+      );
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<Map>> requestFindingPasswordVerifier({
+    required String email,
+  }) async {
+    try {
+      String body = json.encode({"email": email});
+      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      return ApiResult.success(
+        data: response,
+      );
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
     }
   }
 }

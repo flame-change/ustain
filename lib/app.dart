@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/src/user_repository.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
@@ -38,7 +39,7 @@ class App extends StatelessWidget {
                   userRepository: userRepository)),
           BlocProvider<SignupCubit>(
             create: (context) => SignupCubit(authenticationRepository),
-          )
+          ),
         ], child: AppView()));
   }
 }

@@ -1,7 +1,12 @@
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_email_page.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class SignInPage extends StatefulWidget {
   static String routeName = 'signIn_page';
@@ -29,9 +34,6 @@ class _SignInPageState extends State<SignInPage> {
         body: PageWire(
           child: BlocListener<SignInCubit, SignInState>(
             listener: (context, state) async {
-              if (state.auth != null) {
-                Navigator.pushNamed(context, 'home_screen');
-              }
               if (state.errorMessage != null) {
                 Scaffold.of(context)
                   ..hideCurrentSnackBar()
@@ -42,15 +44,57 @@ class _SignInPageState extends State<SignInPage> {
             },
             child: Column(
               children: [
+                Container(
+                    alignment: Alignment.center,
+                    height: 10.h,
+                    child: Text("다시 만나서 반가워요! 😊")),
                 _emailInput(),
                 _passwordInput(),
                 MaterialButton(
+                  minWidth: 100.w,
+                  color: Colors.grey,
                   onPressed: () {
                     context.read<SignInCubit>().signIn(
                         email: _emailController.text.trim(),
                         password: _passwordController.text.trim());
                   },
                   child: Text("로그인"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider<FindingAccountCubit>(
+                                create: (context) => FindingAccountCubit(
+                                    RepositoryProvider.of<AuthenticationRepository>(context),
+                                ),
+                                child: FindingEmailPage(),
+                              ),
+                            ));
+                      },
+                      child: Text("이메일 찾기"),
+                    ),
+                    Text(" | "),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider<FindingAccountCubit>(
+                                create: (context) => FindingAccountCubit(
+                                  RepositoryProvider.of<AuthenticationRepository>(context),
+                                ),
+                                child: FindingPassWordPage(),
+                              ),
+                            ));
+                      },
+                      child: Text("비밀번호 찾기"),
+                    ),
+                  ],
                 )
               ],
             ),

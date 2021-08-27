@@ -59,7 +59,7 @@ class MagazineCommentCubit extends Cubit<MagazineCommentState> {
 
         comments = state.comments!
             .map((comment) => comment.id == replyId
-                ? comment.copyWith(reply: comment.reply! + [newComment])
+                ? comment.copyWith(reply: comment.reply==null?[]:comment.reply! + [newComment])
                 : comment)
             .toList();
       }
