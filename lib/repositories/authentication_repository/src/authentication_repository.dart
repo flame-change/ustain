@@ -35,7 +35,9 @@ class AuthenticationRepository {
     _controller.add(AuthenticationStatus.authenticated);
   }
 
-  void logOut() {
+  void logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("access");
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 
@@ -52,7 +54,9 @@ class AuthenticationRepository {
         data: response['phone'],
       );
     } catch (e) {
-      return ApiResult.failure(error: NetworkExceptions.getDioException(e),);
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
     }
   }
 
