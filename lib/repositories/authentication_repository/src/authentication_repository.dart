@@ -170,4 +170,40 @@ class AuthenticationRepository {
       logger.d(Error);
     }
   }
+
+  Future<ApiResult<Map>> requestFindingEmailPhoneVerifier({
+    required String phoneNumber,
+  }) async {
+    try {
+      String body = json.encode({"phone": phoneNumber});
+      var response =
+      await _dioClient.post('/api/v1/user/email-found/phone-verifier/', data: body);
+      return ApiResult.success(
+        data: response['phone'],
+      );
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<String>> findingEmailVerifyCode({
+    required String phoneNumber,
+    required String verifyCode,
+  }) async {
+    try {
+      String body = json.encode({
+        "phone": phoneNumber,
+        "code": verifyCode,
+      });
+      var response = await _dioClient
+          .post('/api/v1/user/email-found/phone-verifier/confirm/', data: body);
+      return ApiResult.success(
+        data: response['email'],
+      );
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }
