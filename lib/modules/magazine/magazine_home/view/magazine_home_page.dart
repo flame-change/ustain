@@ -25,7 +25,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
   void initState() {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
-    _magazineCubit.getMagazinesByCategory(MagazineCategory.all);
+    _magazineCubit.getMagazinesByCategory();
     _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
   }
@@ -78,22 +78,31 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                       children: List.generate(
                           state.magazines!.length,
                           (index) => GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (_) => MultiBlocProvider(providers: [
-                                  BlocProvider<MagazineDetailCubit>(
-                                      create: (context) => MagazineDetailCubit(
-                                          RepositoryProvider.of<MagazineRepository>(context)),
-                                     )
-                                ], child: MagazineDetailPage(state.magazines![index].id!)),
-                              ));
-                            },
-                            child: Container(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => MultiBlocProvider(
+                                            providers: [
+                                              BlocProvider<MagazineDetailCubit>(
+                                                create: (context) =>
+                                                    MagazineDetailCubit(
+                                                        RepositoryProvider.of<
+                                                                MagazineRepository>(
+                                                            context)),
+                                              )
+                                            ],
+                                            child: MagazineDetailPage(
+                                                state.magazines![index].id!)),
+                                      ));
+                                },
+                                child: Container(
                                   width: 100.w,
                                   height: 30.h,
                                   color: Colors.black38,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Image.network(
                                         state.magazines![index].bannerImage!,
@@ -112,28 +121,38 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                                     ],
                                   ),
                                 ),
-                          )),
+                              )),
                     )
                   ],
                 ),
               ]);
             } else {
-              return Container(height: 100.h,child: Center(child: CircularProgressIndicator()));
+              return Container(
+                  height: 100.h,
+                  child: Center(child: CircularProgressIndicator()));
             }
           },
         ));
   }
-}
 
-List<Widget> categoryTitle() {
-  return List<Widget>.generate(
-      MagazineCategory.values.length,
-      (index) => Container(
-        alignment: Alignment.center,
-            margin: EdgeInsets.only(right: 5),
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-                color: Colors.black12, borderRadius: BorderRadius.circular(25)),
-            child: Text(MagazineCategory.values[index].name),
-          ));
+  List<Widget> categoryTitle() {
+    return List<Widget>.generate(
+        MagazineCategory.values.length,
+        (index) => GestureDetector(
+              onTap: () {
+                print(MagazineCategory.values[index].name);
+                _magazineCubit.getMagazinesByCategory(
+                    magazineCategory: MagazineCategory.values[index]);
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(right: 5),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                    color: _magazineCubit.state.magazineCategory == MagazineCategory.values[index] ? Colors.lightBlue: Colors.black12,
+                    borderRadius: BorderRadius.circular(25)),
+                child: Text(MagazineCategory.values[index].name),
+              ),
+            ));
+  }
 }

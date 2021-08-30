@@ -1,9 +1,10 @@
 part of 'magazine_cubit.dart';
 
 class MagazineState extends Equatable {
-  const MagazineState({
-        this.todaysMaagazines,
-        this.magazines,
+  const MagazineState(
+      {this.todaysMaagazines,
+      this.magazines,
+      required this.magazineCategory,
       this.count,
       this.next,
       this.previous,
@@ -14,6 +15,7 @@ class MagazineState extends Equatable {
   final List<Magazine>? todaysMaagazines;
   final List<Magazine>? magazines;
   final NetworkExceptions? error;
+  final MagazineCategory magazineCategory;
   final int? count;
   final int? next;
   final int? previous;
@@ -21,11 +23,22 @@ class MagazineState extends Equatable {
   final bool isLoading;
 
   @override
-  List<Object?> get props => [todaysMaagazines, magazines, error, isLoaded, isLoading, count, next, previous];
+  List<Object?> get props => [
+        todaysMaagazines,
+        magazines,
+        magazineCategory,
+        error,
+        isLoaded,
+        isLoading,
+        count,
+        next,
+        previous
+      ];
 
   MagazineState copyWith(
       {List<Magazine>? todaysMaagazines,
       List<Magazine>? magazines,
+      MagazineCategory? magazineCategory,
       int? count,
       int? next,
       int? previous,
@@ -35,6 +48,7 @@ class MagazineState extends Equatable {
     return MagazineState(
         todaysMaagazines: todaysMaagazines ?? this.todaysMaagazines,
         magazines: magazines ?? this.magazines,
+        magazineCategory: magazineCategory ?? this.magazineCategory,
         count: count ?? this.count,
         next: next ?? this.next,
         previous: previous ?? this.previous,
