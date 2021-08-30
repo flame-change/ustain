@@ -1,3 +1,6 @@
+import 'package:aroundus_app/modules/home/home.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +13,16 @@ extension MenuStateToString on MenuState {
   String get name {
     return ["home", "magazine", "store", "community", "my_page"][this.index];
   }
+
+  Widget get page {
+    return [
+      HomeScreen(),
+      MagazineHomeScreen(),
+      HomeScreen(),
+      HomeScreen(),
+      HomeScreen()
+    ][this.index];
+  }
 }
 
 class BottomNavBar extends StatefulWidget {
@@ -21,72 +34,35 @@ class BottomNavBar extends StatefulWidget {
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar>
+    with SingleTickerProviderStateMixin {
+  int get _selectedIndex => this.widget.selectedMenu.index;
+
   @override
   void initState() {
     super.initState();
   }
 
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(40),
-          topLeft: Radius.circular(40),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButtonWidget(
-              changedColor: MenuState.home == widget.selectedMenu
-                  ? Colors.black
-                  : Color(0xFFB6B6B6),
-              menu: MenuState.home.name,
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, 'home_screen', (route) => false);
-              },
-            ),
-            IconButtonWidget(
-              changedColor: MenuState.magazine == widget.selectedMenu
-                  ? Colors.black
-                  : Color(0xFFB6B6B6),
-              menu: MenuState.magazine.name,
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, 'magazine_home_screen', (route) => false);
-              },
-            ),
-            IconButtonWidget(
-              changedColor: MenuState.store == widget.selectedMenu
-                  ? Colors.black
-                  : Color(0xFFB6B6B6),
-              menu: MenuState.store.name,
-              onPressed: () {},
-            ),
-            IconButtonWidget(
-              changedColor: MenuState.community == widget.selectedMenu
-                  ? Colors.black
-                  : Color(0xFFB6B6B6),
-              menu: MenuState.community.name,
-              onPressed: () {},
-            ),
-            IconButtonWidget(
-              changedColor: MenuState.my_page == widget.selectedMenu
-                  ? Colors.black
-                  : Color(0xFFB6B6B6),
-              menu: MenuState.my_page.name,
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
+    return BottomNavigationBar(
+      items: List.generate(
+          MenuState.values.length,
+          (index) => BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
+                ),
+                label: "${MenuState.values[index].name}",
+              )),
+      selectedItemColor: Colors.lightBlue,
+      unselectedItemColor: Colors.grey,
+      currentIndex: _selectedIndex,
+      selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+      onTap: (index) {
+        Navigator.of(context).push(routePage(MenuState.values[index].page));
+      },
     );
   }
 }
@@ -114,7 +90,6 @@ class IconButtonWidget extends StatelessWidget {
             // Icon(Icons.home, color: Colors.black, size: this.size),
             SvgPicture.asset(
               "assets/icons/bottomNavigationBar/$menu.svg",
-              // height: this.size,
             ),
             Text(
               menu,
