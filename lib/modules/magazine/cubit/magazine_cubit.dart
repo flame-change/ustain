@@ -1,4 +1,3 @@
-
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -12,7 +11,7 @@ part 'magazine_state.dart';
 
 class MagazineCubit extends Cubit<MagazineState> {
   MagazineCubit(this._magazineRepository)
-      : super(const MagazineState(isLoading: true, isLoaded: false));
+      : super(const MagazineState(isLoading: true, isLoaded: false, magazineCategory: MagazineCategory.all));
 
   final MagazineRepository _magazineRepository;
 
@@ -33,12 +32,25 @@ class MagazineCubit extends Cubit<MagazineState> {
     });
   }
 
-  Future<void> getMagazinesByCategory(MagazineCategory magazineCategory) async {
-    ApiResult<PageResponse> apiResult =await _magazineRepository.getMagazinesByCategory(magazineCategory.toValue);
+  Future<void> getMagazinesByCategory({MagazineCategory? magazineCategory}) async {
+
+    if (magazineCategory!=null){
+      emit(state.copyWith(
+        magazineCategory: magazineCategory
+      ));
+    }
+
+    String category = state.magazineCategory.toValue != ""
+        ? "\"" + state.magazineCategory.toValue + "\""
+        : state.magazineCategory.toValue;
+
+    ApiResult<PageResponse> apiResult =
+        await _magazineRepository.getMagazinesByCategory(category);
 
     apiResult.when(success: (PageResponse? pageResponse) {
       emit(state.copyWith(
-          magazines: pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList(),
+          magazines:
+              pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList(),
           count: pageResponse.count,
           next: pageResponse.next,
           previous: pageResponse.previous,
