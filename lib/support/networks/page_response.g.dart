@@ -9,8 +9,8 @@ part of 'page_response.dart';
 PageResponse _$PageResponseFromJson(Map<String, dynamic> json) {
   return PageResponse(
     count: json['count'] as int?,
-    next: json['next'] as int?,
-    previous: json['previous'] as int?,
+    next: json['next'] as String?,
+    previous: json['previous'] as String?,
     results: json['results'] as List<dynamic>?,
   );
 }

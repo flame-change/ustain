@@ -17,8 +17,8 @@ class MagazineState extends Equatable {
   final NetworkExceptions? error;
   final MagazineCategory magazineCategory;
   final int? count;
-  final int? next;
-  final int? previous;
+  final String? next;
+  final String? previous;
   final bool isLoaded;
   final bool isLoading;
 
@@ -40,8 +40,8 @@ class MagazineState extends Equatable {
       List<Magazine>? magazines,
       MagazineCategory? magazineCategory,
       int? count,
-      int? next,
-      int? previous,
+      String? next,
+      String? previous,
       NetworkExceptions? error,
       bool? isLoading,
       bool? isLoaded}) {
