@@ -34,7 +34,8 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll == 0) {
-      // TODO 모아보기 페이징처리
+      _magazineCubit.getMagazinesByCategory(
+          magazineCategory: _magazineCubit.state.magazineCategory);
     }
   }
 
@@ -149,7 +150,10 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                 margin: EdgeInsets.only(right: 5),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                    color: _magazineCubit.state.magazineCategory == MagazineCategory.values[index] ? Colors.lightBlue: Colors.black12,
+                    color: _magazineCubit.state.magazineCategory ==
+                            MagazineCategory.values[index]
+                        ? Colors.lightBlue
+                        : Colors.black12,
                     borderRadius: BorderRadius.circular(25)),
                 child: Text(MagazineCategory.values[index].name),
               ),

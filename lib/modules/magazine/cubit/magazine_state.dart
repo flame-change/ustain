@@ -9,6 +9,8 @@ class MagazineState extends Equatable {
       this.next,
       this.previous,
       this.error,
+      required this.page,
+      required this.maxIndex,
       required this.isLoaded,
       required this.isLoading});
 
@@ -19,6 +21,8 @@ class MagazineState extends Equatable {
   final int? count;
   final String? next;
   final String? previous;
+  final int page;
+  final bool maxIndex;
   final bool isLoaded;
   final bool isLoading;
 
@@ -28,11 +32,13 @@ class MagazineState extends Equatable {
         magazines,
         magazineCategory,
         error,
+        maxIndex,
         isLoaded,
         isLoading,
         count,
         next,
-        previous
+        previous,
+        page,
       ];
 
   MagazineState copyWith(
@@ -43,16 +49,20 @@ class MagazineState extends Equatable {
       String? next,
       String? previous,
       NetworkExceptions? error,
+      bool? maxIndex,
       bool? isLoading,
-      bool? isLoaded}) {
+      bool? isLoaded,
+      int? page}) {
     return MagazineState(
         todaysMaagazines: todaysMaagazines ?? this.todaysMaagazines,
         magazines: magazines ?? this.magazines,
         magazineCategory: magazineCategory ?? this.magazineCategory,
         count: count ?? this.count,
         next: next ?? this.next,
+        page: page ?? this.page,
         previous: previous ?? this.previous,
         error: error ?? this.error,
+        maxIndex: maxIndex ?? this.maxIndex,
         isLoaded: isLoaded ?? this.isLoaded,
         isLoading: isLoading ?? this.isLoading);
   }

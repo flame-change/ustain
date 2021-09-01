@@ -67,7 +67,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "매거진 제목",
+                            "${magazineDetail.title}",
                             style: TextStyle(
                                 fontSize: 25.sp, fontWeight: FontWeight.bold),
                           ),
