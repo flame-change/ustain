@@ -13,8 +13,8 @@ class PageResponse {
 
   final List<dynamic>? results;
   final int? count;
-  final int? previous;
-  final int? next;
+  final String? previous;
+  final String? next;
 
   factory PageResponse.fromJson(Map<String, dynamic> json) =>
       _$PageResponseFromJson(json);

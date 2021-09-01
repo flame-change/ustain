@@ -11,7 +11,13 @@ part 'magazine_state.dart';
 
 class MagazineCubit extends Cubit<MagazineState> {
   MagazineCubit(this._magazineRepository)
-      : super(const MagazineState(isLoading: true, isLoaded: false, magazineCategory: MagazineCategory.all));
+      : super(const MagazineState(
+          isLoading: true,
+          isLoaded: false,
+          maxIndex: false,
+          page: 1,
+          magazineCategory: MagazineCategory.all,
+        ));
 
   final MagazineRepository _magazineRepository;
 
@@ -33,32 +39,39 @@ class MagazineCubit extends Cubit<MagazineState> {
   }
 
   Future<void> getMagazinesByCategory({MagazineCategory? magazineCategory}) async {
-
-    if (magazineCategory!=null){
+    if (magazineCategory != null && state.magazineCategory != magazineCategory) {
       emit(state.copyWith(
-        magazineCategory: magazineCategory
-      ));
+        magazines: [],
+          magazineCategory: magazineCategory, maxIndex: false, page: 1));
     }
 
     String category = state.magazineCategory.toValue != ""
         ? "\"" + state.magazineCategory.toValue + "\""
         : state.magazineCategory.toValue;
 
-    ApiResult<PageResponse> apiResult =
-        await _magazineRepository.getMagazinesByCategory(category);
+    if (!state.maxIndex) {
+      ApiResult<PageResponse> apiResult = await _magazineRepository
+          .getMagazinesByCategory(state.page, category);
 
-    apiResult.when(success: (PageResponse? pageResponse) {
-      emit(state.copyWith(
-          magazines:
-              pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList(),
-          count: pageResponse.count,
-          next: pageResponse.next,
-          previous: pageResponse.previous,
-          isLoaded: true,
-          isLoading: false));
-    }, failure: (NetworkExceptions? error) {
-      logger.w("error $error!");
-      emit(state.copyWith(error: error));
-    });
+      apiResult.when(success: (PageResponse? pageResponse) {
+        List<Magazine>? newMagazine =
+            pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList();
+
+        emit(state.copyWith(
+            magazines: state.magazines != null
+                ? state.magazines! + newMagazine!
+                : newMagazine!,
+            count: pageResponse.count,
+            page: state.page + 1,
+            next: pageResponse.next,
+            previous: pageResponse.previous,
+            maxIndex: pageResponse.next == null ? true : false,
+            isLoaded: true,
+            isLoading: false));
+      }, failure: (NetworkExceptions? error) {
+        logger.w("error $error!");
+        emit(state.copyWith(error: error));
+      });
+    }
   }
 }

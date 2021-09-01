@@ -15,8 +15,8 @@ class MagazineCommentState extends Equatable {
   final bool isLoaded;
   final NetworkExceptions? error;
   final int? count;
-  final int? next;
-  final int? previous;
+  final String? next;
+  final String? previous;
 
   final List<MagazineComment>? comments;
 
@@ -36,8 +36,8 @@ class MagazineCommentState extends Equatable {
     bool? isLoading,
     bool? isLoaded,
     int? count,
-    int? next,
-    int? previous,
+    String? next,
+    String? previous,
     List<MagazineComment>? comments,
   }) {
     return MagazineCommentState(
