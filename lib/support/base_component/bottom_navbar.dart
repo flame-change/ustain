@@ -61,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar>
         type: BottomNavigationBarType.fixed,
         elevation: 0,
       onTap: (index) {
-        Navigator.of(context).push(routePage(MenuState.values[index].page));
+        Navigator.of(context).pushAndRemoveUntil(routePage(MenuState.values[index].page), (route) => false);
       },
     );
   }
