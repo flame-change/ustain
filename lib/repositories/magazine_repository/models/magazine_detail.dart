@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'magazine.dart';
+import 'magazine_category.dart';
 
 part 'magazine_detail.g.dart';
 
@@ -21,7 +21,7 @@ class MagazineDetail extends Equatable {
       this.totalComments,
   });
 
-  final List<MagazineCategory>? categories;
+  final List<String>? categories;
   final String? bannerImage;
   final int? id;
   final String? content;
@@ -54,7 +54,7 @@ class MagazineDetail extends Equatable {
       ];
 
   MagazineDetail copyWith(
-      {List<MagazineCategory>? categories,
+      {List<String>? categories,
       String? bannerImage,
       int? id,
       String? content,

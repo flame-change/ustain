@@ -4,7 +4,7 @@ class MagazineState extends Equatable {
   const MagazineState(
       {this.todaysMaagazines,
       this.magazines,
-      required this.magazineCategory,
+      this.magazineCategory,
       this.count,
       this.next,
       this.previous,
@@ -17,7 +17,7 @@ class MagazineState extends Equatable {
   final List<Magazine>? todaysMaagazines;
   final List<Magazine>? magazines;
   final NetworkExceptions? error;
-  final MagazineCategory magazineCategory;
+  final MagazineCategory? magazineCategory;
   final int? count;
   final String? next;
   final String? previous;

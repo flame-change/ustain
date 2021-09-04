@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/routes.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,10 +57,10 @@ class _AppViewState extends State<AppView> {
       BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           switch (state.status) {
-            // case AuthenticationStatus.agree:
-            //   _navigator!.pushNamedAndRemoveUntil(
-            //       AgreeScreen.routeName, (route) => false);
-            //   break;
+            case AuthenticationStatus.profile:
+              _navigator!.pushNamedAndRemoveUntil(
+                  'signup_nickname_page', (route) => false);
+              break;
             case AuthenticationStatus.authenticated:
               _navigator!
                   .pushNamedAndRemoveUntil('home_screen', (route) => false);

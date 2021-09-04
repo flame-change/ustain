@@ -1,5 +1,5 @@
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
@@ -16,7 +16,6 @@ class MagazineCubit extends Cubit<MagazineState> {
           isLoaded: false,
           maxIndex: false,
           page: 1,
-          magazineCategory: MagazineCategory.all,
         ));
 
   final MagazineRepository _magazineRepository;
@@ -45,9 +44,7 @@ class MagazineCubit extends Cubit<MagazineState> {
           magazineCategory: magazineCategory, maxIndex: false, page: 1));
     }
 
-    String category = state.magazineCategory.toValue != ""
-        ? "\"" + state.magazineCategory.toValue + "\""
-        : state.magazineCategory.toValue;
+    String category = state.magazineCategory == null? "" : "\"" +state.magazineCategory!.mid!+ "\"";
 
     if (!state.maxIndex) {
       ApiResult<PageResponse> apiResult = await _magazineRepository
