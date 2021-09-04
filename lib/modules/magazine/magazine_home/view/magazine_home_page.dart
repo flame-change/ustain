@@ -1,8 +1,10 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +23,8 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
   late MagazineCubit _magazineCubit;
   final _scrollController = ScrollController();
 
+  late User user;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +32,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
     _magazineCubit.getMagazinesByCategory();
     _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
+    user = context.read<AuthenticationBloc>().state.user;
   }
 
   void _onScroll() {
@@ -70,7 +75,27 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                       height: 5.h,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: categoryTitle(),
+                        children:
+                        <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              print("전체보기");
+                              _magazineCubit.getMagazinesByCategory();
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(right: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  color: _magazineCubit.state.magazineCategory == null
+                                      ? Colors.lightBlue
+                                      : Colors.black12,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: Text("전체보기"),
+                            ),
+                          )
+                        ]+
+                            categoryTitle(),
                       ),
                     ),
                     Wrap(
@@ -138,24 +163,23 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
 
   List<Widget> categoryTitle() {
     return List<Widget>.generate(
-        MagazineCategory.values.length,
+        user.categories!.length,
         (index) => GestureDetector(
               onTap: () {
-                print(MagazineCategory.values[index].name);
+                print(user.categories![index].title);
                 _magazineCubit.getMagazinesByCategory(
-                    magazineCategory: MagazineCategory.values[index]);
+                    magazineCategory: user.categories![index]);
               },
               child: Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(right: 5),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                    color: _magazineCubit.state.magazineCategory ==
-                            MagazineCategory.values[index]
+                    color: _magazineCubit.state.magazineCategory == user.categories![index]
                         ? Colors.lightBlue
                         : Colors.black12,
                     borderRadius: BorderRadius.circular(25)),
-                child: Text(MagazineCategory.values[index].name),
+                child: Text(user.categories![index].title!),
               ),
             ));
   }

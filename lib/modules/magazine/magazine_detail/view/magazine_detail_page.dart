@@ -93,7 +93,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   }
 }
 
-Widget getCategories(List<MagazineCategory> categories) {
+Widget getCategories(List<String> categories) {
   return Wrap(
     spacing: 10,
     runSpacing: 5,
@@ -104,7 +104,7 @@ Widget getCategories(List<MagazineCategory> categories) {
               decoration: BoxDecoration(
                   color: Colors.lightBlue,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Text("${categories[index].name}"),
+              child: Text("${categories[index]}"),
             )),
   );
 }
