@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
+import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/user_repository.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,7 +29,8 @@ class AuthenticationBloc
 
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
-  late StreamSubscription<AuthenticationStatus>  _authenticationStatusSubscription;
+  late StreamSubscription<AuthenticationStatus>
+      _authenticationStatusSubscription;
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -52,7 +55,9 @@ class AuthenticationBloc
   Future<AuthenticationState> _mapAuthenticationUserChangedToState(
     User user,
   ) async {
-    return AuthenticationState.authenticated(user);
+    return AuthenticationState.authenticated(
+      user,
+    );
   }
 
   Future<AuthenticationState> _mapAuthenticationStatusChangedToState(
@@ -70,12 +75,18 @@ class AuthenticationBloc
   }
 
   Future<AuthenticationState?> _tryGetUser() async {
+
     try {
       ApiResult<User> apiResult = await _userRepository.getUser();
-      AuthenticationState authenticationState =
-          AuthenticationState.unauthenticated();
+      AuthenticationState authenticationState = AuthenticationState.unauthenticated();
       apiResult.when(success: (User? user) {
-        authenticationState = AuthenticationState.authenticated(user!);
+        if (user!.name == null || user.name!.length < 0) {
+          authenticationState = AuthenticationState.profile(user);
+        } else {
+          authenticationState = AuthenticationState.authenticated(user);
+        }
+        logger.w(authenticationState);
+
       }, failure: (NetworkExceptions? error) {
         authenticationState = AuthenticationState.unauthenticated();
       });

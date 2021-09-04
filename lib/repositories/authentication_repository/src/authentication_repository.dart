@@ -7,8 +7,9 @@ import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
-enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+enum AuthenticationStatus { unknown, authenticated, unauthenticated, profile }
 
 class AuthenticationRepository {
   final DioClient _dioClient;
@@ -102,7 +103,7 @@ class AuthenticationRepository {
       var response =
           await _dioClient.post('/api/v1/user/email-verifier/', data: body);
       return ApiResult.success(
-        data: response['email'],
+        data: response,
       );
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -136,6 +137,8 @@ class AuthenticationRepository {
         "phoneToken": phoneToken,
         "passwordConfirm": passwordConfirm
       });
+
+      logger.w(body);
 
       var response =
           await _dioClient.post('/api/v1/user/register/', data: body);
@@ -176,8 +179,8 @@ class AuthenticationRepository {
   }) async {
     try {
       String body = json.encode({"phone": phoneNumber});
-      var response =
-      await _dioClient.post('/api/v1/user/email-found/phone-verifier/', data: body);
+      var response = await _dioClient
+          .post('/api/v1/user/email-found/phone-verifier/', data: body);
       return ApiResult.success(
         data: response['phone'],
       );
@@ -212,7 +215,24 @@ class AuthenticationRepository {
   }) async {
     try {
       String body = json.encode({"email": email});
-      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      var response =
+          await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      return ApiResult.success(
+        data: response,
+      );
+    } catch (e) {
+      return ApiResult.failure(
+        error: NetworkExceptions.getDioException(e),
+      );
+    }
+  }
+
+  Future<ApiResult<Map>> updateUserProfile(
+      Map<String, dynamic> updateUserProfile) async {
+    try {
+      String body = json.encode(updateUserProfile);
+      var response = await _dioClient.put('/api/v1/user/profile/', data: body);
+
       return ApiResult.success(
         data: response,
       );

@@ -24,6 +24,7 @@ class SignupState extends Equatable {
     this.expiredFlag = false,
     this.unverifiedFlag = false,
     this.phoneToken,
+    this.categories,
   });
 
   final Email email;
@@ -47,6 +48,7 @@ class SignupState extends Equatable {
   final bool unverifiedFlag;
 
   final String? phoneToken;
+  final List<dynamic>? categories;
 
   @override
   List<Object> get props => [
@@ -91,6 +93,7 @@ class SignupState extends Equatable {
     bool? expiredFlag,
     bool? unverifiedFlag,
     String? phoneToken,
+    List<dynamic>? categories,
   }) {
     return SignupState(
         email: email ?? this.email,
@@ -112,7 +115,8 @@ class SignupState extends Equatable {
         republishFlag: republishFlag ?? this.republishFlag,
         expiredFlag: expiredFlag ?? this.expiredFlag,
         unverifiedFlag: unverifiedFlag ?? this.unverifiedFlag,
-        phoneToken: phoneToken ?? this.phoneToken);
+        phoneToken: phoneToken ?? this.phoneToken,
+        categories: categories ?? this.categories);
   }
 }
 

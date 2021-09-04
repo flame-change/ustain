@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
 class User extends Equatable {
   const User(
@@ -9,6 +10,7 @@ class User extends Equatable {
       this.profileArticle,
       this.sexChoices,
       this.birthday,
+      this.selectedCategories,
       this.categories});
 
   final String? groups;
@@ -18,7 +20,8 @@ class User extends Equatable {
   final String? profileArticle;
   final String? sexChoices;
   final String? birthday; // 자료형 확인
-  final List<dynamic>? categories;
+  final List<dynamic>? selectedCategories;
+  final List<MagazineCategory>? categories;
 
   @override
   List<Object?> get props => [
@@ -29,8 +32,33 @@ class User extends Equatable {
         profileArticle,
         sexChoices,
         birthday,
+        selectedCategories,
         categories
       ];
+
+  User copyWith({
+    String? groups,
+    String? phone,
+    String? email,
+    String? name,
+    String? profileArticle,
+    String? sexChoices,
+    String? birthday,
+    List<dynamic>? selectedCategories,
+    List<MagazineCategory>? categories,
+  }) {
+    return User(
+      groups: groups ?? this.groups,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      profileArticle: profileArticle ?? this.profileArticle,
+      sexChoices: sexChoices ?? this.sexChoices,
+      birthday: birthday ?? this.birthday,
+      selectedCategories: selectedCategories ?? this.selectedCategories,
+      categories: categories ?? this.categories,
+    );
+  }
 
   static const empty = User();
 }
