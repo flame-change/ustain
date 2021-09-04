@@ -9,7 +9,7 @@ part of 'magazine_detail.dart';
 MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
   return MagazineDetail(
     categories: (json['categories'] as List<dynamic>?)
-        ?.map((e) => _$enumDecode(_$MagazineCategoryEnumMap, e))
+        ?.map((e) => e as String)
         .toList(),
     bannerImage: json['bannerImage'] as String?,
     id: json['id'] as int?,
@@ -26,9 +26,7 @@ MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$MagazineDetailToJson(MagazineDetail instance) =>
     <String, dynamic>{
-      'categories': instance.categories
-          ?.map((e) => _$MagazineCategoryEnumMap[e])
-          .toList(),
+      'categories': instance.categories,
       'bannerImage': instance.bannerImage,
       'id': instance.id,
       'content': instance.content,
@@ -40,37 +38,3 @@ Map<String, dynamic> _$MagazineDetailToJson(MagazineDetail instance) =>
       'likeUserCount': instance.likeUserCount,
       'totalComments': instance.totalComments,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-const _$MagazineCategoryEnumMap = {
-  MagazineCategory.all: 'all',
-  MagazineCategory.vegetarian: 'vegetarian',
-  MagazineCategory.animals: 'animals',
-  MagazineCategory.ecosystem: 'ecosystem',
-  MagazineCategory.people: 'people',
-};

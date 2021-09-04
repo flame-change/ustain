@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'magazine_category.dart';
 
 part 'magazine.g.dart';
 
@@ -20,16 +21,4 @@ class Magazine extends Equatable {
 
   @override
   List<Object?> get props => [id, title, isLike, category, bannerImage, content];
-}
-
-enum MagazineCategory { all, vegetarian, animals, ecosystem, people }
-
-extension MagazineCategoryToString on MagazineCategory {
-  String get name {
-    return ["전체보기","비건", "동물보호", "환경보호", "인권보호"][this.index];
-  }
-
-  String get toValue {
-    return ["", "vegetarian", "animals", "ecosystem", "people"][this.index];
-  }
 }
