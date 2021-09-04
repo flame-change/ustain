@@ -36,8 +36,9 @@ class _SignupFormState extends State<SignupForm> {
               //       SnackBar(content: Text('${state.errorMessage}')),
               //     );
               // }
+
               if (state.status.isSubmissionSuccess) {
-                Navigator.pushNamed(context, 'home_screen');
+                Navigator.pushNamedAndRemoveUntil(context, 'signup_nickname_page', (routes)=>false);
               }
               // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
               //   Scaffold.of(context)
