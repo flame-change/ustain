@@ -1,6 +1,8 @@
 
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/modules/store/store_home/view/store_home_page.dart';
+import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:flutter/widgets.dart';
 
 import 'modules/authentication/account/view/view.dart';
@@ -20,6 +22,8 @@ final Map<String, WidgetBuilder> routes = {
   FindingEmailPage.routeName: (context) => FindingEmailPage(),
   FindingPassWordResultPage.routeName: (context) => FindingPassWordResultPage(),
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
+  StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
+  StorePage.routeName: (context) => StorePage(),
 };
 
 Route routePage(Widget nextPage) {
