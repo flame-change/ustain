@@ -36,10 +36,6 @@ class _SignupFormState extends State<SignupForm> {
               //       SnackBar(content: Text('${state.errorMessage}')),
               //     );
               // }
-
-              if (state.status.isSubmissionSuccess) {
-                Navigator.pushNamedAndRemoveUntil(context, 'signup_nickname_page', (routes)=>false);
-              }
               // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
               //   Scaffold.of(context)
               //     ..hideCurrentSnackBar()
@@ -51,7 +47,12 @@ class _SignupFormState extends State<SignupForm> {
             },
             child: Column(
               children: [
-                _EmailInput(),
+                Text("안녕하세요☺️ 어쩌구 저쩌구"),
+                // _EmailInput(),
+                TextFormField(
+                  readOnly: true,
+                  initialValue: _signupCubit.state.phoneNumber.value,
+                ),
                 _PasswordInput(),
                 _ConfirmPasswordInput(),
                 _SignUpButton(),
@@ -59,46 +60,6 @@ class _SignupFormState extends State<SignupForm> {
             ),
           ),
         ));
-  }
-}
-
-class _EmailInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignupCubit, SignupState>(
-      buildWhen: (previous, current) =>
-          previous.email != current.email ||
-          previous.isDupCheckedSnsId != current.isDupCheckedSnsId,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_emailInput_textField'),
-          onChanged: (email) => context.read<SignupCubit>().emailChanged(email),
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            labelText: '이메일',
-            helperText: '',
-            errorText: state.email.invalid ? '잘못된 이메일 형식 입니다.' : null,
-            suffixIcon: Container(
-              padding: EdgeInsets.only(right: 10),
-              child: FlatButton(
-                color: Colors.grey,
-                onPressed: state.email.valid && state.isDupCheckedSnsId != false
-                    ? () => context.read<SignupCubit>().emailVerifyRequest()
-                    : null,
-                child: Text(
-                  '중복확인',
-                ),
-                textColor: Colors.white,
-              ),
-            ),
-            suffixIconConstraints: BoxConstraints(
-              minHeight: 32,
-              minWidth: 32,
-            ),
-          ),
-        );
-      },
-    );
   }
 }
 
@@ -110,14 +71,15 @@ class _PasswordInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('signUpForm_passwordInput_textField'),
-          onChanged: (password) => context.read<SignupCubit>().passwordChanged(password),
+          onChanged: (password) =>
+              context.read<SignupCubit>().passwordChanged(password),
           maxLength: 60,
           obscureText: true,
           decoration: InputDecoration(
             counterText: '',
             labelText: '비밀번호',
             helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            errorText: state.password.invalid ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.' : null,
           ),
         );
       },
@@ -145,7 +107,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
             labelText: '비밀번호 확인',
             helperText: '',
             errorText: state.confirmedPassword.invalid
-                ? 'passwords do not match'
+                ? '비밀번호가 일치하지 않습니다.'
                 : null,
           ),
         );
@@ -175,10 +137,10 @@ class _SignUpButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Text('확인'),
-                  onPressed: state.email.valid &&
-                          state.confirmedPassword.valid &&
+                  onPressed: state.confirmedPassword.valid &&
                           state.password.valid
-                      ? () => context.read<SignupCubit>().signUpFormSubmitted(state)
+                      ? () =>
+                          context.read<SignupCubit>().signUpFormSubmitted(state)
                       : null,
                 ),
               );

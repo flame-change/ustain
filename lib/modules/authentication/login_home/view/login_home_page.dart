@@ -42,14 +42,12 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                          value: BlocProvider.of<SignupCubit>(context),
+                      builder: (_) => BlocProvider(
+                          create: (context) => SignupCubit(
+                              RepositoryProvider.of<AuthenticationRepository>(
+                                  context)),
                           child: PhoneVerifyPage()),
                     ));
-                // Navigator.pushNamed(context, 'phone_verify_page',
-                //     arguments: SignupCubit(
-                //         RepositoryProvider.of<AuthenticationRepository>(
-                //             context)));
               },
               child: Text("일반 회원가입"),
             ),
@@ -60,10 +58,10 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (_) => BlocProvider(
-                          create: (_) => SignInCubit(RepositoryProvider.of<
-                              AuthenticationRepository>(context)),
-                          child: SignInPage(),
-                        )));
+                              create: (_) => SignInCubit(RepositoryProvider.of<
+                                  AuthenticationRepository>(context)),
+                              child: SignInPage(),
+                            )));
               },
               child: Text("일반 로그인"),
             ),
