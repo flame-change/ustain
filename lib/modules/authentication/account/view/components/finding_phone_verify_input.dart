@@ -5,6 +5,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:logger/logger.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,7 +24,9 @@ class FindingPhoneNumberInputField extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           key: Key('phoneNumber_code_textFormField'),
-          maxLength: 50,
+          inputFormatters: [
+            MaskedInputFormatter('000-0000-0000', allowedCharMatcher: RegExp('[0-9]'))
+          ],
           onChanged: (phoneNumber) =>
               context.read<FindingAccountCubit>().phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.number,
@@ -41,12 +44,12 @@ class FindingPhoneNumberInputField extends StatelessWidget {
                         VerifyStatus.init) {
                       context
                           .read<FindingAccountCubit>()
-                          .findingEmailPhoneNumberVerifyRequest();
+                          .findingPhoneNumberVerifyRequest();
                       context.read<FindingAccountCubit>().republishAuth();
                     } else {
                       context
                           .read<FindingAccountCubit>()
-                          .findingEmailPhoneNumberVerifyRequest();
+                          .findingPhoneNumberVerifyRequest();
                     }
                   }
                       : null,

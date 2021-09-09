@@ -120,7 +120,7 @@ class _FindingVerifyNumberInputState extends State<FindingVerifyNumberInput> {
               onPressed: state.verifyNumber.valid &&
                   (verifyStatus == VerifyStatus.request ||
                       verifyStatus == VerifyStatus.unverified)
-                  ? () => _findingAccountCubit!.findingEmailPhoneNumberVerify()
+                  ? () => _findingAccountCubit!.findingPassWordVerify()
                   : null,
               child: verifyStatus == VerifyStatus.expiered
                   ? Text('시간만료')
