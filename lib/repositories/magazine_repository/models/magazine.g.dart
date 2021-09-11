@@ -11,9 +11,7 @@ Magazine _$MagazineFromJson(Map<String, dynamic> json) {
     json['id'] as int?,
     json['title'] as String?,
     json['bannerImage'] as String?,
-    (json['category'] as List<dynamic>?)
-        ?.map((e) => MagazineCategory.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    (json['categories'] as List<dynamic>?)?.map((e) => e as String).toList(),
     json['isLike'] as bool?,
     json['content'] as String?,
   );
@@ -23,7 +21,7 @@ Map<String, dynamic> _$MagazineToJson(Magazine instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'isLike': instance.isLike,
-      'category': instance.category,
+      'categories': instance.categories,
       'bannerImage': instance.bannerImage,
       'content': instance.content,
     };

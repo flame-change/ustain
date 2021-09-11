@@ -41,18 +41,19 @@ class MagazineState extends Equatable {
         page,
       ];
 
-  MagazineState copyWith(
-      {List<Magazine>? todaysMaagazines,
-      List<Magazine>? magazines,
-      MagazineCategory? magazineCategory,
-      int? count,
-      String? next,
-      String? previous,
-      NetworkExceptions? error,
-      bool? maxIndex,
-      bool? isLoading,
-      bool? isLoaded,
-      int? page}) {
+  MagazineState copyWith({
+    List<Magazine>? todaysMaagazines,
+    List<Magazine>? magazines,
+    MagazineCategory? magazineCategory,
+    int? count,
+    String? next,
+    String? previous,
+    NetworkExceptions? error,
+    bool? maxIndex,
+    bool? isLoading,
+    bool? isLoaded,
+    int? page,
+  }) {
     return MagazineState(
         todaysMaagazines: todaysMaagazines ?? this.todaysMaagazines,
         magazines: magazines ?? this.magazines,
