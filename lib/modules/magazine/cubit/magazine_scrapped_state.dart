@@ -1,10 +1,9 @@
-part of 'magazine_cubit.dart';
+part of 'magazine_scrapped_cubit.dart';
 
-class MagazineState extends Equatable {
-  const MagazineState(
-      {this.todaysMaagazines,
-      this.magazines,
-      this.magazineCategory,
+class MagazineScrappedState extends Equatable {
+  const MagazineScrappedState(
+      {
+      this.scrappedMagazines,
       this.count,
       this.next,
       this.previous,
@@ -14,10 +13,8 @@ class MagazineState extends Equatable {
       required this.isLoaded,
       required this.isLoading});
 
-  final List<Magazine>? todaysMaagazines;
-  final List<Magazine>? magazines;
+  final List<Magazine>? scrappedMagazines;
   final NetworkExceptions? error;
-  final MagazineCategory? magazineCategory;
   final int? count;
   final String? next;
   final String? previous;
@@ -28,9 +25,7 @@ class MagazineState extends Equatable {
 
   @override
   List<Object?> get props => [
-        todaysMaagazines,
-        magazines,
-        magazineCategory,
+        scrappedMagazines,
         error,
         maxIndex,
         isLoaded,
@@ -41,10 +36,8 @@ class MagazineState extends Equatable {
         page,
       ];
 
-  MagazineState copyWith({
-    List<Magazine>? todaysMaagazines,
-    List<Magazine>? magazines,
-    MagazineCategory? magazineCategory,
+  MagazineScrappedState copyWith({
+    List<Magazine>? scrappedMagazines,
     int? count,
     String? next,
     String? previous,
@@ -54,10 +47,8 @@ class MagazineState extends Equatable {
     bool? isLoaded,
     int? page,
   }) {
-    return MagazineState(
-        todaysMaagazines: todaysMaagazines ?? this.todaysMaagazines,
-        magazines: magazines ?? this.magazines,
-        magazineCategory: magazineCategory ?? this.magazineCategory,
+    return MagazineScrappedState(
+        scrappedMagazines: scrappedMagazines ?? this.scrappedMagazines,
         count: count ?? this.count,
         next: next ?? this.next,
         page: page ?? this.page,

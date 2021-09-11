@@ -65,6 +65,17 @@ class MagazineRepository {
     }
   }
 
+  Future<ApiResult<Map>> updateScrapped(int id) async {
+    try {
+      var response =
+      await _dioClient.put('/api/v1/magazine/detail/$id/update-scrap/');
+
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
   Future<ApiResult<PageResponse>> getMagazineComments(int id) async {
     try {
       // TODO Page 처리
@@ -110,4 +121,12 @@ class MagazineRepository {
     }
   }
 
+  Future<ApiResult<PageResponse>> getScrappedMagazine(int page) async {
+    try {
+      var response = await _dioClient.getWithAuth('/api/v1/magazine/list/scrapped/?page=$page');
+      return ApiResult.success(data: PageResponse.fromJson(response));
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }

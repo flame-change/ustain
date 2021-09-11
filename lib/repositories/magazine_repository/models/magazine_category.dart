@@ -21,4 +21,5 @@ class MagazineCategory extends Equatable {
   @override
   List<Object?> get props => [mid, title, description, snapshotImage];
 
+  static const empty = MagazineCategory();
 }

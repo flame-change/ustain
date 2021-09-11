@@ -61,4 +61,16 @@ class User extends Equatable {
   }
 
   static const empty = User();
+
+  String fromEng(String english) {
+    String toKo = "";
+
+    this.categories!.forEach((category) {
+      if(category.mid==english) {
+        toKo = category.title!;
+      }
+    });
+
+    return toKo;
+  }
 }

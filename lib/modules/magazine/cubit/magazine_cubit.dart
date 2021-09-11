@@ -15,6 +15,7 @@ class MagazineCubit extends Cubit<MagazineState> {
           isLoading: true,
           isLoaded: false,
           maxIndex: false,
+          magazineCategory: MagazineCategory.empty,
           page: 1,
         ));
 
@@ -38,13 +39,20 @@ class MagazineCubit extends Cubit<MagazineState> {
   }
 
   Future<void> getMagazinesByCategory({MagazineCategory? magazineCategory}) async {
-    if (magazineCategory != null && state.magazineCategory != magazineCategory) {
+    if (state.magazineCategory != magazineCategory) {
+      print("state.magazineCategory != magazineCategory ${state.magazineCategory} ${magazineCategory}");
       emit(state.copyWith(
-        magazines: [],
-          magazineCategory: magazineCategory, maxIndex: false, page: 1));
+          magazines: [],
+          magazineCategory: magazineCategory,
+          maxIndex: false,
+          page: 1));
     }
 
-    String category = state.magazineCategory == null? "" : "\"" +state.magazineCategory!.mid!+ "\"";
+    print("state.magazineCategory ${state.magazineCategory}");
+
+    String category = state.magazineCategory == MagazineCategory.empty || magazineCategory==MagazineCategory.empty
+        ? ""
+        : "\"" + state.magazineCategory!.mid! + "\"";
 
     if (!state.maxIndex) {
       ApiResult<PageResponse> apiResult = await _magazineRepository
