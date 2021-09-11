@@ -1,5 +1,7 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
+import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +22,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   int get _id => this.widget.id;
   late MagazineDetailCubit _magazineDetailCubit;
   final _scrollController = ScrollController();
+  late User user;
 
   @override
   void initState() {
@@ -28,10 +31,11 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
     _magazineDetailCubit.getMagazineDetail(_id);
     _magazineDetailCubit.getIsLike(_id);
     _scrollController.addListener(_onScroll);
+    user = context.read<AuthenticationBloc>().state.user;
   }
 
   void _onScroll() {
-      _magazineDetailCubit.hideNavigation(false);
+    _magazineDetailCubit.hideNavigation(false);
   }
 
   @override
@@ -44,6 +48,12 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
             return Scaffold(
               appBar: AppBar(
                 title: Text("${magazineDetail.title}"),
+                actions: [
+                  IconButton(onPressed: () {
+                    _magazineDetailCubit.updateIsScrapped(magazineDetail.id!);
+
+                  }, icon: Icon(Icons.archive_outlined))
+                ],
               ),
               floatingActionButton: magazineLikeButton(magazineDetail.id!),
               bottomNavigationBar: magazineBottomNavigator(magazineDetail.id!),
@@ -74,7 +84,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                           Text("매거진 부제목: 매거진의 부제목",
                               style: TextStyle(fontSize: 20.sp)),
                           getCategories(magazineDetail.categories!),
-                          Text("${magazineDetail.createdAt!}"),
+                          Text("${magazineDetail.createdAt!}  ${magazineDetail.likeUserCount!}likes"),
                           Divider(),
                           Html(
                             data: magazineDetail.content!,
@@ -91,20 +101,19 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
           }
         });
   }
-}
 
-Widget getCategories(List<String> categories) {
-  return Wrap(
-    spacing: 10,
-    runSpacing: 5,
-    children: List<Widget>.generate(
-        categories.length,
-        (index) => Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Text("${categories[index]}"),
-            )),
-  );
+  Widget getCategories(List<String> categories) {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 5,
+      children: List<Widget>.generate(
+          categories.length,
+              (index) => Container(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+            decoration: BoxDecoration(
+                color: Colors.lightBlue,),
+            child: Text("${user.fromEng(categories[index])}"),
+          )),
+    );
+  }
 }
