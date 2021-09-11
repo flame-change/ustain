@@ -14,11 +14,11 @@ class SignInCubit extends Cubit<SignInState> {
   final AuthenticationRepository _authenticationRepository;
   var logger = Logger(printer: PrettyPrinter());
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn({required String phoneNumber, required String password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     ApiResult<Map> apiResult = await _authenticationRepository.signIn(
-        email: email, password: password);
+        phoneNumber: phoneNumber, password: password);
 
     apiResult.when(
         success: (Map? response) {

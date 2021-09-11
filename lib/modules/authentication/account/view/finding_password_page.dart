@@ -1,22 +1,21 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
-import 'package:aroundus_app/modules/authentication/signup/models/email.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/authentication/account/view/view.dart';
+import 'package:aroundus_app/modules/authentication/signup/signup.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-class FindingPassWordPage extends StatefulWidget {
+class FindingPasswordPage extends StatefulWidget {
+  static String routeName = 'finding_password_page';
+
   @override
-  State<StatefulWidget> createState() => _FindingPassWordPageState();
+  State<StatefulWidget> createState() => _FindingPasswordPageState();
 }
 
-class _FindingPassWordPageState extends State<FindingPassWordPage> {
-  final TextEditingController _emailController = TextEditingController();
-
+class _FindingPasswordPageState extends State<FindingPasswordPage> {
   late FindingAccountCubit _findingAccountCubit;
+  VerifyStatus phoneNumberVerifyStatus = VerifyStatus.init;
 
   @override
   void initState() {
@@ -29,38 +28,86 @@ class _FindingPassWordPageState extends State<FindingPassWordPage> {
     return Scaffold(
       appBar: AppBar(),
       body: PageWire(
-        child: BlocBuilder<FindingAccountCubit, FindingAccountState>(
-            builder: (context, state) {
-          return Wrap(
-            runSpacing: 15,
-            children: [
-              Text(
-                "가입하신 이메일을 입력해주세요.",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
-              ),
-              TextFormField(
-                  controller: _emailController,
-                  onChanged: (email) => _findingAccountCubit.emailChanged(email),
-                  decoration: InputDecoration(
-                    labelText: "이메일",
-                    helperText: '',
-                    errorText: Email.dirty(_emailController.value.text).invalid
-                        ? '올바른 이메일 양식 입력해주세요'
-                        : null,
-                  )),
-              MaterialButton(
-                minWidth: 100.w,
-                color: Colors.grey,
-                onPressed: () async {
-                  await _findingAccountCubit.findingPasswordEmailVerifyRequest();
-                  Navigator.pushNamedAndRemoveUntil(context, 'finding_password_result', (route) => false);
-                },
-                child: Text("인증하기"),
-              )
-            ],
-          );
-        }),
-      ),
+          child: BlocListener<FindingAccountCubit, FindingAccountState>(
+        bloc: _findingAccountCubit,
+        listener: (context, state) async {
+          print(state);
+          if (state.errorMessage != null) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text('${state.errorMessage}')),
+              );
+          }
+          if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
+            if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(content: Text('인증번호가 발급되었습니다.')),
+                );
+            } else if (state.republishFlag) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(content: Text('인증번호가 재발급되었습니다.')),
+                );
+            }
+            setState(() {
+              phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
+              _findingAccountCubit.republishAuthInit();
+            });
+          }
+          if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
+              state.expiredFlag) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text('인증번호 입력시간이 만료되었습니다.')),
+              );
+            setState(() {
+              _findingAccountCubit.expiredFlagFalse();
+            });
+          }
+          if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
+              state.unverifiedFlag) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text('인증번호가 일치하지 않습니다.')),
+              );
+            setState(() {
+              _findingAccountCubit.unverifiedFlagFalse();
+            });
+          }
+          if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (_) => BlocProvider<FindingAccountCubit>.value(
+                          value: _findingAccountCubit,
+                          child: FindingPasswordResultPage(),
+                        )),
+                (route) => false);
+          }
+        },
+        child: Wrap(
+          runSpacing: 20,
+          spacing: 20,
+          children: [
+            Text(
+              "가입하신 휴대폰 번호를 입력해주세요.",
+              style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
+            ),
+            Column(
+              children: [
+                FindingPhoneNumberInputField(),
+                if (_findingAccountCubit.state.phoneNumberVerifyStatus == VerifyStatus.request)
+                  FindingVerifyNumberInput(),
+              ],
+            ),
+          ],
+        ),
+      )),
     );
   }
 }

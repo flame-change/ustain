@@ -4,7 +4,6 @@ enum ConfirmPasswordValidationError { invalid }
 
 class SignupState extends Equatable {
   const SignupState({
-    this.email = const Email.pure(),
     this.password = const Password.pure(),
     this.confirmedPassword = const ConfirmedPassword.pure(),
     this.status = FormzStatus.pure,
@@ -16,7 +15,7 @@ class SignupState extends Equatable {
     this.agreeMarketing = false,
     this.isDupCheckedSnsId,
     this.isDupCheckedNickName,
-    this.errorMessage = "",
+    required this.errorMessage,
     this.phoneNumberVerifyStatus = VerifyStatus.init,
     this.verifyNumber = const VerifyNumber.pure(),
     this.success = false,
@@ -27,7 +26,6 @@ class SignupState extends Equatable {
     this.categories,
   });
 
-  final Email email;
   final Password password;
   final ConfirmedPassword confirmedPassword;
   final FormzStatus status;
@@ -51,20 +49,19 @@ class SignupState extends Equatable {
   final List<dynamic>? categories;
 
   @override
-  List<Object> get props => [
-        email,
+  List<Object?> get props => [
         password,
         confirmedPassword,
         status,
         nickName,
         phoneNumber,
-        // certString,
+        certString,
         agreeService,
         agreeSecurity,
         agreeMarketing,
-        // isDupCheckedSnsId,
-        // isDupCheckedNickName,
-        // errorMessage,
+        isDupCheckedSnsId,
+        isDupCheckedNickName,
+        errorMessage,
         phoneNumberVerifyStatus,
         verifyNumber,
         success,
@@ -74,7 +71,6 @@ class SignupState extends Equatable {
       ];
 
   SignupState copyWith({
-    Email? email,
     Password? password,
     ConfirmedPassword? confirmedPassword,
     FormzStatus? status,
@@ -96,7 +92,6 @@ class SignupState extends Equatable {
     List<dynamic>? categories,
   }) {
     return SignupState(
-        email: email ?? this.email,
         password: password ?? this.password,
         confirmedPassword: confirmedPassword ?? this.confirmedPassword,
         status: status ?? this.status,

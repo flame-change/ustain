@@ -17,8 +17,7 @@ final Map<String, WidgetBuilder> routes = {
   SignupForm.routeName: (context) => SignupForm(),
   MagazineHomeScreen.routeName: (context) => MagazineHomeScreen(),
   MagazineHomePage.routeName: (context) => MagazineHomePage(),
-  FindingEmailPage.routeName: (context) => FindingEmailPage(),
-  FindingPassWordResultPage.routeName: (context) => FindingPassWordResultPage(),
+  FindingPasswordPage.routeName: (context) => FindingPasswordPage(),
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
 };
 

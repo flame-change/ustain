@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.da
 import 'package:aroundus_app/modules/authentication/signup/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class VerifyNumberInput extends StatefulWidget {
   @override
@@ -114,7 +115,8 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
                 ),
               ),
             ),
-            FlatButton(
+            MaterialButton(
+              minWidth: 100.w,
               color: Colors.grey,
               onPressed: state.verifyNumber.valid &&
                       (verifyStatus == VerifyStatus.request ||
@@ -125,7 +127,7 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
                   ? Text('시간만료')
                   : verifyStatus == VerifyStatus.verified
                       ? Text('인증성공')
-                      : Text('번호인증'),
+                      : Text('인증 완료'),
               textColor: Colors.white,
             ),
           ],

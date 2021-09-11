@@ -4,6 +4,8 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:logger/logger.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,7 +22,7 @@ class PhoneVerifyPage extends StatefulWidget {
 }
 
 class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
-  SignupCubit? _signupCubit;
+  late SignupCubit _signupCubit;
   VerifyStatus phoneNumberVerifyStatus = VerifyStatus.init;
 
   @override
@@ -37,11 +39,11 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
           child: BlocListener<SignupCubit, SignupState>(
         bloc: BlocProvider.of<SignupCubit>(context),
         listener: (context, state) async {
-          if(state.errorMessage!=""){
+          if(state.errorMessage != null) {
             Scaffold.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
-                SnackBar(content: Text(state.errorMessage!)),
+                SnackBar(content: Text('${state.errorMessage}')),
               );
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
@@ -60,7 +62,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
             }
             setState(() {
               phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-              _signupCubit!.republishAuthInit();
+              _signupCubit.republishAuthInit();
             });
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
@@ -71,7 +73,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                 SnackBar(content: Text('인증번호 입력시간이 만료되었습니다.')),
               );
             setState(() {
-              _signupCubit!.expiredFlagFalse();
+              _signupCubit.expiredFlagFalse();
             });
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
@@ -82,12 +84,10 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                 SnackBar(content: Text('인증번호가 일치하지 않습니다.')),
               );
             setState(() {
-              _signupCubit!.unverifiedFlagFalse();
+              _signupCubit.unverifiedFlagFalse();
             });
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-            // var bloc = BlocProvider.of(context);
-            // logger.d(bloc);
 
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
@@ -101,6 +101,14 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
         },
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.only(bottom: 35),
+              width: 100.w,
+              child: Text(
+                "편리한 서비스 이용을 위해 번호 인증이 필요해요☺️",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+              ),
+            ),
             PhoneNumberInputField(),
             if (phoneNumberVerifyStatus == VerifyStatus.request)
               VerifyNumberInput(),
@@ -127,6 +135,9 @@ class PhoneNumberInputField extends StatelessWidget {
           onChanged: (phoneNumber) =>
               context.read<SignupCubit>().phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.number,
+          inputFormatters: [
+            MaskedInputFormatter('000-0000-0000', allowedCharMatcher: RegExp('[0-9]'))
+          ],
           decoration: InputDecoration(
               labelText: '전화번호',
               errorText: state.phoneNumber.invalid ? '숫자만 입력 가능합니다.' : null,
@@ -155,7 +166,7 @@ class PhoneNumberInputField extends StatelessWidget {
                           '인증 재발급',
                         )
                       : Text(
-                          '인증요청',
+                          '전송',
                         ),
                   textColor: Colors.white,
                 ),
