@@ -23,7 +23,7 @@ class _PlainButtonState extends State<PlainButton> {
     return Container(
       width: _size!.w,
       child: MaterialButton(
-        onPressed: () => _onPressed,
+        onPressed: _onPressed,
         color: Colors.grey,
         child: Text(_text),
       ),

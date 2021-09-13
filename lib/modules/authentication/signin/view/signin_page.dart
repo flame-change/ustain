@@ -34,15 +34,19 @@ class _SignInPageState extends State<SignInPage> {
         body: PageWire(
           child: BlocListener<SignInCubit, SignInState>(
             listener: (context, state) async {
-              if (state.errorMessage != null) {
+              if (state.errorMessage != null && state.errorMessage!.length >0)
+              {
                 Scaffold.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(content: Text('${state.errorMessage}')),
                   );
+                _signInCubit.errorMsg();
               }
             },
-            child: Column(
+            child: Wrap(
+              runSpacing: 15,
+              alignment: WrapAlignment.center,
               children: [
                 Container(
                     alignment: Alignment.center,
@@ -54,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
                   minWidth: 100.w,
                   color: Colors.grey,
                   onPressed: () {
-                    context.read<SignInCubit>().signIn(
+                    _signInCubit.signIn(
                         phoneNumber: _phoneNumberController.text.trim().replaceAll("-", ""),
                         password: _passwordController.text.trim());
                   },

@@ -32,13 +32,15 @@ class SignInCubit extends Cubit<SignInState> {
         },
         failure: (NetworkExceptions? error) {
           emit(state.copyWith(
+            error: error,
             errorMessage: NetworkExceptions.getErrorMessage(error!),
           ));
         });
   }
 
-// Future<void> signOut() async {
-//   await _authenticationRepository.signOut();
-// }
-
+  void errorMsg(){
+    emit(state.copyWith(
+      errorMessage: ""
+    ));
+  }
 }
