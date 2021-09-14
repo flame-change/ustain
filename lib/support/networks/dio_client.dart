@@ -308,27 +308,19 @@ class DioClient {
   _handleDioError(DioError dioError) {
     print("]-----] DioUtil::_handleDioError [-----[ $dioError");
     print("]-----] response ${dioError.response}");
+    print("]-----] response ${dioError.response?.data['errorMsg']}");
 
     if (dioError.response != null) {
-      logger.e("DioUtil::_handleDioError.response ");
-      logger.e("${dioError.response} ${dioError.response!.headers} ${dioError.response!.statusCode}");
-      if (dioError.response?.statusCode == 401) {
-        authenticationBloc!.add(AuthenticationLogoutRequested());
-      }
-      if (dioError.response?.statusCode == 403) {
-        authenticationBloc!.add(AuthenticationLogoutRequested());
+      if (dioError.response?.data['errorMsg'] != null) {
+        throw dioError;
       } else {
-        if (dioError.response?.data['code'] != null) {
-          throw dioError;
-        } else {
-          throw Exception(dioError);
-        }
+        throw dioError;
       }
     } else {
       if (dioError.error is SocketException) {
         throw Exception(ErrorMessage.getValue(999));
       } else {
-        throw Exception(dioError.message);
+        throw Exception(dioError.response?.data['errorMsg']);
       }
     }
   }

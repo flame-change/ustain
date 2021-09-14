@@ -30,43 +30,39 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
     return PageWire(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PlainButton(text: "카카오 로그인", onPressed: () {}),
-        PlainButton(text: "애플 로그인", onPressed: () {}),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
+        PlainButton(
+            text: "회원가입",
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                        create: (context) => SignupCubit(
+                            RepositoryProvider.of<AuthenticationRepository>(
+                                context)),
+                        child: PhoneVerifyPage()),
+                  ));
+            }),
+        PlainButton(
+            text: "로그인",
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
                       builder: (_) => BlocProvider(
-                          create: (context) => SignupCubit(
-                              RepositoryProvider.of<AuthenticationRepository>(
-                                  context)),
-                          child: PhoneVerifyPage()),
-                    ));
-              },
-              child: Text("일반 회원가입"),
-            ),
-            Text(" | "),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => BlocProvider(
-                              create: (_) => SignInCubit(RepositoryProvider.of<
-                                  AuthenticationRepository>(context)),
-                              child: SignInPage(),
-                            )));
-              },
-              child: Text("일반 로그인"),
-            ),
-          ],
-        )
+                            create: (_) => SignInCubit(
+                                RepositoryProvider.of<AuthenticationRepository>(
+                                    context)),
+                            child: SignInPage(),
+                          )));
+            }),
+        InkWell(
+          onTap: () {
+            // TODO 명세 확인 필요
+          },
+          child: Text("둘러보기"),
+        ),
       ],
     ));
   }
