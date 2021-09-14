@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'magazine_category.dart';
-
 part 'magazine_detail.g.dart';
 
 @JsonSerializable()
