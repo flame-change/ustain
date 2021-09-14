@@ -17,6 +17,7 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
 
   Future<void> findingPhoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
+    emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     ApiResult<Map> apiResult = await _authenticationRepository.requestFindingPassWordVerifier(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
