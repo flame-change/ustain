@@ -21,6 +21,9 @@ MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
     commentsBanned: json['commentsBanned'] as bool?,
     likeUserCount: json['likeUserCount'] as int?,
     totalComments: json['totalComments'] as int?,
+    products: (json['products'] as List<dynamic>?)
+        ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -37,4 +40,5 @@ Map<String, dynamic> _$MagazineDetailToJson(MagazineDetail instance) =>
       'commentsBanned': instance.commentsBanned,
       'likeUserCount': instance.likeUserCount,
       'totalComments': instance.totalComments,
+      'products': instance.products,
     };
