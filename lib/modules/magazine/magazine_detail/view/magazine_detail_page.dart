@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:sizer/sizer.dart';
 
+import 'components/product_card_widget.dart';
+
 class MagazineDetailPage extends StatefulWidget {
   final int id;
 
@@ -49,10 +51,12 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
               appBar: AppBar(
                 title: Text("${magazineDetail.title}"),
                 actions: [
-                  IconButton(onPressed: () {
-                    _magazineDetailCubit.updateIsScrapped(magazineDetail.id!);
-
-                  }, icon: Icon(Icons.archive_outlined))
+                  IconButton(
+                      onPressed: () {
+                        _magazineDetailCubit
+                            .updateIsScrapped(magazineDetail.id!);
+                      },
+                      icon: Icon(Icons.archive_outlined))
                 ],
               ),
               floatingActionButton: magazineLikeButton(magazineDetail.id!),
@@ -72,7 +76,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                     PageWire(
                         child: Container(
                       width: 100.w,
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 10, bottom: 11.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -84,11 +88,15 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                           Text("매거진 부제목: 매거진의 부제목",
                               style: TextStyle(fontSize: 20.sp)),
                           getCategories(magazineDetail.categories!),
-                          Text("${magazineDetail.createdAt!}  ${magazineDetail.likeUserCount!}likes"),
+                          Text(
+                              "${magazineDetail.createdAt!}  ${magazineDetail.likeUserCount!}likes"),
                           Divider(),
                           Html(
                             data: magazineDetail.content!,
-                          )
+                          ),
+                          magazineDetail.products != null
+                              ? productCard(magazineDetail.products!)
+                              : SizedBox(height: 0)
                         ],
                       ),
                     ))
@@ -108,12 +116,13 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
       runSpacing: 5,
       children: List<Widget>.generate(
           categories.length,
-              (index) => Container(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-            decoration: BoxDecoration(
-                color: Colors.lightBlue,),
-            child: Text("${user.fromEng(categories[index])}"),
-          )),
+          (index) => Container(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                ),
+                child: Text("${user.fromEng(categories[index])}"),
+              )),
     );
   }
 }
