@@ -45,6 +45,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
               ..showSnackBar(
                 SnackBar(content: Text('${state.errorMessage}')),
               );
+            _signupCubit.errorMsg();
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {

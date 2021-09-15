@@ -63,8 +63,6 @@ class DioClient {
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -127,8 +125,6 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -162,8 +158,6 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -193,8 +187,6 @@ class DioClient {
         cancelToken: cancelToken,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -296,8 +288,6 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
