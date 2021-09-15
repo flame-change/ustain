@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/models/models.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:equatable/equatable.dart';
@@ -11,28 +12,33 @@ part 'finding_account_state.dart';
 
 class FindingAccountCubit extends Cubit<FindingAccountState> {
   FindingAccountCubit(this._authenticationRepository)
-      : super(const FindingAccountState(errorMessage: null));
+      : super(const FindingAccountState());
 
   final AuthenticationRepository _authenticationRepository;
+
+  void errorMsg() {
+    emit(state.copyWith(
+        errorMessage: ""
+    ));
+  }
 
   Future<void> findingPhoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
     emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
-    ApiResult<Map> apiResult = await _authenticationRepository.requestFindingPassWordVerifier(
+    ApiResult<Map> apiResult = await _authenticationRepository
+        .requestFindingPassWordVerifier(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(errorMessage: "phone-already-in-use"));
-      print(state);
     });
   }
 
   Future<void> findingPassWordVerify() async {
     if (!state.phoneNumber.valid) return;
     ApiResult<String> apiResult =
-        await _authenticationRepository.findingPassWordVerifyCode(
+    await _authenticationRepository.findingPassWordVerifyCode(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
       verifyCode: state.verifyNumber.value,
     );
@@ -41,14 +47,15 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
           phoneNumberVerifyStatus: VerifyStatus.verified,
           phoneToken: phoneToken!));
     }, failure: (NetworkExceptions? error) {
+      logger.w(error);
       emit(state.copyWith(
+        errorMessage: NetworkExceptions.getErrorMessage(error!),
           phoneNumberVerifyStatus: VerifyStatus.unverified,
-          unverifiedFlag: true,
-          errorMessage: error.toString()));
+          unverifiedFlag: true));
     });
   }
 
-  Future<bool?> resetPassWord() async {
+  Future<void> resetPassWord() async {
     // if (!state.password.valid || !state.confirmedPassword.valid) return;
 
     print(state);
@@ -60,25 +67,21 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
     );
 
     apiResult.when(success: (String? phone) {
-      return true;
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(errorMessage: error.toString()));
+      emit(state.copyWith(
+          errorMessage: NetworkExceptions.getErrorMessage(error!)));
     });
   }
 
   void passwordChanged(String value) {
-    print(value);
-    final password = Password.dirty(value);
+    Password newPassword = Password.dirty(value);
 
-    print(password);
+
+    print(newPassword);
 
     emit(state.copyWith(
-        password: password,
-        status: Formz.validate([
-          password,
-        ])));
-
-    print(state);
+        password: newPassword
+    ));
   }
 
   void confirmedPasswordChanged(String value) {
@@ -143,6 +146,12 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
       status: Formz.validate([
         email,
       ]),
+    ));
+  }
+
+  void completeVerify(){
+    emit(state.copyWith(
+      phoneNumberVerifyStatus: VerifyStatus.complete
     ));
   }
 }

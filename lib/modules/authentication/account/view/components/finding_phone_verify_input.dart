@@ -23,7 +23,7 @@ class FindingPhoneNumberInputField extends StatelessWidget {
           pre.phoneNumberVerifyStatus != cur.phoneNumberVerifyStatus,
       builder: (context, state) {
         return TextFormField(
-          key: Key('phoneNumber_code_textFormField'),
+          key: Key('finding_account_phoneNumber_code_textFormField'),
           inputFormatters: [
             MaskedInputFormatter('000-0000-0000', allowedCharMatcher: RegExp('[0-9]'))
           ],
