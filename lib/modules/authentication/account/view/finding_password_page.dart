@@ -31,14 +31,6 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
           child: BlocListener<FindingAccountCubit, FindingAccountState>(
         bloc: _findingAccountCubit,
         listener: (context, state) async {
-          print(state);
-          if (state.errorMessage != null) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(content: Text('${state.errorMessage}')),
-              );
-          }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
               Scaffold.of(context)
@@ -80,15 +72,6 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
               _findingAccountCubit.unverifiedFlagFalse();
             });
           }
-          if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (_) => BlocProvider<FindingAccountCubit>.value(
-                          value: _findingAccountCubit,
-                          child: FindingPasswordResultPage(),
-                        )),
-                (route) => false);
-          }
         },
         child: Wrap(
           runSpacing: 20,
@@ -101,7 +84,9 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
             Column(
               children: [
                 FindingPhoneNumberInputField(),
-                if (_findingAccountCubit.state.phoneNumberVerifyStatus == VerifyStatus.request)
+                if (_findingAccountCubit.state.phoneNumberVerifyStatus ==
+                    VerifyStatus.request || _findingAccountCubit.state.phoneNumberVerifyStatus ==
+                    VerifyStatus.unverified)
                   FindingVerifyNumberInput(),
               ],
             ),

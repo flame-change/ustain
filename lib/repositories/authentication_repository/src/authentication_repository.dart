@@ -245,7 +245,7 @@ class AuthenticationRepository {
         "password": password,
         "password_confirm": passwordConfirm,
       });
-      var response =       await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
       return ApiResult.success(
         data: response['phone'],
       );
