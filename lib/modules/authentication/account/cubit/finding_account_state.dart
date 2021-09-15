@@ -14,7 +14,7 @@ class FindingAccountState extends Equatable {
     this.unverifiedFlag = false,
     this.phoneToken,
 
-    required this.errorMessage,
+    this.errorMessage = "",
   });
 
   final Password password;
@@ -28,7 +28,7 @@ class FindingAccountState extends Equatable {
   final bool unverifiedFlag;
 
   final String? phoneToken;
-  final String? errorMessage;
+  final String errorMessage;
 
   @override
   List<Object?> get props =>

@@ -16,9 +16,9 @@ class SignupCubit extends Cubit<SignupState> {
 
   final AuthenticationRepository _authenticationRepository;
 
-  void errorMessageInit() {
+  void errorMsg(){
     emit(state.copyWith(
-      errorMessage: null,
+        errorMessage: ""
     ));
   }
 
@@ -34,7 +34,7 @@ class SignupCubit extends Cubit<SignupState> {
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(errorMessage: NetworkExceptions.getErrorMessageCode("phone-already-in-use")));
+      emit(state.copyWith(errorMessage: NetworkExceptions.getErrorMessage(error!)));
     });
   }
 

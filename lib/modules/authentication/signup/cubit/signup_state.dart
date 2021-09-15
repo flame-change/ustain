@@ -115,4 +115,4 @@ class SignupState extends Equatable {
   }
 }
 
-enum VerifyStatus { init, request, verified, unverified, expiered }
+enum VerifyStatus { init, request, verified, unverified, expiered, complete }
