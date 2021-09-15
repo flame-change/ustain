@@ -1,9 +1,13 @@
+import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/models/models.dart';
+import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-Widget productCard(List<Product> products) {
+Widget productCard(BuildContext context, List<Product> products) {
   return Wrap(
     runSpacing: 20,
     children: <Widget>[
@@ -16,8 +20,15 @@ Widget productCard(List<Product> products) {
           products.length,
           (index) => GestureDetector(
             onTap: () {
-              // TODO 상품 상세 페이지로 이동
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => BlocProvider<ProductCubit>(
+                            create: (_) => ProductCubit(
+                                RepositoryProvider.of<ProductRepository>(
+                                    context)),
+                            child: ProductDetailPage(products[index].Id!),
+                          )));
             },
             child: Column(
               children: [
@@ -28,12 +39,12 @@ Widget productCard(List<Product> products) {
                     children: [
                       Flexible(
                         child: Container(
-                          width: 20.w,
+                          height: 10.h,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
-                                      'https://via.placeholder.com/80'))),
+                                      products[index].thumbnail!))),
                         ),
                       ),
                       Flexible(

@@ -95,7 +95,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                             data: magazineDetail.content!,
                           ),
                           magazineDetail.products != null
-                              ? productCard(magazineDetail.products!)
+                              ? productCard(context, magazineDetail.products!)
                               : SizedBox(height: 0)
                         ],
                       ),
