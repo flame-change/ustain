@@ -16,7 +16,16 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     originalPrice: json['originalPrice'] as String?,
     discountPrice: json['discountPrice'] as String?,
     discountRate: json['discountRate'] as String?,
-    brand: json['brand'] as String?,
+    brand: json['brand'] == null
+        ? null
+        : Brand.fromJson(json['brand'] as Map<String, dynamic>),
+    thumbnail: json['thumbnail'] as String?,
+    available: json['available'] as bool?,
+    keywords: json['keywords'] as String?,
+    socialValues: (json['socialValues'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList(),
+    totalReviews: json['totalReviews'] as String?,
   );
 }
 
@@ -30,4 +39,9 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'discountPrice': instance.discountPrice,
       'discountRate': instance.discountRate,
       'brand': instance.brand,
+      'keywords': instance.keywords,
+      'available': instance.available,
+      'thumbnail': instance.thumbnail,
+      'socialValues': instance.socialValues,
+      'totalReviews': instance.totalReviews,
     };
