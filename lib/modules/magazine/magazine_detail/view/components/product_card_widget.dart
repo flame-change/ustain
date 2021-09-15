@@ -17,6 +17,7 @@ Widget productCard(List<Product> products) {
           (index) => GestureDetector(
             onTap: () {
               // TODO 상품 상세 페이지로 이동
+
             },
             child: Column(
               children: [
