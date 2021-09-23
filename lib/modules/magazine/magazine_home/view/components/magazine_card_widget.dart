@@ -5,10 +5,10 @@ import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repos
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:sizer/sizer.dart';
 
 Widget magazineCard(BuildContext context, Magazine magazine) {
-
   User user = context.read<AuthenticationBloc>().state.user;
 
   return GestureDetector(
@@ -25,15 +25,15 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
           ));
     },
     child: Container(
-      width: 100.w,
-      height: 30.h,
+      width: Adaptive.w(100),
+      height: Adaptive.h(30),
       color: Colors.black38,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 20.h,
-            width: 100.w,
+            height: Adaptive.h(20),
+            width: Adaptive.w(100),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
@@ -50,7 +50,8 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
                     (index) => Container(
                       color: Colors.blue,
                       padding: EdgeInsets.all(5),
-                      child: Text("#${user.fromEng(magazine.categories![index])}"),
+                      child:
+                          Text("#${user.fromEng(magazine.categories![index])}"),
                     ),
                   ),
                 ),
@@ -59,7 +60,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
           ),
           Text(
             magazine.title!,
-            style: TextStyle(fontSize: 20.sp),
+            style: TextStyle(fontSize: Adaptive.sp(20)),
           ),
           Text(
             "매거진 내용 최대 두 줄",

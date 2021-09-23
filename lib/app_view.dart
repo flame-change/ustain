@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:sizer/sizer.dart';
 
@@ -26,7 +27,7 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
+    return FlutterSizer(builder: (context, orientation, deviceType) {
       return  FlutterWebFrame(
         builder: (context) {
           return MaterialApp(

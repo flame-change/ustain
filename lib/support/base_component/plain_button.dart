@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:sizer/sizer.dart';
 
 class PlainButton extends StatefulWidget {
@@ -21,7 +22,7 @@ class _PlainButtonState extends State<PlainButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: _size!.w,
+      width: Adaptive.w(_size!),
       child: MaterialButton(
         onPressed: _onPressed,
         color: Colors.grey,

@@ -8,6 +8,7 @@ import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:sizer/sizer.dart';
 
 class MagazineHomeScreen extends StatefulWidget {
@@ -30,19 +31,19 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
               title: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: 50.w,
+                  width: Adaptive.w(50),
                   child: TabBar(
                     tabs: <Widget>[
                       Text("매거진",
-                          style:TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                          style:TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
                       Text("스크랩",
-                          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                          style: TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
               ),
               actions: [
-                Icon(Icons.notifications, size: 20.sp),
+                Icon(Icons.notifications, size: Adaptive.sp(20)),
               ],
             ),
             body: TabBarView(

@@ -3,6 +3,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:sizer/sizer.dart';
 
 class TodaysMagazine extends StatefulWidget {
@@ -41,14 +42,14 @@ class _TodaysMagazineState extends State<TodaysMagazine> with SingleTickerProvid
         children: [
           Text(
             "오늘의 매거진📚",
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
           ),
           Text(
             "좋아하실 만한 읽을거리를 가져왔어요",
-            style: TextStyle(fontSize: 15.sp, color: Color(0xFF979797)),
+            style: TextStyle(fontSize: Adaptive.sp(15), color: Color(0xFF979797)),
           ),
           Container(
-            height: 30.h,
+            height: Adaptive.h(30),
             child: ListView.builder(
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
@@ -76,7 +77,7 @@ class _TodaysMagazineState extends State<TodaysMagazine> with SingleTickerProvid
                   },
                   child: Container(
                     margin: EdgeInsets.only(right: 10),
-                    width: 65.w,
+                    width: Adaptive.w(65),
                     color: Colors.black38,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
@@ -85,23 +86,23 @@ class _TodaysMagazineState extends State<TodaysMagazine> with SingleTickerProvid
                           flex: 3,
                           child: Image.network(
                             _todaysMaagazines[index].bannerImage!,
-                            width: 65.w,
+                            width: Adaptive.w(65),
                             fit: BoxFit.cover,
                           ),
                         ),
                         Container(
-                            width: 100.w,
+                            width: Adaptive.w(100),
                             padding: EdgeInsets.only(top: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   _todaysMaagazines[index].title!,
-                                  style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: Adaptive.sp(15), fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                     "${_todaysMaagazines[index].title!} 설명",
-                                    style: TextStyle(fontSize: 12.sp)),
+                                    style: TextStyle(fontSize: Adaptive.sp(12))),
                               ],
                             ))
                       ],

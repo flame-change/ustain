@@ -10,6 +10,7 @@ import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:sizer/sizer.dart';
 
 import 'components/todays_magazine_widget.dart';
@@ -61,7 +62,7 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
           );
         } else {
           return Container(
-              height: 100.h, child: Center(child: Text("스크랩한 매거진이 없어요.")));
+              height: Adaptive.h(100), child: Center(child: Text("스크랩한 매거진이 없어요.")));
         }
       } else {
         return Center(
