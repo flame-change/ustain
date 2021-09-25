@@ -6,7 +6,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class SignInPage extends StatefulWidget {
   static String routeName = 'signIn_page';
@@ -50,12 +50,12 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 Container(
                     alignment: Alignment.center,
-                    height: 10.h,
+                    height: Adaptive.h(10),
                     child: Text("다시 만나서 반가워요! 😊")),
                 _phoneNumberInput(),
                 _passwordInput(),
                 MaterialButton(
-                  minWidth: 100.w,
+                  minWidth: Adaptive.w(100),
                   color: Colors.grey,
                   onPressed: () {
                     _signInCubit.signIn(

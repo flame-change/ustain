@@ -1,13 +1,10 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:logger/logger.dart';
-import 'package:sizer/sizer.dart';
 
 
 var logger = Logger(printer: PrettyPrinter());

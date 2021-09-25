@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signup/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class VerifyNumberInput extends StatefulWidget {
   @override
@@ -116,7 +115,7 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
               ),
             ),
             MaterialButton(
-              minWidth: 100.w,
+              minWidth: Adaptive.w(100),
               color: Colors.grey,
               onPressed: state.verifyNumber.valid &&
                       (verifyStatus == VerifyStatus.request ||

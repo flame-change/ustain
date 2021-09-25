@@ -1,13 +1,9 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
-import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
-import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
-import 'package:aroundus_app/modules/authentication/signup/models/email.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:formz/formz.dart';
-import 'package:sizer/sizer.dart';
 
 class FindingPasswordResultPage extends StatefulWidget {
   static String routeName = 'finding_password_result_page';
@@ -42,12 +38,12 @@ class _FindingPasswordResultPageState extends State<FindingPasswordResultPage> {
               children: [
                 Text(
                   "새 비밀번호를 입력해주세요.",
-                  style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: Adaptive.sp(13), fontWeight: FontWeight.bold),
                 ),
                 _PasswordInput(),
                 _ConfirmPasswordInput(),
                 MaterialButton(
-                    minWidth: 100.w,
+                    minWidth: Adaptive.w(100),
                     color: Colors.grey,
                     child: Text("로그인 하러가기"),
                     onPressed: state.status ==

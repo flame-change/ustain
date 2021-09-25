@@ -5,7 +5,7 @@ import 'package:aroundus_app/modules/authentication/account/view/finding_passwor
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class FindingVerifyNumberInput extends StatefulWidget {
   @override
@@ -134,7 +134,7 @@ class _FindingVerifyNumberInputState extends State<FindingVerifyNumberInput> {
               ),
             ),
             MaterialButton(
-              minWidth: 100.w,
+              minWidth: Adaptive.w(100),
               color: Colors.grey,
               onPressed: state.verifyNumber.valid &&
                       (verifyStatus == VerifyStatus.request ||

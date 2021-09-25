@@ -1,13 +1,11 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:logger/logger.dart';
-import 'package:sizer/sizer.dart';
 
 import 'components/verify_number_input.dart';
 import 'signup_form_page.dart';
@@ -104,10 +102,10 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
           children: [
             Container(
               padding: EdgeInsets.only(bottom: 35),
-              width: 100.w,
+              width: Adaptive.w(100),
               child: Text(
                 "편리한 서비스 이용을 위해 번호 인증이 필요해요☺️",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: Adaptive.sp(16)),
               ),
             ),
             PhoneNumberInputField(),
