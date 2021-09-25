@@ -55,8 +55,7 @@ class _AppViewState extends State<AppView> {
           );
         },
         maximumSize: Size(475.0, 812.0),
-        // enabled: kIsWeb,
-        enabled: true,
+        enabled: kIsWeb,
         backgroundColor: Colors.grey,
       );
     },

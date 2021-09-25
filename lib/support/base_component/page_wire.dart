@@ -10,7 +10,9 @@ class PageWire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
+        padding: EdgeInsets.symmetric(horizontal: Adaptive.w(100) > 475
+            ? 475 / 100 * 5
+            : Adaptive.w(5)),
         child: child));
   }
 }
