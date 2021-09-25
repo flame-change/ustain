@@ -2,10 +2,8 @@ import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
 import 'package:aroundus_app/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sizer/sizer.dart';
-
-import 'base_component.dart';
 
 enum MenuState { home, magazine, store, community, my_page }
 
@@ -93,7 +91,7 @@ class IconButtonWidget extends StatelessWidget {
             ),
             Text(
               menu,
-              style: TextStyle(fontSize: 8.sp),
+              style: TextStyle(fontSize: Adaptive.sp(8)),
             ),
           ],
         ));

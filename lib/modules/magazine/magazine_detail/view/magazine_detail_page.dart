@@ -6,7 +6,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'components/product_card_widget.dart';
 
@@ -66,8 +66,8 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                 child: Column(
                   children: [
                     Container(
-                      height: 50.h,
-                      width: 100.w,
+                      height: Adaptive.h(50),
+                      width: Adaptive.w(100),
                       child: Image.network(
                         "${magazineDetail.bannerImage}",
                         fit: BoxFit.cover,
@@ -75,7 +75,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                     ),
                     PageWire(
                         child: Container(
-                      width: 100.w,
+                      width: Adaptive.w(100),
                       padding: EdgeInsets.only(top: 10, bottom: 11.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,10 +83,10 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                           Text(
                             "${magazineDetail.title}",
                             style: TextStyle(
-                                fontSize: 25.sp, fontWeight: FontWeight.bold),
+                                fontSize: Adaptive.sp(25), fontWeight: FontWeight.bold),
                           ),
                           Text("매거진 부제목: 매거진의 부제목",
-                              style: TextStyle(fontSize: 20.sp)),
+                              style: TextStyle(fontSize: Adaptive.sp(20))),
                           getCategories(magazineDetail.categories!),
                           Text(
                               "${magazineDetail.createdAt!}  ${magazineDetail.likeUserCount!}likes"),

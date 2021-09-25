@@ -4,7 +4,7 @@ import 'package:aroundus_app/modules/authentication/signup/signup.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class FindingPasswordPage extends StatefulWidget {
   static String routeName = 'finding_password_page';
@@ -79,7 +79,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
           children: [
             Text(
               "가입하신 휴대폰 번호를 입력해주세요.",
-              style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: Adaptive.sp(13), fontWeight: FontWeight.bold),
             ),
             Column(
               children: [

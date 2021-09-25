@@ -1,5 +1,4 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
-import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_comment_cubit.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
@@ -7,7 +6,7 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class MagazineCommentSheet extends StatefulWidget {
   final int id;
@@ -50,14 +49,12 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 85.h,
+      height: Adaptive.h(85),
       child: PageWire(
         child: BlocSelector<MagazineCommentCubit, MagazineCommentState,
             List<MagazineComment>?>(
           selector: (state) => state.comments,
           builder: (context, comments) {
-            print("re build");
-
             if (comments != null) {
               return Column(
                 children: [
@@ -75,7 +72,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                                         children: List.generate(
                                           comments[index].reply!.length,
                                           (i) => Padding(
-                                            padding: EdgeInsets.only(left: 5.w),
+                                            padding: EdgeInsets.only(left: Adaptive.w(5)),
                                             child: commentTile(
                                                 comments[index].reply![i]),
                                           ),
@@ -85,7 +82,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                               ],
                             ),
                           )
-                        : Center(heightFactor: 100.h, child: Text("댓글이 없습니다.")),
+                        : Center(heightFactor: Adaptive.h(100), child: Text("댓글이 없습니다.")),
                   ),
                   Flexible(child: messageWidget())
                 ],

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
-import 'package:sizer/sizer.dart';
 
 import 'modules/authentication/bloc/authentication_bloc.dart';
 import 'modules/splash/splash.dart';
@@ -56,7 +55,8 @@ class _AppViewState extends State<AppView> {
           );
         },
         maximumSize: Size(475.0, 812.0),
-        enabled: kIsWeb,
+        // enabled: kIsWeb,
+        enabled: true,
         backgroundColor: Colors.grey,
       );
     },

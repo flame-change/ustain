@@ -22,7 +22,7 @@ MagazineDetail _$MagazineDetailFromJson(Map<String, dynamic> json) {
     likeUserCount: json['likeUserCount'] as int?,
     totalComments: json['totalComments'] as int?,
     products: (json['products'] as List<dynamic>?)
-        ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e as Map<String, dynamic>)
         .toList(),
   );
 }

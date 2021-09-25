@@ -7,7 +7,6 @@ import 'package:aroundus_app/repositories/authentication_repository/authenticati
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 
 class LoginHomePage extends StatefulWidget {
   static String routeName = 'login_home_page';

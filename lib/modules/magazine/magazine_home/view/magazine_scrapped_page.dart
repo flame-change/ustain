@@ -1,19 +1,10 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
-import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
-import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/magazine_card_widget.dart';
-import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:sizer/sizer.dart';
-
-import 'components/todays_magazine_widget.dart';
 
 class MagazineScrappedPage extends StatefulWidget {
   static String routeName = 'magazine_scrapped_page';

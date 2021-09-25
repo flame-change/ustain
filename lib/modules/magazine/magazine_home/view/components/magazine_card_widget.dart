@@ -6,7 +6,6 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:sizer/sizer.dart';
 
 Widget magazineCard(BuildContext context, Magazine magazine) {
   User user = context.read<AuthenticationBloc>().state.user;

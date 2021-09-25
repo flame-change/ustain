@@ -5,15 +5,27 @@ import 'package:aroundus_app/repositories/product_repository/product_repository.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
-Widget productCard(BuildContext context, List<Product> products) {
+Widget productCard(BuildContext context, List<Map> mapProducts) {
+  List<Product> products = mapProducts
+      .map((p) => Product(
+          Id: p["Id"],
+          name: p["name"],
+          summary: p["summary"],
+          description: p["description"],
+          rating: p["rating"],
+          originalPrice: p["originalPrice"],
+          discountPrice: p["discountPrice"],
+          discountRate: p["discountRate"],
+          thumbnail: p["thumbnail"]))
+      .toList();
   return Wrap(
     runSpacing: 20,
     children: <Widget>[
           Text(
             "연관상품",
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
           )
         ] +
         List.generate(
@@ -33,13 +45,13 @@ Widget productCard(BuildContext context, List<Product> products) {
             child: Column(
               children: [
                 Container(
-                  width: 100.w,
-                  height: 10.h,
+                  width: Adaptive.w(100),
+                  height: Adaptive.h(10),
                   child: Row(
                     children: [
                       Flexible(
                         child: Container(
-                          height: 10.h,
+                          height: Adaptive.h(10),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   fit: BoxFit.cover,
@@ -62,7 +74,7 @@ Widget productCard(BuildContext context, List<Product> products) {
                                         TextSpan(
                                             text: "${products[index].name}\n",
                                             style: TextStyle(
-                                                fontSize: 14.sp,
+                                                fontSize: Adaptive.sp(14),
                                                 fontWeight: FontWeight.bold)),
                                         TextSpan(
                                           text: "${products[index].summary}",
@@ -82,7 +94,7 @@ Widget productCard(BuildContext context, List<Product> products) {
                                                 text:
                                                     "${products[index].discountRate}% \t",
                                                 style: TextStyle(
-                                                    fontSize: 15.sp,
+                                                    fontSize: Adaptive.sp(15),
                                                     fontWeight:
                                                         FontWeight.bold)),
                                             TextSpan(
@@ -98,7 +110,7 @@ Widget productCard(BuildContext context, List<Product> products) {
                                       "${products[index].discountPrice}원",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 20.sp),
+                                          fontSize: Adaptive.sp(20)),
                                     ),
                                   ],
                                 ),

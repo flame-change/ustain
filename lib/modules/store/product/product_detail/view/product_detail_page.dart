@@ -3,7 +3,7 @@ import 'package:aroundus_app/repositories/product_repository/models/product.dart
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class ProductDetailPage extends StatefulWidget {
   ProductDetailPage(this.productId);
@@ -53,12 +53,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     Text(
                       "${product.brand!.name}",
                       style: TextStyle(
-                          fontSize: 15.sp, fontWeight: FontWeight.bold),
+                          fontSize: Adaptive.sp(15), fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "${product.name}",
                       style: TextStyle(
-                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
                     ),
                   ],
                 ))

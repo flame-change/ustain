@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:sizer/sizer.dart';
 
 class SignInPage extends StatefulWidget {
   static String routeName = 'signIn_page';

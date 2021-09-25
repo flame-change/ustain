@@ -9,7 +9,6 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:sizer/sizer.dart';
 
 class MagazineHomeScreen extends StatefulWidget {
   static String routeName = 'magazine_home_screen';

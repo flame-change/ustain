@@ -32,7 +32,7 @@ class MagazineDetail extends Equatable {
   final bool? commentsBanned;
   final int? likeUserCount;
   final int? totalComments;
-  final List<Product>? products;
+  final List<Map>? products;
 
   factory MagazineDetail.fromJson(Map<String, dynamic> json) =>
       _$MagazineDetailFromJson(json);
@@ -67,7 +67,7 @@ class MagazineDetail extends Equatable {
     bool? commentsBanned,
     int? likeUserCount,
     int? totalComments,
-    List<Product>? products
+    List<Map>? products
   }) {
     return MagazineDetail(
       categories: categories ?? this.categories,
