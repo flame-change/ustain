@@ -4,6 +4,7 @@ import 'package:aroundus_app/repositories/product_repository/models/product.dart
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -38,8 +39,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded) {
             product = state.products!.first;
-            print(product);
-
             return Column(
               children: [
                 Container(
@@ -51,30 +50,65 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             image: NetworkImage(product.thumbnail!)))),
                 PageWire(
                     child: Container(
+                  padding: EdgeInsets.only(top: 20),
                   width: Adaptive.w(100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Wrap(
+                    runSpacing: 15,
+                    spacing: 20,
                     children: [
                       categoryTag(context, product.socialValues!),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage(product.brand!.url!),
-                          ),
-                          Text(
-                            "${product.brand!.name}",
-                            style: TextStyle(
-                                fontSize: Adaptive.sp(15),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          // TODO 브랜드 페이지 이동
+                          print("브랜드 페이지 이동");
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              margin: EdgeInsets.only(right: 10),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: NetworkImage(product.brand!.url!),
+                                  )),
+                            ),
+                            Text(
+                              "${product.brand!.name} >",
+                              style: TextStyle(
+                                  fontSize: Adaptive.sp(15),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       Text(
                         "${product.name}",
                         style: TextStyle(
                             fontSize: Adaptive.sp(20),
                             fontWeight: FontWeight.bold),
+                      ),
+                      Divider(),
+                      Html(
+                        data: product.description,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                            style: TextStyle(color: Colors.black),
+                            children: [
+                              TextSpan(
+                                  text: "${product.discountRate}% ",
+                                  style: TextStyle(
+                                    fontSize: Adaptive.sp(15),
+                                  )),
+                              TextSpan(
+                                text: "${product.discountPrice}원",
+                                style: TextStyle(
+                                    fontSize: Adaptive.sp(20),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
