@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/magazine/magazine_home/view/components/categoryTag_widget.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -37,6 +38,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded) {
             product = state.products!.first;
+            print(product);
+
             return Column(
               children: [
                 Container(
@@ -47,20 +50,34 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             fit: BoxFit.cover,
                             image: NetworkImage(product.thumbnail!)))),
                 PageWire(
-                    child: Column(
-                  children: [
-                    Text("product detail page"),
-                    Text(
-                      "${product.brand!.name}",
-                      style: TextStyle(
-                          fontSize: Adaptive.sp(15), fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "${product.name}",
-                      style: TextStyle(
-                          fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                    child: Container(
+                  width: Adaptive.w(100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      categoryTag(context, product.socialValues!),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(product.brand!.url!),
+                          ),
+                          Text(
+                            "${product.brand!.name}",
+                            style: TextStyle(
+                                fontSize: Adaptive.sp(15),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "${product.name}",
+                        style: TextStyle(
+                            fontSize: Adaptive.sp(20),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ))
               ],
             );

@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
+import 'categoryTag_widget.dart';
+
 Widget magazineCard(BuildContext context, Magazine magazine) {
-  User user = context.read<AuthenticationBloc>().state.user;
 
   return GestureDetector(
     onTap: () {
@@ -41,19 +42,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
               padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.bottomLeft,
-                child: Wrap(
-                  runSpacing: 5,
-                  spacing: 10,
-                  children: List.generate(
-                    magazine.categories!.length,
-                    (index) => Container(
-                      color: Colors.blue,
-                      padding: EdgeInsets.all(5),
-                      child:
-                          Text("#${user.fromEng(magazine.categories![index])}"),
-                    ),
-                  ),
-                ),
+                child: categoryTag(context, magazine.categories!),
               ),
             ),
           ),
