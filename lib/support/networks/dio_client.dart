@@ -165,6 +165,41 @@ class DioClient {
     }
   }
 
+  Future<dynamic> patchWithClayful(
+      String uri, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.patch(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": cancelToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response.data;
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
   Future<dynamic> delete(
     String uri, {
     data,
@@ -194,6 +229,37 @@ class DioClient {
     }
   }
 
+  Future<dynamic> deleteWithClayful(
+      String uri, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.delete(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": clayfulToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+      );
+      return response.data;
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
   Future<dynamic> getWithAuth(
     String uri, {
     Map<String, dynamic>? queryParameters,
@@ -209,6 +275,41 @@ class DioClient {
         uri,
         queryParameters: queryParameters,
         options: Options(headers: {
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response.data;
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on FormatException catch (_) {
+      throw FormatException("Unable to process the data");
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
+  Future<dynamic> getWithClayful(
+      String uri, {
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.get(
+        uri,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": clayfulToken,
           Headers.contentTypeHeader: Headers.jsonContentType,
           HttpHeaders.authorizationHeader: "Bearer $accessToken",
         }),
@@ -263,7 +364,7 @@ class DioClient {
     }
   }
 
-  Future<dynamic> postFormWithAuth(
+  Future<dynamic> postWithClayful(
     String uri, {
     data,
     Map<String, dynamic>? queryParameters,
@@ -274,13 +375,18 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      var clayfulToken = prefs.getString('clayful');
       var accessToken = prefs.getString('access');
+
+      print(cancelToken);
 
       var response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
         options: Options(headers: {
+          "clayful": clayfulToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
           HttpHeaders.authorizationHeader: "Bearer $accessToken",
         }),
         cancelToken: cancelToken,
