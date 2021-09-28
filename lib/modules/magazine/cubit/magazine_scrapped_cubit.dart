@@ -21,26 +21,29 @@ class MagazineScrappedCubit extends Cubit<MagazineScrappedState> {
   final MagazineRepository _magazineRepository;
 
   Future<void> getScrappedMagazine() async {
-    ApiResult<PageResponse> apiResult =
-        await _magazineRepository.getScrappedMagazine(state.page);
+    if (!state.maxIndex) {
+      ApiResult<PageResponse> apiResult =
+          await _magazineRepository.getScrappedMagazine(state.page);
 
-    apiResult.when(
-        success: (PageResponse? pageResponse) {
-          List<Magazine>? newMagazine = pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList();
+      apiResult.when(success: (PageResponse? pageResponse) {
+        List<Magazine>? newMagazine =
+            pageResponse!.results?.map((e) => Magazine.fromJson(e)).toList();
 
-          print(newMagazine);
-
-          emit(state.copyWith(
-            scrappedMagazines: state.scrappedMagazines != null
-                ? state.scrappedMagazines! + newMagazine!
-                : newMagazine!,
-            isLoaded: true,
-            isLoading: false,
-          ));
-        },
-        failure: (NetworkExceptions? error) {
-          logger.w("error $error!");
-          emit(state.copyWith(error: error));
-        });
+        emit(state.copyWith(
+          scrappedMagazines: state.scrappedMagazines != null
+              ? state.scrappedMagazines! + newMagazine!
+              : newMagazine!,
+          isLoaded: true,
+          isLoading: false,
+          page: state.page + 1,
+          next: pageResponse.next,
+          previous: pageResponse.previous,
+          maxIndex: pageResponse.next == null ? true : false,
+        ));
+      }, failure: (NetworkExceptions? error) {
+        logger.w("error $error!");
+        emit(state.copyWith(error: error));
+      });
+    }
   }
 }
