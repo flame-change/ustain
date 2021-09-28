@@ -115,7 +115,23 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
       trailing: user!.name == comment.name
           ? InkWell(
               onTap: () {
-                _magazineCommentCubit.deleteMagazineComment(comment);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("댓글을 삭제하시겠습니까?"),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              _magazineCommentCubit
+                                  .deleteMagazineComment(comment);
+                              Navigator.pop(context);
+                            },
+                            child: Text("확인"),
+                          ),
+                        ],
+                      );
+                    });
               },
               child: Text("삭제"),
             )
