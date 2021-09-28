@@ -10,6 +10,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
     Id: json['Id'] as String?,
     name: json['name'] as String?,
+    keywords: json['keywords'] as String?,
     summary: json['summary'] as String?,
     description: json['description'] as String?,
     rating: json['rating'] as String?,
@@ -21,17 +22,23 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     thumbnail: json['thumbnail'] as String?,
     available: json['available'] as bool?,
-    keywords: json['keywords'] as String?,
     socialValues: (json['socialValues'] as List<dynamic>?)
         ?.map((e) => e as String)
         .toList(),
     totalReviews: json['totalReviews'] as String?,
+    options: (json['options'] as List<dynamic>?)
+        ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    variants: (json['variants'] as List<dynamic>?)
+        ?.map((e) => Variants.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'Id': instance.Id,
       'name': instance.name,
+      'keywords': instance.keywords,
       'summary': instance.summary,
       'description': instance.description,
       'rating': instance.rating,
@@ -39,9 +46,10 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'discountPrice': instance.discountPrice,
       'discountRate': instance.discountRate,
       'brand': instance.brand,
-      'keywords': instance.keywords,
       'available': instance.available,
       'thumbnail': instance.thumbnail,
       'socialValues': instance.socialValues,
       'totalReviews': instance.totalReviews,
+      'options': instance.options,
+      'variants': instance.variants,
     };

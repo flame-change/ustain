@@ -56,7 +56,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     runSpacing: 15,
                     spacing: 20,
                     children: [
-                      categoryTag(context, product.socialValues!),
+                      // categoryTag(context, product.socialValues!),
                       GestureDetector(
                         onTap: () {
                           // TODO 브랜드 페이지 이동
