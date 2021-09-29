@@ -8,8 +8,12 @@ part of 'type_group.dart';
 
 TypeGroup _$TypeGroupFromJson(Map<String, dynamic> json) {
   return TypeGroup(
-    Option.fromJson(json['option'] as Map<String, dynamic>),
-    Variation.fromJson(json['variation'] as Map<String, dynamic>),
+    option: json['option'] == null
+        ? null
+        : Option.fromJson(json['option'] as Map<String, dynamic>),
+    variation: json['variation'] == null
+        ? null
+        : Variation.fromJson(json['variation'] as Map<String, dynamic>),
   );
 }
 

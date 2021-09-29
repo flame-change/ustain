@@ -27,5 +27,4 @@ class Option extends Equatable {
     name,
     variations,
   ];
-
 }

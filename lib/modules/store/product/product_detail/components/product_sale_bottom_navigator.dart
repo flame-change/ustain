@@ -6,7 +6,8 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'product_purchase_sheet.dart';
 
-Widget productSaleBottomNavigator(BuildContext context, ProductCubit _productCubit) {
+Widget productSaleBottomNavigator(
+    BuildContext context, ProductCubit _productCubit) {
   return Container(
     color: Colors.lightBlue,
     height: Adaptive.h(10),
@@ -40,12 +41,13 @@ Widget productSaleBottomNavigator(BuildContext context, ProductCubit _productCub
             showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                ),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
                 builder: (context) => BlocProvider<ProductCubit>.value(
-                  value: _productCubit,
-                  child: ProductPurchaseSheet(),
-                ),
+                      value: _productCubit,
+                      child: ProductPurchaseSheet(),
+                    ),
                 isScrollControlled: true);
           },
           color: Colors.grey,

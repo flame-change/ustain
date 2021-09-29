@@ -26,4 +26,20 @@ class ProductCubit extends Cubit<ProductState> {
       emit(state.copyWith(error: error));
     });
   }
+
+  Future<void> createCard() async {
+    Map body = {
+      "product": "MCN3RAV4WV4F",
+      "variant": "NJRRT8K5Z8YD",
+      "quantity": "3"
+    };
+
+    ApiResult<Map> apiResult = await _productRepository.createCard(body);
+
+    apiResult.when(success: (Map? mapResponse) {
+      print(mapResponse);
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
+  }
 }
