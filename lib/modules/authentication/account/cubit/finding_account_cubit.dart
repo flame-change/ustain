@@ -1,7 +1,7 @@
-
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/models/models.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:equatable/equatable.dart';
@@ -11,42 +11,93 @@ import 'package:formz/formz.dart';
 part 'finding_account_state.dart';
 
 class FindingAccountCubit extends Cubit<FindingAccountState> {
-  FindingAccountCubit(this._authenticationRepository) : super(const FindingAccountState());
+  FindingAccountCubit(this._authenticationRepository)
+      : super(const FindingAccountState());
 
   final AuthenticationRepository _authenticationRepository;
 
-  Future<void> findingEmailPhoneNumberVerifyRequest() async {
+  void errorMsg() {
+    emit(state.copyWith(
+        errorMessage: ""
+    ));
+  }
+
+  Future<void> findingPhoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
     emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     ApiResult<Map> apiResult = await _authenticationRepository
-        .requestFindingEmailPhoneVerifier(
-      phoneNumber: state.phoneNumber.value,
+        .requestFindingPassWordVerifier(
+      phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      if(error!=null) {
-        emit(state.copyWith(
-            errorMessage: NetworkExceptions.getErrorMessage(
-                NetworkExceptions.defaultError('phone-already-in-use'))));
-      }
     });
   }
 
-  Future<void> findingEmailPhoneNumberVerify() async {
+  Future<void> findingPassWordVerify() async {
     if (!state.phoneNumber.valid) return;
-    ApiResult<String> apiResult = await _authenticationRepository.findingEmailVerifyCode(
-      phoneNumber: state.phoneNumber.value,
+    ApiResult<String> apiResult =
+    await _authenticationRepository.findingPassWordVerifyCode(
+      phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
       verifyCode: state.verifyNumber.value,
     );
-    apiResult.when(success: (String? email) {
+    apiResult.when(success: (String? phoneToken) {
       emit(state.copyWith(
-          phoneNumberVerifyStatus: VerifyStatus.verified, email: Email.dirty(email!)));
+          phoneNumberVerifyStatus: VerifyStatus.verified,
+          phoneToken: phoneToken!));
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.unverified,
-          unverifiedFlag: true,
-          errorMessage: error.toString()));
+      logger.w(error);
+      emit(state.copyWith(
+        errorMessage: NetworkExceptions.getErrorMessage(error!),
+          phoneNumberVerifyStatus: VerifyStatus.unverified,
+          unverifiedFlag: true));
     });
+  }
+
+  Future<void> resetPassWord() async {
+    // if (!state.password.valid || !state.confirmedPassword.valid) return;
+
+    print(state);
+    ApiResult<String> apiResult = await _authenticationRepository.resetPassWord(
+      phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
+      phoneToken: state.phoneToken!,
+      password: state.password.value,
+      passwordConfirm: state.confirmedPassword.value,
+    );
+
+    apiResult.when(success: (String? phone) {
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(
+          errorMessage: NetworkExceptions.getErrorMessage(error!)));
+    });
+  }
+
+  void passwordChanged(String value) {
+    Password newPassword = Password.dirty(value);
+
+
+    print(newPassword);
+
+    emit(state.copyWith(
+        password: newPassword
+    ));
+  }
+
+  void confirmedPasswordChanged(String value) {
+    print(value);
+
+    final confirmedPassword = ConfirmedPassword.dirty(
+      password: state.password.value,
+      value: value,
+    );
+    emit(state.copyWith(
+      confirmedPassword: confirmedPassword,
+      status: Formz.validate([
+        state.password,
+        confirmedPassword,
+      ]),
+    ));
   }
 
   void verifyNumberChanged(String value) {
@@ -82,7 +133,6 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
     emit(state.copyWith(
       phoneNumber: phoneNumber,
       status: Formz.validate([
-        state.email,
         state.password,
         phoneNumber,
       ]),
@@ -93,28 +143,15 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
   void emailChanged(String value) {
     final email = Email.dirty(value);
     emit(state.copyWith(
-      email: email,
       status: Formz.validate([
         email,
       ]),
     ));
   }
 
-  Future<void> findingPasswordEmailVerifyRequest() async {
-    if (!state.email.valid) return;
-
-    emit(state.copyWith(emailVerifyStatus: VerifyStatus.request));
-
-    ApiResult<Map> apiResult = await _authenticationRepository.requestFindingPasswordVerifier(email: state.email.value,);
-
-    apiResult.when(success: (Map? response) {
-      emit(state.copyWith(emailVerifyStatus: VerifyStatus.request));
-    }, failure: (NetworkExceptions? error) {
-      if(error!=null) {
-        emit(state.copyWith(
-            errorMessage: NetworkExceptions.getErrorMessage(
-                NetworkExceptions.defaultError('email-already-in-use'))));
-      }
-    });
+  void completeVerify(){
+    emit(state.copyWith(
+      phoneNumberVerifyStatus: VerifyStatus.complete
+    ));
   }
 }

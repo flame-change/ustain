@@ -11,7 +11,8 @@ part 'magazine_detail_state.dart';
 
 class MagazineDetailCubit extends Cubit<MagazineDetailState> {
   MagazineDetailCubit(this._magazineRepository)
-      : super(const MagazineDetailState(isLoading: true, isLoaded: false, isHide: true));
+      : super(const MagazineDetailState(
+            isLoading: true, isLoaded: false, isHide: true));
 
   final MagazineRepository _magazineRepository;
 
@@ -32,10 +33,7 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
     ApiResult<Map> apiResult = await _magazineRepository.getIsLike(id);
 
     apiResult.when(success: (Map? mapResponse) {
-      emit(state.copyWith(
-          isLike: mapResponse!["isLike"]
-      )
-      );
+      emit(state.copyWith(isLike: mapResponse!["isLike"]));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
@@ -46,10 +44,18 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
     ApiResult<Map> apiResult = await _magazineRepository.updateLike(id);
 
     apiResult.when(success: (Map? mapResponse) {
-      emit(state.copyWith(
-        isLike: mapResponse!["isLike"]
-      )
-      );
+      emit(state.copyWith(isLike: mapResponse!["isLike"]));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> updateIsScrapped(int id) async {
+    ApiResult<Map> apiResult = await _magazineRepository.updateScrapped(id);
+
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(isLike: mapResponse!["isScrapped"]));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
@@ -57,9 +63,6 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
   }
 
   void hideNavigation(bool isHide) {
-    emit(state.copyWith(
-      isHide: isHide
-    ));
+    emit(state.copyWith(isHide: isHide));
   }
-
 }

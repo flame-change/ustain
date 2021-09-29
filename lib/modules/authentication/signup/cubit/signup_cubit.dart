@@ -12,13 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit(this._authenticationRepository) : super(const SignupState());
+  SignupCubit(this._authenticationRepository) : super(const SignupState(errorMessage: null));
 
   final AuthenticationRepository _authenticationRepository;
 
-  void errorMessageInit() {
+  void errorMsg(){
     emit(state.copyWith(
-      errorMessage: null,
+        errorMessage: ""
     ));
   }
 
@@ -28,19 +28,13 @@ class SignupCubit extends Cubit<SignupState> {
 
   Future<void> phoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
-    emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
-    ApiResult<Map> apiResult =
-        await _authenticationRepository.requestPhoneVerifier(
-      phoneNumber: state.phoneNumber.value,
+    ApiResult<Map> apiResult = await _authenticationRepository.requestPhoneVerifier(
+      phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      if (error != null) {
-        emit(state.copyWith(
-            errorMessage: NetworkExceptions.getErrorMessage(
-                NetworkExceptions.defaultError('phone-already-in-use'))));
-      }
+      emit(state.copyWith(errorMessage: NetworkExceptions.getErrorMessage(error!)));
     });
   }
 
@@ -89,7 +83,7 @@ class SignupCubit extends Cubit<SignupState> {
       emit(state.copyWith(
           phoneNumberVerifyStatus: VerifyStatus.unverified,
           unverifiedFlag: true,
-          errorMessage: error.toString()));
+          errorMessage: NetworkExceptions.getErrorMessage(error!)));
     });
   }
 
@@ -102,7 +96,6 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(
       phoneNumber: phoneNumber,
       status: Formz.validate([
-        state.email,
         state.password,
         state.nickName,
         phoneNumber,
@@ -123,41 +116,6 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(unverifiedFlag: false));
   }
 
-  // MARK -- 이메일 중복 확인용 Cubit
-  Future<void> emailVerifyRequest() async {
-    if (!state.email.valid) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    ApiResult<String> apiResult =
-        await _authenticationRepository.emailVerifyRequest(
-      email: state.email.value,
-    );
-    apiResult.when(success: (String? email) {
-      emit(state.copyWith(
-        isDupCheckedSnsId: false,
-        status: FormzStatus.pure,
-        // errorMessage: isDuplicated
-        //     ? NetworkExceptions.getErrorMessage(
-        //     NetworkExceptions.defaultError('email-already-in-use'))
-        //     : NetworkExceptions.getErrorMessage(
-        //     NetworkExceptions.defaultError('email-useable'))
-      ));
-    }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    });
-  }
-
-  void emailChanged(String value) {
-    final email = Email.dirty(value);
-    emit(state.copyWith(
-      email: email,
-      status: Formz.validate([
-        email,
-        state.password,
-      ]),
-      isDupCheckedSnsId: true,
-    ));
-  }
-
   void confirmedPasswordChanged(String value) {
     final confirmedPassword = ConfirmedPassword.dirty(
       password: state.password.value,
@@ -166,7 +124,6 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(
       confirmedPassword: confirmedPassword,
       status: Formz.validate([
-        state.email,
         state.password,
         confirmedPassword,
         state.nickName,
@@ -176,46 +133,20 @@ class SignupCubit extends Cubit<SignupState> {
 
   void passwordChanged(String value) {
     final password = Password.dirty(value);
-    // final confirmedPassword = ConfirmedPassword.dirty(
-    //   password: password.value,
-    //   value: state.confirmedPassword.value,
-    // );
+
     emit(state.copyWith(
       password: password,
-      // confirmedPassword: confirmedPassword,
       status: Formz.validate([
-        state.email,
         password,
-        state.nickName,
         state.phoneNumber,
       ]),
     ));
   }
 
-  Future<void> emailAuthCheck(SignupState _state) async {
-    if (!state.email.valid || !state.password.valid) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-
-    ApiResult<String> apiResult =
-        await _authenticationRepository.emailAuthCheck(
-      email: state.email.value,
-      password: state.password.value,
-    );
-    apiResult.when(success: (String? email) {
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(
-        status: FormzStatus.submissionFailure,
-        errorMessage: NetworkExceptions.getErrorMessage(error!),
-      ));
-    });
-  }
-
   Future<void> signUpFormSubmitted(SignupState _state) async {
     print("signUpFormSubmitted $state");
     print("signUpFormSubmitted ${state.phoneToken}");
-    if (!state.email.valid ||
-        !state.password.valid ||
+    if (!state.password.valid ||
         !state.phoneNumber.valid ||
         state.phoneToken == null) return;
 
@@ -223,8 +154,7 @@ class SignupCubit extends Cubit<SignupState> {
 
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     ApiResult<Map> apiResult = await _authenticationRepository.signUp(
-      email: state.email.value,
-      phone: state.phoneNumber.value,
+      phone: state.phoneNumber.value.replaceAll("-", ""),
       password: state.password.value,
       passwordConfirm: state.password.value,
       phoneToken: state.phoneToken!,

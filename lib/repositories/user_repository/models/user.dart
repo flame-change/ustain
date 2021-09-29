@@ -61,4 +61,16 @@ class User extends Equatable {
   }
 
   static const empty = User();
+
+  String categoryTransfer(String word) {
+    String transfer = "";
+
+    this.categories!.forEach((category) {
+      if(category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
+        transfer = category.title!;
+      }
+    });
+
+    return transfer==""?word:transfer;
+  }
 }

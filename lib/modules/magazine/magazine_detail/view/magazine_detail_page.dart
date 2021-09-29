@@ -1,10 +1,14 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
+import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+
+import 'components/product_card_widget.dart';
 
 class MagazineDetailPage extends StatefulWidget {
   final int id;
@@ -20,6 +24,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   int get _id => this.widget.id;
   late MagazineDetailCubit _magazineDetailCubit;
   final _scrollController = ScrollController();
+  late User user;
 
   @override
   void initState() {
@@ -28,10 +33,11 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
     _magazineDetailCubit.getMagazineDetail(_id);
     _magazineDetailCubit.getIsLike(_id);
     _scrollController.addListener(_onScroll);
+    user = context.read<AuthenticationBloc>().state.user;
   }
 
   void _onScroll() {
-      _magazineDetailCubit.hideNavigation(false);
+    _magazineDetailCubit.hideNavigation(false);
   }
 
   @override
@@ -44,6 +50,14 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
             return Scaffold(
               appBar: AppBar(
                 title: Text("${magazineDetail.title}"),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        _magazineDetailCubit
+                            .updateIsScrapped(magazineDetail.id!);
+                      },
+                      icon: Icon(Icons.archive_outlined))
+                ],
               ),
               floatingActionButton: magazineLikeButton(magazineDetail.id!),
               bottomNavigationBar: magazineBottomNavigator(magazineDetail.id!),
@@ -52,8 +66,10 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                 child: Column(
                   children: [
                     Container(
-                      height: 50.h,
-                      width: 100.w,
+                      height: Adaptive.h(50),
+                      width: Adaptive.w(100) > 475
+                          ? 475 / 100 * 100
+                          : Adaptive.w(100),
                       child: Image.network(
                         "${magazineDetail.bannerImage}",
                         fit: BoxFit.cover,
@@ -61,24 +77,29 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                     ),
                     PageWire(
                         child: Container(
-                      width: 100.w,
-                      padding: EdgeInsets.only(top: 10),
+                      width: Adaptive.w(100),
+                      padding: EdgeInsets.only(top: 10, bottom: 11.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "${magazineDetail.title}",
                             style: TextStyle(
-                                fontSize: 25.sp, fontWeight: FontWeight.bold),
+                                fontSize: Adaptive.sp(25), fontWeight: FontWeight.bold),
                           ),
                           Text("매거진 부제목: 매거진의 부제목",
-                              style: TextStyle(fontSize: 20.sp)),
+                              style: TextStyle(fontSize: Adaptive.sp(20))),
                           getCategories(magazineDetail.categories!),
-                          Text("${magazineDetail.createdAt!}"),
+                          Text(
+                              "${magazineDetail.createdAt!}  ${magazineDetail.likeUserCount!}likes"),
                           Divider(),
                           Html(
                             data: magazineDetail.content!,
-                          )
+                            shrinkWrap: true,
+                          ),
+                          magazineDetail.products != null
+                              ? productCard(context, magazineDetail.products!)
+                              : SizedBox(height: 0)
                         ],
                       ),
                     ))
@@ -91,20 +112,20 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
           }
         });
   }
-}
 
-Widget getCategories(List<String> categories) {
-  return Wrap(
-    spacing: 10,
-    runSpacing: 5,
-    children: List<Widget>.generate(
-        categories.length,
-        (index) => Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              decoration: BoxDecoration(
+  Widget getCategories(List<String> categories) {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 5,
+      children: List<Widget>.generate(
+          categories.length,
+          (index) => Container(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                decoration: BoxDecoration(
                   color: Colors.lightBlue,
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Text("${categories[index]}"),
-            )),
-  );
+                ),
+                child: Text("${user.categoryTransfer(categories[index])}"),
+              )),
+    );
+  }
 }

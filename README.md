@@ -14,3 +14,9 @@ cd ios
 pod install 
 flutter run
 ```
+
+(devlopment) Web으로 프로젝트 시작하는 법
+
+```
+terminal > flutter run -d chrom --web-renderer html  
+```

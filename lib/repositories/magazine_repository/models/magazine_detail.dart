@@ -1,24 +1,24 @@
+import 'package:aroundus_app/repositories/product_repository/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'magazine_category.dart';
 
 part 'magazine_detail.g.dart';
 
 @JsonSerializable()
 class MagazineDetail extends Equatable {
   const MagazineDetail({
-      this.categories,
-      this.bannerImage,
-      this.id,
-      this.content,
-      this.title,
-      this.hit,
-      this.createdAt,
-      this.updatedAt,
-      this.commentsBanned,
-      this.likeUserCount,
-      this.totalComments,
+    this.categories,
+    this.bannerImage,
+    this.id,
+    this.content,
+    this.title,
+    this.hit,
+    this.createdAt,
+    this.updatedAt,
+    this.commentsBanned,
+    this.likeUserCount,
+    this.totalComments,
+    this.products,
   });
 
   final List<String>? categories;
@@ -32,6 +32,7 @@ class MagazineDetail extends Equatable {
   final bool? commentsBanned;
   final int? likeUserCount;
   final int? totalComments;
+  final List<Map>? products;
 
   factory MagazineDetail.fromJson(Map<String, dynamic> json) =>
       _$MagazineDetailFromJson(json);
@@ -39,7 +40,8 @@ class MagazineDetail extends Equatable {
   Map<String, dynamic> toJson() => _$MagazineDetailToJson(this);
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         categories,
         bannerImage,
         id,
@@ -51,21 +53,22 @@ class MagazineDetail extends Equatable {
         commentsBanned,
         likeUserCount,
         totalComments,
+        products,
       ];
 
-  MagazineDetail copyWith(
-      {List<String>? categories,
-      String? bannerImage,
-      int? id,
-      String? content,
-      String? title,
-      int? hit,
-      String? createdAt,
-      String? updatedAt,
-      bool? commentsBanned,
-      int? likeUserCount,
-      int? totalComments
-      }) {
+  MagazineDetail copyWith({List<String>? categories,
+    String? bannerImage,
+    int? id,
+    String? content,
+    String? title,
+    int? hit,
+    String? createdAt,
+    String? updatedAt,
+    bool? commentsBanned,
+    int? likeUserCount,
+    int? totalComments,
+    List<Map>? products
+  }) {
     return MagazineDetail(
       categories: categories ?? this.categories,
       bannerImage: bannerImage ?? this.bannerImage,
@@ -78,6 +81,7 @@ class MagazineDetail extends Equatable {
       commentsBanned: commentsBanned ?? this.commentsBanned,
       likeUserCount: likeUserCount ?? this.likeUserCount,
       totalComments: totalComments ?? this.totalComments,
+      products: products ?? this.products,
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_det
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'magazine_comment_sheet.dart';
 
@@ -18,10 +18,10 @@ Widget magazineBottomNavigator(int id) {
         visible: !isHide,
         child: Container(
           color: Colors.lightBlue,
-          height: 10.h,
-          width: 100.w,
+          height: Adaptive.h(10),
+          width: Adaptive.w(100),
           padding: EdgeInsets.symmetric(
-            horizontal: 5.w,
+            horizontal: Adaptive.w(5),
           ),
           child: Wrap(
             runAlignment: WrapAlignment.center,

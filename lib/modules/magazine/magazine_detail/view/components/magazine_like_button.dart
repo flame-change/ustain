@@ -10,10 +10,11 @@ Widget magazineLikeButton(int id) {
          return FloatingActionButton(
           onPressed: () {
             context.read<MagazineDetailCubit>().updateIsLike(id);
+            context.read<MagazineDetailCubit>().getMagazineDetail(id);
           },
           child: isLike
-              ? Icon(Icons.favorite_border)
-              : Icon(Icons.favorite),
+              ? Icon(Icons.favorite)
+              : Icon(Icons.favorite_border),
         );
       } else {
          return SizedBox(height: 0);

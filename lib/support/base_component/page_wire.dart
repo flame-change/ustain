@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class PageWire extends StatelessWidget {
 
@@ -10,7 +10,9 @@ class PageWire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.w),
+        padding: EdgeInsets.symmetric(horizontal: Adaptive.w(100) > 475
+            ? 475 / 100 * 5
+            : Adaptive.w(5)),
         child: child));
   }
 }

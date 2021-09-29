@@ -2,7 +2,7 @@ import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.da
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'signup_category_page.dart';
 
@@ -31,7 +31,7 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
           children: [
             Text(
               "만나서 반가워요! 😊\n저희가 뭐라고 불러드리면 좋을까요?",
-              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: Adaptive.sp(15), fontWeight: FontWeight.bold),
             ),
             BlocBuilder<SignupCubit, SignupState>(
                 buildWhen: (previous, current) =>
@@ -61,7 +61,7 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
                             ),
                             (route) => false)
                         : null,
-                    minWidth: 100.w,
+                    minWidth: Adaptive.w(100),
                     color: Colors.grey,
                     child: Text("다음"),
                   );

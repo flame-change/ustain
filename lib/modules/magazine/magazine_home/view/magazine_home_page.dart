@@ -8,8 +8,9 @@ import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
+import 'components/magazine_card_widget.dart';
 import 'components/todays_magazine_widget.dart';
 
 class MagazineHomePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
   void initState() {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
-    _magazineCubit.getMagazinesByCategory();
+    _magazineCubit.getMagazinesByCategory(magazineCategory: MagazineCategory.empty);
     _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
     user = context.read<AuthenticationBloc>().state.user;
@@ -50,7 +51,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
         controller: _scrollController,
         child: BlocBuilder<MagazineCubit, MagazineState>(
           builder: (context, state) {
-            if (state.todaysMaagazines != null && state.magazines != null) {
+            if (state.todaysMaagazines!=null && state.magazines!=null) {
               return Wrap(runSpacing: 15, children: [
                 // 오늘의 매거진
                 TodaysMagazine(state.todaysMaagazines!),
@@ -62,40 +63,20 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                     Text(
                       "모아보기📚",
                       style: TextStyle(
-                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "어쩌구 저쩌구!",
                       style:
-                          TextStyle(fontSize: 15.sp, color: Color(0xFF979797)),
+                          TextStyle( color: Color(0xFF979797)),
                     ),
                     // TODO 카테고리들 스크롤링 뷰
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 5.h,
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      height: 30,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children:
-                        <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              print("전체보기");
-                              _magazineCubit.getMagazinesByCategory();
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(right: 5),
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: _magazineCubit.state.magazineCategory == null
-                                      ? Colors.lightBlue
-                                      : Colors.black12,
-                                  borderRadius: BorderRadius.circular(25)),
-                              child: Text("전체보기"),
-                            ),
-                          )
-                        ]+
-                            categoryTitle(),
+                        children: categoryTitle(),
                       ),
                     ),
                     Wrap(
@@ -103,58 +84,14 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                       runSpacing: 10,
                       children: List.generate(
                           state.magazines!.length,
-                          (index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => MultiBlocProvider(
-                                            providers: [
-                                              BlocProvider<MagazineDetailCubit>(
-                                                create: (context) =>
-                                                    MagazineDetailCubit(
-                                                        RepositoryProvider.of<
-                                                                MagazineRepository>(
-                                                            context)),
-                                              )
-                                            ],
-                                            child: MagazineDetailPage(
-                                                state.magazines![index].id!)),
-                                      ));
-                                },
-                                child: Container(
-                                  width: 100.w,
-                                  height: 30.h,
-                                  color: Colors.black38,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.network(
-                                        state.magazines![index].bannerImage!,
-                                        height: 20.h,
-                                        width: 100.w,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      Text(
-                                        state.magazines![index].title!,
-                                        style: TextStyle(fontSize: 20.sp),
-                                      ),
-                                      Text(
-                                        "매거진 내용 최대 두 줄",
-                                        maxLines: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )),
+                          (index) => magazineCard(context, state.magazines![index])),
                     )
                   ],
                 ),
               ]);
             } else {
               return Container(
-                  height: 100.h,
+                  height: Adaptive.h(100),
                   child: Center(child: CircularProgressIndicator()));
             }
           },
@@ -162,7 +99,25 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
   }
 
   List<Widget> categoryTitle() {
-    return List<Widget>.generate(
+    print("magazine ${_magazineCubit.state.magazineCategory}");
+
+    return <Widget>[GestureDetector(
+      onTap: () {
+        print("전체보기");
+        _magazineCubit.getMagazinesByCategory(magazineCategory: MagazineCategory.empty);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(right: 5),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+            color: _magazineCubit.state.magazineCategory == MagazineCategory.empty
+                ? Colors.lightBlue
+                : Colors.black12,
+            borderRadius: BorderRadius.circular(25)),
+        child: Text("전체보기"),
+      ),
+    )]+List<Widget>.generate(
         user.categories!.length,
         (index) => GestureDetector(
               onTap: () {

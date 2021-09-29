@@ -63,8 +63,6 @@ class DioClient {
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -127,8 +125,6 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -162,8 +158,41 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
+  Future<dynamic> patchWithClayful(
+      String uri, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.patch(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": cancelToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response.data;
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -193,8 +222,37 @@ class DioClient {
         cancelToken: cancelToken,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
+  Future<dynamic> deleteWithClayful(
+      String uri, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.delete(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": clayfulToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+      );
+      return response.data;
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -217,6 +275,41 @@ class DioClient {
         uri,
         queryParameters: queryParameters,
         options: Options(headers: {
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        }),
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response.data;
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on FormatException catch (_) {
+      throw FormatException("Unable to process the data");
+    } on DioError catch (dioError) {
+      _handleDioError(dioError);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
+  Future<dynamic> getWithClayful(
+      String uri, {
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var accessToken = prefs.getString('access');
+      var clayfulToken = prefs.getString('clayful');
+
+      var response = await _dio.get(
+        uri,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          "clayful": clayfulToken,
           Headers.contentTypeHeader: Headers.jsonContentType,
           HttpHeaders.authorizationHeader: "Bearer $accessToken",
         }),
@@ -271,7 +364,7 @@ class DioClient {
     }
   }
 
-  Future<dynamic> postFormWithAuth(
+  Future<dynamic> postWithClayful(
     String uri, {
     data,
     Map<String, dynamic>? queryParameters,
@@ -282,13 +375,18 @@ class DioClient {
   }) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      var clayfulToken = prefs.getString('clayful');
       var accessToken = prefs.getString('access');
+
+      print(cancelToken);
 
       var response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
         options: Options(headers: {
+          "clayful": clayfulToken,
+          Headers.contentTypeHeader: Headers.jsonContentType,
           HttpHeaders.authorizationHeader: "Bearer $accessToken",
         }),
         cancelToken: cancelToken,
@@ -296,8 +394,6 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       return response.data;
-    } on FormatException catch (_) {
-      throw FormatException("Unable to process the data");
     } on DioError catch (dioError) {
       _handleDioError(dioError);
     } catch (e) {
@@ -308,27 +404,19 @@ class DioClient {
   _handleDioError(DioError dioError) {
     print("]-----] DioUtil::_handleDioError [-----[ $dioError");
     print("]-----] response ${dioError.response}");
+    print("]-----] response ${dioError.response?.data['errorMsg']}");
 
     if (dioError.response != null) {
-      logger.e("DioUtil::_handleDioError.response ");
-      logger.e("${dioError.response} ${dioError.response!.headers} ${dioError.response!.statusCode}");
-      if (dioError.response?.statusCode == 401) {
-        authenticationBloc!.add(AuthenticationLogoutRequested());
-      }
-      if (dioError.response?.statusCode == 403) {
-        authenticationBloc!.add(AuthenticationLogoutRequested());
+      if (dioError.response?.data['errorMsg'] != null) {
+        throw dioError;
       } else {
-        if (dioError.response?.data['code'] != null) {
-          throw dioError;
-        } else {
-          throw Exception(dioError);
-        }
+        throw dioError;
       }
     } else {
       if (dioError.error is SocketException) {
         throw Exception(ErrorMessage.getValue(999));
       } else {
-        throw Exception(dioError.message);
+        throw Exception(dioError.response?.data['errorMsg']);
       }
     }
   }

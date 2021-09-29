@@ -14,16 +14,17 @@ class SignInCubit extends Cubit<SignInState> {
   final AuthenticationRepository _authenticationRepository;
   var logger = Logger(printer: PrettyPrinter());
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn({required String phoneNumber, required String password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     ApiResult<Map> apiResult = await _authenticationRepository.signIn(
-        email: email, password: password);
+        phoneNumber: phoneNumber, password: password);
 
     apiResult.when(
         success: (Map? response) {
           logger.d("prefs ${prefs.get('access')}");
           prefs.setString('access', response!['access']);
+          prefs.setString('clayful', response['clayful']);
           prefs.setString('refresh', response['refresh']);
           _authenticationRepository.logIn();
           emit(state.copyWith(
@@ -32,13 +33,15 @@ class SignInCubit extends Cubit<SignInState> {
         },
         failure: (NetworkExceptions? error) {
           emit(state.copyWith(
+            error: error,
             errorMessage: NetworkExceptions.getErrorMessage(error!),
           ));
         });
   }
 
-// Future<void> signOut() async {
-//   await _authenticationRepository.signOut();
-// }
-
+  void errorMsg(){
+    emit(state.copyWith(
+      errorMessage: ""
+    ));
+  }
 }

@@ -82,9 +82,11 @@ class AuthenticationRepository {
   }) async {
     try {
       String body = json.encode({
-        "phone": phoneNumber,
+        "phone": phoneNumber.replaceAll("-", ""),
         "code": verifyCode,
       });
+
+      print(body);
       var response = await _dioClient
           .post('/api/v1/user/phone-verifier/confirm/', data: body);
       return ApiResult.success(
@@ -110,31 +112,17 @@ class AuthenticationRepository {
     }
   }
 
-  Future<ApiResult<String>> emailAuthCheck(
-      {required String email, required String password}) async {
-    try {
-      String body = json.encode({"email": email});
-      return ApiResult.success(
-        data: email,
-      );
-    } catch (e) {
-      print(e);
-      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
-    }
-  }
 
   Future<ApiResult<Map>> signUp(
-      {required String email,
-      required String password,
+      {required String password,
       required String phone,
       required String phoneToken,
       required String passwordConfirm}) async {
     try {
       String body = json.encode({
-        "email": email,
         "phone": phone,
         "password": password,
-        "phoneToken": phoneToken,
+        "phone_token": phoneToken,
         "passwordConfirm": passwordConfirm
       });
 
@@ -149,10 +137,10 @@ class AuthenticationRepository {
   }
 
   Future<ApiResult<Map>> signIn(
-      {required String email, required String password}) async {
+      {required String phoneNumber, required String password}) async {
     try {
       String body = json.encode({
-        "email": email,
+        "phone": phoneNumber,
         "password": password,
       });
 
@@ -174,13 +162,13 @@ class AuthenticationRepository {
     }
   }
 
-  Future<ApiResult<Map>> requestFindingEmailPhoneVerifier({
+  Future<ApiResult<Map>> requestFindingPassWordVerifier({
     required String phoneNumber,
   }) async {
     try {
       String body = json.encode({"phone": phoneNumber});
       var response = await _dioClient
-          .post('/api/v1/user/email-found/phone-verifier/', data: body);
+          .post('/api/v1/user/password-reset/phone-verifier/', data: body);
       return ApiResult.success(
         data: response['phone'],
       );
@@ -191,7 +179,7 @@ class AuthenticationRepository {
     }
   }
 
-  Future<ApiResult<String>> findingEmailVerifyCode({
+  Future<ApiResult<String>> findingPassWordVerifyCode({
     required String phoneNumber,
     required String verifyCode,
   }) async {
@@ -200,10 +188,11 @@ class AuthenticationRepository {
         "phone": phoneNumber,
         "code": verifyCode,
       });
-      var response = await _dioClient
-          .post('/api/v1/user/email-found/phone-verifier/confirm/', data: body);
+      var response = await _dioClient.post(
+          '/api/v1/user/password-reset/phone-verifier/confirm/',
+          data: body);
       return ApiResult.success(
-        data: response['email'],
+        data: response['phoneToken'],
       );
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -240,6 +229,28 @@ class AuthenticationRepository {
       return ApiResult.failure(
         error: NetworkExceptions.getDioException(e),
       );
+    }
+  }
+
+  Future<ApiResult<String>> resetPassWord({
+    required String phoneNumber,
+    required String phoneToken,
+    required String password,
+    required String passwordConfirm,
+  }) async {
+    try {
+      String body = json.encode({
+        "phone": phoneNumber,
+        "phone_token": phoneToken,
+        "password": password,
+        "password_confirm": passwordConfirm,
+      });
+      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      return ApiResult.success(
+        data: response['phone'],
+      );
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 }

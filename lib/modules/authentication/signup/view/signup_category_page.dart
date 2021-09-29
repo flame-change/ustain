@@ -1,12 +1,10 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class SignupCategoryPage extends StatefulWidget {
   static String routeName = 'signup_category_page';
@@ -42,7 +40,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
               Text(
                 "가입을 축하드립니다! 🎉\n"
                 "${_signupCubit.state.nickName.value.toString()} 님은 어떤 분야에 관심이 많으신가요? 🤔 세 가지를 골라주세요!",
-                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: Adaptive.sp(15), fontWeight: FontWeight.bold),
               ),
               Container(
                 child: Wrap(
@@ -98,7 +96,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                 onPressed: () {
                   _signupCubit.updateUserProfile(nickName: _signupCubit.state.nickName.value.toString(), categories: selectedCategory);
                 },
-                minWidth: 100.w,
+                minWidth: Adaptive.w(100),
                 child: Text("선택완료"),
               ),
               InkWell(

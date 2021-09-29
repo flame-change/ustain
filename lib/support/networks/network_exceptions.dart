@@ -60,12 +60,14 @@ abstract class NetworkExceptions with _$NetworkExceptions {
               networkExceptions = NetworkExceptions.sendTimeout();
               break;
             case DioErrorType.response:
+              print("error.response ${error.response}");
+
               switch (error.response!.statusCode) {
                 case 400:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions = NetworkExceptions.defaultError(error.response!.data['errorMsg']);
                   break;
                 case 401:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions = NetworkExceptions.defaultError(error.response!.data['errorMsg']);
                   break;
                 case 403:
                   networkExceptions = NetworkExceptions.unauthorisedRequest();
@@ -175,7 +177,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
         case 'nickname-useable':
           return "사용 가능한 닉네임 입니다.";
         default:
-          return "네트워크 오류입니다 관리자에 문의 부탁드립니다.";
+          return errorMessageCode;
       }
     }
     return 'errorMessageCode';
