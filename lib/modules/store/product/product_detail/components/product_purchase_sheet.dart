@@ -23,14 +23,13 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
     _product = _productCubit.state.products!.first;
   }
 
-
   /*
-  pickOption : 사용자가 선택한 옵션
+  selectedOptions : 사용자가 선택한 옵션
   - 옵션 조합마다 Id값이 유니크해서, type씩 맵핑해줘야함
 
   quantity : 구매할 옵션의 수량
   */
-  late List<TypeGroup> pickOption = List.generate(
+  late List<TypeGroup> selectedOptions = List.generate(
       _product.options!.length,
       (index) => TypeGroup(
           option: Option(
@@ -60,7 +59,28 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      print(selectedOptions);
+
+                      _productCubit.createCard(
+                          _product, selectedOptions, quantity);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("장바구니에 상품이 담겼습니다."),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("확인"),
+                                ),
+                              ],
+                            );
+                          });
+                    },
                     child: Container(
                         color: Colors.cyanAccent,
                         width: Adaptive.w(100) > 475
@@ -70,7 +90,10 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                         child: Text("장바구니 담기")),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      // TODO 오더 쪽 하면 작업
+
+                    },
                     child: Container(
                         color: Colors.cyan,
                         width: Adaptive.w(100) > 475
@@ -110,23 +133,27 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                         padding: EdgeInsets.only(right: 10),
                         child: MaterialButton(
                             onPressed: () {
-                              if (pickOption[i].variation ==
+                              if (selectedOptions[i].variation ==
                                   options[i].variations![j]) {
                                 setState(() {
-                                  pickOption[i] = pickOption[i].copyWith(
-                                      option: pickOption[i].option, variation: null);
+                                  selectedOptions[i] = selectedOptions[i]
+                                      .copyWith(
+                                          option: selectedOptions[i].option,
+                                          variation: null);
                                 });
                               } else {
                                 setState(() {
-                                  pickOption[i] = pickOption[i].copyWith(
-                                      option: pickOption[i].option,
-                                      variation: options[i].variations![j]);
+                                  selectedOptions[i] = selectedOptions[i]
+                                      .copyWith(
+                                          option: selectedOptions[i].option,
+                                          variation: options[i].variations![j]);
                                 });
                               }
                             },
                             height: Adaptive.h(5),
                             elevation: 0,
-                            color: pickOption[i].variation == options[i].variations![j]
+                            color: selectedOptions[i].variation ==
+                                    options[i].variations![j]
                                 ? Colors.amber
                                 : Colors.grey,
                             child: Text("${options[i].variations![j].value}")),
@@ -162,7 +189,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     setState(() {
-                      if (quantity>1){
+                      if (quantity > 1) {
                         quantity -= 1;
                       }
                     });
@@ -173,7 +200,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                   icon: Icon(Icons.add),
                   onPressed: () {
                     setState(() {
-                      if (quantity<100){
+                      if (quantity < 100) {
                         quantity += 1;
                       }
                     });
