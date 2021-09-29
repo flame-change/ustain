@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -83,9 +84,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                     },
                     child: Container(
                         color: Colors.cyanAccent,
-                        width: Adaptive.w(100) > 475
-                            ? 475 / 100 * 50
-                            : Adaptive.w(50),
+                        width: sizeWith(50),
                         alignment: Alignment.center,
                         child: Text("장바구니 담기")),
                   ),
@@ -96,9 +95,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                     },
                     child: Container(
                         color: Colors.cyan,
-                        width: Adaptive.w(100) > 475
-                            ? 475 / 100 * 50
-                            : Adaptive.w(50),
+                        width: sizeWith(50),
                         alignment: Alignment.center,
                         child: Text("구매하기")),
                   ),
