@@ -35,7 +35,7 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
       ),
       bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.store),
       floatingActionButton: FloatingActionButton(onPressed: () {
-
+        Navigator.pushNamed(context, 'cart_screen');
       },
       child: Icon(Icons.shopping_cart_outlined)),
     );
