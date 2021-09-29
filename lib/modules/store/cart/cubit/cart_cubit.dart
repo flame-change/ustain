@@ -1,5 +1,6 @@
-
 import 'package:aroundus_app/repositories/cart_repository/cart_repository.dart';
+import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
+import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -11,4 +12,14 @@ class CartCubit extends Cubit<CartState> {
 
   final CartRepository _cartRepository;
 
+  Future<void> getCartList() async {
+    ApiResult<List> apiResult = await _cartRepository.getCartList();
+
+    apiResult.when(success: (List? listResponse) {
+      emit(state.copyWith(
+          carts: listResponse!.map((cart) => Cart.fromJson(cart)).toList()));
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
+  }
 }
