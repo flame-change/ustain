@@ -1,3 +1,4 @@
+import 'package:aroundus_app/repositories/product_repository/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -10,6 +11,7 @@ class Product extends Equatable {
   const Product({
     this.Id,
     this.name,
+    this.keywords,
     this.summary,
     this.description,
     this.rating,
@@ -19,13 +21,15 @@ class Product extends Equatable {
     this.brand,
     this.thumbnail,
     this.available,
-    this.keywords,
     this.socialValues,
     this.totalReviews,
+    this.options,
+    this.variants,
   });
 
   final String? Id;
   final String? name;
+  final String? keywords;
   final String? summary;
   final String? description;
   final String? rating;
@@ -33,11 +37,12 @@ class Product extends Equatable {
   final String? discountPrice;
   final String? discountRate;
   final Brand? brand;
-  final String? keywords;
   final bool? available;
   final String? thumbnail;
   final List<String>? socialValues;
   final String? totalReviews;
+  final List<Option>? options;
+  final List<Variants>? variants;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -60,6 +65,8 @@ class Product extends Equatable {
         keywords,
         socialValues,
         totalReviews,
+        options,
+        variants,
       ];
 
   Product copyWith({
@@ -77,6 +84,8 @@ class Product extends Equatable {
     bool? available,
     List<String>? socialValues,
     String? totalReviews,
+    List<Option>? options,
+    List<Variants>? variants,
   }) {
     return Product(
       Id: Id ?? this.Id,
@@ -92,6 +101,8 @@ class Product extends Equatable {
       socialValues: socialValues ?? this.socialValues,
       totalReviews: totalReviews ?? this.totalReviews,
       brand: brand ?? this.brand,
+      options: options ?? this.options,
+      variants: variants ?? this.variants,
     );
   }
 }

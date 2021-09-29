@@ -67,7 +67,9 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                   children: [
                     Container(
                       height: Adaptive.h(50),
-                      width: Adaptive.w(100),
+                      width: Adaptive.w(100) > 475
+                          ? 475 / 100 * 100
+                          : Adaptive.w(100),
                       child: Image.network(
                         "${magazineDetail.bannerImage}",
                         fit: BoxFit.cover,
@@ -93,6 +95,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                           Divider(),
                           Html(
                             data: magazineDetail.content!,
+                            shrinkWrap: true,
                           ),
                           magazineDetail.products != null
                               ? productCard(context, magazineDetail.products!)
@@ -121,7 +124,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                 decoration: BoxDecoration(
                   color: Colors.lightBlue,
                 ),
-                child: Text("${user.fromEng(categories[index])}"),
+                child: Text("${user.categoryTransfer(categories[index])}"),
               )),
     );
   }

@@ -72,7 +72,8 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                                         children: List.generate(
                                           comments[index].reply!.length,
                                           (i) => Padding(
-                                            padding: EdgeInsets.only(left: Adaptive.w(5)),
+                                            padding: EdgeInsets.only(
+                                                left: Adaptive.w(5)),
                                             child: commentTile(
                                                 comments[index].reply![i]),
                                           ),
@@ -82,7 +83,9 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                               ],
                             ),
                           )
-                        : Center(heightFactor: Adaptive.h(100), child: Text("댓글이 없습니다.")),
+                        : Center(
+                            heightFactor: Adaptive.h(100),
+                            child: Text("댓글이 없습니다.")),
                   ),
                   Flexible(child: messageWidget())
                 ],
@@ -102,9 +105,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
       // leading: Text("${comment.id}"),
       leading: Image.network('https://via.placeholder.com/80'),
       title: RichText(
-        text: TextSpan(
-            style: TextStyle(color: Colors.black),
-            children: [
+        text: TextSpan(style: TextStyle(color: Colors.black), children: [
           TextSpan(
               text: "${comment.name} ",
               style: TextStyle(fontWeight: FontWeight.bold)),
@@ -114,7 +115,23 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
       trailing: user!.name == comment.name
           ? InkWell(
               onTap: () {
-                _magazineCommentCubit.deleteMagazineComment(comment);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("댓글을 삭제하시겠습니까?"),
+                        actions: [
+                          MaterialButton(
+                            onPressed: () {
+                              _magazineCommentCubit
+                                  .deleteMagazineComment(comment);
+                              Navigator.pop(context);
+                            },
+                            child: Text("확인"),
+                          ),
+                        ],
+                      );
+                    });
               },
               child: Text("삭제"),
             )
@@ -124,7 +141,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
       // TODO 날짜 유틸 후 수정
       subtitle: Row(
         children: [
-          Text("July 26"),
+          Text("${comment.createdAt}  "),
           InkWell(
             onTap: () {
               focusNode.requestFocus();
@@ -141,14 +158,13 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
   }
 
   Widget messageWidget() {
+    _messageController.text = "";
+
     return Container(
         width: 100.w,
         child: TextFormField(
             focusNode: focusNode,
             controller: _messageController,
-            onChanged: (value) {
-              print(value);
-            },
             decoration: InputDecoration(
                 prefixText:
                     editComment != null ? "@" + editComment!.name! + " " : "",
@@ -164,6 +180,9 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                           editComment!.parent == null
                               ? editComment!.id
                               : editComment!.parent);
+                      setState(() {
+                        editComment = null;
+                      });
                     } else {
                       _magazineCommentCubit.requestMagazineComment(
                           _magazineId, _messageController.text, null);

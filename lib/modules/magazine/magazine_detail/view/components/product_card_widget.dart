@@ -92,7 +92,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
                                           children: [
                                             TextSpan(
                                                 text:
-                                                    "${products[index].discountRate}% \t",
+                                                    "${products[index].discountRate}%   ",
                                                 style: TextStyle(
                                                     fontSize: Adaptive.sp(15),
                                                     fontWeight:

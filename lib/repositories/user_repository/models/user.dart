@@ -62,15 +62,15 @@ class User extends Equatable {
 
   static const empty = User();
 
-  String fromEng(String english) {
-    String toKo = "";
+  String categoryTransfer(String word) {
+    String transfer = "";
 
     this.categories!.forEach((category) {
-      if(category.mid==english) {
-        toKo = category.title!;
+      if(category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
+        transfer = category.title!;
       }
     });
 
-    return toKo;
+    return transfer==""?word:transfer;
   }
 }

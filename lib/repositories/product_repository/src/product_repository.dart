@@ -18,4 +18,15 @@ class ProductRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<Map>> createCard(Map<String, dynamic> body) async {
+    try {
+      var response =
+          await _dioClient.postWithClayful('/api/v1/commerce/cart/add/', data: body);
+
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }

@@ -24,6 +24,7 @@ class SignInCubit extends Cubit<SignInState> {
         success: (Map? response) {
           logger.d("prefs ${prefs.get('access')}");
           prefs.setString('access', response!['access']);
+          prefs.setString('clayful', response['clayful']);
           prefs.setString('refresh', response['refresh']);
           _authenticationRepository.logIn();
           emit(state.copyWith(
