@@ -17,8 +17,11 @@ class _CartScreen extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("장바구니"),
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: BlocProvider(
         create: (_) => CartCubit(RepositoryProvider.of<CartRepository>(context)),
