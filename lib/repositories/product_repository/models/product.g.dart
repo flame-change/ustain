@@ -22,9 +22,8 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     thumbnail: json['thumbnail'] as String?,
     available: json['available'] as bool?,
-    socialValues: (json['socialValues'] as List<dynamic>?)
-        ?.map((e) => e as String)
-        .toList(),
+    hashtags:
+        (json['hashtags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     totalReviews: json['totalReviews'] as String?,
     options: (json['options'] as List<dynamic>?)
         ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
@@ -48,7 +47,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'brand': instance.brand,
       'available': instance.available,
       'thumbnail': instance.thumbnail,
-      'socialValues': instance.socialValues,
+      'hashtags': instance.hashtags,
       'totalReviews': instance.totalReviews,
       'options': instance.options,
       'variants': instance.variants,

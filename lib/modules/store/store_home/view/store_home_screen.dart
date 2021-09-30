@@ -65,39 +65,48 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
             StoreCubit(RepositoryProvider.of<StoreRepository>(context)),
         child: Stack(
           children: [
-            AnimatedOpacity(
-              opacity: isOpen ? 0.3 : 0,
-              duration: Duration(milliseconds: 700),
-              child: Container(
-                height: Adaptive.h(100),
-                color: Colors.black,
+            StorePage(selectedMenu),
+            IndexedStack(index: 1, children: [
+              AnimatedOpacity(
+                opacity: isOpen ? 0.3 : 0,
+                duration: Duration(milliseconds: 700),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isOpen = !isOpen;
+                    });
+                  },
+                  child: Container(
+                    height: Adaptive.h(100),
+                    color: Colors.black,
+                  ),
+                ),
               ),
-            ),
-            AnimatedContainer(
-              color: Colors.white,
-              height: isOpen ? user.collections!.length * 50 : 0,
-              duration: Duration(milliseconds: 700),
-              curve: Curves.fastOutSlowIn,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () {
-                      print(user.collections![index]);
-                      setState(() {
-                        isOpen = !isOpen;
-                        selectedMenu = user.collections![index];
-                      });
-                    },
-                    title: Text("${user.collections![index].name}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  );
-                },
-                itemCount: user.collections!.length,
-                itemExtent: 50,
+              AnimatedContainer(
+                color: Colors.white,
+                height: isOpen ? user.collections!.length * 50 : 0,
+                duration: Duration(milliseconds: 700),
+                curve: Curves.fastOutSlowIn,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        setState(() {
+                          isOpen = !isOpen;
+                          selectedMenu = user.collections![index];
+                        });
+                        print(selectedMenu);
+                      },
+                      title: Text("${user.collections![index].name}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    );
+                  },
+                  itemCount: user.collections!.length,
+                  itemExtent: 50,
+                ),
               ),
-            ),
-            StorePage(),
+            ]),
           ],
         ),
       ),

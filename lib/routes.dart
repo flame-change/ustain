@@ -23,7 +23,6 @@ final Map<String, WidgetBuilder> routes = {
   FindingPasswordPage.routeName: (context) => FindingPasswordPage(),
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
-  StorePage.routeName: (context) => StorePage(),
   CartScreen.routeName: (context) => CartScreen(),
 };
 
