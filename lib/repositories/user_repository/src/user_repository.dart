@@ -1,3 +1,4 @@
+import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
@@ -5,7 +6,10 @@ import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
 class UserGetFailure implements Exception {}
+
 class CategoryGetFailure implements Exception {}
+
+class CollectionGetFailure implements Exception {}
 
 class UserRepository {
   final DioClient _dioClient;
@@ -21,28 +25,41 @@ class UserRepository {
     }
   }
 
-  Future<ApiResult<User>> getUser() async {
+  Future<List> getCollection() async {
+    try {
+      var response =
+          await _dioClient.getWithAuth('/api/v1/commerce/collection/');
 
+      return response;
+    } on Exception {
+      throw CollectionGetFailure();
+    }
+  }
+
+  Future<ApiResult<User>> getUser() async {
     List? category = await getCategories();
+    List? collections = await getCollection();
 
     try {
       var response = await _dioClient.getWithAuth('/api/v1/user/profile/');
 
-      return ApiResult.success(data: User(
-        groups: response['groups'],
-        phone: response['phone'],
-        email: response['email'],
-        name: response['name'],
-        profileArticle: response['profileArticle'],
-        sexChoices: response['sexChoices'],
-        birthday: response['birthday'],
-        selectedCategories: response['categories'] ,
-        categories: category.map((e) => MagazineCategory.fromJson(e)).toList()
-      ),
+      return ApiResult.success(
+        data: User(
+            groups: response['groups'],
+            phone: response['phone'],
+            email: response['email'],
+            name: response['name'],
+            profileArticle: response['profileArticle'],
+            sexChoices: response['sexChoices'],
+            birthday: response['birthday'],
+            selectedCategories: response['categories'],
+            categories:
+                category.map((e) => MagazineCategory.fromJson(e)).toList(),
+            collections:
+                collections.map((e) => Collection.fromJson(e)).toList()+[Collection("","전체보기")] ),
       );
     } on Exception {
       throw UserGetFailure();
     }
   }
-
 }
