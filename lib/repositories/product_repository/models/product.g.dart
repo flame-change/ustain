@@ -13,10 +13,10 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     keywords: json['keywords'] as String?,
     summary: json['summary'] as String?,
     description: json['description'] as String?,
-    rating: json['rating'] as String?,
-    originalPrice: json['originalPrice'] as String?,
-    discountPrice: json['discountPrice'] as String?,
-    discountRate: json['discountRate'] as String?,
+    rating: json['rating'] as int?,
+    originalPrice: json['originalPrice'] as int?,
+    discountPrice: json['discountPrice'] as int?,
+    discountRate: json['discountRate'] as int?,
     brand: json['brand'] == null
         ? null
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),

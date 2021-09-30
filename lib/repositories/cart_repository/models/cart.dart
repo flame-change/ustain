@@ -14,6 +14,8 @@ class Cart extends Equatable {
     this.variantOptions,
     this.salePrice,
     this.quantity,
+    this.Id,
+    this.isChecked = false,
   });
 
   final String? brand;
@@ -22,8 +24,10 @@ class Cart extends Equatable {
   final String? productThumbnail;
   final String? variantId;
   final String? variantOptions;
-  final String? salePrice;
-  final String? quantity;
+  final int? salePrice;
+  final int? quantity;
+  final String? Id;
+  final bool? isChecked;
 
   factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
 
@@ -36,8 +40,10 @@ class Cart extends Equatable {
     String? productThumbnail,
     String? variantId,
     String? variantOptions,
-    String? salePrice,
-    String? quantity,
+    int? salePrice,
+    int? quantity,
+    String? Id,
+    bool? isChecked,
   }) {
     return Cart(
       brand: brand ?? this.brand,
@@ -48,6 +54,8 @@ class Cart extends Equatable {
       variantOptions: variantOptions ?? this.variantOptions,
       salePrice: salePrice ?? this.salePrice,
       quantity: quantity ?? this.quantity,
+      Id: Id ?? this.Id,
+      isChecked: isChecked ?? this.isChecked,
     );
   }
 
@@ -60,6 +68,8 @@ class Cart extends Equatable {
         variantId,
         variantOptions,
         salePrice,
-        quantity
+        quantity,
+        Id,
+        isChecked,
       ];
 }

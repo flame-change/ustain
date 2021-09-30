@@ -14,8 +14,10 @@ Cart _$CartFromJson(Map<String, dynamic> json) {
     productThumbnail: json['productThumbnail'] as String?,
     variantId: json['variantId'] as String?,
     variantOptions: json['variantOptions'] as String?,
-    salePrice: json['salePrice'] as String?,
-    quantity: json['quantity'] as String?,
+    salePrice: json['salePrice'] as int?,
+    quantity: json['quantity'] as int?,
+    Id: json['Id'] as String?,
+    isChecked: json['isChecked'] as bool?,
   );
 }
 
@@ -28,4 +30,6 @@ Map<String, dynamic> _$CartToJson(Cart instance) => <String, dynamic>{
       'variantOptions': instance.variantOptions,
       'salePrice': instance.salePrice,
       'quantity': instance.quantity,
+      'Id': instance.Id,
+      'isChecked': instance.isChecked,
     };

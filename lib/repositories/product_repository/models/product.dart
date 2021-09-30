@@ -32,10 +32,10 @@ class Product extends Equatable {
   final String? keywords;
   final String? summary;
   final String? description;
-  final String? rating;
-  final String? originalPrice;
-  final String? discountPrice;
-  final String? discountRate;
+  final int? rating;
+  final int? originalPrice;
+  final int? discountPrice;
+  final int? discountRate;
   final Brand? brand;
   final bool? available;
   final String? thumbnail;
@@ -74,10 +74,10 @@ class Product extends Equatable {
     String? name,
     String? summary,
     String? description,
-    String? rating,
-    String? originalPrice,
-    String? discountPrice,
-    String? discountRate,
+    int? rating,
+    int? originalPrice,
+    int? discountPrice,
+    int? discountRate,
     Brand? brand,
     String? thumbnail,
     String? keywords,
