@@ -1,17 +1,20 @@
+import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
 class User extends Equatable {
-  const User(
-      {this.groups,
-      this.phone,
-      this.email,
-      this.name,
-      this.profileArticle,
-      this.sexChoices,
-      this.birthday,
-      this.selectedCategories,
-      this.categories});
+  const User({
+    this.groups,
+    this.phone,
+    this.email,
+    this.name,
+    this.profileArticle,
+    this.sexChoices,
+    this.birthday,
+    this.selectedCategories,
+    this.categories,
+    this.collections,
+  });
 
   final String? groups;
   final String? phone;
@@ -22,6 +25,7 @@ class User extends Equatable {
   final String? birthday; // 자료형 확인
   final List<dynamic>? selectedCategories;
   final List<MagazineCategory>? categories;
+  final List<Collection>? collections;
 
   @override
   List<Object?> get props => [
@@ -33,7 +37,8 @@ class User extends Equatable {
         sexChoices,
         birthday,
         selectedCategories,
-        categories
+        categories,
+        collections,
       ];
 
   User copyWith({
@@ -46,6 +51,7 @@ class User extends Equatable {
     String? birthday,
     List<dynamic>? selectedCategories,
     List<MagazineCategory>? categories,
+    List<Collection>? collections,
   }) {
     return User(
       groups: groups ?? this.groups,
@@ -57,6 +63,7 @@ class User extends Equatable {
       birthday: birthday ?? this.birthday,
       selectedCategories: selectedCategories ?? this.selectedCategories,
       categories: categories ?? this.categories,
+      collections: collections ?? this.collections,
     );
   }
 
@@ -66,11 +73,11 @@ class User extends Equatable {
     String transfer = "";
 
     this.categories!.forEach((category) {
-      if(category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
+      if (category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
         transfer = category.title!;
       }
     });
 
-    return transfer==""?word:transfer;
+    return transfer == "" ? word : transfer;
   }
 }

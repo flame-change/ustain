@@ -21,7 +21,7 @@ class Product extends Equatable {
     this.brand,
     this.thumbnail,
     this.available,
-    this.socialValues,
+    this.hashtags,
     this.totalReviews,
     this.options,
     this.variants,
@@ -32,14 +32,14 @@ class Product extends Equatable {
   final String? keywords;
   final String? summary;
   final String? description;
-  final String? rating;
-  final String? originalPrice;
-  final String? discountPrice;
-  final String? discountRate;
+  final int? rating;
+  final int? originalPrice;
+  final int? discountPrice;
+  final int? discountRate;
   final Brand? brand;
   final bool? available;
   final String? thumbnail;
-  final List<String>? socialValues;
+  final List<String>? hashtags;
   final String? totalReviews;
   final List<Option>? options;
   final List<Variants>? variants;
@@ -63,7 +63,7 @@ class Product extends Equatable {
         thumbnail,
         available,
         keywords,
-        socialValues,
+    hashtags,
         totalReviews,
         options,
         variants,
@@ -74,15 +74,15 @@ class Product extends Equatable {
     String? name,
     String? summary,
     String? description,
-    String? rating,
-    String? originalPrice,
-    String? discountPrice,
-    String? discountRate,
+    int? rating,
+    int? originalPrice,
+    int? discountPrice,
+    int? discountRate,
     Brand? brand,
     String? thumbnail,
     String? keywords,
     bool? available,
-    List<String>? socialValues,
+    List<String>? hashtags,
     String? totalReviews,
     List<Option>? options,
     List<Variants>? variants,
@@ -98,7 +98,7 @@ class Product extends Equatable {
       discountRate: discountRate ?? this.discountRate,
       available: available ?? this.available,
       keywords: keywords ?? this.keywords,
-      socialValues: socialValues ?? this.socialValues,
+      hashtags: hashtags ?? this.hashtags,
       totalReviews: totalReviews ?? this.totalReviews,
       brand: brand ?? this.brand,
       options: options ?? this.options,

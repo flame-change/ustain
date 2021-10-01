@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.da
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -67,9 +68,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                   children: [
                     Container(
                       height: Adaptive.h(50),
-                      width: Adaptive.w(100) > 475
-                          ? 475 / 100 * 100
-                          : Adaptive.w(100),
+                      width: sizeWith(100),
                       child: Image.network(
                         "${magazineDetail.bannerImage}",
                         fit: BoxFit.cover,

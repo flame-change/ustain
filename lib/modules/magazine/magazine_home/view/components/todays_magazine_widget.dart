@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -60,9 +61,7 @@ class _TodaysMagazineState extends State<TodaysMagazine>
                   children: List.generate(
                       _todaysMaagazines.length,
                       (index) => Container(
-                          width: Adaptive.w(100) > 475
-                              ? 475 / 100 * 65
-                              : Adaptive.w(65),
+                          width: sizeWith(65),
                           child: magazineCard(
                               context, _todaysMaagazines[index])))),
             ))
