@@ -14,6 +14,7 @@ class User extends Equatable {
     this.selectedCategories,
     this.categories,
     this.collections,
+    this.cartCount,
   });
 
   final String? groups;
@@ -26,6 +27,7 @@ class User extends Equatable {
   final List<dynamic>? selectedCategories;
   final List<MagazineCategory>? categories;
   final List<Collection>? collections;
+  final int? cartCount;
 
   @override
   List<Object?> get props => [
@@ -39,6 +41,7 @@ class User extends Equatable {
         selectedCategories,
         categories,
         collections,
+    cartCount,
       ];
 
   User copyWith({
@@ -52,6 +55,7 @@ class User extends Equatable {
     List<dynamic>? selectedCategories,
     List<MagazineCategory>? categories,
     List<Collection>? collections,
+    int? cartCount,
   }) {
     return User(
       groups: groups ?? this.groups,
@@ -64,6 +68,7 @@ class User extends Equatable {
       selectedCategories: selectedCategories ?? this.selectedCategories,
       categories: categories ?? this.categories,
       collections: collections ?? this.collections,
+      cartCount: cartCount ?? this.cartCount,
     );
   }
 

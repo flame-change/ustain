@@ -6,6 +6,7 @@ import 'package:aroundus_app/repositories/store_repository/src/store_repository.
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -115,7 +116,13 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
           onPressed: () {
             Navigator.pushNamed(context, 'cart_screen');
           },
-          child: Icon(Icons.shopping_cart_outlined)),
+          backgroundColor: Colors.black,
+          child: Badge(
+              badgeContent: Text("${user.cartCount}"),
+              toAnimate: false,
+              elevation: 0,
+              badgeColor: Colors.white,
+              child: Icon(Icons.shopping_cart_outlined))),
     );
   }
 }
