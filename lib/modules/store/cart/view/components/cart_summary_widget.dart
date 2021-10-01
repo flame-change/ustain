@@ -8,10 +8,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 Widget cartSummary(List<Cart> carts) {
 
   List<Cart> checkedCart = carts.fold(<Cart>[], (pre, cart) => cart.isChecked!?pre+[cart]:pre+[]);
-
   final num totalPrice = checkedCart.fold(0, (pre, cart) => pre+(cart.quantity!*cart.salePrice!));
-
-  print(checkedCart);
 
   return Container(
     width: sizeWith(100),

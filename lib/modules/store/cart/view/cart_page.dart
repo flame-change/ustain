@@ -32,8 +32,11 @@ class _CartPageState extends State<CartPage> {
         return BlocSelector<CartCubit, CartState, List<Cart>?>(
             selector: (state) => state.carts,
             builder: (context, carts) {
-              if (carts != null) {
-                bool allCheckBox = !(carts.map((cart) => cart.isChecked).toList().contains(false));
+              if (carts != null && carts.isNotEmpty) {
+                bool allCheckBox = !(carts
+                    .map((cart) => cart.isChecked)
+                    .toList()
+                    .contains(false));
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -49,16 +52,23 @@ class _CartPageState extends State<CartPage> {
                               Row(
                                 children: [
                                   IconButton(
-                                      onPressed: () {
-
-                                      },
-                                      icon: allCheckBox?Icon(Icons.check_box_rounded):Icon(Icons
-                                          .check_box_outline_blank_rounded)),
+                                      onPressed: () {},
+                                      icon: allCheckBox
+                                          ? Icon(Icons.check_box_rounded)
+                                          : Icon(Icons
+                                              .check_box_outline_blank_rounded)),
                                   Text("전체선택")
                                 ],
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  List<Cart> deleteCarts = state.carts!.fold(
+                                      <Cart>[],
+                                      (pre, cart) => cart.isChecked!
+                                          ? pre + [cart]
+                                          : pre + []);
+                                  _cartCubit.deleteCart(deleteCarts);
+                                },
                                 child: Text(
                                   "선택삭제",
                                   style: TextStyle(
@@ -69,8 +79,8 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                         Column(
-                          children: List.generate(
-                              carts.length, (index) => cartTile(_cartCubit, carts[index])),
+                          children: List.generate(carts.length,
+                              (index) => cartTile(_cartCubit, carts[index])),
                         ),
                         Blank(),
                         cartSummary(carts),
@@ -79,13 +89,15 @@ class _CartPageState extends State<CartPage> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print("결제하기");
+                        },
                         color: Colors.grey,
                         minWidth: sizeWith(100),
                         height: Adaptive.h(10),
                         child: Text("결제하기"),
                       ),
-                    )
+                    ),
                   ],
                 );
               } else {

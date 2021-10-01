@@ -4,6 +4,7 @@ import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget cartTile(CartCubit cartCubit, Cart cart) {
@@ -30,7 +31,7 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                         ? Icon(Icons.check_box_rounded)
                         : Icon(Icons.check_box_outline_blank_rounded))),
         Flexible(
-            flex: 4,
+            flex: 8,
             child: Wrap(
               runSpacing: Adaptive.h(1),
               children: [
@@ -52,11 +53,11 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                                 style: TextStyle(fontSize: Adaptive.sp(9))),
                           ]),
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        constraints: BoxConstraints.loose(Size.zero),
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.clear))
+                    GestureDetector(
+                      onTap: () {
+                        cartCubit.deleteCart([cart]);
+                      },
+                      child: Icon(Icons.clear),)
                   ],
                 ),
                 Row(
@@ -70,6 +71,7 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                         "${cart.productThumbnail}",
                         height: sizeWith(20),
                         width: sizeWith(20),
+                        fit: BoxFit.cover,
                       ),
                     ),
                     Flexible(
