@@ -9,10 +9,10 @@ part of 'variants.dart';
 Variants _$VariantsFromJson(Map<String, dynamic> json) {
   return Variants(
     Id: json['Id'] as String?,
-    name: json['name'] as String?,
-    originalPrice: json['originalPrice'] as String?,
-    discountPrice: json['discountPrice'] as String?,
-    discountRate: json['discountRate'] as String?,
+    variantName: json['variantName'] as String?,
+    originalPrice: json['originalPrice'] as int?,
+    discountPrice: json['discountPrice'] as int?,
+    discountRate: json['discountRate'] as int?,
     available: json['available'] as bool?,
     thumbnail: json['thumbnail'] as String?,
     types: (json['types'] as List<dynamic>?)
@@ -23,7 +23,7 @@ Variants _$VariantsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$VariantsToJson(Variants instance) => <String, dynamic>{
       'Id': instance.Id,
-      'name': instance.name,
+      'variantName': instance.variantName,
       'originalPrice': instance.originalPrice,
       'discountPrice': instance.discountPrice,
       'discountRate': instance.discountRate,

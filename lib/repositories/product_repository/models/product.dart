@@ -40,7 +40,7 @@ class Product extends Equatable {
   final bool? available;
   final String? thumbnail;
   final List<String>? hashtags;
-  final String? totalReviews;
+  final int? totalReviews;
   final List<Option>? options;
   final List<Variants>? variants;
 
@@ -63,7 +63,7 @@ class Product extends Equatable {
         thumbnail,
         available,
         keywords,
-    hashtags,
+        hashtags,
         totalReviews,
         options,
         variants,
@@ -83,7 +83,7 @@ class Product extends Equatable {
     String? keywords,
     bool? available,
     List<String>? hashtags,
-    String? totalReviews,
+    int? totalReviews,
     List<Option>? options,
     List<Variants>? variants,
   }) {

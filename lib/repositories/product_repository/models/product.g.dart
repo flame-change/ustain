@@ -24,7 +24,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     available: json['available'] as bool?,
     hashtags:
         (json['hashtags'] as List<dynamic>?)?.map((e) => e as String).toList(),
-    totalReviews: json['totalReviews'] as String?,
+    totalReviews: json['totalReviews'] as int?,
     options: (json['options'] as List<dynamic>?)
         ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
         .toList(),
