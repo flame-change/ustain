@@ -1,10 +1,12 @@
+import 'package:aroundus_app/modules/store/cart/cubit/cart_cubit.dart';
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
-Widget cartTile(Cart cart) {
+Widget cartTile(CartCubit cartCubit, Cart cart) {
   return Card(
     margin:
         EdgeInsets.symmetric(horizontal: sizeWith(5), vertical: Adaptive.h(1)),
@@ -19,10 +21,14 @@ Widget cartTile(Cart cart) {
         Flexible(
             child: // Icon(Icons.check_box_rounded)
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cartCubit.selectedCart(cart);
+                    },
                     alignment: Alignment.topCenter,
                     padding: EdgeInsets.zero,
-                    icon: Icon(Icons.check_box_outline_blank_rounded))),
+                    icon: cart.isChecked!
+                        ? Icon(Icons.check_box_rounded)
+                        : Icon(Icons.check_box_outline_blank_rounded))),
         Flexible(
             flex: 4,
             child: Wrap(
@@ -73,12 +79,12 @@ Widget cartTile(Cart cart) {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${cart.variantOptions}"),
+                            Text("${cart.variantName}"),
                             Text("수량 : ${cart.quantity}개"),
                             Container(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                "${cart.salePrice}원",
+                                "${currencyFromString((cart.salePrice! * cart.quantity!).toString())}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: Adaptive.sp(14)),

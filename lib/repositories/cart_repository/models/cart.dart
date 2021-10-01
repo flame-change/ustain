@@ -11,11 +11,11 @@ class Cart extends Equatable {
     this.productName,
     this.productThumbnail,
     this.variantId,
-    this.variantOptions,
+    this.variantName,
     this.salePrice,
     this.quantity,
     this.Id,
-    this.isChecked = false,
+    this.isChecked = true,
   });
 
   final String? brand;
@@ -23,9 +23,9 @@ class Cart extends Equatable {
   final String? productName;
   final String? productThumbnail;
   final String? variantId;
-  final String? variantOptions;
-  final int? salePrice;
-  final int? quantity;
+  final String? variantName;
+  final num? salePrice;
+  final num? quantity;
   final String? Id;
   final bool? isChecked;
 
@@ -39,9 +39,9 @@ class Cart extends Equatable {
     String? productName,
     String? productThumbnail,
     String? variantId,
-    String? variantOptions,
-    int? salePrice,
-    int? quantity,
+    String? variantName,
+    num? salePrice,
+    num? quantity,
     String? Id,
     bool? isChecked,
   }) {
@@ -51,7 +51,7 @@ class Cart extends Equatable {
       productName: productName ?? this.productName,
       productThumbnail: productThumbnail ?? this.productThumbnail,
       variantId: variantId ?? this.variantId,
-      variantOptions: variantOptions ?? this.variantOptions,
+      variantName: variantName ?? this.variantName,
       salePrice: salePrice ?? this.salePrice,
       quantity: quantity ?? this.quantity,
       Id: Id ?? this.Id,
@@ -66,7 +66,7 @@ class Cart extends Equatable {
         productName,
         productThumbnail,
         variantId,
-        variantOptions,
+        variantName,
         salePrice,
         quantity,
         Id,

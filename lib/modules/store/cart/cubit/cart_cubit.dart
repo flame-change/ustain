@@ -17,9 +17,22 @@ class CartCubit extends Cubit<CartState> {
 
     apiResult.when(success: (List? listResponse) {
       emit(state.copyWith(
-          carts: listResponse!.map((cart) => Cart.fromJson(cart)).toList()));
+        carts: listResponse!
+            .map((cart) => Cart.fromJson(cart).copyWith(isChecked: true))
+            .toList(),
+        isLoading: false,
+        isLoaded: true,
+      ));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(error: error));
     });
+  }
+
+  void selectedCart(Cart cart) {
+    emit(state.copyWith(
+        carts: state.carts!
+            .map((e) =>
+                e == cart ? cart.copyWith(isChecked: !cart.isChecked!) : e)
+            .toList()));
   }
 }
