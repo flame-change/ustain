@@ -17,7 +17,7 @@ class ProductCubit extends Cubit<ProductState> {
         await _productRepository.getProductDetail(productId);
 
     apiResult.when(success: (Product? productResponse) {
-      print(productResponse!);
+      print("product ${productResponse!}");
       emit(state.copyWith(
         products: [productResponse],
         isLoaded: true,

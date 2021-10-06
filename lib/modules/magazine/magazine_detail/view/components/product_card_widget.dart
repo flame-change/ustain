@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/models/models.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,7 +100,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
                                                         FontWeight.bold)),
                                             TextSpan(
                                               text:
-                                                  "${products[index].originalPrice}원",
+                                                  "${currencyFromString(products[index].originalPrice.toString())}",
                                               style: TextStyle(
                                                   decoration: TextDecoration
                                                       .lineThrough),
@@ -107,7 +108,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
                                           ]),
                                     ),
                                     Text(
-                                      "${products[index].discountPrice}원",
+                                      "${currencyFromString(products[index].discountPrice.toString())}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: Adaptive.sp(20)),

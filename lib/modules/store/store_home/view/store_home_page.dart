@@ -46,7 +46,7 @@ class _StorePageState extends State<StorePage> with SingleTickerProviderStateMix
         builder: (context, state) {
           if (state.products != null) {
             return ListView.builder(
-              itemBuilder: (context, index) => storeProduct(state.products![index]),
+              itemBuilder: (context, index) => storeProduct(context, state.products![index]),
               itemCount: state.products!.length,
             );
           } else {

@@ -8,7 +8,7 @@ part 'variants.g.dart';
 class Variants extends Equatable {
   const Variants({
     this.Id,
-    this.name,
+    this.variantName,
     this.originalPrice,
     this.discountPrice,
     this.discountRate,
@@ -18,10 +18,10 @@ class Variants extends Equatable {
 });
 
   final String? Id;
-  final String? name;
-  final String? originalPrice;
-  final String? discountPrice;
-  final String? discountRate;
+  final String? variantName;
+  final int? originalPrice;
+  final int? discountPrice;
+  final int? discountRate;
   final bool? available;
   final String? thumbnail;
   final List<TypeGroup>? types;
@@ -33,7 +33,7 @@ class Variants extends Equatable {
   @override
   List<Object?> get props => [
     Id,
-    name,
+    variantName,
     originalPrice,
     discountPrice,
     discountRate,
