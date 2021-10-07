@@ -33,11 +33,14 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
                   width: Adaptive.w(50),
                   child: TabBar(
                     tabs: <Widget>[
-                      Text("매거진",
-                          style:TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
-                      Text("스크랩",
-                          style: TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
+                      Text("매거진"),
+                      Text("스크랩"),
                     ],
+                    labelStyle: theme.textTheme.button!.copyWith(fontSize: Adaptive.dp(20)),
+                    labelColor: Colors.black,
+                    labelPadding: EdgeInsets.zero,
+                    indicatorColor: theme.accentColor,
+                    indicatorWeight: 3,
                   ),
                 ),
               ),

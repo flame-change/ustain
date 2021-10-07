@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.da
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'categoryTag_widget.dart';
 
 Widget magazineCard(BuildContext context, Magazine magazine) {
-
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -24,38 +24,37 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
             ], child: MagazineDetailPage(magazine.id!)),
           ));
     },
-    child: Container(
-      width: Adaptive.w(100),
-      height: Adaptive.h(30),
-      color: Colors.black38,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: Adaptive.h(20),
-            width: Adaptive.w(100),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(magazine.bannerImage!))),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: categoryTag(context, magazine.categories!),
-              ),
+    child: Card(
+        elevation: 4,
+        child: Column(
+          children: [
+            Container(
+              width: Adaptive.w(100),
+              height: Adaptive.h(20),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(magazine.bannerImage!))),
             ),
-          ),
-          Text(
-            magazine.title!,
-            style: TextStyle(fontSize: Adaptive.sp(20)),
-          ),
-          Text(
-            "매거진 내용 최대 두 줄",
-            maxLines: 2,
-          ),
-        ],
-      ),
-    ),
+            Container(
+                color: Colors.white,
+                width: Adaptive.w(100),
+                padding: EdgeInsets.all(5),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        magazine.title!,
+                        style: theme.textTheme.headline4,
+                      ),
+                      Text(
+                        magazine.content!,
+                        maxLines: 2,
+                        style: theme.textTheme.bodyText2!.copyWith(fontWeight: FontWeight.w400),
+                      ),
+                    ])),
+          ],
+        )),
   );
 }

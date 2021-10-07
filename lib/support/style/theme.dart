@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 final theme = ThemeData(
+  dividerColor: Color(0xFFC2C2C2),
   primarySwatch: Colors.pink,
   fontFamily: 'Pretendard',
   backgroundColor: const Color(0xFFFFFFFF),

@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dar
 import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/magazine_card_widget.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -46,14 +47,30 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
             controller: _scrollController,
             child: Wrap(
               runSpacing: 15,
-              children: List.generate(
-                  state.scrappedMagazines!.length,
-                  (index) => magazineCard(context, state.scrappedMagazines![index])),
+              children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                          style:
+                              theme.textTheme.headline3!.copyWith(height: 1.5),
+                          children: [
+                            TextSpan(
+                              text: "MY ",
+                              style: TextStyle(color: theme.accentColor),
+                            ),
+                            TextSpan(text: "MAGAZINES"),
+                          ]),
+                    ),
+                  ] +
+                  List.generate(
+                      state.scrappedMagazines!.length,
+                      (index) => magazineCard(
+                          context, state.scrappedMagazines![index])),
             ),
           );
         } else {
           return Container(
-              height: Adaptive.h(100), child: Center(child: Text("스크랩한 매거진이 없어요.")));
+              height: Adaptive.h(100),
+              child: Center(child: Text("스크랩한 매거진이 없어요.")));
         }
       } else {
         return Center(
