@@ -1,4 +1,5 @@
 
+import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
@@ -21,6 +22,7 @@ final Map<String, WidgetBuilder> routes = {
   MagazineHomeScreen.routeName: (context) => MagazineHomeScreen(),
   MagazineHomePage.routeName: (context) => MagazineHomePage(),
   FindingPasswordPage.routeName: (context) => FindingPasswordPage(),
+  FindingPasswordRequestPage.routeName: (context) => FindingPasswordRequestPage(),
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),

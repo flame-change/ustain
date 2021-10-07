@@ -35,8 +35,8 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
     });
   }
 
-  Future<void> findingPassWordVerify() async {
-    if (!state.phoneNumber.valid) return;
+  Future<bool?> findingPassWordVerify() async {
+    if (!state.phoneNumber.valid) return false;
     ApiResult<String> apiResult =
     await _authenticationRepository.findingPassWordVerifyCode(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
@@ -46,12 +46,14 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
       emit(state.copyWith(
           phoneNumberVerifyStatus: VerifyStatus.verified,
           phoneToken: phoneToken!));
+      return true;
     }, failure: (NetworkExceptions? error) {
       logger.w(error);
       emit(state.copyWith(
         errorMessage: NetworkExceptions.getErrorMessage(error!),
           phoneNumberVerifyStatus: VerifyStatus.unverified,
           unverifiedFlag: true));
+      return false;
     });
   }
 

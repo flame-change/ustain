@@ -6,20 +6,21 @@ import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class FindingPasswordPage extends StatefulWidget {
-  static String routeName = 'finding_password_page';
+class FindingPasswordRequestPage extends StatefulWidget {
+  static String routeName = 'finding_password_request_page';
 
   @override
-  State<StatefulWidget> createState() => _FindingPasswordPageState();
+  State<StatefulWidget> createState() => _FindingPasswordRequestPageState();
 }
 
-class _FindingPasswordPageState extends State<FindingPasswordPage> {
+class _FindingPasswordRequestPageState
+    extends State<FindingPasswordRequestPage> {
   late FindingAccountCubit _findingAccountCubit;
   VerifyStatus phoneNumberVerifyStatus = VerifyStatus.init;
+  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -37,25 +38,21 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
           bloc: _findingAccountCubit,
           listener: (context, state) async {
-            if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-              if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호가 발급되었습니다.')),
-                  );
-              } else if (state.republishFlag) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호가 재발급되었습니다.')),
-                  );
-              }
-              setState(() {
-                phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-                _findingAccountCubit.republishAuthInit();
-              });
+            // 인증에 성공한 경우
+            if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
+              _findingAccountCubit.completeVerify();
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider<FindingAccountCubit>.value(
+                      value: _findingAccountCubit,
+                      child: FindingPasswordResultPage(),
+                    ),
+                  ));
             }
+
+            // 만료된 경우 - 현재 사용 안됨
             if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
                 state.expiredFlag) {
               Scaffold.of(context)
@@ -67,6 +64,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 _findingAccountCubit.expiredFlagFalse();
               });
             }
+
+            // 일치하지 않는 경우
             if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
                 state.unverifiedFlag) {
               Scaffold.of(context)
@@ -76,6 +75,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 );
               setState(() {
                 _findingAccountCubit.unverifiedFlagFalse();
+                controller.clear();
               });
             }
           },
@@ -91,7 +91,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                             .copyWith(color: Colors.white, height: 1.5),
                         children: [
                           TextSpan(
-                              text: "인증번호",
+                              text: "휴대폰번호",
                               style: theme.textTheme.headline2!
                                   .copyWith(color: theme.accentColor)),
                           TextSpan(text: "를\n"),
@@ -112,42 +112,29 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 child: Wrap(
                   runSpacing: 15,
                   children: [
-                    Text("FIND PASSWORD",
+                    Text("OTP CERTIFICATE",
                         style: theme.textTheme.headline2!
                             .copyWith(fontSize: Adaptive.dp(20))),
-                    TextFormField(
-                      key:
-                      Key('finding_account_phoneNumber_code_textFormField'),
-                      inputFormatters: [
-                        MaskedInputFormatter('000-0000-0000',
-                            allowedCharMatcher: RegExp('[0-9]'))
-                      ],
-                      onChanged: (phoneNumber) =>
-                          context
-                              .read<FindingAccountCubit>()
-                              .phoneNumberChanged(phoneNumber),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: '휴대폰 번호',
+                    PinCodeTextField(
+                      appContext: context,
+                      length: 6,
+                      controller: controller,
+                      animationType: AnimationType.fade,
+                      animationDuration: Duration(milliseconds: 100),
+                      cursorColor: theme.accentColor,
+                      pinTheme: PinTheme(
+                        activeColor: Colors.grey,
+                        inactiveColor: Colors.black,
+                        selectedColor: theme.accentColor,
                       ),
+                      onChanged: (value) {
+                        _findingAccountCubit.verifyNumberChanged(value);
+                      },
                     ),
                     PlainButton(
-                      text: "인증번호 전송",
+                      text: "인증 완료",
                       onPressed: () {
-                        _findingAccountCubit
-                            .findingPhoneNumberVerifyRequest()
-                            .whenComplete(() {
-                              Future.delayed(Duration(seconds: 3));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                BlocProvider<FindingAccountCubit>.value(
-                                  value: _findingAccountCubit,
-                                  child: FindingPasswordRequestPage(),
-                                ),
-                              ));
-                        });
+                        _findingAccountCubit.findingPassWordVerify();
                       },
                     ),
                   ],
