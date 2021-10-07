@@ -2,24 +2,27 @@ import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/routes.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-enum MenuState { home, magazine, store, community, my_page }
+enum MenuState { home, store, magazine, my_page }
 
 extension MenuStateToString on MenuState {
   String get name {
-    return ["home", "magazine", "store", "community", "my_page"][this.index];
+    return ["home", "store", "magazine", "my_page"][this.index];
   }
 
+  String get nickName {
+    return ["홈", "스토어", "매거진", "내 계정"][this.index];
+  }
 
   Widget get page {
     return [
       HomeScreen(),
-      MagazineHomeScreen(),
       StoreHomeScreen(),
-      HomeScreen(),
+      MagazineHomeScreen(),
       HomeScreen()
     ][this.index];
   }
@@ -45,57 +48,37 @@ class _BottomNavBarState extends State<BottomNavBar>
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: List.generate(
-          MenuState.values.length,
-          (index) => BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
-                ),
-                label: "${MenuState.values[index].name}",
-              )),
-      selectedItemColor: Colors.lightBlue,
-      unselectedItemColor: Colors.grey,
-      currentIndex: _selectedIndex,
-      selectedFontSize: 12,
+    return Container(
+      decoration: BoxDecoration(border: Border(top: BorderSide(width: 1))),
+      child: BottomNavigationBar(
+        items: List.generate(
+            MenuState.values.length,
+            (index) => BottomNavigationBarItem(
+                  icon: ImageIcon(Svg(
+                      "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg")),
+                  label: "${MenuState.values[index].nickName}",
+                )),
+        selectedItemColor: theme.accentColor,
+        unselectedItemColor: Color(0xFF8C8C8C),
+        unselectedLabelStyle: TextStyle(
+          fontFamily: 'Pretendard',
+          fontSize: Adaptive.dp(12),
+          fontWeight: FontWeight.w900,
+        ),
+        selectedLabelStyle: TextStyle(
+          fontFamily: 'Pretendard',
+          fontSize: Adaptive.dp(12),
+          fontWeight: FontWeight.w900,
+        ),
+        currentIndex: _selectedIndex,
+        selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-      onTap: (index) {
-        Navigator.of(context).pushAndRemoveUntil(routePage(MenuState.values[index].page), (route) => false);
-      },
+        onTap: (index) {
+          Navigator.of(context).pushAndRemoveUntil(
+              routePage(MenuState.values[index].page), (route) => false);
+        },
+      ),
     );
-  }
-}
-
-class IconButtonWidget extends StatelessWidget {
-  const IconButtonWidget({
-    this.size = 20.0,
-    required this.menu,
-    required this.changedColor,
-    required this.onPressed,
-  });
-
-  final double size;
-  final Color changedColor;
-  final String menu;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-        onPressed: this.onPressed,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Icon(Icons.home, color: Colors.black, size: this.size),
-            SvgPicture.asset(
-              "assets/icons/bottomNavigationBar/$menu.svg",
-            ),
-            Text(
-              menu,
-              style: TextStyle(fontSize: Adaptive.sp(8)),
-            ),
-          ],
-        ));
   }
 }
