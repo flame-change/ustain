@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -56,7 +57,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                       optionPurchase(_product.options!) + productQuantity()),
             ),
             Container(
-              height: Adaptive.h(5),
+              height: Adaptive.h(10),
               child: Row(
                 children: [
                   GestureDetector(
@@ -83,21 +84,26 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                           });
                     },
                     child: Container(
-                        color: Colors.cyanAccent,
                         width: sizeWith(50),
                         alignment: Alignment.center,
-                        child: Text("장바구니 담기")),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.black),
+                        ),
+                        child: Text("장바구니 담기", style: theme.textTheme.button)),
                   ),
                   GestureDetector(
                     onTap: () {
                       // TODO 오더 쪽 하면 작업
-
                     },
                     child: Container(
-                        color: Colors.cyan,
+                        color: Colors.black,
                         width: sizeWith(50),
                         alignment: Alignment.center,
-                        child: Text("구매하기")),
+                        child: Text(
+                          "구매하기",
+                          style: theme.textTheme.button!
+                              .copyWith(color: Colors.white),
+                        )),
                   ),
                 ],
               ),
