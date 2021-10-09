@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
+import 'package:aroundus_app/support/base_component/plain_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
@@ -87,7 +89,8 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
               key: const Key('signUpForm_verifyNumber_textField'),
               onChanged: (verifyNumber) =>
                   _signupCubit!.verifyNumberChanged(verifyNumber),
-              maxLength: 10,
+              maxLength: 6,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
@@ -114,21 +117,18 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
                 ),
               ),
             ),
-            MaterialButton(
-              minWidth: Adaptive.w(100),
-              color: Colors.grey,
-              onPressed: state.verifyNumber.valid &&
+            PlainButton(
+              onPressed:
                       (verifyStatus == VerifyStatus.request ||
                           verifyStatus == VerifyStatus.unverified)
                   ? () => _signupCubit!.phoneNumberVerify()
                   : null,
-              child: verifyStatus == VerifyStatus.expiered
-                  ? Text('시간만료')
+              text: verifyStatus == VerifyStatus.expiered
+                  ? "시간만료"
                   : verifyStatus == VerifyStatus.verified
-                      ? Text('인증성공')
-                      : Text('인증 완료'),
-              textColor: Colors.white,
-            ),
+                      ? "인증성공"
+                      : "인증완료",
+            )
           ],
         );
       },

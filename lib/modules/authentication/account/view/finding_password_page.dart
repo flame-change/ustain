@@ -33,6 +33,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
+          title: mainLogo(),
         ),
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
           bloc: _findingAccountCubit,

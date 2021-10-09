@@ -34,6 +34,7 @@ class _FindingPasswordRequestPageState
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
+          title: mainLogo(),
         ),
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
           bloc: _findingAccountCubit,

@@ -26,6 +26,7 @@ class _FindingPasswordResultPageState extends State<FindingPasswordResultPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        title: mainLogo(),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {

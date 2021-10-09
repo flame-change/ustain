@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SignInPage extends StatefulWidget {
   static String routeName = 'signIn_page';
@@ -33,13 +34,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Image.asset(
-          'assets/images/logo_main.png',
-          width: sizeWith(30),
-        ),
-      ),
+      appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
       body: BlocListener<SignInCubit, SignInState>(
         listener: (context, state) async {
           if (state.errorMessage != null && state.errorMessage!.length > 0) {

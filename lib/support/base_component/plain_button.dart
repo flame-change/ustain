@@ -54,12 +54,20 @@ class _PlainButtonState extends State<PlainButton> {
           border:
               Border.all(color: borderColor == null ? color! : borderColor!)),
       height: Adaptive.h(height!),
-      child: MaterialButton(
-        onPressed: _onPressed,
-        textColor:  borderColor == null ? textColor:borderColor,
-        elevation: 0,
-        child: Text(text),
-      ),
+      child: _onPressed == null
+          ? Align(
+        alignment: Alignment.center,
+            child: Text(
+                text,
+                style: theme.textTheme.button!.copyWith(color: textColor),
+              ),
+          )
+          : MaterialButton(
+              onPressed: _onPressed,
+              textColor: borderColor == null ? textColor : borderColor,
+              elevation: 0,
+              child: Text(text),
+            ),
     );
   }
 }

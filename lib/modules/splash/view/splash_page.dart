@@ -1,3 +1,4 @@
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,14 +9,12 @@ class SplashPage extends StatelessWidget {
 
   static String routeName = '/';
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Text("SplashPage"),
+        child: Image.asset('assets/images/logo_group.png')
       ),
     );
   }

@@ -15,7 +15,7 @@ class SignupState extends Equatable {
     this.agreeMarketing = false,
     this.isDupCheckedSnsId,
     this.isDupCheckedNickName,
-    required this.errorMessage,
+    this.errorMessage,
     this.phoneNumberVerifyStatus = VerifyStatus.init,
     this.verifyNumber = const VerifyNumber.pure(),
     this.success = false,

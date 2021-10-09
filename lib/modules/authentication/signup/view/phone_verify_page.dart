@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 
 import 'components/verify_number_input.dart';
@@ -37,18 +38,11 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        title: mainLogo(),
       ),
       body: BlocListener<SignupCubit, SignupState>(
         bloc: BlocProvider.of<SignupCubit>(context),
         listener: (context, state) async {
-          if (state.errorMessage != null) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(content: Text('이미 존재하는 휴대폰입니다.')),
-              );
-            _signupCubit.errorMsg();
-          }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
               Scaffold.of(context)
@@ -91,14 +85,15 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
             });
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-            Navigator.of(context).pushAndRemoveUntil(
+            _signupCubit.completeVerify();
+
+            Navigator.push(
+                context,
                 MaterialPageRoute(
                   builder: (_) => BlocProvider<SignupCubit>.value(
-                      value:
-                          BlocProvider.of<SignupCubit>(context, listen: true),
+                      value: BlocProvider.of<SignupCubit>(context),
                       child: SignupForm()),
-                ),
-                (route) => false);
+                ));
           }
         },
         child: Column(
