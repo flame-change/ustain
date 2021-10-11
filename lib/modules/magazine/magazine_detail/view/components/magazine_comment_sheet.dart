@@ -4,6 +4,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -58,6 +59,21 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
             if (comments != null) {
               return Column(
                 children: [
+                  Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                      color: Colors.black38,
+                    ))),
+                    child: Text(
+                      "댓글",
+                      style: theme.textTheme.bodyText1!
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ),
                   Flexible(
                     flex: 9,
                     child: comments.isNotEmpty
@@ -101,16 +117,13 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
 
   Widget commentTile(MagazineComment comment) {
     return ListTile(
+      dense: true,
       contentPadding: EdgeInsets.zero,
       // leading: Text("${comment.id}"),
       leading: Image.network('https://via.placeholder.com/80'),
-      title: RichText(
-        text: TextSpan(style: TextStyle(color: Colors.black), children: [
-          TextSpan(
-              text: "${comment.name} ",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          TextSpan(text: "${comment.content}"),
-        ]),
+      title: Text(
+        "${comment.name}",
+        style: theme.textTheme.subtitle2!.copyWith(fontWeight: FontWeight.bold),
       ),
       trailing: user!.name == comment.name
           ? InkWell(
@@ -139,18 +152,31 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
               height: 0,
             ),
       // TODO 날짜 유틸 후 수정
-      subtitle: Row(
+      subtitle: Wrap(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
+        runSpacing: 10,
         children: [
-          Text("${comment.createdAt}  "),
-          InkWell(
-            onTap: () {
-              focusNode.requestFocus();
+          Text(
+            "${comment.content}",
+            style: theme.textTheme.subtitle2,
+          ),
+          Row(
+            children: [
+              Text("${comment.createdAt}  ",
+                  style:
+                      theme.textTheme.subtitle2!.copyWith(color: Colors.grey)),
+              InkWell(
+                onTap: () {
+                  focusNode.requestFocus();
 
-              setState(() {
-                editComment = comment;
-              });
-            },
-            child: Text("답글 달기"),
+                  setState(() {
+                    editComment = comment;
+                  });
+                },
+                child: Text("답글 달기"),
+              )
+            ],
           )
         ],
       ),
@@ -166,36 +192,34 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
             focusNode: focusNode,
             controller: _messageController,
             decoration: InputDecoration(
+                hintText: "메시지를 입력하세요.",
                 prefixText:
                     editComment != null ? "@" + editComment!.name! + " " : "",
                 suffixIcon: MaterialButton(
-                  onPressed: () {
-                    if (editComment != null) {
-                      String editContent = _messageController.text.trim();
+                    onPressed: () {
+                      if (editComment != null) {
+                        String editContent = _messageController.text.trim();
 
-                      _messageController.clear();
-                      _magazineCommentCubit.requestMagazineComment(
-                          _magazineId,
-                          editContent,
-                          editComment!.parent == null
-                              ? editComment!.id
-                              : editComment!.parent);
-                      setState(() {
-                        editComment = null;
-                      });
-                    } else {
-                      _magazineCommentCubit.requestMagazineComment(
-                          _magazineId, _messageController.text, null);
-                    }
-                  },
-                  minWidth: 60,
-                  height: 60,
-                  color: Colors.grey,
-                  child: Icon(
-                    Icons.send,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                ))));
+                        _messageController.clear();
+                        _magazineCommentCubit.requestMagazineComment(
+                            _magazineId,
+                            editContent,
+                            editComment!.parent == null
+                                ? editComment!.id
+                                : editComment!.parent);
+                        setState(() {
+                          editComment = null;
+                        });
+                      } else {
+                        _magazineCommentCubit.requestMagazineComment(
+                            _magazineId, _messageController.text, null);
+                      }
+                    },
+                    minWidth: 60,
+                    height: 60,
+                    child: Text(
+                      "등록",
+                      style: TextStyle(color: theme.accentColor),
+                    )))));
   }
 }
