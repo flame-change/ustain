@@ -59,6 +59,11 @@ final theme = ThemeData(
           fontSize: Adaptive.dp(15),
           fontWeight: FontWeight.w300,
           color: Colors.black),
+      subtitle2: TextStyle(
+          fontFamily: 'Pretendard',
+          fontSize: Adaptive.dp(12),
+          fontWeight: FontWeight.w300,
+          color: Colors.black),
       bodyText1: TextStyle(
           fontFamily: 'Pretendard',
           fontSize: Adaptive.dp(15),
