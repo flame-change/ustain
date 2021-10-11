@@ -112,17 +112,17 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.store),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'cart_screen');
-          },
-          backgroundColor: Colors.black,
-          child: Badge(
-              badgeContent: Text("${user.cartCount}"),
-              toAnimate: false,
-              elevation: 0,
-              badgeColor: Colors.white,
-              child: Icon(Icons.shopping_cart_outlined))),
+      // floatingActionButton: FloatingActionButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, 'cart_screen');
+      //     },
+      //     backgroundColor: Colors.black,
+      //     child: Badge(
+      //         badgeContent: Text("${user.cartCount}"),
+      //         toAnimate: false,
+      //         elevation: 0,
+      //         badgeColor: Colors.white,
+      //         child: Icon(Icons.shopping_cart_outlined))),
     );
   }
 }

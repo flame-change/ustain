@@ -1,6 +1,8 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/components/product_sale_bottom_navigator.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
+import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -24,6 +26,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   String get _productId => this.widget.productId;
 
   late Product product;
+  late User user;
 
   late ProductCubit _productCubit;
 
@@ -32,6 +35,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     super.initState();
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
+    user = context.read<AuthenticationBloc>().state.user;
   }
 
   @override
@@ -52,10 +56,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           fit: BoxFit.cover,
                           image: NetworkImage(product.thumbnail!))),
                   child: PageWire(
-                    child: Container(
-                      width: 100.w,
-                      alignment: Alignment.topCenter,
-                      child: Row(
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
                             icon: Icon(Icons.arrow_back_ios_outlined),
@@ -63,10 +66,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             onPressed: () {
                               Navigator.pop(context);
                             },
+                          ),
+                          IconButton(
+                            // icon: ImageIcon(Svg("assets/icons/cart.svg")),
+                            icon: Icon(Icons.shopping_cart),
+                            iconSize: 20,
+                            alignment: Alignment.centerLeft,
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'cart_screen');
+                            },
                           )
                         ],
                       ),
-                    ),
+                      // getCategories(magazineDetail.categories!),
+                    ]),
                   ),
                 ),
                 SafeArea(
@@ -146,5 +159,21 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             return Center(child: CircularProgressIndicator());
           }
         }));
+  }
+
+  Widget getCategories(List<String> categories) {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 5,
+      children: List<Widget>.generate(
+          categories.length,
+              (index) => Container(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+            ),
+            child: Text("${user.categoryTransfer(categories[index])}"),
+          )),
+    );
   }
 }
