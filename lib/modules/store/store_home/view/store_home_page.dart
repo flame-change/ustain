@@ -45,42 +45,34 @@ class _StorePageState extends State<StorePage>
     }
     return BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
       if (state.products != null) {
-        return Container(
-          height: Adaptive.h(100),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(25),
-                  topLeft: Radius.circular(25))),
-          child: SingleChildScrollView(
-            padding: basePadding(),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: Adaptive.h(3)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "PRODUCT",
-                        style: theme.textTheme.headline4!.copyWith(
-                            color: theme.accentColor, fontWeight: FontWeight.w900),
-                      ),
-                      Text("인기순 필터")
-                    ],
-                  ),
+        return SingleChildScrollView(
+          padding: basePadding(),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: Adaptive.h(3)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "PRODUCT",
+                      style: theme.textTheme.headline4!
+                          .copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    Text("인기순 필터")
+                  ],
                 ),
-                GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: (4 / 7),
-                  children: List.generate(state.products!.length,
-                      (index) => storeProduct(context, state.products![index])),
-                ),
-              ],
-            ),
+              ),
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 15,
+                childAspectRatio: (4 / 7),
+                children: List.generate(state.products!.length,
+                    (index) => storeProduct(context, state.products![index])),
+              ),
+            ],
           ),
         );
       } else {

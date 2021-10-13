@@ -34,9 +34,8 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: GestureDetector(
           onTap: () {
@@ -46,12 +45,14 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
           },
           // child: _offsetPopup(),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("${selectedMenu.name}",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black)),
               isOpen
-                  ? Icon(Icons.keyboard_arrow_up_sharp)
-                  : Icon(Icons.keyboard_arrow_down_sharp),
+                  ? Icon(Icons.keyboard_arrow_up_sharp, color: Colors.black)
+                  : Icon(Icons.keyboard_arrow_down_sharp, color: Colors.black),
             ],
           ),
         ),

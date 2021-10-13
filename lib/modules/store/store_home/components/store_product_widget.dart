@@ -30,7 +30,7 @@ Widget storeProduct(BuildContext context, Product product) {
       footer: Container(
         height: Adaptive.h(15),
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: sizeWith(4), vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: sizeWith(1), vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

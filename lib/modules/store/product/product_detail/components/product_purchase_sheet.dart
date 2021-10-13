@@ -5,6 +5,7 @@ import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -40,22 +41,37 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
 
   int quantity = 1;
 
+  double modalHeight = 0;
+  bool isSelected = false;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: Adaptive.h(45),
-      padding: EdgeInsets.only(top: Adaptive.h(5)),
-      child:
-          BlocBuilder<ProductCubit, ProductState>(builder: (context, comments) {
-        return Column(
+    modalHeight = _product.options!.length * 5 + 20 + (isSelected?10:0);
+    return BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, comments) {
+      isSelected = !selectedOptions
+          .map((e) => e.variation != null)
+          .toList()
+          .contains(false);
+      return Container(
+        height: Adaptive.h(modalHeight),
+        padding: EdgeInsets.only(top: Adaptive.h(5)),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             PageWire(
               child: Wrap(
-                  runSpacing: 15,
-                  children:
-                      optionPurchase(_product.options!) + productQuantity()),
+                  runSpacing: 5, children: optionPurchase(_product.options!)),
             ),
+            selectedOptions
+                    .map((e) => e.variation != null)
+                    .toList()
+                    .contains(false)
+                ? SizedBox(height: 0)
+                : Container(
+                    height: Adaptive.h(10),
+                    color: Colors.amber,
+                  ),
             Container(
               height: Adaptive.h(10),
               child: Row(
@@ -109,9 +125,9 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
               ),
             ),
           ],
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 
   List<Widget> optionPurchase(List<Option> options) {
@@ -119,51 +135,102 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
         options.length,
         (i) => Container(
               width: Adaptive.w(100),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${options[i].name}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: Adaptive.sp(15)),
-                  ),
-                  Container(
-                    height: Adaptive.h(5),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: options[i].variations!.length,
-                      itemBuilder: (context, j) => Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: MaterialButton(
-                            onPressed: () {
-                              if (selectedOptions[i].variation ==
-                                  options[i].variations![j]) {
-                                setState(() {
-                                  selectedOptions[i] = selectedOptions[i]
-                                      .copyWith(
-                                          option: selectedOptions[i].option,
-                                          variation: null);
-                                });
-                              } else {
-                                setState(() {
-                                  selectedOptions[i] = selectedOptions[i]
-                                      .copyWith(
-                                          option: selectedOptions[i].option,
-                                          variation: options[i].variations![j]);
-                                });
-                              }
-                            },
-                            height: Adaptive.h(5),
-                            elevation: 0,
-                            color: selectedOptions[i].variation ==
-                                    options[i].variations![j]
-                                ? Colors.amber
-                                : Colors.grey,
-                            child: Text("${options[i].variations![j].value}")),
-                      ),
+              child: Container(
+                height: Adaptive.h(5),
+                padding: EdgeInsets.all(10),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black38)),
+                child: GestureDetector(
+                  onTap: () {
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (_) => Container(
+                              height: Adaptive.h(modalHeight),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                      height: Adaptive.h(5),
+                                      width: sizeWith(100),
+                                      alignment: Alignment.centerRight,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffffffff),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xff999999),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: CupertinoButton(
+                                        child: Text('Done'),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0,
+                                          vertical: 5.0,
+                                        ),
+                                      )),
+                                  Container(
+                                    height: Adaptive.h(modalHeight - 5),
+                                    child: CupertinoPicker(
+                                      backgroundColor: Colors.white,
+                                      itemExtent: 30,
+                                      scrollController:
+                                          FixedExtentScrollController(
+                                              initialItem: 0),
+                                      children: options[i]
+                                          .variations!
+                                          .map((option) =>
+                                              Text("${option.value}"))
+                                          .toList(),
+                                      onSelectedItemChanged: (j) {
+                                        if (selectedOptions[i].variation ==
+                                            options[i].variations![j]) {
+                                          setState(() {
+                                            selectedOptions[i] =
+                                                selectedOptions[i].copyWith(
+                                                    option: selectedOptions[i]
+                                                        .option,
+                                                    variation: null);
+                                          });
+                                        } else {
+                                          setState(() {
+                                            selectedOptions[i] =
+                                                selectedOptions[i].copyWith(
+                                                    option: selectedOptions[i]
+                                                        .option,
+                                                    variation: options[i]
+                                                        .variations![j]);
+                                          });
+                                        }
+                                        print(selectedOptions);
+                                        // setState(() {
+                                        //   _selectedValue = value;
+                                        // });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ));
+                  },
+                  child: Container(
+                    width: sizeWith(100),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                            "${selectedOptions[i].variation == null ? options[i].name : selectedOptions[i].variation!.value}"),
+                        Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          color: Colors.black12,
+                        )
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ));
   }
