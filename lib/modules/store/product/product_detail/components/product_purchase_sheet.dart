@@ -41,12 +41,17 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
 
   int quantity = 1;
   int selected = 0;
-  bool isSelected = false;
+  bool hasCart = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
         builder: (context, comments) {
+      hasCart = !selectedOptions
+          .map((e) => e.variation != null)
+          .toList()
+          .contains(false);
+
       return Container(
         height: Adaptive.h(65),
         padding: EdgeInsets.only(top: Adaptive.h(5)),
@@ -54,24 +59,91 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             PageWire(
-              child: Wrap(
-                  runSpacing: 5, children: optionPurchase(_product.options!)),
+              child: hasCart
+                  ? ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey),
+                      ),
+                      title: Text("옵션 다시 선택하기"),
+                      trailing: Icon(Icons.keyboard_arrow_down_sharp),
+                      onTap: () {
+                        setState(() {
+                          selectedOptions = List.generate(
+                              _product.options!.length,
+                              (index) => TypeGroup(
+                                  option: Option(
+                                      Id: _product.options![index].Id,
+                                      name: _product.options![index].name)));
+                        });
+                      },
+                    )
+                  : Wrap(
+                      runSpacing: 5,
+                      children: optionPurchase(_product.options!)),
             ),
-            selectedOptions
-                    .map((e) => e.variation != null)
-                    .toList()
-                    .contains(false)
-                ? SizedBox(height: 0)
-                : Expanded(
+            hasCart
+                ? Expanded(
                     child: Container(
                       padding: basePadding(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SingleChildScrollView(
-                            child: Wrap(
+                          ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.grey),
+                            ),
+                            minVerticalPadding: 15,
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${selectedOptions}"),
+                                Text(
+                                    "${selectedOptions.map((e) => e.variation!.value)}"),
+                                IconButton(
+                                  icon: Icon(Icons.clear),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height: Adaptive.h(5),
+                                  margin: EdgeInsets.only(top: 5),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (quantity > 1) {
+                                              quantity -= 1;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Text("$quantity"),
+                                      IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (quantity < 100) {
+                                              quantity += 1;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text("100,000원"),
                               ],
                             ),
                           ),
@@ -79,7 +151,8 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                         ],
                       ),
                     ),
-                  ),
+                  )
+                : SizedBox(height: 0),
             Container(
               height: Adaptive.h(10),
               child: Row(
@@ -200,49 +273,17 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
 
   List<Widget> productQuantity() {
     return [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "수량",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: Adaptive.sp(15)),
-          ),
-          Container(
-            height: Adaptive.h(5),
-            margin: EdgeInsets.only(top: 5),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.circular(5)),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    setState(() {
-                      if (quantity > 1) {
-                        quantity -= 1;
-                      }
-                    });
-                  },
-                ),
-                Text("$quantity"),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      if (quantity < 100) {
-                        quantity += 1;
-                      }
-                    });
-                  },
-                ),
-              ],
+      Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "수량",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: Adaptive.sp(15)),
             ),
-          )
-        ],
+          ],
+        ),
       )
     ];
   }
