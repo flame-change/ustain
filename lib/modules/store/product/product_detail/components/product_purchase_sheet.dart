@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -18,12 +16,14 @@ class ProductPurchaseSheet extends StatefulWidget {
 class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
   late ProductCubit _productCubit;
   late Product _product;
+  late double modalHeight;
 
   @override
   void initState() {
     super.initState();
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _product = _productCubit.state.products!.first;
+    modalHeight = _product.options!.length * 5 + 20;
   }
 
   /*
@@ -40,21 +40,15 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
               name: _product.options![index].name)));
 
   int quantity = 1;
-
-  double modalHeight = 0;
+  int selected = 0;
   bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
-    modalHeight = _product.options!.length * 5 + 20 + (isSelected?10:0);
     return BlocBuilder<ProductCubit, ProductState>(
         builder: (context, comments) {
-      isSelected = !selectedOptions
-          .map((e) => e.variation != null)
-          .toList()
-          .contains(false);
       return Container(
-        height: Adaptive.h(modalHeight),
+        height: Adaptive.h(65),
         padding: EdgeInsets.only(top: Adaptive.h(5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,9 +62,23 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                     .toList()
                     .contains(false)
                 ? SizedBox(height: 0)
-                : Container(
-                    height: Adaptive.h(10),
-                    color: Colors.amber,
+                : Expanded(
+                    child: Container(
+                      padding: basePadding(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SingleChildScrollView(
+                            child: Wrap(
+                              children: [
+                                Text("${selectedOptions}"),
+                              ],
+                            ),
+                          ),
+                          purchaseSummary(),
+                        ],
+                      ),
+                    ),
                   ),
             Container(
               height: Adaptive.h(10),
@@ -78,8 +86,6 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print(selectedOptions);
-
                       _productCubit.createCard(
                           _product, selectedOptions, quantity);
                       showDialog(
@@ -133,106 +139,63 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
   List<Widget> optionPurchase(List<Option> options) {
     return List.generate(
         options.length,
-        (i) => Container(
-              width: Adaptive.w(100),
-              child: Container(
-                height: Adaptive.h(5),
-                padding: EdgeInsets.all(10),
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black38)),
-                child: GestureDetector(
-                  onTap: () {
-                    showCupertinoModalPopup(
-                        context: context,
-                        builder: (_) => Container(
-                              height: Adaptive.h(modalHeight),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                      height: Adaptive.h(5),
-                                      width: sizeWith(100),
-                                      alignment: Alignment.centerRight,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffffffff),
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Color(0xff999999),
-                                            width: 0.0,
-                                          ),
-                                        ),
-                                      ),
-                                      child: CupertinoButton(
-                                        child: Text('Done'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0,
-                                          vertical: 5.0,
-                                        ),
-                                      )),
-                                  Container(
-                                    height: Adaptive.h(modalHeight - 5),
-                                    child: CupertinoPicker(
-                                      backgroundColor: Colors.white,
-                                      itemExtent: 30,
-                                      scrollController:
-                                          FixedExtentScrollController(
-                                              initialItem: 0),
-                                      children: options[i]
-                                          .variations!
-                                          .map((option) =>
-                                              Text("${option.value}"))
-                                          .toList(),
-                                      onSelectedItemChanged: (j) {
-                                        if (selectedOptions[i].variation ==
-                                            options[i].variations![j]) {
-                                          setState(() {
-                                            selectedOptions[i] =
-                                                selectedOptions[i].copyWith(
-                                                    option: selectedOptions[i]
-                                                        .option,
-                                                    variation: null);
-                                          });
-                                        } else {
-                                          setState(() {
-                                            selectedOptions[i] =
-                                                selectedOptions[i].copyWith(
-                                                    option: selectedOptions[i]
-                                                        .option,
-                                                    variation: options[i]
-                                                        .variations![j]);
-                                          });
-                                        }
-                                        print(selectedOptions);
-                                        // setState(() {
-                                        //   _selectedValue = value;
-                                        // });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ));
-                  },
-                  child: Container(
-                    width: sizeWith(100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                            "${selectedOptions[i].variation == null ? options[i].name : selectedOptions[i].variation!.value}"),
-                        Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: Colors.black12,
-                        )
-                      ],
-                    ),
+        (i) => Card(
+              child: ExpansionTile(
+                  key: GlobalKey(),
+                  title: RichText(
+                    text:
+                        TextSpan(style: theme.textTheme.bodyText1!, children: [
+                      TextSpan(text: "${options[i].name} "),
+                      TextSpan(
+                          text:
+                              "${selectedOptions[i].variation == null ? "" : selectedOptions[i].variation!.value}"),
+                    ]),
                   ),
-                ),
-              ),
+                  // maintainState: true,
+                  initiallyExpanded: i == selected,
+                  children: ListTile.divideTiles(
+                      color: Colors.grey[200],
+                      tiles: List.generate(
+                          options[i].variations!.length,
+                          (index) => ListTile(
+                                title: Text(
+                                    "${options[i].variations![index].value}"),
+                                onTap: () {
+                                  setState(() {
+                                    selectedOptions[i] = selectedOptions[i]
+                                        .copyWith(
+                                            variation:
+                                                options[i].variations![index]);
+                                    selected = selected + 1;
+                                  });
+                                },
+                              ))).toList()),
             ));
+  }
+
+  Widget purchaseSummary() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          border: Border(
+        top: BorderSide(color: theme.dividerColor),
+      )),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("총 1개의 상품"),
+          RichText(
+            text: TextSpan(style: theme.textTheme.bodyText2, children: [
+              TextSpan(text: "총 금액 "),
+              TextSpan(
+                  text: "100,000원",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.red)),
+            ]),
+          )
+        ],
+      ),
+    );
   }
 
   List<Widget> productQuantity() {
