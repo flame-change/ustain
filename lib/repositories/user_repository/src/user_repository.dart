@@ -69,8 +69,8 @@ class UserRepository {
           selectedCategories: response['categories'],
           categories:
               category.map((e) => MagazineCategory.fromJson(e)).toList(),
-          collections: collections.map((e) => Collection.fromJson(e)).toList() +
-              [Collection("", "전체보기")],
+          // collections: collections.map((e) => Collection.fromJson(e)).toList() +
+          //     [Collection("", "전체보기")],
           cartCount: cartCount,
         ),
       );
