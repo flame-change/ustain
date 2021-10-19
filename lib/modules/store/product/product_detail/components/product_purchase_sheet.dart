@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -18,12 +19,14 @@ class ProductPurchaseSheet extends StatefulWidget {
 class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
   late ProductCubit _productCubit;
   late Product _product;
+  late double modalHeight;
 
   @override
   void initState() {
     super.initState();
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _product = _productCubit.state.products!.first;
+    modalHeight = _product.options!.length * 5 + 20;
   }
 
   /*
@@ -39,49 +42,168 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
               Id: _product.options![index].Id,
               name: _product.options![index].name)));
 
-  int quantity = 1;
-
-  double modalHeight = 0;
-  bool isSelected = false;
+  int selected = 0;
+  bool hasCart = false;
+  List<CartTemp> cartTempList = [];
 
   @override
   Widget build(BuildContext context) {
-    modalHeight = _product.options!.length * 5 + 20 + (isSelected?10:0);
     return BlocBuilder<ProductCubit, ProductState>(
         builder: (context, comments) {
-      isSelected = !selectedOptions
+      hasCart = !selectedOptions
           .map((e) => e.variation != null)
           .toList()
           .contains(false);
+
       return Container(
-        height: Adaptive.h(modalHeight),
+        height: Adaptive.h(65),
         padding: EdgeInsets.only(top: Adaptive.h(5)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             PageWire(
-              child: Wrap(
-                  runSpacing: 5, children: optionPurchase(_product.options!)),
+              child: hasCart
+                  ? GestureDetector(
+                      onTap: () {
+                        print(selectedOptions);
+
+                        setState(() {
+                          selectedOptions = List.generate(
+                              _product.options!.length,
+                              (index) => TypeGroup(
+                                  option: Option(
+                                      Id: _product.options![index].Id,
+                                      name: _product.options![index].name)));
+                        });
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.grey),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "옵션을 선택해주세요",
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                            Icon(Icons.keyboard_arrow_down_sharp),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Wrap(
+                      runSpacing: 5,
+                      children: optionPurchase(_product.options!)),
             ),
-            selectedOptions
-                    .map((e) => e.variation != null)
-                    .toList()
-                    .contains(false)
-                ? SizedBox(height: 0)
-                : Container(
-                    height: Adaptive.h(10),
-                    color: Colors.amber,
-                  ),
+            hasCart
+                ? Expanded(
+                    child: Container(
+                        padding: basePadding(),
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.grey),
+                              ),
+                              minVerticalPadding: 15,
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      "${cartTempList[index].variants!.variantName}"),
+                                  IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {},
+                                  ),
+                                ],
+                              ),
+                              subtitle: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: Adaptive.h(5),
+                                    margin: EdgeInsets.only(top: 5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.remove),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (cartTempList[index]
+                                                      .quantity! >
+                                                  1) {
+                                                cartTempList[
+                                                    index] = cartTempList[
+                                                        index]
+                                                    .copyWith(
+                                                        quantity:
+                                                            cartTempList[index]
+                                                                    .quantity! -
+                                                                1);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        Text("${cartTempList[index].quantity}"),
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (cartTempList[index]
+                                                      .quantity! <
+                                                  100) {
+                                                cartTempList[
+                                                    index] = cartTempList[
+                                                        index]
+                                                    .copyWith(
+                                                        quantity:
+                                                            cartTempList[index]
+                                                                    .quantity! +
+                                                                1);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                      "${currencyFromString((cartTempList[index].variants!.discountPrice! * cartTempList[index].quantity!).toString())}"),
+                                ],
+                              ),
+                            );
+                          },
+                          itemCount: cartTempList.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(height: 10),
+                        )),
+                  )
+                : SizedBox(height: 0),
+            cartTempList.length > 0 ? purchaseSummary() : SizedBox(height: 0),
             Container(
               height: Adaptive.h(10),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print(selectedOptions);
-
-                      _productCubit.createCard(
-                          _product, selectedOptions, quantity);
+                      _productCubit.createCard(_product, cartTempList);
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -104,6 +226,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           border: Border.all(width: 1, color: Colors.black),
+                          color: Colors.white,
                         ),
                         child: Text("장바구니 담기", style: theme.textTheme.button)),
                   ),
@@ -133,153 +256,108 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
   List<Widget> optionPurchase(List<Option> options) {
     return List.generate(
         options.length,
-        (i) => Container(
-              width: Adaptive.w(100),
-              child: Container(
-                height: Adaptive.h(5),
-                padding: EdgeInsets.all(10),
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black38)),
-                child: GestureDetector(
-                  onTap: () {
-                    showCupertinoModalPopup(
-                        context: context,
-                        builder: (_) => Container(
-                              height: Adaptive.h(modalHeight),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                      height: Adaptive.h(5),
-                                      width: sizeWith(100),
-                                      alignment: Alignment.centerRight,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffffffff),
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Color(0xff999999),
-                                            width: 0.0,
-                                          ),
-                                        ),
-                                      ),
-                                      child: CupertinoButton(
-                                        child: Text('Done'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0,
-                                          vertical: 5.0,
-                                        ),
-                                      )),
-                                  Container(
-                                    height: Adaptive.h(modalHeight - 5),
-                                    child: CupertinoPicker(
-                                      backgroundColor: Colors.white,
-                                      itemExtent: 30,
-                                      scrollController:
-                                          FixedExtentScrollController(
-                                              initialItem: 0),
-                                      children: options[i]
-                                          .variations!
-                                          .map((option) =>
-                                              Text("${option.value}"))
-                                          .toList(),
-                                      onSelectedItemChanged: (j) {
-                                        if (selectedOptions[i].variation ==
-                                            options[i].variations![j]) {
-                                          setState(() {
-                                            selectedOptions[i] =
-                                                selectedOptions[i].copyWith(
-                                                    option: selectedOptions[i]
-                                                        .option,
-                                                    variation: null);
-                                          });
-                                        } else {
-                                          setState(() {
-                                            selectedOptions[i] =
-                                                selectedOptions[i].copyWith(
-                                                    option: selectedOptions[i]
-                                                        .option,
-                                                    variation: options[i]
-                                                        .variations![j]);
-                                          });
-                                        }
-                                        print(selectedOptions);
-                                        // setState(() {
-                                        //   _selectedValue = value;
-                                        // });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ));
-                  },
-                  child: Container(
-                    width: sizeWith(100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                            "${selectedOptions[i].variation == null ? options[i].name : selectedOptions[i].variation!.value}"),
-                        Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: Colors.black12,
-                        )
-                      ],
-                    ),
+        (i) => Card(
+              child: ExpansionTile(
+                  key: GlobalKey(),
+                  title: RichText(
+                    text:
+                        TextSpan(style: theme.textTheme.bodyText1!, children: [
+                      TextSpan(text: "${options[i].name} "),
+                      TextSpan(
+                          text:
+                              "${selectedOptions[i].variation == null ? "" : selectedOptions[i].variation!.value}"),
+                    ]),
                   ),
-                ),
-              ),
+                  // maintainState: true,
+                  initiallyExpanded: i == selected,
+                  children: ListTile.divideTiles(
+                      color: Colors.grey[200],
+                      tiles: List.generate(
+                          options[i].variations!.length,
+                          (index) => ListTile(
+                                title: Text(
+                                    "${options[i].variations![index].value}"),
+                                onTap: () {
+                                  // 선택 옵션 추가
+                                  setState(() {
+                                    selectedOptions[i] = selectedOptions[i]
+                                        .copyWith(
+                                            variation:
+                                                options[i].variations![index]);
+                                    selected = selected + 1;
+                                  });
+
+                                  if (!selectedOptions
+                                      .map((e) => e.variation != null)
+                                      .toList()
+                                      .contains(false)) {
+                                    // cartTemp 생성
+
+                                    Variants? variant;
+
+                                    _product.variants!.forEach((element) {
+                                      if (listEquals(
+                                          element.types, selectedOptions)) {
+                                        variant = element;
+                                      }
+                                    });
+
+                                    setState(() {
+                                      selected = 0;
+                                      cartTempList.add(CartTemp(
+                                          variants: variant, quantity: 1));
+                                    });
+                                    print(cartTempList);
+                                  }
+                                },
+                              ))).toList()),
             ));
+  }
+
+  Widget purchaseSummary() {
+    num total = cartTempList.fold(
+        0,
+        (pre, cartTemp) =>
+            pre + (cartTemp.quantity! * cartTemp.variants!.discountPrice!));
+
+    return Container(
+      padding: basePadding(vertical: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(color: theme.dividerColor),
+          )),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("총 ${cartTempList.length}개의 상품"),
+          RichText(
+            text: TextSpan(style: theme.textTheme.bodyText2, children: [
+              TextSpan(text: "총 금액 "),
+              TextSpan(
+                  text: "${currencyFromString(total.toString())}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.red)),
+            ]),
+          )
+        ],
+      ),
+    );
   }
 
   List<Widget> productQuantity() {
     return [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "수량",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: Adaptive.sp(15)),
-          ),
-          Container(
-            height: Adaptive.h(5),
-            margin: EdgeInsets.only(top: 5),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.circular(5)),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    setState(() {
-                      if (quantity > 1) {
-                        quantity -= 1;
-                      }
-                    });
-                  },
-                ),
-                Text("$quantity"),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      if (quantity < 100) {
-                        quantity += 1;
-                      }
-                    });
-                  },
-                ),
-              ],
+      Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "수량",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: Adaptive.sp(15)),
             ),
-          )
-        ],
+          ],
+        ),
       )
     ];
   }

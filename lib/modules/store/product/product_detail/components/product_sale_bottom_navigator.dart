@@ -1,5 +1,7 @@
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/modules/store/purchase/cubit/purchase_cubit.dart';
 import 'package:aroundus_app/repositories/product_repository/models/models.dart';
+import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';

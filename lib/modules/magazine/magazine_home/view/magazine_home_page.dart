@@ -31,8 +31,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
   void initState() {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
-    _magazineCubit.getMagazinesByCategory(
-        magazineCategory: MagazineCategory.empty);
+    _magazineCubit.getMagazinesByCategory(magazineCategory: MagazineCategory.empty);
     _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
     user = context.read<AuthenticationBloc>().state.user;
