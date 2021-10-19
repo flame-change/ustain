@@ -1,9 +1,12 @@
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -39,9 +42,9 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
               Id: _product.options![index].Id,
               name: _product.options![index].name)));
 
-  int quantity = 1;
   int selected = 0;
   bool hasCart = false;
+  List<CartTemp> cartTempList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +58,19 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
       return Container(
         height: Adaptive.h(65),
         padding: EdgeInsets.only(top: Adaptive.h(5)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             PageWire(
               child: hasCart
-                  ? ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey),
-                      ),
-                      title: Text("옵션 다시 선택하기"),
-                      trailing: Icon(Icons.keyboard_arrow_down_sharp),
+                  ? GestureDetector(
                       onTap: () {
+                        print(selectedOptions);
+
                         setState(() {
                           selectedOptions = List.generate(
                               _product.options!.length,
@@ -76,6 +80,24 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                       name: _product.options![index].name)));
                         });
                       },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.grey),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "옵션을 선택해주세요",
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                            Icon(Icons.keyboard_arrow_down_sharp),
+                          ],
+                        ),
+                      ),
                     )
                   : Wrap(
                       runSpacing: 5,
@@ -84,83 +106,104 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
             hasCart
                 ? Expanded(
                     child: Container(
-                      padding: basePadding(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.grey),
-                            ),
-                            minVerticalPadding: 15,
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    "${selectedOptions.map((e) => e.variation!.value)}"),
-                                IconButton(
-                                  icon: Icon(Icons.clear),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: Adaptive.h(5),
-                                  margin: EdgeInsets.only(top: 5),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(Icons.remove),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (quantity > 1) {
-                                              quantity -= 1;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      Text("$quantity"),
-                                      IconButton(
-                                        icon: Icon(Icons.add),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (quantity < 100) {
-                                              quantity += 1;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
+                        padding: basePadding(),
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.grey),
+                              ),
+                              minVerticalPadding: 15,
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      "${cartTempList[index].variants!.variantName}"),
+                                  IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {},
                                   ),
-                                ),
-                                Text("100,000원"),
-                              ],
-                            ),
-                          ),
-                          purchaseSummary(),
-                        ],
-                      ),
-                    ),
+                                ],
+                              ),
+                              subtitle: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: Adaptive.h(5),
+                                    margin: EdgeInsets.only(top: 5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1, color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.remove),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (cartTempList[index]
+                                                      .quantity! >
+                                                  1) {
+                                                cartTempList[
+                                                    index] = cartTempList[
+                                                        index]
+                                                    .copyWith(
+                                                        quantity:
+                                                            cartTempList[index]
+                                                                    .quantity! -
+                                                                1);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        Text("${cartTempList[index].quantity}"),
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (cartTempList[index]
+                                                      .quantity! <
+                                                  100) {
+                                                cartTempList[
+                                                    index] = cartTempList[
+                                                        index]
+                                                    .copyWith(
+                                                        quantity:
+                                                            cartTempList[index]
+                                                                    .quantity! +
+                                                                1);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                      "${currencyFromString((cartTempList[index].variants!.discountPrice! * cartTempList[index].quantity!).toString())}"),
+                                ],
+                              ),
+                            );
+                          },
+                          itemCount: cartTempList.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(height: 10),
+                        )),
                   )
                 : SizedBox(height: 0),
+            cartTempList.length > 0 ? purchaseSummary() : SizedBox(height: 0),
             Container(
               height: Adaptive.h(10),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _productCubit.createCard(
-                          _product, selectedOptions, quantity);
+                      _productCubit.createCard(_product, cartTempList);
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -183,6 +226,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           border: Border.all(width: 1, color: Colors.black),
+                          color: Colors.white,
                         ),
                         child: Text("장바구니 담기", style: theme.textTheme.button)),
                   ),
@@ -234,6 +278,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                 title: Text(
                                     "${options[i].variations![index].value}"),
                                 onTap: () {
+                                  // 선택 옵션 추가
                                   setState(() {
                                     selectedOptions[i] = selectedOptions[i]
                                         .copyWith(
@@ -241,27 +286,56 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                                 options[i].variations![index]);
                                     selected = selected + 1;
                                   });
+
+                                  if (!selectedOptions
+                                      .map((e) => e.variation != null)
+                                      .toList()
+                                      .contains(false)) {
+                                    // cartTemp 생성
+
+                                    Variants? variant;
+
+                                    _product.variants!.forEach((element) {
+                                      if (listEquals(
+                                          element.types, selectedOptions)) {
+                                        variant = element;
+                                      }
+                                    });
+
+                                    setState(() {
+                                      selected = 0;
+                                      cartTempList.add(CartTemp(
+                                          variants: variant, quantity: 1));
+                                    });
+                                    print(cartTempList);
+                                  }
                                 },
                               ))).toList()),
             ));
   }
 
   Widget purchaseSummary() {
+    num total = cartTempList.fold(
+        0,
+        (pre, cartTemp) =>
+            pre + (cartTemp.quantity! * cartTemp.variants!.discountPrice!));
+
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: basePadding(vertical: 10),
       decoration: BoxDecoration(
+          color: Colors.white,
           border: Border(
-        top: BorderSide(color: theme.dividerColor),
-      )),
+            top: BorderSide(color: theme.dividerColor),
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("총 1개의 상품"),
+          Text("총 ${cartTempList.length}개의 상품"),
           RichText(
             text: TextSpan(style: theme.textTheme.bodyText2, children: [
               TextSpan(text: "총 금액 "),
               TextSpan(
-                  text: "100,000원",
+                  text: "${currencyFromString(total.toString())}",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.red)),
             ]),

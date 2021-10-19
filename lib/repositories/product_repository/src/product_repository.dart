@@ -19,7 +19,7 @@ class ProductRepository {
     }
   }
 
-  Future<ApiResult<Map>> createCard(Map<String, dynamic> body) async {
+  Future<ApiResult<Map>> createCard(List<dynamic> body) async {
     try {
       var response =
           await _dioClient.postWithClayful('/api/v1/commerce/cart/add/', data: body);
