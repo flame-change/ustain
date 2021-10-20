@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
+import 'package:aroundus_app/repositories/store_repository/models/menu.dart';
 import 'package:equatable/equatable.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
@@ -26,7 +27,7 @@ class User extends Equatable {
   final String? birthday; // 자료형 확인
   final List<dynamic>? selectedCategories;
   final List<MagazineCategory>? categories;
-  final List<Collection>? collections;
+  final List<Menu>? collections;
   final int? cartCount;
 
   @override
@@ -54,7 +55,7 @@ class User extends Equatable {
     String? birthday,
     List<dynamic>? selectedCategories,
     List<MagazineCategory>? categories,
-    List<Collection>? collections,
+    List<Menu>? collections,
     int? cartCount,
   }) {
     return User(

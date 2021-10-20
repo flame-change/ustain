@@ -3,6 +3,7 @@ part of 'store_cubit.dart';
 class StoreState extends Equatable {
   const StoreState({
     this.products,
+    this.selectedMenu,
     this.count = 0,
     this.previous,
     this.next,
@@ -14,6 +15,7 @@ class StoreState extends Equatable {
   });
 
   final List<Product>? products;
+  final Collection? selectedMenu;
   final int? count;
   final String? previous;
   final String? next;
@@ -26,6 +28,7 @@ class StoreState extends Equatable {
   @override
   List<Object?> get props => [
         products,
+    selectedMenu,
         count,
         previous,
         next,
@@ -38,6 +41,7 @@ class StoreState extends Equatable {
 
   StoreState copyWith({
     List<Product>? products,
+    Collection? selectedMenu,
     int? count,
     String? previous,
     String? next,
@@ -49,6 +53,7 @@ class StoreState extends Equatable {
   }) {
     return StoreState(
       products: products ?? this.products,
+      selectedMenu: selectedMenu ?? this.selectedMenu,
       count: count ?? this.count,
       previous: previous ?? this.previous,
       next: next ?? this.next,

@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
+import 'package:aroundus_app/repositories/store_repository/models/menu.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
@@ -69,8 +70,8 @@ class UserRepository {
           selectedCategories: response['categories'],
           categories:
               category.map((e) => MagazineCategory.fromJson(e)).toList(),
-          // collections: collections.map((e) => Collection.fromJson(e)).toList() +
-          //     [Collection("", "전체보기")],
+          collections: collections.map((e) => Menu.fromJson(e)).toList() +
+              [Menu("전체보기", [Collection("", "전체보기")])],
           cartCount: cartCount,
         ),
       );

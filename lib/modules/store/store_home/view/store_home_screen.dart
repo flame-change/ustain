@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dar
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/modules/store/store_home/view/view.dart';
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
+import 'package:aroundus_app/repositories/store_repository/models/menu.dart';
 import 'package:aroundus_app/repositories/store_repository/src/store_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
@@ -19,111 +20,47 @@ class StoreHomeScreen extends StatefulWidget {
 }
 
 class _StoreHomeScreen extends State<StoreHomeScreen> {
-  bool isOpen = false;
-  late Collection selectedMenu;
 
-  late User user;
+  late StoreCubit _storeCubit;
+  late Collection currentCollection;
+
+  PageController _pageController =  PageController(initialPage: 1);
 
   @override
   void initState() {
     super.initState();
-    user = context.read<AuthenticationBloc>().state.user;
-    selectedMenu = user.collections!.last;
+    _storeCubit = StoreCubit(RepositoryProvider.of<StoreRepository>(context));
+    _storeCubit.initMenu();
+    currentCollection = _storeCubit.state.selectedMenu!;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  void goBack() {
+    _pageController.previousPage(curve: Curves.ease, duration: Duration(milliseconds: 500));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: GestureDetector(
-          onTap: () {
-            setState(() {
-              isOpen = !isOpen;
-            });
-          },
-          // child: _offsetPopup(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${selectedMenu.name}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black)),
-              isOpen
-                  ? Icon(Icons.keyboard_arrow_up_sharp, color: Colors.black)
-                  : Icon(Icons.keyboard_arrow_down_sharp, color: Colors.black),
-            ],
+      body: PageView(
+        controller: _pageController,
+        children: [
+          BlocProvider.value(
+            value: _storeCubit,
+            child: StoreMenuPage(_pageController),
           ),
-        ),
-        elevation: 0,
-        actions: [
-          Icon(Icons.search, size: Adaptive.sp(20)),
-          Icon(Icons.notifications, size: Adaptive.sp(20)),
+          BlocProvider.value(
+            value: _storeCubit,
+            child: StorePage(_pageController),
+          ),
         ],
       ),
-      body: BlocProvider(
-        create: (_) =>
-            StoreCubit(RepositoryProvider.of<StoreRepository>(context)),
-        child: Stack(
-          children: [
-            StorePage(selectedMenu),
-            IndexedStack(index: 1, children: [
-              AnimatedOpacity(
-                opacity: isOpen ? 0.3 : 0,
-                duration: Duration(milliseconds: 700),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isOpen = !isOpen;
-                    });
-                  },
-                  child: Container(
-                    height: Adaptive.h(100),
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                color: Colors.white,
-                height: isOpen ? user.collections!.length * 50 : 0,
-                duration: Duration(milliseconds: 700),
-                curve: Curves.fastOutSlowIn,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {
-                        setState(() {
-                          isOpen = !isOpen;
-                          selectedMenu = user.collections![index];
-                        });
-                        print(selectedMenu);
-                      },
-                      title: Text("${user.collections![index].name}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    );
-                  },
-                  itemCount: user.collections!.length,
-                  itemExtent: 50,
-                ),
-              ),
-            ]),
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.store),
-      // floatingActionButton: FloatingActionButton(
-      //     onPressed: () {
-      //       Navigator.pushNamed(context, 'cart_screen');
-      //     },
-      //     backgroundColor: Colors.black,
-      //     child: Badge(
-      //         badgeContent: Text("${user.cartCount}"),
-      //         toAnimate: false,
-      //         elevation: 0,
-      //         badgeColor: Colors.white,
-      //         child: Icon(Icons.shopping_cart_outlined))),
     );
   }
 }
