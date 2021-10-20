@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/routes.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -23,7 +24,7 @@ extension MenuStateToString on MenuState {
       HomeScreen(),
       StoreHomeScreen(),
       MagazineHomeScreen(),
-      HomeScreen()
+      MyPageScreen()
     ][this.index];
   }
 }
