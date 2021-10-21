@@ -24,7 +24,7 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
   late StoreCubit _storeCubit;
   late Collection currentCollection;
 
-  PageController _pageController =  PageController(initialPage: 1);
+  PageController _pageController =  PageController(initialPage: 0);
 
   @override
   void initState() {
