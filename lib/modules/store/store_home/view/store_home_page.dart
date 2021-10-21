@@ -51,7 +51,7 @@ class _StorePageState extends State<StorePage>
                 onPressed: () {
                   pageController.jumpToPage(0);
                 },
-                icon: Icon(Icons.arrow_back_ios_rounded),
+                icon: Icon(Icons.menu),
                 color: Colors.black,
                 padding: EdgeInsets.zero,
               ),
