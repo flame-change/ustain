@@ -14,19 +14,15 @@ class StoreCubit extends Cubit<StoreState> {
   StoreCubit(this._storeRepository) : super(const StoreState());
 
   final StoreRepository _storeRepository;
-  
-  void initMenu(Collection collection ) {
-    emit(state.copyWith(
-      selectedMenu: collection
-    ));
+
+  void initMenu(Collection collection) {
+    emit(state.copyWith(selectedMenu: collection));
   }
 
   void selectedCollection(Collection selected) {
-    emit(state.copyWith(
-        selectedMenu: selected
-    ));
+    emit(state.copyWith(selectedMenu: selected));
   }
-  
+
   Future<void> getProductsByCollection(
       Collection collection, String sort) async {
     ApiResult<PageResponse> apiResult = await _storeRepository
@@ -35,7 +31,7 @@ class StoreCubit extends Cubit<StoreState> {
     apiResult.when(success: (PageResponse? pageResponse) {
       List<Product> newProducts = [];
 
-      if(pageResponse!.count!=null) {
+      if (pageResponse!.count != null) {
         newProducts = pageResponse.results!.map((e) {
           return Product(
             Id: e["Id"],
@@ -60,6 +56,19 @@ class StoreCubit extends Cubit<StoreState> {
           maxIndex: pageResponse.next == null ? true : false,
         ),
       );
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> getSubCollection() async {
+    ApiResult<List> apiResult =
+        await _storeRepository.getSubCollection(state.selectedMenu!);
+
+    apiResult.when(success: (List? listResponse) {
+      emit(state.copyWith(
+          subCollections: [Collection("", "전체보기")]+
+              listResponse!.map((e) => Collection.fromJson(e)).toList()));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(error: error));
     });

@@ -29,16 +29,19 @@ class _StorePageState extends State<StorePage>
   late Collection _selectedMenu;
   bool isOpen = false;
   late int collPath;
+  Collection _selectedCollection = Collection("", "전체보기");
 
   @override
   void initState() {
     super.initState();
     _storeCubit = BlocProvider.of<StoreCubit>(context);
     user = context.read<AuthenticationBloc>().state.user;
+    _storeCubit.getSubCollection();
+
     _selectedMenu = _storeCubit.state.selectedMenu!;
 
     user.collections!.forEach((menu) {
-      if(menu.collection.contains(_selectedMenu)){
+      if (menu.collection.contains(_selectedMenu)) {
         collPath = user.collections!.indexOf(menu);
       }
     });
@@ -77,8 +80,10 @@ class _StorePageState extends State<StorePage>
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.black)),
                     isOpen
-                        ? Icon(Icons.keyboard_arrow_up_sharp, color: Colors.black)
-                        : Icon(Icons.keyboard_arrow_down_sharp, color: Colors.black),
+                        ? Icon(Icons.keyboard_arrow_up_sharp,
+                            color: Colors.black)
+                        : Icon(Icons.keyboard_arrow_down_sharp,
+                            color: Colors.black),
                   ],
                 ),
               ),
@@ -97,10 +102,8 @@ class _StorePageState extends State<StorePage>
       body: Stack(
         children: [
           BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
-            print(state.products);
-            print(_selectedMenu);
             if (state.products != null) {
-              if(state.products!.isEmpty) {
+              if (state.products!.isEmpty) {
                 return Center(child: Text("등록된 상품이 없습니다."));
               } else {
                 return SingleChildScrollView(
@@ -121,14 +124,52 @@ class _StorePageState extends State<StorePage>
                           ],
                         ),
                       ),
+                      // 서브 카테고리
+                      Container(
+                        height: 30,
+                        margin: EdgeInsets.symmetric(vertical: 15),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedCollection = state.subCollections![index];
+                                  _storeCubit.getProductsByCollection(_selectedCollection, "price.sale");
+                                });
+                              },
+                              child: Container(
+                                color: _selectedCollection ==
+                                        state.subCollections![index]
+                                    ? Colors.black
+                                    : Colors.grey[300],
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.only(right: 10),
+                                child:
+                                    Text("${state.subCollections![index].name}",
+                                        style: TextStyle(
+                                          color: _selectedCollection ==
+                                                  state.subCollections![index]
+                                              ? Colors.white
+                                              : Colors.black,
+                                        )),
+                              ),
+                            );
+                          },
+                          itemCount: state.subCollections!.length,
+                        ),
+                      ),
                       GridView.count(
                         shrinkWrap: true,
                         crossAxisCount: 2,
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 15,
                         childAspectRatio: (4 / 7),
-                        children: List.generate(state.products!.length,
-                                (index) => storeProduct(context, state.products![index])),
+                        children: List.generate(
+                            state.products!.length,
+                            (index) =>
+                                storeProduct(context, state.products![index])),
                       ),
                     ],
                   ),
@@ -156,7 +197,9 @@ class _StorePageState extends State<StorePage>
             ),
             AnimatedContainer(
               color: Colors.white,
-              height: isOpen ? user.collections![collPath].collection.length * 50 : 0,
+              height: isOpen
+                  ? user.collections![collPath].collection.length * 50
+                  : 0,
               duration: Duration(milliseconds: 700),
               curve: Curves.fastOutSlowIn,
               child: ListView.builder(
@@ -165,11 +208,14 @@ class _StorePageState extends State<StorePage>
                     onTap: () {
                       setState(() {
                         isOpen = !isOpen;
-                        _selectedMenu = user.collections![collPath].collection[index];
-                        _storeCubit.getProductsByCollection(_selectedMenu, "price.sale");
+                        _selectedMenu =
+                            user.collections![collPath].collection[index];
+                        _storeCubit.getProductsByCollection(
+                            _selectedMenu, "price.sale");
                       });
                     },
-                    title: Text("${user.collections![collPath].collection[index].name}",
+                    title: Text(
+                        "${user.collections![collPath].collection[index].name}",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   );
