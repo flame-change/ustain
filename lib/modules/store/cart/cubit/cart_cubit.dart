@@ -29,6 +29,11 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
+  void allSelectedCart(bool selected) {
+    emit(state.copyWith(
+      carts: state.carts!.map((e) => e.copyWith(isChecked: selected)).toList()
+    ));
+  }
   void selectedCart(Cart cart) {
     emit(state.copyWith(
         carts: state.carts!

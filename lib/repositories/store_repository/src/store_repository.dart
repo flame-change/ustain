@@ -22,6 +22,14 @@ class StoreRepository {
     }
   }
 
+  Future<ApiResult<List>> getSubCollection(Collection collection) async {
+    try {
+      var response = await _dioClient.getWithAuth('/api/v1/commerce/collection/${collection.Id}/');
 
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 
 }

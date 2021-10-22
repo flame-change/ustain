@@ -23,6 +23,7 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
 
   late StoreCubit _storeCubit;
   late Collection currentCollection;
+  late User user;
 
   PageController _pageController =  PageController(initialPage: 0);
 
@@ -30,7 +31,8 @@ class _StoreHomeScreen extends State<StoreHomeScreen> {
   void initState() {
     super.initState();
     _storeCubit = StoreCubit(RepositoryProvider.of<StoreRepository>(context));
-    _storeCubit.initMenu();
+    user = context.read<AuthenticationBloc>().state.user;
+    _storeCubit.initMenu(user.collections!.first.collection.first);
     currentCollection = _storeCubit.state.selectedMenu!;
   }
 
