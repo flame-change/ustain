@@ -6,6 +6,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 
 class MagazineScrappedPage extends StatefulWidget {
   static String routeName = 'magazine_scrapped_page';
@@ -48,18 +49,8 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
             child: Wrap(
               runSpacing: 15,
               children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                          style:
-                              theme.textTheme.headline3!.copyWith(height: 1.5),
-                          children: [
-                            TextSpan(
-                              text: "MY ",
-                              style: TextStyle(color: theme.accentColor),
-                            ),
-                            TextSpan(text: "MAGAZINES"),
-                          ]),
-                    ),
+                    TitleWithUnderline(
+                        title: "MY MAGAZINES", subtitle: "친구들에게도 공유 해보세요!")
                   ] +
                   List.generate(
                       state.scrappedMagazines!.length,
