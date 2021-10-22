@@ -1,5 +1,9 @@
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/modules/store/purchase/cubit/purchase_cubit.dart';
 import 'package:aroundus_app/repositories/product_repository/models/models.dart';
+import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -9,12 +13,12 @@ import 'product_purchase_sheet.dart';
 Widget productSaleBottomNavigator(
     BuildContext context, ProductCubit _productCubit) {
   return Container(
-    color: Colors.lightBlue,
     height: Adaptive.h(10),
     width: Adaptive.w(100),
     padding: EdgeInsets.symmetric(
       horizontal: Adaptive.w(5),
     ),
+    decoration: BoxDecoration(border: Border.all(color: Colors.black)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -36,7 +40,7 @@ Widget productSaleBottomNavigator(
             ),
           ],
         ),
-        MaterialButton(
+        PlainButton(
           onPressed: () {
             showModalBottomSheet(
                 context: context,
@@ -50,9 +54,8 @@ Widget productSaleBottomNavigator(
                     ),
                 isScrollControlled: true);
           },
-          color: Colors.grey,
-          elevation: 0,
-          child: Text("구매하기"),
+          text: "구매하기",
+          width: 30,
         ),
       ],
     ),

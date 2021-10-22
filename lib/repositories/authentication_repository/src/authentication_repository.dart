@@ -49,10 +49,9 @@ class AuthenticationRepository {
   }) async {
     try {
       String body = json.encode({"phone": phoneNumber});
-      var response =
-          await _dioClient.post('/api/v1/user/phone-verifier/', data: body);
+      var response = await _dioClient.post('/api/v1/user/phone-verifier/', data: body);
       return ApiResult.success(
-        data: response['phone'],
+        data: response,
       );
     } catch (e) {
       return ApiResult.failure(

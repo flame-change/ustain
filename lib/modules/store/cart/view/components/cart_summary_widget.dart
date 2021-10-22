@@ -20,29 +20,32 @@ Widget cartSummary(List<Cart> carts) {
             title: "총 상품 금액",
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: Adaptive.sp(14)),
+              height: 1.6,
+                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(14)),
             contentStyle: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 fontSize: Adaptive.sp(14),
                 letterSpacing: -1)),
         summaryOutline(
             title: "총 배송비",
             content: "전 상품 무료배송",
             titleStyle: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: Adaptive.sp(14)),
+                height: 1.6,
+                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(14)),
             contentStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: Adaptive.sp(14),
+                fontWeight: FontWeight.w700,
+                fontSize: Adaptive.dp(14),
                 letterSpacing: -1)),
         Divider(color: Colors.black12),
         summaryOutline(
             title: "총 결제 예정 금액",
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: Adaptive.sp(16)),
+                height: 1.6,
+                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(16)),
             contentStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: Adaptive.sp(16),
+                fontWeight: FontWeight.w700,
+                fontSize: Adaptive.dp(16),
                 letterSpacing: -1)),
       ],
     ),

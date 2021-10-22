@@ -1,12 +1,10 @@
-import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/view/components/magazine_card_todays_widget.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
-import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
+import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-
-import 'magazine_card_widget.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
 class TodaysMagazine extends StatefulWidget {
   final List<Magazine> todaysMaagazines;
@@ -39,33 +37,26 @@ class _TodaysMagazineState extends State<TodaysMagazine>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "오늘의 매거진📚",
-          style:
-              TextStyle(fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
-        ),
-        Text(
-          "좋아하실 만한 읽을거리를 가져왔어요",
-          style: TextStyle(fontSize: Adaptive.sp(15), color: Color(0xFF979797)),
-        ),
-        Container(
-            height: Adaptive.h(30),
-            child: SingleChildScrollView(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: TitleWithUnderline(
+              title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
+      Container(
+          height: Adaptive.h(40),
+          margin: EdgeInsets.only(bottom: Adaptive.h(3)),
+          child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Wrap(
                   direction: Axis.horizontal,
-                  spacing: 15,
+                  spacing: 30,
                   children: List.generate(
                       _todaysMaagazines.length,
                       (index) => Container(
-                          width: sizeWith(65),
-                          child: magazineCard(
-                              context, _todaysMaagazines[index])))),
-            ))
-      ],
-    );
+                          width: sizeWith(60),
+                          child: todaysMagazineCard(
+                              context, _todaysMaagazines[index])))))),
+      Divider(height: 0)
+    ]);
   }
 }

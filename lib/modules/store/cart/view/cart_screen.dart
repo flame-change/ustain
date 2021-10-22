@@ -17,10 +17,9 @@ class _CartScreen extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("장바구니"),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
       ),
       body: BlocProvider(

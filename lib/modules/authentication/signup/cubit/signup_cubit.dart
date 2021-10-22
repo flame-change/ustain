@@ -12,14 +12,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit(this._authenticationRepository) : super(const SignupState(errorMessage: null));
+  SignupCubit(this._authenticationRepository) : super(const SignupState());
 
   final AuthenticationRepository _authenticationRepository;
 
-  void errorMsg(){
-    emit(state.copyWith(
-        errorMessage: ""
-    ));
+  void errorMsg() {
+    emit(state.copyWith(errorMessage: ""));
   }
 
   void phoneNumberVerifyInit() async {
@@ -28,13 +26,16 @@ class SignupCubit extends Cubit<SignupState> {
 
   Future<void> phoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
-    ApiResult<Map> apiResult = await _authenticationRepository.requestPhoneVerifier(
+    ApiResult<Map> apiResult =
+        await _authenticationRepository.requestPhoneVerifier(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
-      emit(state.copyWith(errorMessage: NetworkExceptions.getErrorMessage(error!)));
+      logger.i(error);
+      emit(state.copyWith(
+          errorMessage: NetworkExceptions.getErrorMessage(error!)));
     });
   }
 
@@ -50,6 +51,7 @@ class SignupCubit extends Cubit<SignupState> {
           phoneToken: phoneToken));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
+          errorMessage: NetworkExceptions.getErrorMessage(error!),
           phoneNumberVerifyStatus: VerifyStatus.unverified,
           unverifiedFlag: true));
 
@@ -163,6 +165,7 @@ class SignupCubit extends Cubit<SignupState> {
     apiResult.when(success: (Map? response) {
       prefs.setString('access', response!['access']);
       prefs.setString('refresh', response['refresh']);
+      prefs.setString('clayful', response['clayful']);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
       _authenticationRepository.logIn();
     }, failure: (NetworkExceptions? error) {
@@ -204,4 +207,11 @@ class SignupCubit extends Cubit<SignupState> {
       nickName: nickName,
     ));
   }
+
+  void completeVerify(){
+    emit(state.copyWith(
+        phoneNumberVerifyStatus: VerifyStatus.complete
+    ));
+  }
+
 }

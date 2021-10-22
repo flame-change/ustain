@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../login_home.dart';
@@ -19,9 +18,8 @@ class LoginHomeScreen extends StatefulWidget {
 }
 
 class _LoginHomeScreen extends State<LoginHomeScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: LoginHomePage());
+    return Scaffold(backgroundColor: Colors.black, body: LoginHomePage());
   }
 }

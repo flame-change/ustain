@@ -1,9 +1,12 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/view/view.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:formz/formz.dart';
 
 class SignupForm extends StatefulWidget {
@@ -25,41 +28,77 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: PageWire(
-          child: BlocListener<SignupCubit, SignupState>(
-            listener: (context, state) async {
-              // if (state.status.isSubmissionFailure) {
-              //   Scaffold.of(context)
-              //     ..hideCurrentSnackBar()
-              //     ..showSnackBar(
-              //       SnackBar(content: Text('${state.errorMessage}')),
-              //     );
-              // }
-              // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
-              //   Scaffold.of(context)
-              //     ..hideCurrentSnackBar()
-              //     ..showSnackBar(
-              //       SnackBar(content: Text('${state.errorMessage}')),
-              //     );
-              //   context.read<SignupCubit>().errorMessageInit();
-              // }
-            },
-            child: Column(
-              children: [
-                Text("안녕하세요☺️ 어쩌구 저쩌구"),
-                // _EmailInput(),
-                TextFormField(
-                  readOnly: true,
-                  initialValue: _signupCubit.state.phoneNumber.value,
-                ),
-                _PasswordInput(),
-                _ConfirmPasswordInput(),
-                _SignUpButton(),
-              ],
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: mainLogo(),
+        backgroundColor: Colors.black,
+      ),
+      body: BlocListener<SignupCubit, SignupState>(
+        listener: (context, state) async {
+          // if (state.status.isSubmissionFailure) {
+          //   Scaffold.of(context)
+          //     ..hideCurrentSnackBar()
+          //     ..showSnackBar(
+          //       SnackBar(content: Text('${state.errorMessage}')),
+          //     );
+          // }
+          // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
+          //   Scaffold.of(context)
+          //     ..hideCurrentSnackBar()
+          //     ..showSnackBar(
+          //       SnackBar(content: Text('${state.errorMessage}')),
+          //     );
+          //   context.read<SignupCubit>().errorMessageInit();
+          // }
+        },
+        child: Column(
+          children: [
+            Flexible(
+              flex: 3,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: basePadding(),
+                  child: RichText(
+                    text: TextSpan(
+                        style: theme.textTheme.headline2!
+                            .copyWith(color: Colors.white, height: 1.5),
+                        children: [
+                          TextSpan(text: "마지막 단계!\n"),
+                          TextSpan(text: "조금만 더 힘내세요!"),
+                        ]),
+                  )),
             ),
-          ),
-        ));
+            Flexible(
+                flex: 6,
+                child: Container(
+                    padding: basePadding(vertical: Adaptive.h(4)),
+                    height: Adaptive.h(100),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(25),
+                            topLeft: Radius.circular(25))),
+                    child: Wrap(
+                      runSpacing: 15,
+                      spacing: 5,
+                      children: [
+                        Text("SIGN UP",
+                            style: theme.textTheme.headline2!
+                                .copyWith(fontSize: Adaptive.dp(20))),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: '휴대폰 번호'),
+                          readOnly: true,
+                          initialValue: _signupCubit.state.phoneNumber.value,
+                        ),
+                        _PasswordInput(),
+                        _ConfirmPasswordInput(),
+                        _SignUpButton(),
+                      ],
+                    )))
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -79,7 +118,8 @@ class _PasswordInput extends StatelessWidget {
             counterText: '',
             labelText: '비밀번호',
             helperText: '',
-            errorText: state.password.invalid ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.' : null,
+            errorText:
+                state.password.invalid ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.' : null,
           ),
         );
       },
@@ -106,9 +146,8 @@ class _ConfirmPasswordInput extends StatelessWidget {
             counterText: '',
             labelText: '비밀번호 확인',
             helperText: '',
-            errorText: state.confirmedPassword.invalid
-                ? '비밀번호가 일치하지 않습니다.'
-                : null,
+            errorText:
+                state.confirmedPassword.invalid ? '비밀번호가 일치하지 않습니다.' : null,
           ),
         );
       },
@@ -125,25 +164,26 @@ class _SignUpButton extends StatelessWidget {
             ? Center(
                 child: const CircularProgressIndicator(),
               )
-            : Container(
-                margin: EdgeInsets.only(top: 10),
-                width: double.infinity,
-                child: FlatButton(
-                  disabledColor: Colors.grey,
-                  padding: EdgeInsets.all(15),
-                  color: Colors.amber,
-                  key: Key('signUpForm_continue_raisedButton'),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Text('확인'),
-                  onPressed: state.confirmedPassword.valid &&
-                          state.password.valid
-                      ? () =>
-                          context.read<SignupCubit>().signUpFormSubmitted(state)
-                      : null,
-                ),
-              );
+            :
+            PlainButton(onPressed:  state.password.valid
+                ? () =>
+                context.read<SignupCubit>().signUpFormSubmitted(state)
+                : null, text: '회원가입',);
+        // Container(
+        //         margin: EdgeInsets.only(top: 10),
+        //         width: double.infinity,
+        //         child: FlatButton(
+        //           padding: EdgeInsets.all(15),
+        //           color: Colors.black,
+        //           key: Key('signUpForm_continue_raisedButton'),
+        //           child: Text('회원가입'),
+        //           onPressed: state.confirmedPassword.valid &&
+        //                   state.password.valid
+        //               ? () =>
+        //                   context.read<SignupCubit>().signUpFormSubmitted(state)
+        //               : null,
+        //         ),
+        //       );
       },
     );
   }

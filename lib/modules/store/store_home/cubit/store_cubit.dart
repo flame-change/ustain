@@ -14,25 +14,41 @@ class StoreCubit extends Cubit<StoreState> {
   StoreCubit(this._storeRepository) : super(const StoreState());
 
   final StoreRepository _storeRepository;
+  
+  void initMenu() {
+    emit(state.copyWith(
+      selectedMenu: Collection("", "전체보기")
+    ));
+  }
 
+  void selectedCollection(Collection selected) {
+    emit(state.copyWith(
+        selectedMenu: selected
+    ));
+  }
+  
   Future<void> getProductsByCollection(
       Collection collection, String sort) async {
     ApiResult<PageResponse> apiResult = await _storeRepository
         .getProductsByCollection(collection, sort, state.page!);
 
     apiResult.when(success: (PageResponse? pageResponse) {
-      List<Product> newProducts = pageResponse!.results!.map((e) {
-        return Product(
-          Id: e["Id"],
-          name: e["name"],
-          rating: e["rating"],
-          originalPrice: e["originalPrice"],
-          discountPrice: e["discountPrice"],
-          discountRate: e["discountRate"],
-          brand: Brand(name: e["brand"]),
-          thumbnail: e["thumbnail"],
-        );
-      }).toList();
+      List<Product> newProducts = [];
+
+      if(pageResponse!.count!=null) {
+        newProducts = pageResponse.results!.map((e) {
+          return Product(
+            Id: e["Id"],
+            name: e["name"],
+            rating: e["rating"],
+            originalPrice: e["originalPrice"],
+            discountPrice: e["discountPrice"],
+            discountRate: e["discountRate"],
+            brand: Brand(name: e["brand"]),
+            thumbnail: e["thumbnail"],
+          );
+        }).toList();
+      }
 
       emit(
         state.copyWith(

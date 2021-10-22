@@ -12,6 +12,7 @@ class MagazineDetail extends Equatable {
     this.id,
     this.content,
     this.title,
+    this.subtitle,
     this.hit,
     this.createdAt,
     this.updatedAt,
@@ -26,6 +27,7 @@ class MagazineDetail extends Equatable {
   final int? id;
   final String? content;
   final String? title;
+  final String? subtitle;
   final int? hit;
   final String? createdAt;
   final String? updatedAt;
@@ -40,8 +42,7 @@ class MagazineDetail extends Equatable {
   Map<String, dynamic> toJson() => _$MagazineDetailToJson(this);
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         categories,
         bannerImage,
         id,
@@ -56,19 +57,19 @@ class MagazineDetail extends Equatable {
         products,
       ];
 
-  MagazineDetail copyWith({List<String>? categories,
-    String? bannerImage,
-    int? id,
-    String? content,
-    String? title,
-    int? hit,
-    String? createdAt,
-    String? updatedAt,
-    bool? commentsBanned,
-    int? likeUserCount,
-    int? totalComments,
-    List<Map>? products
-  }) {
+  MagazineDetail copyWith(
+      {List<String>? categories,
+      String? bannerImage,
+      int? id,
+      String? content,
+      String? title,
+      int? hit,
+      String? createdAt,
+      String? updatedAt,
+      bool? commentsBanned,
+      int? likeUserCount,
+      int? totalComments,
+      List<Map>? products}) {
     return MagazineDetail(
       categories: categories ?? this.categories,
       bannerImage: bannerImage ?? this.bannerImage,

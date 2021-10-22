@@ -1,3 +1,4 @@
+import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
@@ -28,21 +29,14 @@ class ProductCubit extends Cubit<ProductState> {
     });
   }
 
-  Future<void> createCard(Product product, List<TypeGroup> selectedOptions, int quantity) async {
-
-    late String variant;
-
-    product.variants!.forEach((v) {
-      if(listEquals(v.types, selectedOptions)){
-        variant = v.Id!;
-      }
-    });
-
-    Map<String, dynamic> body = {
-      "product": product.Id,
-      "variant": variant,
-      "quantity": quantity.toString()
-    };
+  Future<void> createCard(Product product, List<CartTemp> cartTemp) async {
+    List<dynamic> body = cartTemp
+        .map((temp) => {
+              "product": product.Id,
+              "variant": temp.variants!.Id,
+              "quantity": temp.quantity
+            })
+        .toList();
 
     print(body);
     ApiResult<Map> apiResult = await _productRepository.createCard(body);

@@ -6,19 +6,21 @@ part 'magazine.g.dart';
 
 @JsonSerializable()
 class Magazine extends Equatable {
-  const Magazine(
-      this.id, this.title, this.bannerImage, this.categories, this.isLike, this.content);
+  const Magazine(this.id, this.title, this.subtitle, this.bannerImage,
+      this.categories, this.content);
 
   final int? id;
   final String? title;
-  final bool? isLike;
+  final String? subtitle;
   final List<String>? categories;
   final String? bannerImage;
   final String? content;
 
-  factory Magazine.fromJson(Map<String, dynamic> json) => _$MagazineFromJson(json);
+  factory Magazine.fromJson(Map<String, dynamic> json) =>
+      _$MagazineFromJson(json);
   Map<String, dynamic> toJson() => _$MagazineToJson(this);
 
   @override
-  List<Object?> get props => [id, title, isLike, categories, bannerImage, content];
+  List<Object?> get props =>
+      [id, title, subtitle, categories, bannerImage, content];
 }

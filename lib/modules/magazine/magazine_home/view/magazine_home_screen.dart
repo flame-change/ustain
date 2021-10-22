@@ -30,14 +30,25 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
               title: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: Adaptive.w(50),
                   child: TabBar(
+                    isScrollable: true,
                     tabs: <Widget>[
-                      Text("매거진",
-                          style:TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
-                      Text("스크랩",
-                          style: TextStyle(fontSize: Adaptive.sp(18), fontWeight: FontWeight.bold)),
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text("매거진")),
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text("스크랩"))
                     ],
+                    indicator: UnderlineTabIndicator(
+                        borderSide:
+                            BorderSide(width: 4, color: theme.accentColor),
+                        insets: EdgeInsets.only(bottom: -6)),
+                    labelStyle: theme.textTheme.button!
+                        .copyWith(fontSize: Adaptive.dp(20)),
+                    labelColor: Colors.black,
+                    labelPadding: EdgeInsets.zero,
+                    indicatorPadding: EdgeInsets.only(right: 20),
                   ),
                 ),
               ),
@@ -50,7 +61,7 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
                 BlocProvider(
                     create: (_) => MagazineCubit(
                         RepositoryProvider.of<MagazineRepository>(context)),
-                    child: PageWire(child: MagazineHomePage())),
+                    child: LeftPageWire(child: MagazineHomePage())),
                 BlocProvider(
                     create: (_) => MagazineScrappedCubit(
                         RepositoryProvider.of<MagazineRepository>(context)),

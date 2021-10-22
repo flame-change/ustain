@@ -1,10 +1,13 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 
 import 'components/verify_number_input.dart';
@@ -32,19 +35,14 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: PageWire(
-          child: BlocListener<SignupCubit, SignupState>(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: mainLogo(),
+      ),
+      body: BlocListener<SignupCubit, SignupState>(
         bloc: BlocProvider.of<SignupCubit>(context),
         listener: (context, state) async {
-          if(state.errorMessage != null) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(content: Text('${state.errorMessage}')),
-              );
-            _signupCubit.errorMsg();
-          }
           if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
             if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
               Scaffold.of(context)
@@ -87,33 +85,61 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
             });
           }
           if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
+            _signupCubit.completeVerify();
 
-            Navigator.of(context).pushAndRemoveUntil(
+            Navigator.push(
+                context,
                 MaterialPageRoute(
                   builder: (_) => BlocProvider<SignupCubit>.value(
-                      value:
-                          BlocProvider.of<SignupCubit>(context, listen: true),
+                      value: BlocProvider.of<SignupCubit>(context),
                       child: SignupForm()),
-                ),
-                (route) => false);
+                ));
           }
         },
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 35),
-              width: Adaptive.w(100),
-              child: Text(
-                "편리한 서비스 이용을 위해 번호 인증이 필요해요☺️",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: Adaptive.sp(16)),
-              ),
+            Flexible(
+              flex: 3,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: basePadding(),
+                  child: RichText(
+                    text: TextSpan(
+                        style: theme.textTheme.headline2!
+                            .copyWith(color: Colors.white, height: 1.5),
+                        children: [
+                          TextSpan(text: "만나서 반가워요!"),
+                          TextSpan(
+                              text: ":)",
+                              style: theme.textTheme.headline2!
+                                  .copyWith(color: theme.accentColor)),
+                        ]),
+                  )),
             ),
-            PhoneNumberInputField(),
-            if (phoneNumberVerifyStatus == VerifyStatus.request)
-              VerifyNumberInput(),
+            Flexible(
+                flex: 6,
+                child: Container(
+                    padding: basePadding(vertical: Adaptive.h(4)),
+                    height: Adaptive.h(100),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(25),
+                            topLeft: Radius.circular(25))),
+                    child: Wrap(
+                      runSpacing: 15,
+                      children: [
+                        Text("MOBILE CERTIFICATE",
+                            style: theme.textTheme.headline2!
+                                .copyWith(fontSize: Adaptive.dp(20))),
+                        PhoneNumberInputField(),
+                        if (phoneNumberVerifyStatus == VerifyStatus.request)
+                          VerifyNumberInput(),
+                      ],
+                    ))),
           ],
         ),
-      )),
+      ),
     );
   }
 }
@@ -130,44 +156,51 @@ class PhoneNumberInputField extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           key: Key('phoneNumber_code_textFormField'),
-          maxLength: 50,
           onChanged: (phoneNumber) =>
               context.read<SignupCubit>().phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.number,
           inputFormatters: [
-            MaskedInputFormatter('000-0000-0000', allowedCharMatcher: RegExp('[0-9]'))
+            MaskedInputFormatter('000-0000-0000',
+                allowedCharMatcher: RegExp('[0-9]'))
           ],
           decoration: InputDecoration(
-              labelText: '전화번호',
+              labelText: '휴대폰 번호',
               errorText: state.phoneNumber.invalid ? '숫자만 입력 가능합니다.' : null,
-              suffixIcon: Container(
-                padding: EdgeInsets.only(right: 10),
-                child: MaterialButton(
-                  color: Colors.grey,
-                  onPressed: state.phoneNumber.valid &&
-                          state.phoneNumberVerifyStatus != VerifyStatus.verified
-                      ? () {
-                          if (state.phoneNumberVerifyStatus !=
-                              VerifyStatus.init) {
-                            context
-                                .read<SignupCubit>()
-                                .phoneNumberVerifyRequest();
-                            context.read<SignupCubit>().republishAuth();
-                          } else {
-                            context
-                                .read<SignupCubit>()
-                                .phoneNumberVerifyRequest();
-                          }
+              suffixIcon: GestureDetector(
+                onTap: state.phoneNumber.valid &&
+                        state.phoneNumberVerifyStatus != VerifyStatus.verified
+                    ? () {
+                        if (state.phoneNumberVerifyStatus !=
+                            VerifyStatus.init) {
+                          context
+                              .read<SignupCubit>()
+                              .phoneNumberVerifyRequest();
+                          context.read<SignupCubit>().republishAuth();
+                        } else {
+                          context
+                              .read<SignupCubit>()
+                              .phoneNumberVerifyRequest();
                         }
-                      : null,
+                      }
+                    : null,
+                child: Container(
+                  margin: EdgeInsets.all(8),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   child: state.phoneNumberVerifyStatus != VerifyStatus.init
                       ? Text(
                           '인증 재발급',
+                          style: theme.textTheme.bodyText2!
+                              .copyWith(color: Colors.white),
                         )
                       : Text(
                           '전송',
+                          style: theme.textTheme.bodyText2!
+                              .copyWith(color: Colors.white),
                         ),
-                  textColor: Colors.white,
                 ),
               )),
         );
