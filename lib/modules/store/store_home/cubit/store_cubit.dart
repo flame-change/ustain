@@ -15,9 +15,9 @@ class StoreCubit extends Cubit<StoreState> {
 
   final StoreRepository _storeRepository;
   
-  void initMenu() {
+  void initMenu(Collection collection ) {
     emit(state.copyWith(
-      selectedMenu: Collection("", "전체보기")
+      selectedMenu: collection
     ));
   }
 
