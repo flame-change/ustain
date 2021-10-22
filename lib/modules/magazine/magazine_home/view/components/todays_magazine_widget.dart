@@ -1,14 +1,10 @@
-import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/view/components/magazine_card_todays_widget.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
-import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
+import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-
-import 'magazine_card_widget.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
 class TodaysMagazine extends StatefulWidget {
   final List<Magazine> todaysMaagazines;
@@ -41,32 +37,15 @@ class _TodaysMagazineState extends State<TodaysMagazine>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: RichText(
-            text: TextSpan(
-                style: theme.textTheme.headline3!
-                    .copyWith(height: 1.5),
-                children: [
-                  TextSpan(text: "TRENDING "),
-                  TextSpan(
-                    text: "NOW\n",
-                    style: TextStyle(color: theme.accentColor),
-                  ),
-                  TextSpan(
-                    text: "좋아하실 만한 읽을거리를 가져왔어요.",
-                    style: theme.textTheme.subtitle1
-                  )
-                ]),
-          ),
-        ),
-        Container(
-            height: Adaptive.h(40),
-            margin: EdgeInsets.only(bottom: Adaptive.h(3)),
-            child: SingleChildScrollView(
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: TitleWithUnderline(
+              title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
+      Container(
+          height: Adaptive.h(40),
+          margin: EdgeInsets.only(bottom: Adaptive.h(3)),
+          child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Wrap(
                   direction: Axis.horizontal,
@@ -76,10 +55,8 @@ class _TodaysMagazineState extends State<TodaysMagazine>
                       (index) => Container(
                           width: sizeWith(60),
                           child: todaysMagazineCard(
-                              context, _todaysMaagazines[index])))),
-            )),
-        Divider()
-      ],
-    );
+                              context, _todaysMaagazines[index])))))),
+      Divider(height: 0)
+    ]);
   }
 }

@@ -59,7 +59,7 @@ Widget todaysMagazineCard(BuildContext context, Magazine magazine) {
                       height: 2,
                       color: Colors.white)),
               Text(
-                magazine.content!,
+                magazine.subtitle!,
                 maxLines: 2,
                 style: theme.textTheme.bodyText1!.copyWith(color: Colors.white),
               ),
