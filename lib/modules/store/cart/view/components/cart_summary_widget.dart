@@ -2,6 +2,7 @@ import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
@@ -12,15 +13,15 @@ Widget cartSummary(List<Cart> carts) {
 
   return Container(
     width: sizeWith(100),
-    margin:
-        EdgeInsets.symmetric(horizontal: sizeWith(5), vertical: Adaptive.h(1)),
+    margin: EdgeInsets.symmetric(vertical: 15),
+    color: Colors.white,
     child: Column(
       children: [
         summaryOutline(
             title: "총 상품 금액",
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
-              height: 1.6,
+                height: 1.6,
                 fontWeight: FontWeight.w700, fontSize: Adaptive.dp(14)),
             contentStyle: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -42,9 +43,10 @@ Widget cartSummary(List<Cart> carts) {
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
                 height: 1.6,
-                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(16)),
+                fontWeight: FontWeight.w300, fontSize: Adaptive.dp(16)),
             contentStyle: TextStyle(
                 fontWeight: FontWeight.w700,
+                color: theme.accentColor,
                 fontSize: Adaptive.dp(16),
                 letterSpacing: -1)),
       ],

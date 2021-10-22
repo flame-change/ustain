@@ -38,96 +38,84 @@ class _CartPageState extends State<CartPage> {
                     .map((cart) => cart.isChecked)
                     .toList()
                     .contains(false));
-                return Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          topLeft: Radius.circular(25))),
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
+                return Stack(
+                  children: [
+                    PageWire(
+                      child: SingleChildScrollView(
                         padding: EdgeInsets.only(bottom: Adaptive.h(12)),
                         child: Column(
-                            children: [
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(children: [
+                              // 전체선택 컴포넌트
                               Container(
-                                padding: EdgeInsets.only(
-                                    top: Adaptive.h(4), left: sizeWith(5), right: sizeWith(5)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
-                                      child: Text("CART",
-                                          style: theme.textTheme.headline2!
-                                              .copyWith(
-                                                  fontSize: Adaptive.dp(20), color: theme.accentColor)),
-                                    ),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
-                                            IconButton(
-                                                onPressed: () {},
-                                                padding: EdgeInsets.zero,
-                                                alignment: Alignment.center,
-                                                icon: allCheckBox
-                                                    ? Icon(
-                                                        Icons.check_box_rounded)
+                                            GestureDetector(
+                                                onTap: () {
+                                                  _cartCubit.allSelectedCart(!allCheckBox);
+                                                },
+                                                child: allCheckBox
+                                                    ? Icon(Icons.check_box_rounded)
                                                     : Icon(Icons
-                                                        .check_box_outline_blank_rounded)),
+                                                    .check_box_outline_blank_rounded)),
                                             Text("전체선택")
                                           ],
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            List<Cart> deleteCarts =
-                                                state.carts!.fold(
-                                                    <Cart>[],
-                                                    (pre, cart) =>
-                                                        cart.isChecked!
-                                                            ? pre + [cart]
-                                                            : pre + []);
+                                            List<Cart> deleteCarts = state.carts!
+                                                .fold(
+                                                <Cart>[],
+                                                    (pre, cart) => cart.isChecked!
+                                                    ? pre + [cart]
+                                                    : pre + []);
                                             _cartCubit.deleteCart(deleteCarts);
                                           },
                                           child: Text(
                                             "선택삭제",
                                             style: TextStyle(
                                                 decoration:
-                                                    TextDecoration.underline),
+                                                TextDecoration.underline),
                                           ),
                                         )
                                       ],
                                     ),
+                                    Blank(height: 5, color: Colors.black),
                                   ],
                                 ),
                               ),
                               Column(
-                                children: List.generate(
-                                    carts.length,
-                                    (index) =>
-                                        cartTile(_cartCubit, carts[index])),
+                                children: List.generate(carts.length,
+                                        (index) => cartTile(_cartCubit, carts[index])),
                               ),
-                              Blank(),
-                              cartSummary(carts),
+
                             ]),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: MaterialButton(
-                          onPressed: () {
-                            print("결제하기");
-                          },
-                          color: Colors.grey,
-                          minWidth: sizeWith(100),
-                          height: Adaptive.h(10),
-                          child: Text("결제하기"),
+                            cartSummary(carts),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MaterialButton(
+                        onPressed: () {
+                          print("결제하기");
+                        },
+                        color: Colors.black,
+                        minWidth: sizeWith(100),
+                        height: Adaptive.h(10),
+                        child: Text("결제하기", style: TextStyle(color: theme.accentColor),),
+                      ),
+                    ),
+                  ],
                 );
               } else {
                 return Center(
