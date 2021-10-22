@@ -7,6 +7,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'components/cart_summary_widget.dart';
 import 'components/cart_tile_widget.dart';
@@ -38,42 +39,32 @@ class _CartPageState extends State<CartPage> {
                     .map((cart) => cart.isChecked)
                     .toList()
                     .contains(false));
-                return Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          topLeft: Radius.circular(25))),
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
+                return Stack(
+                  children: [
+                    PageWire(
+                      child: SingleChildScrollView(
                         padding: EdgeInsets.only(bottom: Adaptive.h(12)),
                         child: Column(
-                            children: [
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(children: [
+                              // 전체선택 컴포넌트
                               Container(
-                                padding: EdgeInsets.only(
-                                    top: Adaptive.h(4), left: sizeWith(5), right: sizeWith(5)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
-                                      child: Text("CART",
-                                          style: theme.textTheme.headline2!
-                                              .copyWith(
-                                                  fontSize: Adaptive.dp(20), color: theme.accentColor)),
-                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
-                                            IconButton(
-                                                onPressed: () {},
-                                                padding: EdgeInsets.zero,
-                                                alignment: Alignment.center,
-                                                icon: allCheckBox
+                                            GestureDetector(
+                                                onTap: () {
+                                                  _cartCubit.allSelectedCart(
+                                                      !allCheckBox);
+                                                },
+                                                child: allCheckBox
                                                     ? Icon(
                                                         Icons.check_box_rounded)
                                                     : Icon(Icons
@@ -101,6 +92,7 @@ class _CartPageState extends State<CartPage> {
                                         )
                                       ],
                                     ),
+                                    Blank(height: 5, color: Colors.black),
                                   ],
                                 ),
                               ),
@@ -110,28 +102,48 @@ class _CartPageState extends State<CartPage> {
                                     (index) =>
                                         cartTile(_cartCubit, carts[index])),
                               ),
-                              Blank(),
-                              cartSummary(carts),
                             ]),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: MaterialButton(
-                          onPressed: () {
-                            print("결제하기");
-                          },
-                          color: Colors.grey,
-                          minWidth: sizeWith(100),
-                          height: Adaptive.h(10),
-                          child: Text("결제하기"),
+                            cartSummary(carts),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MaterialButton(
+                        onPressed: () {
+                          print("결제하기");
+                        },
+                        color: Colors.black,
+                        minWidth: sizeWith(100),
+                        height: Adaptive.h(10),
+                        child: Text(
+                          "결제하기",
+                          style: TextStyle(color: theme.accentColor),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               } else {
                 return Center(
-                  child: Text("아직 장바구니에 담긴 상품이 없어요 😭"),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: SvgPicture.asset(
+                          'assets/images/empty_cart.svg',
+                          height: 80,
+                          color: theme.accentColor,
+                        ),
+                      ),
+                      Text(
+                        "아무것도 없어요!",
+                        style: theme.textTheme.headline2!.copyWith(height: 2),
+                      ),
+                    ],
+                  ),
                 );
               }
             });
