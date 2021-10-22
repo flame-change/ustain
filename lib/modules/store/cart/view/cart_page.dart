@@ -7,6 +7,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'components/cart_summary_widget.dart';
 import 'components/cart_tile_widget.dart';
@@ -54,36 +55,39 @@ class _CartPageState extends State<CartPage> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
                                             GestureDetector(
                                                 onTap: () {
-                                                  _cartCubit.allSelectedCart(!allCheckBox);
+                                                  _cartCubit.allSelectedCart(
+                                                      !allCheckBox);
                                                 },
                                                 child: allCheckBox
-                                                    ? Icon(Icons.check_box_rounded)
+                                                    ? Icon(
+                                                        Icons.check_box_rounded)
                                                     : Icon(Icons
-                                                    .check_box_outline_blank_rounded)),
+                                                        .check_box_outline_blank_rounded)),
                                             Text("전체선택")
                                           ],
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            List<Cart> deleteCarts = state.carts!
-                                                .fold(
-                                                <Cart>[],
-                                                    (pre, cart) => cart.isChecked!
-                                                    ? pre + [cart]
-                                                    : pre + []);
+                                            List<Cart> deleteCarts =
+                                                state.carts!.fold(
+                                                    <Cart>[],
+                                                    (pre, cart) =>
+                                                        cart.isChecked!
+                                                            ? pre + [cart]
+                                                            : pre + []);
                                             _cartCubit.deleteCart(deleteCarts);
                                           },
                                           child: Text(
                                             "선택삭제",
                                             style: TextStyle(
                                                 decoration:
-                                                TextDecoration.underline),
+                                                    TextDecoration.underline),
                                           ),
                                         )
                                       ],
@@ -93,10 +97,11 @@ class _CartPageState extends State<CartPage> {
                                 ),
                               ),
                               Column(
-                                children: List.generate(carts.length,
-                                        (index) => cartTile(_cartCubit, carts[index])),
+                                children: List.generate(
+                                    carts.length,
+                                    (index) =>
+                                        cartTile(_cartCubit, carts[index])),
                               ),
-
                             ]),
                             cartSummary(carts),
                           ],
@@ -112,14 +117,33 @@ class _CartPageState extends State<CartPage> {
                         color: Colors.black,
                         minWidth: sizeWith(100),
                         height: Adaptive.h(10),
-                        child: Text("결제하기", style: TextStyle(color: theme.accentColor),),
+                        child: Text(
+                          "결제하기",
+                          style: TextStyle(color: theme.accentColor),
+                        ),
                       ),
                     ),
                   ],
                 );
               } else {
                 return Center(
-                  child: Text("아직 장바구니에 담긴 상품이 없어요 😭"),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: SvgPicture.asset(
+                          'assets/images/empty_cart.svg',
+                          height: 80,
+                          color: theme.accentColor,
+                        ),
+                      ),
+                      Text(
+                        "아무것도 없어요!",
+                        style: theme.textTheme.headline2!.copyWith(height: 2),
+                      ),
+                    ],
+                  ),
                 );
               }
             });
