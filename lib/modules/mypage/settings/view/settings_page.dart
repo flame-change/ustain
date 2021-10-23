@@ -13,6 +13,13 @@ class _SettingsPageState extends State<SettingsPage> {
       Container(
           padding: EdgeInsets.all(20),
           child: Column(children: [
+            menuWidget("ACCOUNT"),
+            subMenuWidget(title: "닉네임 수정"),
+            subMenuWidget(title: "휴대폰 번호 수정")
+          ])),
+      Container(
+          padding: EdgeInsets.all(20),
+          child: Column(children: [
             menuWidget("SERVICE"),
             subMenuWidget(title: "개인정보 처리방침"),
             subMenuWidget(title: "서비스 이용약관")

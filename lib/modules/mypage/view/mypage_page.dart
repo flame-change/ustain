@@ -31,43 +31,43 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: Adaptive.h(90),
         child: Column(children: [
-          Container(
-              height: Adaptive.h(15),
-              padding: EdgeInsets.symmetric(vertical: 30),
-              color: Colors.black,
-              child: myPageInfo()),
-          Container(
-              height: Adaptive.h(10),
-              decoration:
-                  BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
-              child: orderInfo()),
-          Container(
-              padding: EdgeInsets.all(20),
-              child: Column(children: [
-                menuWidget("SHOPPING"),
-                subMenuWidget(title: "배송지 관리"),
-                subMenuWidget(title: "취소 / 교환 / 반품 내역"),
-                subMenuWidget(title: "내 리뷰")
-              ])),
-          Container(
-              padding: EdgeInsets.all(20),
-              child: Column(children: [
-                menuWidget("HELP CENTER"),
-                subMenuWidget(title: "1:1 문의하기", taped: () {}),
-                subMenuWidget(title: "FAQ"),
-                subMenuWidget(title: "공지사항")
-              ])),
-          SizedBox(height: Adaptive.h(5)),
-          GestureDetector(
-              onTap: () {},
-              child: Center(
-                  child: Text('로그아웃',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Colors.grey,
-                          decoration: TextDecoration.underline))))
-        ]));
+      Container(
+          height: Adaptive.h(15),
+          padding: EdgeInsets.symmetric(vertical: 30),
+          color: Colors.black,
+          child: myPageInfo()),
+      Container(
+          height: Adaptive.h(10),
+          decoration:
+              BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
+          child: orderInfo()),
+      Container(
+          padding: EdgeInsets.all(20),
+          child: Column(children: [
+            menuWidget("SHOPPING"),
+            subMenuWidget(title: "배송지 관리"),
+            subMenuWidget(title: "주문 / 취소내역"),
+            subMenuWidget(title: "내 리뷰")
+          ])),
+      Container(
+          padding: EdgeInsets.all(20),
+          child: Column(children: [
+            menuWidget("HELP CENTER"),
+            subMenuWidget(title: "1:1 문의하기", taped: () {}),
+            subMenuWidget(title: "FAQ"),
+            subMenuWidget(title: "공지사항")
+          ])),
+      SizedBox(height: Adaptive.h(5)),
+      GestureDetector(
+          onTap: () {},
+          child: Center(
+              child: Text('로그아웃',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      color: Colors.grey,
+                      decoration: TextDecoration.underline)))),
+      SizedBox(height: Adaptive.h(10))
+    ]));
   }
 
   Widget myPageInfo() {
@@ -89,28 +89,25 @@ class _MyPageState extends State<MyPage> {
                 TextSpan(
                     text: "${user.name} ",
                     style: TextStyle(color: Colors.white)),
+                TextSpan(
+                    text: "\nLV5. 채식맨 ",
+                    style: theme.textTheme.bodyText2!
+                        .copyWith(height: 1.5, color: Color(0xFF979797))),
                 WidgetSpan(
                     child: Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Icon(Icons.arrow_forward_ios_rounded,
-                            size: 20, color: Colors.white))),
-                TextSpan(
-                    text: "\nLV5. 채식맨",
-                    style: theme.textTheme.bodyText2!
-                        .copyWith(height: 1.5, color: Color(0xFF979797)))
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Icon(Icons.info, size: 12, color: Colors.grey)))
               ]))
             ])));
   }
 
   Widget orderInfo() {
     return Row(children: [
-      UserProfileInfo(context: context, count: 4, title: '주문 내역'),
+      UserProfileInfo(context: context, count: 3, title: '쿠폰', onTap: () {}),
       UserVerticalDivider(),
-      UserProfileInfo(context: context, count: 4, title: '주문 내역'),
+      UserProfileInfo(context: context, count: 4, title: '후기 작성', onTap: () {}),
       UserVerticalDivider(),
-      UserProfileInfo(context: context, count: 4, title: '주문 내역'),
-      UserVerticalDivider(),
-      UserProfileInfo(context: context, count: 4, title: '주문 내역')
+      UserProfileInfo(context: context, count: 4, title: '내 성과', onTap: () {})
     ]);
   }
 }
