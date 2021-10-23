@@ -50,7 +50,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                     magazineBottomNavigator(context, magazineDetail.id!),
                 body: CustomScrollView(slivers: <Widget>[
                   SliverAppBar(
-                      backgroundColor: Colors.black38,
+                      backgroundColor: Colors.black,
                       leading: IconButton(
                           padding: EdgeInsets.only(left: 30),
                           icon: Icon(Icons.arrow_back_ios_outlined),
@@ -65,9 +65,9 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                             alignment: Alignment.centerLeft,
                             onPressed: () => Navigator.pop(context))
                       ],
-                      pinned: true,
+                      pinned: false,
                       snap: false,
-                      floating: false,
+                      floating: true,
                       expandedHeight:
                           Adaptive.h(50) - AppBar().preferredSize.height,
                       flexibleSpace: FlexibleSpaceBar(
