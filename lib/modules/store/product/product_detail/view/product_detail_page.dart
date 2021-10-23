@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductDetailPage extends StatefulWidget {
   ProductDetailPage(this.productId);
@@ -46,9 +47,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded) {
             product = state.products!.first;
-            return Column(
-              children: [
-                Container(
+            return SingleChildScrollView(
+                child: Column(children: [
+              Container(
                   height: 50.h,
                   width: 100.w,
                   decoration: BoxDecoration(
@@ -56,124 +57,89 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           fit: BoxFit.cover,
                           image: NetworkImage(product.thumbnail!))),
                   child: PageWire(
-                    child: Column(children: [
-                      Row(
+                      child: Column(children: [
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.arrow_back_ios_outlined),
-                            iconSize: 20,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          IconButton(
-                            // icon: ImageIcon(Svg("assets/icons/cart.svg")),
-                            icon: Icon(Icons.shopping_cart),
-                            iconSize: 20,
-                            alignment: Alignment.centerLeft,
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'cart_screen');
-                            },
-                          )
-                        ],
-                      ),
-                      // getCategories(magazineDetail.categories!),
-                    ]),
-                  ),
-                ),
-                SafeArea(
-                    top: false,
-                    child: Container(
-                      padding: basePadding(vertical: 20),
-                      child: Wrap(
-                        runSpacing: 15,
-                        spacing: 20,
-                        children: [
-                          // categoryTag(context, product.socialValues!),
+                              icon: Icon(Icons.arrow_back_ios_outlined),
+                              iconSize: 20,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }),
                           GestureDetector(
-                            onTap: () {
-                              // TODO 브랜드 페이지 이동
-                              print("브랜드 페이지 이동");
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  margin: EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image:
-                                            NetworkImage(product.brand!.url!),
-                                      )),
-                                ),
-                                Text(
-                                  "${product.brand!.name}",
-                                  style: theme.textTheme.button,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "${product.name}",
-                            style: theme.textTheme.headline4,
-                          ),
-                          Html(
-                            data: product.description,
-                          ),
-                          Divider(),
-                          RichText(
-                            text: TextSpan(
-                                style: theme.textTheme.headline4,
-                                children: [
-                                  TextSpan(
+                              onTap: () =>
+                                  Navigator.pushNamed(context, 'cart_screen'),
+                              child: SvgPicture.asset("assets/icons/cart.svg"))
+                        ])
+                    // getCategories(magazineDetail.categories!),
+                  ]))),
+              SafeArea(
+                  top: false,
+                  child: Container(
+                      padding: basePadding(vertical: 20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // categoryTag(context, product.socialValues!),
+                            GestureDetector(
+                                onTap: () {
+                                  // TODO 브랜드 페이지 이동
+                                  print("브랜드 페이지 이동");
+                                },
+                                child: Row(children: [
+                                  CircleAvatar(),
+                                  Container(
+                                      width: 20,
+                                      height: 20,
+                                      margin: EdgeInsets.only(right: 10),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  product.brand!.url!)))),
+                                  Text("${product.brand!.name}",
+                                      style: theme.textTheme.button)
+                                ])),
+                            SizedBox(height: 10),
+                            Text("${product.name}",
+                                style: theme.textTheme.headline4),
+                            SizedBox(height: 10),
+                            Text("${product.summary}"),
+                            Divider(),
+                            RichText(
+                              text: TextSpan(
+                                  style: theme.textTheme.headline4,
+                                  children: [
+                                    TextSpan(
+                                        text:
+                                            "${currencyFromString(product.discountPrice.toString())}\n",
+                                        style: theme.textTheme.subtitle1!
+                                            .copyWith(
+                                                fontSize: Adaptive.dp(12),
+                                                decoration: TextDecoration
+                                                    .lineThrough)),
+                                    TextSpan(
+                                        text: "${product.discountRate}%\t",
+                                        style: TextStyle(
+                                            fontSize: Adaptive.dp(15))),
+                                    TextSpan(
                                       text:
-                                          "${currencyFromString(product.discountPrice.toString())}\n",
-                                      style: theme.textTheme.subtitle1!
-                                          .copyWith(
-                                              fontSize: Adaptive.dp(12),
-                                              decoration:
-                                                  TextDecoration.lineThrough)),
-                                  TextSpan(
-                                      text: "${product.discountRate}%\t",
+                                          "${currencyFromString(product.discountPrice.toString())}",
                                       style: TextStyle(
-                                        fontSize: Adaptive.dp(15),
-                                      )),
-                                  TextSpan(
-                                    text:
-                                        "${currencyFromString(product.discountPrice.toString())}",
-                                    style: TextStyle(
-                                        fontSize: Adaptive.sp(20),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ]),
-                          ),
-                        ],
-                      ),
-                    ))
-              ],
-            );
+                                          fontSize: Adaptive.sp(20),
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ]),
+                            ),
+                            Html(
+                              data: product.description,
+                            )
+                          ])))
+            ]));
           } else {
             return Center(child: CircularProgressIndicator());
           }
         }));
-  }
-
-  Widget getCategories(List<String> categories) {
-    return Wrap(
-      spacing: 10,
-      runSpacing: 5,
-      children: List<Widget>.generate(
-          categories.length,
-              (index) => Container(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-            decoration: BoxDecoration(
-              color: Colors.lightBlue,
-            ),
-            child: Text("${user.categoryTransfer(categories[index])}"),
-          )),
-    );
   }
 }
