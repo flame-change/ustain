@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/authentication/account/view/finding_passwor
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
+import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_page.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:flutter/widgets.dart';
