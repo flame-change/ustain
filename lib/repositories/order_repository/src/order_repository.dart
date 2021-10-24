@@ -8,13 +8,10 @@ class OrderRepository {
 
   final DioClient _dioClient;
 
-  Future<ApiResult<Order>> createOrder(List<dynamic> orderItems) async {
+  Future<ApiResult<Map<String, dynamic>>> createOrder(List<dynamic> orderItems) async {
     try {
-
-      print(orderItems.toString());
-      var response = await _dioClient.postWithClayful('/api/v1/commerce/order/order-temp/', data: orderItems.toString());
-
-      return ApiResult.success(data: Order.fromJson(response));
+      var response = await _dioClient.postWithClayful('/api/v1/commerce/order/order-temp/', data: orderItems);
+      return ApiResult.success(data: response);
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }

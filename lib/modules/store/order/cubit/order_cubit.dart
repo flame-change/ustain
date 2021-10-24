@@ -18,14 +18,19 @@ class OrderCubit extends Cubit<OrderState> {
         .map((e) => {
               "product": e.productId,
               "variant": e.variantId,
-              "quantity": e.quantity!.toInt(),
+              "quantity": e.quantity,
             })
         .toList();
 
-    ApiResult<Order> apiResult = await _orderRepository.createOrder(orderItems);
+    ApiResult<Map<String, dynamic>> apiResult = await _orderRepository.createOrder(orderItems);
 
-    apiResult.when(success: (Order? orderResponse) {
-      emit(state.copyWith(order: orderResponse!));
+    apiResult.when(success: (Map<String, dynamic>? mapResponse) {
+      print(mapResponse);
+      emit(state.copyWith(
+        order: Order.fromJson(mapResponse!),
+        isLoaded: true,
+        isLoading: false,
+      ));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
         error: error,
