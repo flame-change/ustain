@@ -13,7 +13,7 @@ class Address extends Equatable {
       this.phoneNumber,
       this.isDefault);
 
-  final String id;
+  final int id;
   final String name;
   final String bigAddress;
   final String smallAddress;
