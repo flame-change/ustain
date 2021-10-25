@@ -8,19 +8,18 @@ part of 'order.dart';
 
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
-    (json['products'] as List<dynamic>?)
+    products: (json['products'] as List<dynamic>?)
         ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
         .toList(),
-    json['address'] == null
+    address: json['address'] == null
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),
-    json['request'] == null
+    request: json['request'] == null
         ? null
         : CustomerRequests.fromJson(json['request'] as Map<String, dynamic>),
-    json['coupon'] == null
+    coupon: json['coupon'] == null
         ? null
         : Coupon.fromJson(json['coupon'] as Map<String, dynamic>),
-    json['agreed'] as bool?,
   );
 }
 
@@ -29,5 +28,4 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'address': instance.address,
       'request': instance.request,
       'coupon': instance.coupon,
-      'agreed': instance.agreed,
     };
