@@ -61,6 +61,7 @@ class _MyPageState extends State<MyPage> {
                             title: "배송지 관리",
                             taped: () {
                               print("배송지");
+                              Navigator.pushNamed(context, 'address_screen');
                             }),
                         subMenuWidget(title: "취소 / 교환 / 반품 내역"),
                         subMenuWidget(title: "내 리뷰"),
