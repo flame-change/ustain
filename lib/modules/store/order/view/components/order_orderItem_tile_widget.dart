@@ -89,6 +89,5 @@ Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
         ],
       ),
     ),
-    Blank(height: 1),
   ]);
 }
