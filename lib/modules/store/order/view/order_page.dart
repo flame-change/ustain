@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/mypage/address/cubit/address_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -7,11 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
-import 'components/order_address_widget.dart';
-import 'components/order_compose_widget.dart';
-import 'components/order_coupon_widget.dart';
-import 'components/order_delivery_widget.dart';
-import 'components/order_orderItem_tile_widget.dart';
+import 'components/views.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -20,11 +17,13 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   late OrderCubit _orderCubit;
+  late AddressCubit _addressCubit;
 
   @override
   void initState() {
     super.initState();
     _orderCubit = BlocProvider.of<OrderCubit>(context);
+    _addressCubit = BlocProvider.of<AddressCubit>(context);
   }
 
   @override
@@ -42,19 +41,55 @@ class _OrderPageState extends State<OrderPage> {
                       child: Wrap(
                         children: [
                           orderCompose(
-                            title: "주문상품 (0)건",
-                            // child: Column(
-                            //   children: List.generate(
-                            //       order.products!.length,
-                            //       (index) => orderItemTile(
-                            //           _orderCubit, order.products![index])),
-                            // ),
+                            title: "주문상품 (${order.products!.length}건)",
+                            child: Column(
+                              children: List.generate(
+                                  order.products!.length,
+                                  (index) => orderItemTile(
+                                      _orderCubit, order.products![index])),
+                            ),
                           ),
                           orderCompose(title: "쿠폰 사용", child: orderCoupon()),
-                          orderCompose(title: "배송지/주문자 정보", child: orderAddress(order.address!)),
-                          orderCompose(title: "배송 요청사항", child: orderDelivery(order.request!)),
-                          orderCompose(title: "결제 수단", child: Text("아임포트 확인할 것")),
-                          orderCompose(title: "결제 정보"),
+                          orderCompose(
+                              title: "배송지/주문자 정보",
+                              child: orderAddress(context, order.address!)),
+                          orderCompose(
+                              title: "배송 요청사항",
+                              child: orderDelivery(order.request!)),
+                          orderCompose(
+                              title: "결제 수단", child: Text("아임포트 확인할 것")),
+                          orderCompose(
+                              title: "결제 정보",
+                              child: orderPayment(order.products!)),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("주문 내역 확인 동의 및 결제 동의",
+                                      style: theme.textTheme.bodyText1),
+                                  IconButton(
+                                      onPressed: () {
+                                        _orderCubit.setAgreed();
+                                      },
+                                      icon: Icon(
+                                        state.agreed
+                                            ? Icons.check_box_rounded
+                                            : Icons
+                                                .check_box_outline_blank_rounded,
+                                        color: Color(0xFFC4C4C4),
+                                      )),
+                                ],
+                              ),
+                              Text(
+                                  "주문 상품의 상세 정보, 가격, 환불정책 등을  확인하였으며, 이에 동의합니다.",
+                                  style: TextStyle(
+                                      color: Color(0xFFC4C4C4),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: Adaptive.dp(12))),
+                            ],
+                          )
                         ],
                       ),
                     ),

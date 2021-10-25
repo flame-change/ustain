@@ -4,12 +4,14 @@ class OrderState extends Equatable {
   const OrderState({
     this.order,
     this.error,
+    this.agreed = false,
     this.isLoaded = false,
     this.isLoading = true,
     this.errorMessage,
   });
 
   final Order? order;
+  final bool agreed;
   final bool isLoaded;
   final bool isLoading;
   final NetworkExceptions? error;
@@ -19,6 +21,7 @@ class OrderState extends Equatable {
   List<Object?> get props => [
         order,
         error,
+        agreed,
         isLoaded,
         isLoading,
         errorMessage,
@@ -26,6 +29,7 @@ class OrderState extends Equatable {
 
   OrderState copyWith({
     Order? order,
+    bool? agreed,
     NetworkExceptions? error,
     bool? isLoading,
     bool? isLoaded,
@@ -33,6 +37,7 @@ class OrderState extends Equatable {
   }) {
     return OrderState(
       order: order ?? this.order,
+      agreed: agreed ?? this.agreed,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
       isLoaded: isLoaded ?? this.isLoaded,
