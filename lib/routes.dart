@@ -2,6 +2,7 @@
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_page.dart';
@@ -27,6 +28,7 @@ final Map<String, WidgetBuilder> routes = {
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  AddressScreen.routeName: (context) => AddressScreen(),
 };
 
 Route routePage(Widget nextPage) {

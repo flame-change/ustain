@@ -46,6 +46,7 @@ dependencies:
   flutter_sizer: ^1.0.4
   badges: ^2.0.1
   pin_code_fields: ^7.3.0
+  kpostal: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -82,3 +83,4 @@ flutter:
     - assets/icons/
     - assets/icons/bottomNavigationBar/
     - assets/images/
+    - assets/postcode.html
