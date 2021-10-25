@@ -5,29 +5,29 @@ part 'address.g.dart';
 
 @JsonSerializable()
 class Address extends Equatable {
-  const Address(this.id,
+  const Address(
+      {this.id,
       this.name,
       this.bigAddress,
       this.smallAddress,
       this.postalCode,
       this.phoneNumber,
-      this.isDefault);
+      this.isDefault=false});
 
-  final int id;
-  final String name;
-  final String bigAddress;
-  final String smallAddress;
-  final String postalCode;
-  final String phoneNumber;
-  final bool isDefault;
+  final int? id;
+  final String? name;
+  final String? bigAddress;
+  final String? smallAddress;
+  final String? postalCode;
+  final String? phoneNumber;
+  final bool? isDefault;
 
-  factory Address.fromJson(Map<String, dynamic> json) =>
-      _$AddressFromJson(json);
+  factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
 
   Map<String, dynamic> toJson() => _$AddressToJson(this);
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [
         id,
         name,
@@ -37,4 +37,24 @@ class Address extends Equatable {
         phoneNumber,
         isDefault
       ];
+
+  Address copyWith({
+     int? id,
+     String? name,
+     String? bigAddress,
+     String? smallAddress,
+     String? postalCode,
+     String? phoneNumber,
+     bool? isDefault,
+  }) {
+    return Address(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      bigAddress: bigAddress ?? this.bigAddress,
+      smallAddress: smallAddress ?? this.smallAddress,
+      postalCode: postalCode ?? this.postalCode,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
 }
