@@ -70,15 +70,14 @@ class _AddressPage extends State<AddressPage> {
                                         selected = index;
                                       });
                                     },
-                                    child: addressTile(
-                                    _addressCubit, addresses[index]!, selected==index),
+                                    child: addressTile(_addressCubit, addresses[index]!, selected==index),
                                   )))),
                     ])),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
                         onTap: () {
-                          _addressCubit.updateDefaultAddress(state.addresses![0].id!);
+                          _addressCubit.updateDefaultAddress(state.addresses![selected].id!);
                         },
                         child: Container(
                           height: Adaptive.h(10),
