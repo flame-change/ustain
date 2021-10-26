@@ -123,127 +123,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                                             context, magazineDetail.products!)
                                         : SizedBox(height: 0)
                                   ]))))
-                ])
-                // body: SingleChildScrollView(
-                //   child: Column(
-                //     children: [
-                //       SliverAppBar(
-                //         expandedHeight: Adaptive.h(50),
-                //         floating: false,
-                //         pinned: true,
-                //         flexibleSpace: FlexibleSpaceBar(
-                //             centerTitle: true,
-                //             title: Text("Collapsing Toolbar",
-                //                 style: TextStyle(
-                //                   color: Colors.white,
-                //                   fontSize: 16.0,
-                //                 )),
-                //             background: Image.network(
-                //               magazineDetail.bannerImage!,
-                //               fit: BoxFit.cover,
-                //             )),
-                //       ),
-                //       Stack(
-                //         children: [
-                //           Container(
-                //             height: Adaptive.h(50),
-                //             width: sizeWith(100),
-                //             decoration: BoxDecoration(
-                //                 image: DecorationImage(
-                //                     fit: BoxFit.cover,
-                //                     image: NetworkImage(
-                //                         magazineDetail.bannerImage!))),
-                //             child: Container(
-                //                 width: 100.w,
-                //                 child: Container(
-                //                   color: Colors.black12,
-                //                 )),
-                //           ),
-                //           Container(
-                //             height: Adaptive.h(50),
-                //             padding: EdgeInsets.only(
-                //                 left: sizeWith(5),
-                //                 right: sizeWith(5),
-                //                 bottom: 20),
-                //             child: SafeArea(
-                //               child: Column(
-                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                 children: [
-                //                   Row(
-                //                     mainAxisAlignment:
-                //                         MainAxisAlignment.spaceBetween,
-                //                     children: [
-                //                       IconButton(
-                //                         icon: Icon(Icons.arrow_back_ios_outlined),
-                //                         iconSize: 20,
-                //                         alignment: Alignment.centerLeft,
-                //                         onPressed: () {
-                //                           Navigator.pop(context);
-                //                         },
-                //                       ),
-                //                     ],
-                //                   ),
-                //                   Column(
-                //                     crossAxisAlignment: CrossAxisAlignment.start,
-                //                     children: [
-                //                       RichText(
-                //                         text: TextSpan(
-                //                             style: theme.textTheme.bodyText1!
-                //                                 .copyWith(
-                //                                     color: Colors.white,
-                //                                     height: 1.5),
-                //                             children: [
-                //                               TextSpan(
-                //                                   text:
-                //                                       "${magazineDetail.title}\n",
-                //                                   style: TextStyle(
-                //                                       fontWeight: FontWeight.w900,
-                //                                       fontSize: Adaptive.dp(20))),
-                //                               TextSpan(text: "매거진 부제목"),
-                //                             ]),
-                //                       ),
-                //                       Padding(
-                //                         padding: const EdgeInsets.only(top: 15),
-                //                         child: getCategories(
-                //                             magazineDetail.categories!),
-                //                       ),
-                //                     ],
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SafeArea(
-                //           top: false,
-                //           child: Container(
-                //             width: Adaptive.w(100),
-                //             padding: EdgeInsets.only(
-                //               left: sizeWith(5),
-                //               right: sizeWith(5),
-                //               top: 15,
-                //             ),
-                //             child: Column(
-                //               crossAxisAlignment: CrossAxisAlignment.start,
-                //               children: [
-                //                 Html(
-                //                   data: magazineDetail.content,
-                //                   shrinkWrap: true,
-                //                 ),
-                //                 Divider(),
-                //                 magazineDetail.products != null
-                //                     ? productCard(
-                //                         context, magazineDetail.products!)
-                //                     : SizedBox(height: 0)
-                //               ],
-                //             ),
-                //           ))
-                //     ],
-                //   ),
-                // ),
-                );
+                ]));
           } else {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
           }
@@ -257,10 +137,11 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
         children: List<Widget>.generate(
             categories.length,
             (index) => Container(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                decoration: BoxDecoration(color: Colors.black),
-                child: Text("${user.categoryTransfer(categories[index])}",
-                    style: theme.textTheme.bodyText2!
-                        .copyWith(color: Colors.white)))));
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  decoration: BoxDecoration(color: Colors.black),
+                  // child: Text("${user.categoryTransfer(categories[index])}",
+                  //     style: theme.textTheme.bodyText2!
+                  //         .copyWith(color: Colors.white))
+                )));
   }
 }

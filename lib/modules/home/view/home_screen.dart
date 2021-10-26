@@ -8,10 +8,6 @@ import '../home.dart';
 class HomeScreen extends StatefulWidget {
   static String routeName = 'home_screen';
 
-  HomeScreen({
-    Key? key,
-  }) : super(key: key);
-
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => HomeScreen());
   }
@@ -20,8 +16,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreen();
 }
 
-class _HomeScreen extends State<HomeScreen> {
+class _HomeScreen extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin<HomeScreen> {
   late AuthenticationBloc _authenticationBloc;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initSate() {
@@ -38,9 +38,7 @@ class _HomeScreen extends State<HomeScreen> {
           ),
         ],
         child: Scaffold(
-          appBar: AppBar(),
           body: HomePage(),
-          bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.home),
         ));
   }
 }

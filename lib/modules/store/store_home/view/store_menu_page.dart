@@ -16,7 +16,8 @@ class StoreMenuPage extends StatefulWidget {
   State<StatefulWidget> createState() => _StoreMenuPage();
 }
 
-class _StoreMenuPage extends State<StoreMenuPage> with SingleTickerProviderStateMixin {
+class _StoreMenuPage extends State<StoreMenuPage>
+    with SingleTickerProviderStateMixin {
   PageController get pageController => this.widget.pageController;
 
   late StoreCubit _storeCubit;
@@ -31,8 +32,14 @@ class _StoreMenuPage extends State<StoreMenuPage> with SingleTickerProviderState
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(user.collections);
+    // print(user.collections);
 
     return Scaffold(
       body: PageWire(
@@ -51,46 +58,46 @@ class _StoreMenuPage extends State<StoreMenuPage> with SingleTickerProviderState
                       IconButton(onPressed: () {}, icon: Icon(Icons.search))
                     ],
                   )),
-              Column(
-                children: List.generate(
-                    user.collections!.length,
-                    (i) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${user.collections![i].name}",
-                                style: theme.textTheme.headline3!.copyWith(
-                                  fontSize: Adaptive.dp(18),
-                                )),
-                            GridView.count(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              shrinkWrap: true,
-                              childAspectRatio: 4 / 1,
-                              crossAxisCount: 2,
-                              children: List.generate(
-                                  user.collections![i].collection.length,
-                                  (j) => GestureDetector(
-                                    onTap: () {
-                                      _storeCubit.selectedCollection(user.collections![i].collection[j]);
-                                      pageController.jumpToPage(1);
-                                    },
-                                    child: Container(
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: _storeCubit.state.selectedMenu==user.collections![i].collection[j]?
-                                              Colors.black:Colors.white,
-                                              border: Border.all(color: Colors.black, width: 1)),
-                                          child: Text(
-                                            "${user.collections![i].collection[j].name}",
-                                            style: theme.textTheme.bodyText1!.copyWith(
-                                              color: _storeCubit.state.selectedMenu==user.collections![i].collection[j]?Colors.white:Colors.black
-                                            ),
-                                          ),
-                                        ),
-                                  )),
-                            )
-                          ],
-                        )),
-              )
+              // Column(
+              //   children: List.generate(
+              //       user.collections!.length,
+              //       (i) => Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Text("${user.collections![i].name}",
+              //                   style: theme.textTheme.headline3!.copyWith(
+              //                     fontSize: Adaptive.dp(18),
+              //                   )),
+              //               GridView.count(
+              //                 padding: EdgeInsets.symmetric(vertical: 10),
+              //                 shrinkWrap: true,
+              //                 childAspectRatio: 4 / 1,
+              //                 crossAxisCount: 2,
+              //                 children: List.generate(
+              //                     user.collections![i].collection.length,
+              //                     (j) => GestureDetector(
+              //                       onTap: () {
+              //                         _storeCubit.selectedCollection(user.collections![i].collection[j]);
+              //                         pageController.jumpToPage(1);
+              //                       },
+              //                       child: Container(
+              //                             alignment: Alignment.center,
+              //                             decoration: BoxDecoration(
+              //                               color: _storeCubit.state.selectedMenu==user.collections![i].collection[j]?
+              //                                 Colors.black:Colors.white,
+              //                                 border: Border.all(color: Colors.black, width: 1)),
+              //                             child: Text(
+              //                               "${user.collections![i].collection[j].name}",
+              //                               style: theme.textTheme.bodyText1!.copyWith(
+              //                                 color: _storeCubit.state.selectedMenu==user.collections![i].collection[j]?Colors.white:Colors.black
+              //                               ),
+              //                             ),
+              //                           ),
+              //                     )),
+              //               )
+              //             ],
+              //           )),
+              // )
             ],
           ),
         ),

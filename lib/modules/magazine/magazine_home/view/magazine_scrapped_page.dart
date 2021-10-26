@@ -15,7 +15,11 @@ class MagazineScrappedPage extends StatefulWidget {
   _MagazineScrappedPageState createState() => _MagazineScrappedPageState();
 }
 
-class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
+class _MagazineScrappedPageState extends State<MagazineScrappedPage>
+    with AutomaticKeepAliveClientMixin<MagazineScrappedPage> {
+  @override
+  bool get wantKeepAlive => true;
+
   late MagazineScrappedCubit _magazineScrappedCubit;
   final _scrollController = ScrollController();
 
@@ -36,6 +40,12 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
     if (maxScroll - currentScroll == 0) {
       _magazineScrappedCubit.getScrappedMagazine();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -71,25 +81,25 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
     });
   }
 
-  List<Widget> categoryTitle() {
-    return List<Widget>.generate(
-        user.categories!.length,
-        (index) => GestureDetector(
-              onTap: () {
-                print(user.categories![index].title);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(right: 5),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                // decoration: BoxDecoration(
-                //     color: _magazineCubit.state.magazineCategory ==
-                //             user.categories![index]
-                //         ? Colors.lightBlue
-                //         : Colors.black12,
-                //     borderRadius: BorderRadius.circular(25)),
-                child: Text(user.categories![index].title!),
-              ),
-            ));
-  }
+  // List<Widget> categoryTitle() {
+  //   return List<Widget>.generate(
+  //       user.categories!.length,
+  //       (index) => GestureDetector(
+  //             onTap: () {
+  //               print(user.categories![index].title);
+  //             },
+  //             child: Container(
+  //               alignment: Alignment.center,
+  //               margin: EdgeInsets.only(right: 5),
+  //               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  //               // decoration: BoxDecoration(
+  //               //     color: _magazineCubit.state.magazineCategory ==
+  //               //             user.categories![index]
+  //               //         ? Colors.lightBlue
+  //               //         : Colors.black12,
+  //               //     borderRadius: BorderRadius.circular(25)),
+  //               child: Text(user.categories![index].title!),
+  //             ),
+  //           ));
+  // }
 }
