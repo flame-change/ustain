@@ -1,12 +1,12 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter/material.dart';
 import 'mypage_page.dart';
 
 class MyPageScreen extends StatefulWidget {
-  static String routeName = 'home_screen';
+  static String routeName = 'my_page_screen';
 
   MyPageScreen({
     Key? key,
@@ -34,12 +34,29 @@ class _MyPageScreen extends State<MyPageScreen> {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => BlocProvider.of<AuthenticationBloc>(context),
-          ),
+              create: (context) => BlocProvider.of<AuthenticationBloc>(context))
         ],
         child: Scaffold(
-          body: MyPage(),
-          bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.my_page),
-        ));
+            appBar: AppBar(
+                brightness: Brightness.dark,
+                backgroundColor: Colors.black,
+                centerTitle: false,
+                title: Text('프로필',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(color: Colors.white)),
+                actions: [
+                  GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, SettingsScreen.routeName),
+                      child: Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(Icons.settings,
+                              color: Colors.white, size: 25)))
+                ]),
+            body: SingleChildScrollView(child: MyPage()),
+            bottomNavigationBar:
+                BottomNavBar(selectedMenu: MenuState.my_page)));
   }
 }
