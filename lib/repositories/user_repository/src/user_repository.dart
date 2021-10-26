@@ -51,9 +51,9 @@ class UserRepository {
   }
 
   Future<ApiResult<User>> getUser() async {
-    // List? category = await getCategories();
-    // List? collections = await getCollection();
-    // int? cartCount = await getCartCount();
+    List? category = await getCategories();
+    List? collections = await getCollection();
+    int? cartCount = await getCartCount();
 
     try {
       var response = await _dioClient.getWithAuth('/api/v1/user/profile/');
@@ -68,11 +68,11 @@ class UserRepository {
           sexChoices: response['sexChoices'],
           birthday: response['birthday'],
           selectedCategories: response['categories'],
-          // categories:
-          //     category.map((e) => MagazineCategory.fromJson(e)).toList(),
-          // collections: collections.map((e) => Menu.fromJson(e)).toList() +
-          //     [Menu("전체보기", [Collection("", "전체보기")])],
-          // cartCount: cartCount,
+          categories:
+              category.map((e) => MagazineCategory.fromJson(e)).toList(),
+          collections: collections.map((e) => Menu.fromJson(e)).toList() +
+              [Menu("전체보기", [Collection("", "전체보기")])],
+          cartCount: cartCount,
         ),
       );
     } on Exception {

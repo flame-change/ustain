@@ -4,7 +4,6 @@ import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_p
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_scrapped_page.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/main_screen_wire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,11 @@ class MagazineHomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MagazineHomeScreen();
 }
 
-class _MagazineHomeScreen extends State<MagazineHomeScreen> {
+class _MagazineHomeScreen extends State<MagazineHomeScreen>
+    with AutomaticKeepAliveClientMixin<MagazineHomeScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return MainScreenWire(

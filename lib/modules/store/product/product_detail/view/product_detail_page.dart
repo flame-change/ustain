@@ -71,8 +71,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                               onTap: () =>
                                   Navigator.pushNamed(context, 'cart_screen'),
                               child: SvgPicture.asset("assets/icons/cart.svg"))
-                        ])
-                    // getCategories(magazineDetail.categories!),
+                        ]),
                   ]))),
               SafeArea(
                   top: false,
@@ -88,7 +87,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                   print("브랜드 페이지 이동");
                                 },
                                 child: Row(children: [
-                                  CircleAvatar(),
                                   Container(
                                       width: 20,
                                       height: 20,

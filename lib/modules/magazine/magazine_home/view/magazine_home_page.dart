@@ -101,63 +101,62 @@ class _MagazineHomePageState extends State<MagazineHomePage>
     print("magazine ${_magazineCubit.state.magazineCategory}");
 
     return <Widget>[
-      GestureDetector(
-          onTap: () {
-            print("전체보기");
-            _magazineCubit.getMagazinesByCategory(
-                magazineCategory: MagazineCategory.empty);
-          },
-          child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(right: 5),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  color: _magazineCubit.state.magazineCategory ==
-                          MagazineCategory.empty
-                      ? Colors.black
-                      : Colors.white,
-                  border: Border.all(
+          GestureDetector(
+              onTap: () {
+                print("전체보기");
+                _magazineCubit.getMagazinesByCategory(
+                    magazineCategory: MagazineCategory.empty);
+              },
+              child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
                       color: _magazineCubit.state.magazineCategory ==
                               MagazineCategory.empty
                           ? Colors.black
-                          : Colors.grey)),
-              child: Text("전체보기",
-                  style: TextStyle(
-                    color: _magazineCubit.state.magazineCategory ==
-                            MagazineCategory.empty
-                        ? Colors.white
-                        : Colors.black,
-                  ))))
-    ];
-    // ] +
-    // List<Widget>.generate(
-    //     user.categories!.length,
-    //     (index) => GestureDetector(
-    //         onTap: () {
-    //           print(user.categories![index].title);
-    //           _magazineCubit.getMagazinesByCategory(
-    //               magazineCategory: user.categories![index]);
-    //         },
-    //         child: Container(
-    //             alignment: Alignment.center,
-    //             margin: EdgeInsets.only(right: 5),
-    //             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-    //             decoration: BoxDecoration(
-    //                 color: _magazineCubit.state.magazineCategory ==
-    //                         user.categories![index]
-    //                     ? Colors.black
-    //                     : Colors.white,
-    //                 border: Border.all(
-    //                     color: _magazineCubit.state.magazineCategory ==
-    //                             user.categories![index]
-    //                         ? Colors.black
-    //                         : Colors.grey)),
-    //             child: Text(user.categories![index].title!,
-    //                 style: TextStyle(
-    //                   color: _magazineCubit.state.magazineCategory ==
-    //                           user.categories![index]
-    //                       ? Colors.white
-    //                       : Colors.black,
-    //                 )))))
+                          : Colors.white,
+                      border: Border.all(
+                          color: _magazineCubit.state.magazineCategory ==
+                                  MagazineCategory.empty
+                              ? Colors.black
+                              : Colors.grey)),
+                  child: Text("전체보기",
+                      style: TextStyle(
+                        color: _magazineCubit.state.magazineCategory ==
+                                MagazineCategory.empty
+                            ? Colors.white
+                            : Colors.black,
+                      ))))
+        ] +
+        List<Widget>.generate(
+            user.categories!.length,
+            (index) => GestureDetector(
+                onTap: () {
+                  print(user.categories![index].title);
+                  _magazineCubit.getMagazinesByCategory(
+                      magazineCategory: user.categories![index]);
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: _magazineCubit.state.magazineCategory ==
+                                user.categories![index]
+                            ? Colors.black
+                            : Colors.white,
+                        border: Border.all(
+                            color: _magazineCubit.state.magazineCategory ==
+                                    user.categories![index]
+                                ? Colors.black
+                                : Colors.grey)),
+                    child: Text(user.categories![index].title!,
+                        style: TextStyle(
+                          color: _magazineCubit.state.magazineCategory ==
+                                  user.categories![index]
+                              ? Colors.white
+                              : Colors.black,
+                        )))));
   }
 }
