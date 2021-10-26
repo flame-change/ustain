@@ -3,6 +3,13 @@ import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/modules/mypage/user_profile/view/user_profile_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
+import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
+import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
+import 'package:aroundus_app/modules/store/store_home/view/store_home_page.dart';
+import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
+import 'package:flutter/widgets.dart';
+import 'modules/authentication/account/view/view.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'modules/authentication/login_home/view/view.dart';
@@ -28,6 +35,7 @@ final Map<String, WidgetBuilder> routes = {
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  AddressScreen.routeName: (context) => AddressScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
   UserProfileScreen.routeName: (context) => UserProfileScreen(),
