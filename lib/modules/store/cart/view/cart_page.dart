@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/store/cart/cubit/cart_cubit.dart';
+import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/blank_widget.dart';
@@ -113,6 +114,10 @@ class _CartPageState extends State<CartPage> {
                       child: MaterialButton(
                         onPressed: () {
                           print("결제하기");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderScreen(carts)));
                         },
                         color: Colors.black,
                         minWidth: sizeWith(100),
