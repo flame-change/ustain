@@ -20,7 +20,11 @@ class MyPageScreen extends StatefulWidget {
   State<MyPageScreen> createState() => _MyPageScreen();
 }
 
-class _MyPageScreen extends State<MyPageScreen> {
+class _MyPageScreen extends State<MyPageScreen>
+    with AutomaticKeepAliveClientMixin<MyPageScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
   late AuthenticationBloc _authenticationBloc;
 
   @override
@@ -55,8 +59,6 @@ class _MyPageScreen extends State<MyPageScreen> {
                           child: Icon(Icons.settings,
                               color: Colors.white, size: 25)))
                 ]),
-            body: SingleChildScrollView(child: MyPage()),
-            bottomNavigationBar:
-                BottomNavBar(selectedMenu: MenuState.my_page)));
+            body: SingleChildScrollView(child: MyPage())));
   }
 }

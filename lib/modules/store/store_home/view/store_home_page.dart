@@ -22,7 +22,7 @@ class StorePage extends StatefulWidget {
 
 class _StorePageState extends State<StorePage>
     with SingleTickerProviderStateMixin {
-  PageController get pageController => this.widget.pageController;
+  PageController get _pageController => this.widget.pageController;
 
   late StoreCubit _storeCubit;
   late User user;
@@ -40,13 +40,19 @@ class _StorePageState extends State<StorePage>
 
     _selectedMenu = _storeCubit.state.selectedMenu!;
 
-    user.collections!.forEach((menu) {
-      if (menu.collection.contains(_selectedMenu)) {
-        collPath = user.collections!.indexOf(menu);
-      }
-    });
+    // user.collections!.forEach((menu) {
+    //   if (menu.collection.contains(_selectedMenu)) {
+    //     collPath = user.collections!.indexOf(menu);
+    //   }
+    // });
 
     _storeCubit.getProductsByCollection(_selectedMenu, "price.sale");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
   }
 
   @override
@@ -61,7 +67,7 @@ class _StorePageState extends State<StorePage>
             children: [
               IconButton(
                 onPressed: () {
-                  pageController.jumpToPage(0);
+                  _pageController.jumpToPage(0);
                 },
                 icon: Icon(Icons.menu),
                 color: Colors.black,
@@ -134,8 +140,10 @@ class _StorePageState extends State<StorePage>
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _selectedCollection = state.subCollections![index];
-                                  _storeCubit.getProductsByCollection(_selectedCollection, "price.sale");
+                                  _selectedCollection =
+                                      state.subCollections![index];
+                                  _storeCubit.getProductsByCollection(
+                                      _selectedCollection, "price.sale");
                                 });
                               },
                               child: Container(
@@ -197,32 +205,32 @@ class _StorePageState extends State<StorePage>
             ),
             AnimatedContainer(
               color: Colors.white,
-              height: isOpen
-                  ? user.collections![collPath].collection.length * 50
-                  : 0,
+              // height: isOpen
+              //      ? user.collections![collPath].collection.length * 50
+              //     : 0,
               duration: Duration(milliseconds: 700),
               curve: Curves.fastOutSlowIn,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () {
-                      setState(() {
-                        isOpen = !isOpen;
-                        _selectedMenu =
-                            user.collections![collPath].collection[index];
-                        _storeCubit.getProductsByCollection(
-                            _selectedMenu, "price.sale");
-                      });
-                    },
-                    title: Text(
-                        "${user.collections![collPath].collection[index].name}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  );
-                },
-                itemCount: user.collections![collPath].collection.length,
-                itemExtent: 50,
-              ),
+              // child: ListView.builder(
+              //   itemBuilder: (context, index) {
+              //     return ListTile(
+              //       onTap: () {
+              //         setState(() {
+              //           isOpen = !isOpen;
+              //           _selectedMenu =
+              //               user.collections![collPath].collection[index];
+              //           _storeCubit.getProductsByCollection(
+              //               _selectedMenu, "price.sale");
+              //         });
+              //       },
+              //       title: Text(
+              //           "${user.collections![collPath].collection[index].name}",
+              //           textAlign: TextAlign.center,
+              //           style: TextStyle(fontWeight: FontWeight.bold)),
+              //     );
+              //   },
+              //   itemCount: user.collections![collPath].collection.length,
+              //   itemExtent: 50,
+              // ),
             ),
           ]),
         ],

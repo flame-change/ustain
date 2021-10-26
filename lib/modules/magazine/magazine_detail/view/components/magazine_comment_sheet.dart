@@ -35,7 +35,6 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
   void initState() {
     super.initState();
     user = context.read<AuthenticationBloc>().state.user;
-
     _magazineCommentCubit = BlocProvider.of<MagazineCommentCubit>(context);
     _magazineCommentCubit.getMagazineComments(_magazineId);
     _scrollController.addListener(_onScroll);
@@ -45,6 +44,13 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
     focusNode.unfocus();
     editComment = null;
     _messageController.clear();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _messageController.dispose();
+    _scrollController.dispose();
   }
 
   @override

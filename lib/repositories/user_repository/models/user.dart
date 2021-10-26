@@ -13,9 +13,9 @@ class User extends Equatable {
     this.sexChoices,
     this.birthday,
     this.selectedCategories,
-    this.categories,
-    this.collections,
-    this.cartCount,
+    // this.categories,
+    // this.collections,
+    // this.cartCount,
   });
 
   final String? groups;
@@ -26,9 +26,9 @@ class User extends Equatable {
   final String? sexChoices;
   final String? birthday; // 자료형 확인
   final List<dynamic>? selectedCategories;
-  final List<MagazineCategory>? categories;
-  final List<Menu>? collections;
-  final int? cartCount;
+  // final List<MagazineCategory>? categories;
+  // final List<Menu>? collections;
+  // final int? cartCount;
 
   @override
   List<Object?> get props => [
@@ -40,9 +40,9 @@ class User extends Equatable {
         sexChoices,
         birthday,
         selectedCategories,
-        categories,
-        collections,
-    cartCount,
+        // categories,
+        // collections,
+        // cartCount,
       ];
 
   User copyWith({
@@ -54,8 +54,8 @@ class User extends Equatable {
     String? sexChoices,
     String? birthday,
     List<dynamic>? selectedCategories,
-    List<MagazineCategory>? categories,
-    List<Menu>? collections,
+    // List<MagazineCategory>? categories,
+    // List<Menu>? collections,
     int? cartCount,
   }) {
     return User(
@@ -67,23 +67,23 @@ class User extends Equatable {
       sexChoices: sexChoices ?? this.sexChoices,
       birthday: birthday ?? this.birthday,
       selectedCategories: selectedCategories ?? this.selectedCategories,
-      categories: categories ?? this.categories,
-      collections: collections ?? this.collections,
-      cartCount: cartCount ?? this.cartCount,
+      // categories: categories ?? this.categories,
+      // collections: collections ?? this.collections,
+      // cartCount: cartCount ?? this.cartCount,
     );
   }
 
   static const empty = User();
 
-  String categoryTransfer(String word) {
-    String transfer = "";
-
-    this.categories!.forEach((category) {
-      if (category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
-        transfer = category.title!;
-      }
-    });
-
-    return transfer == "" ? word : transfer;
-  }
+  // String categoryTransfer(String word) {
+  //   String transfer = "";
+  //
+  //   this.categories!.forEach((category) {
+  //     if (category.mid == word && RegExp(r'[a-zA-Z]$').hasMatch(word)) {
+  //       transfer = category.title!;
+  //     }
+  //   });
+  //
+  //   return transfer == "" ? word : transfer;
+  // }
 }

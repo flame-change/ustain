@@ -13,8 +13,7 @@ class MagazineRepository {
 
   Future<ApiResult<List>> getMainMagazine() async {
     try {
-      var response =
-          await _dioClient.getWithAuth('/api/v1/magazine/list/is-main/');
+      var response = await _dioClient.get('/api/v1/magazine/list/is-main/');
 
       return ApiResult.success(data: response);
     } catch (e) {
@@ -23,10 +22,10 @@ class MagazineRepository {
   }
 
   Future<ApiResult<PageResponse>> getMagazinesByCategory(
-      int page,
-      String categoriesList) async {
+      int page, String categoriesList) async {
     try {
-      var response = await _dioClient.get('/api/v1/magazine/list/?page=$page&categories=[$categoriesList]');
+      var response = await _dioClient.get(
+          '/api/v1/magazine/list/?page=$page&categories=[$categoriesList]');
       return ApiResult.success(data: PageResponse.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
@@ -68,7 +67,7 @@ class MagazineRepository {
   Future<ApiResult<Map>> updateScrapped(int id) async {
     try {
       var response =
-      await _dioClient.put('/api/v1/magazine/detail/$id/update-scrap/');
+          await _dioClient.put('/api/v1/magazine/detail/$id/update-scrap/');
 
       return ApiResult.success(data: response);
     } catch (e) {
@@ -87,9 +86,12 @@ class MagazineRepository {
     }
   }
 
-  Future<ApiResult<Map>> requestMagazineComment(Map<String, dynamic> body) async {
+  Future<ApiResult<Map>> requestMagazineComment(
+      Map<String, dynamic> body) async {
     try {
-      var response = await _dioClient.postWithAuth('/api/v1/magazine/detail/reviews/review-create/', data: body);
+      var response = await _dioClient.postWithAuth(
+          '/api/v1/magazine/detail/reviews/review-create/',
+          data: body);
 
       return ApiResult.success(data: response);
     } catch (e) {
@@ -99,7 +101,8 @@ class MagazineRepository {
 
   Future<ApiResult<Map>> deleteMagazineComment(int commentId) async {
     try {
-      var response = await _dioClient.delete('/api/v1/magazine/detail/$commentId/review/delete/');
+      var response = await _dioClient
+          .delete('/api/v1/magazine/detail/$commentId/review/delete/');
 
       return ApiResult.success(data: null);
     } catch (e) {
@@ -107,13 +110,13 @@ class MagazineRepository {
     }
   }
 
-  Future<ApiResult<Map>> updateMagazineComment(int commentId, String content) async {
+  Future<ApiResult<Map>> updateMagazineComment(
+      int commentId, String content) async {
     try {
-      Map<String, dynamic> body = {
-        "content": content
-      };
+      Map<String, dynamic> body = {"content": content};
 
-      var response = await _dioClient.put('/api/v1/magazine/detail/$commentId/review/update/', data: body);
+      var response = await _dioClient
+          .put('/api/v1/magazine/detail/$commentId/review/update/', data: body);
 
       return ApiResult.success(data: response);
     } catch (e) {
@@ -123,7 +126,8 @@ class MagazineRepository {
 
   Future<ApiResult<PageResponse>> getScrappedMagazine(int page) async {
     try {
-      var response = await _dioClient.getWithAuth('/api/v1/magazine/list/scrapped/?page=$page');
+      var response = await _dioClient
+          .getWithAuth('/api/v1/magazine/list/scrapped/?page=$page');
       return ApiResult.success(data: PageResponse.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));

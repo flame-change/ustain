@@ -84,69 +84,69 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                   Text("PREFERENCES",
                       style: theme.textTheme.headline2!
                           .copyWith(fontSize: Adaptive.dp(20))),
-                  Wrap(
-                      runSpacing: 20,
-                      children: List.generate(
-                        user.categories!.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            print("${user.categories![index].mid}");
-                            setState(() {
-                              if (selectedCategory
-                                  .contains(user.categories![index].mid)) {
-                                selectedCategory
-                                    .remove(user.categories![index].mid!);
-                              } else {
-                                if (selectedCategory.length < 3) {
-                                  selectedCategory
-                                      .add(user.categories![index].mid!);
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('관심사는 최대 3개까지만 가능합니다.'),
-                                    ),
-                                  );
-                                }
-                              }
-                            });
-                          },
-                          child: Container(
-                            height: Adaptive.h(10),
-                            decoration: BoxDecoration(
-                                color: selectedCategory
-                                        .contains(user.categories![index].mid)
-                                    ? theme.accentColor
-                                    : Colors.white,
-                                border:
-                                    Border.all(color: Colors.black, width: 1)),
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  "${user.categories![index].snapshotImage}",
-                                  width: Adaptive.h(10),
-                                  height: Adaptive.h(10),
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: Adaptive.w(5)),
-                                  child: RichText(
-                                    text: TextSpan(
-                                        style: theme.textTheme.headline4!,
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  "${user.categories![index].mid}\n"),
-                                          TextSpan(
-                                              text:
-                                                  "${user.categories![index].title}"),
-                                        ]),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )),
+                  //   Wrap(
+                  //       runSpacing: 20,
+                  //       children: List.generate(
+                  //         user.categories!.length,
+                  //         (index) => GestureDetector(
+                  //           onTap: () {
+                  //             print("${user.categories![index].mid}");
+                  //             setState(() {
+                  //               if (selectedCategory
+                  //                   .contains(user.categories![index].mid)) {
+                  //                 selectedCategory
+                  //                     .remove(user.categories![index].mid!);
+                  //               } else {
+                  //                 if (selectedCategory.length < 3) {
+                  //                   selectedCategory
+                  //                       .add(user.categories![index].mid!);
+                  //                 } else {
+                  //                   ScaffoldMessenger.of(context).showSnackBar(
+                  //                     SnackBar(
+                  //                       content: Text('관심사는 최대 3개까지만 가능합니다.'),
+                  //                     ),
+                  //                   );
+                  //                 }
+                  //               }
+                  //             });
+                  //           },
+                  //           // child: Container(
+                  //           //   height: Adaptive.h(10),
+                  //           //   decoration: BoxDecoration(
+                  //           //       color: selectedCategory
+                  //           //               .contains(user.categories![index].mid)
+                  //           //           ? theme.accentColor
+                  //           //           : Colors.white,
+                  //           //       border:
+                  //           //           Border.all(color: Colors.black, width: 1)),
+                  //           //   child: Row(
+                  //           //     children: [
+                  //           //       Image.network(
+                  //           //         "${user.categories![index].snapshotImage}",
+                  //           //         width: Adaptive.h(10),
+                  //           //         height: Adaptive.h(10),
+                  //           //         fit: BoxFit.cover,
+                  //           //       ),
+                  //           //       Padding(
+                  //           //         padding: EdgeInsets.only(left: Adaptive.w(5)),
+                  //           //         child: RichText(
+                  //           //           text: TextSpan(
+                  //           //               style: theme.textTheme.headline4!,
+                  //           //               children: [
+                  //           //                 TextSpan(
+                  //           //                     text:
+                  //           //                         "${user.categories![index].mid}\n"),
+                  //           //                 TextSpan(
+                  //           //                     text:
+                  //           //                         "${user.categories![index].title}"),
+                  //           //               ]),
+                  //           //         ),
+                  //           //       ),
+                  //           //     ],
+                  //           //   ),
+                  //           // ),
+                  //         ),
+                  //       )),
                 ]),
               ),
             ),

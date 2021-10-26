@@ -31,7 +31,6 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen> {
         secondPage: BlocProvider(
             create: (_) => MagazineScrappedCubit(
                 RepositoryProvider.of<MagazineRepository>(context)),
-            child: PageWire(child: MagazineScrappedPage())),
-        bottomNavigator: BottomNavBar(selectedMenu: MenuState.magazine));
+            child: PageWire(child: MagazineScrappedPage())));
   }
 }
