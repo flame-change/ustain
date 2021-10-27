@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/mypage/address/cubit/address_cubit.dart';
+import 'package:aroundus_app/modules/store/coupon/cubit/coupon_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -18,12 +19,14 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   late OrderCubit _orderCubit;
   late AddressCubit _addressCubit;
+  late CouponCubit _couponCubit;
 
   @override
   void initState() {
     super.initState();
     _orderCubit = BlocProvider.of<OrderCubit>(context);
     _addressCubit = BlocProvider.of<AddressCubit>(context);
+    _couponCubit = BlocProvider.of<CouponCubit>(context);
   }
 
   @override
@@ -49,7 +52,9 @@ class _OrderPageState extends State<OrderPage> {
                                       _orderCubit, order.products![index])),
                             ),
                           ),
-                          orderCompose(title: "쿠폰 사용", child: orderCoupon()),
+                          orderCompose(
+                              title: "쿠폰 사용",
+                              child: orderCoupon(context, order.coupon, _couponCubit, _orderCubit)),
                           orderCompose(
                               title: "배송지/주문자 정보",
                               child: orderAddress(context, order.address!)),
