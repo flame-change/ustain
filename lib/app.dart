@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/repositories/address_repository/src/address_repository.dart';
 import 'package:aroundus_app/repositories/cart_repository/cart_repository.dart';
+import 'package:aroundus_app/repositories/coupon_repository/coupon_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/src/user_repository.dart';
@@ -39,6 +40,7 @@ class App extends StatelessWidget {
           RepositoryProvider(create: (context) => CartRepository(dioClient)),
           RepositoryProvider(create: (context) => OrderRepository(dioClient)),
           RepositoryProvider(create: (context) => AddressRepository(dioClient)),
+          RepositoryProvider(create: (context) => CouponRepository(dioClient)),
         ],
         child: MultiBlocProvider(providers: [
           BlocProvider<AuthenticationBloc>(
