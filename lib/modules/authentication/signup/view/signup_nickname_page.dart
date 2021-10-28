@@ -25,6 +25,12 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
   }
 
   @override
+  void dispose() {
+    _nicknameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -100,15 +106,15 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
                           return PlainButton(
                             onPressed: state.nickName.valid
                                 ? () =>
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                      BlocProvider<SignupCubit>.value(
-                                          value: BlocProvider.of<
-                                              SignupCubit>(context,
-                                              listen: true),
-                                          child: SignupCategoryPage()),
-                                    ),
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              BlocProvider<SignupCubit>.value(
+                                                  value: BlocProvider.of<
+                                                          SignupCubit>(context,
+                                                      listen: true),
+                                                  child: SignupCategoryPage()),
+                                        ),
                                         (route) => false)
                                 : null,
                             text: "설정완료",

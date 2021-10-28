@@ -48,9 +48,9 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
 
   @override
   void dispose() {
-    super.dispose();
     _messageController.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   @override

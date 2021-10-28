@@ -10,19 +10,21 @@ class TitleWithUnderline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-        text: TextSpan(children: [
-      WidgetSpan(
-          child: Stack(overflow: Overflow.visible, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Stack(overflow: Overflow.visible, children: [
         Positioned(
-            bottom: 0,
+            top: 14,
             left: 0,
             right: 0,
-            child: Container(height: 20, color: theme.accentColor)),
-        Text("${title}",
-            style: theme.textTheme.headline3!.copyWith(height: 1.5))
-      ])),
-      WidgetSpan(child: Text('${subtitle}', style: theme.textTheme.subtitle1))
-    ]));
+            child: Container(height: 18, color: theme.accentColor)),
+        Padding(
+          padding: EdgeInsets.only(left: 3, right: 3, bottom: 3),
+          child: Text("${title}",
+              style: theme.textTheme.headline4!.copyWith(
+                  fontStyle: FontStyle.italic, fontWeight: FontWeight.w700)),
+        )
+      ]),
+      Text('${subtitle}', style: theme.textTheme.subtitle2)
+    ]);
   }
 }

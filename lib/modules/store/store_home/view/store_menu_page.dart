@@ -32,6 +32,12 @@ class _StoreMenuPage extends State<StoreMenuPage>
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print(user.collections);
 
