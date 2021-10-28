@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
+import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order_item.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
@@ -16,6 +17,27 @@ class OrderCubit extends Cubit<OrderState> {
 
   void setAgreed() {
     emit(state.copyWith(agreed: !state.agreed));
+  }
+
+  // void setCoupon(Coupon coupon) {
+  //   emit(state.copyWith(
+  //     order: state.order!.copyWith(coupon: coupon)
+  //   ));
+  // }
+
+  Future<Coupon?> getCoupon(dynamic couponId) async {
+    ApiResult<Coupon> apiResult = await _orderRepository.getCoupon(couponId);
+
+    apiResult.when(success: (Coupon? response) {
+      emit(state.copyWith(
+        order: state.order!.copyWith(coupon: response),
+        isLoading: false,
+        isLoaded: true,
+      ));
+      return response;
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
   }
 
   Future<void> createOrder(List<Cart> carts) async {

@@ -11,9 +11,9 @@ Coupon _$CouponFromJson(Map<String, dynamic> json) {
     Id: json['Id'] as String?,
     name: json['name'] as String?,
     description: json['description'] as String?,
+    minPrice: json['minPrice'] as int?,
+    discount: json['discount'] as int?,
     expiresAt: json['expiresAt'] as String?,
-    minPrice: json['minPrice'] as String?,
-    discount: json['discount'] as String?,
   );
 }
 
