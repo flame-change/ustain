@@ -111,6 +111,20 @@ class _AddressPage extends State<AddressPage> {
                         "아무것도 없어요!",
                         style: theme.textTheme.headline2!.copyWith(height: 2),
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BlocProvider<AddressCubit>.value(
+                                    value: _addressCubit,
+                                    child: AddressFormPage(),
+                                  )));
+                        },
+                        child: Text("배송지 추가",
+                            style: theme.textTheme.headline5!.copyWith(
+                                decoration: TextDecoration.underline)),
+                      ),
                     ],
                   ),
                 );
