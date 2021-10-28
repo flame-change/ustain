@@ -7,7 +7,6 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget orderCoupon(BuildContext context, Coupon? coupon,
     CouponCubit couponCubit, OrderCubit orderCubit) {
-  print(coupon);
 
   return Wrap(runSpacing: 15, children: [
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

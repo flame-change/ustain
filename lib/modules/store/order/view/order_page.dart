@@ -60,7 +60,7 @@ class _OrderPageState extends State<OrderPage> {
                               child: orderAddress(context, order.address!)),
                           orderCompose(
                               title: "배송 요청사항",
-                              child: orderDelivery(order.request!)),
+                              child: orderDelivery(context, order.request!, _orderCubit)),
                           orderCompose(
                               title: "결제 수단", child: Text("아임포트 확인할 것")),
                           orderCompose(

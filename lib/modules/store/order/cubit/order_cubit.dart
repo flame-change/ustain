@@ -1,5 +1,6 @@
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart';
+import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order_item.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
@@ -19,11 +20,22 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(agreed: !state.agreed));
   }
 
-  // void setCoupon(Coupon coupon) {
-  //   emit(state.copyWith(
-  //     order: state.order!.copyWith(coupon: coupon)
-  //   ));
-  // }
+  void setDeliveryMessage(String message) {
+    emit(state.copyWith(
+      order: state.order!.copyWith(
+       request: state.order!.request!.copyWith(
+         additionalRequest: message
+       )
+      )
+    ));
+  }
+
+  void setShippingRequest(ShippingRequest shippingRequest) {
+    emit(state.copyWith(
+        order: state.order!.copyWith(request: state.order!.request!.copyWith(
+            shippingRequest: [shippingRequest]))
+        ));
+    }
 
   Future<Coupon?> getCoupon(dynamic couponId) async {
     ApiResult<Coupon> apiResult = await _orderRepository.getCoupon(couponId);
@@ -42,7 +54,8 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> createOrder(List<Cart> carts) async {
     List<OrderItem> orderItems = carts
-        .map((e) => OrderItem(
+        .map((e) =>
+        OrderItem(
             brand: e.brand,
             productId: e.productId,
             productName: e.productName,
@@ -55,12 +68,13 @@ class OrderCubit extends Cubit<OrderState> {
         .toList();
 
     ApiResult<Map<String, dynamic>> apiResult =
-        await _orderRepository.createOrder(orderItems);
+    await _orderRepository.createOrder(orderItems);
 
     apiResult.when(success: (Map<String, dynamic>? mapResponse) {
       print(mapResponse);
+      print("mapResponse ${mapResponse!["request"]}");
       emit(state.copyWith(
-        order: Order.fromJson(mapResponse!),
+        order: Order.fromJson(mapResponse),
         isLoaded: true,
         isLoading: false,
       ));
