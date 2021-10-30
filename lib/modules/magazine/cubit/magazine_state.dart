@@ -2,7 +2,10 @@ part of 'magazine_cubit.dart';
 
 class MagazineState extends Equatable {
   const MagazineState(
-      {this.todaysMaagazines,
+      {this.todaysMagazines,
+      this.bannerMagazines,
+      this.catalogMagazines,
+      this.catalogMagazineDetail,
       this.magazines,
       this.magazineCategory,
       this.count,
@@ -14,7 +17,10 @@ class MagazineState extends Equatable {
       required this.isLoaded,
       required this.isLoading});
 
-  final List<Magazine>? todaysMaagazines;
+  final List<Magazine>? todaysMagazines;
+  final List<Magazine>? bannerMagazines;
+  final List<Catalog>? catalogMagazines;
+  final Catalog? catalogMagazineDetail;
   final List<Magazine>? magazines;
   final NetworkExceptions? error;
   final MagazineCategory? magazineCategory;
@@ -28,7 +34,10 @@ class MagazineState extends Equatable {
 
   @override
   List<Object?> get props => [
-        todaysMaagazines,
+        todaysMagazines,
+        bannerMagazines,
+        catalogMagazines,
+        catalogMagazineDetail,
         magazines,
         magazineCategory,
         error,
@@ -42,7 +51,10 @@ class MagazineState extends Equatable {
       ];
 
   MagazineState copyWith({
-    List<Magazine>? todaysMaagazines,
+    List<Magazine>? todaysMagazines,
+    List<Magazine>? bannerMagazines,
+    List<Catalog>? catalogMagazines,
+    Catalog? catalogMagazineDetail,
     List<Magazine>? magazines,
     MagazineCategory? magazineCategory,
     int? count,
@@ -55,7 +67,11 @@ class MagazineState extends Equatable {
     int? page,
   }) {
     return MagazineState(
-        todaysMaagazines: todaysMaagazines ?? this.todaysMaagazines,
+        todaysMagazines: todaysMagazines ?? this.todaysMagazines,
+        bannerMagazines: bannerMagazines ?? this.bannerMagazines,
+        catalogMagazines: catalogMagazines ?? this.catalogMagazines,
+        catalogMagazineDetail:
+            catalogMagazineDetail ?? this.catalogMagazineDetail,
         magazines: magazines ?? this.magazines,
         magazineCategory: magazineCategory ?? this.magazineCategory,
         count: count ?? this.count,

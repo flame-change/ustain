@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class UserProfileInfo extends StatelessWidget {
   const UserProfileInfo(
@@ -24,9 +25,10 @@ class UserProfileInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('$count', style: Theme.of(context).textTheme.headline4),
-            SizedBox(height: 10),
+            SizedBox(height: Adaptive.h(2)),
             Text('$title',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400))
+                style: TextStyle(
+                    fontSize: Adaptive.dp(10), fontWeight: FontWeight.w400))
           ]),
     ));
   }

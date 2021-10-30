@@ -164,11 +164,13 @@ class _SignUpButton extends StatelessWidget {
             ? Center(
                 child: const CircularProgressIndicator(),
               )
-            :
-            PlainButton(onPressed:  state.password.valid
-                ? () =>
-                context.read<SignupCubit>().signUpFormSubmitted(state)
-                : null, text: '회원가입',);
+            : PlainButton(
+                onPressed: state.password.valid
+                    ? () =>
+                        context.read<SignupCubit>().signUpFormSubmitted(state)
+                    : null,
+                text: '회원가입',
+              );
         // Container(
         //         margin: EdgeInsets.only(top: 10),
         //         width: double.infinity,

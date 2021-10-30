@@ -1,6 +1,5 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
-import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'mypage_page.dart';

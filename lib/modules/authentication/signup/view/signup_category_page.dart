@@ -31,6 +31,12 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
   }
 
   @override
+  void dispose() {
+    _nicknameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,

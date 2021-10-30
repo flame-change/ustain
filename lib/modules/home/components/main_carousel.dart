@@ -1,60 +1,80 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/view/magazine_detail_page.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
+import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter/material.dart';
 
-class MainCarousel extends StatelessWidget {
-  const MainCarousel({
-    Key? key,
-    required List<String> images,
-  })  : _images = images,
-        super(key: key);
+class BannerMagazines extends StatefulWidget {
+  final List<Magazine> bannerMagazines;
 
-  final List<String> _images;
+  BannerMagazines(this.bannerMagazines);
+
+  @override
+  _BannerMagazinesState createState() => _BannerMagazinesState();
+}
+
+class _BannerMagazinesState extends State<BannerMagazines> {
+  late List<Magazine> _bannerMagazines = widget.bannerMagazines;
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-        actions: [
-          GestureDetector(
-              child: Padding(
-                  padding: EdgeInsets.only(right: Adaptive.w(5)),
-                  child: Icon(Icons.search_outlined, color: Colors.white)))
-        ],
-        backgroundColor: Colors.white,
-        brightness: Brightness.dark,
-        expandedHeight: Adaptive.h(50),
-        floating: false,
-        pinned: false,
-        flexibleSpace: FlexibleSpaceBar(
-            background: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Swiper(
-                itemCount: _images.length,
-                itemBuilder: (BuildContext context, int index) => Image.asset(
-                    _images[index],
-                    color: Colors.black12,
-                    colorBlendMode: BlendMode.multiply,
-                    fit: BoxFit.cover)),
-            Padding(
-                padding: EdgeInsets.all(Adaptive.w(5)),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text('해시태그 제목',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: Colors.white)),
-                      SizedBox(height: 5),
-                      Text('어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구구 어쩌구 저쩌구',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Colors.white))
-                    ]))
-          ],
-        )));
+    return Swiper(
+        onTap: (int index) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MultiBlocProvider(providers: [
+                      BlocProvider<AuthenticationBloc>(
+                          create: (context) =>
+                              BlocProvider.of<AuthenticationBloc>(context)),
+                      BlocProvider(
+                          create: (context) => MagazineDetailCubit(
+                              RepositoryProvider.of<MagazineRepository>(
+                                  context)))
+                    ], child: MagazineDetailPage(_bannerMagazines[index].id!))),
+          );
+        },
+        itemCount: _bannerMagazines.length,
+        itemBuilder: (BuildContext context, int index) => Stack(children: [
+              Image.network(_bannerMagazines[index].bannerImage!,
+                  height: Adaptive.h(50) + AppBar().preferredSize.height,
+                  color: Colors.black12,
+                  colorBlendMode: BlendMode.multiply,
+                  fit: BoxFit.fitHeight),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Adaptive.w(5), vertical: Adaptive.w(8)),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(_bannerMagazines[index].title!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3!
+                                .copyWith(color: Colors.white)),
+                        SizedBox(height: Adaptive.h(1)),
+                        Text(_bannerMagazines[index].subtitle!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(color: Colors.white))
+                      ]))
+            ]),
+        pagination: new SwiperCustomPagination(
+            builder: (BuildContext context, SwiperPluginConfig config) {
+          return Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  margin: EdgeInsets.all(Adaptive.w(5)),
+                  child: LinearProgressIndicator(
+                      value: (config.activeIndex + 1) / config.itemCount,
+                      valueColor: AlwaysStoppedAnimation(theme.accentColor))));
+        }));
   }
 }

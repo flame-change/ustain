@@ -1,6 +1,4 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {

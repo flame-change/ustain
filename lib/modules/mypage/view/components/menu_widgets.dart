@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 Widget menuWidget(title) {
   return Container(
       width: Adaptive.w(100),
-      padding: EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(bottom: Adaptive.h(1)),
       decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 3))),
       child: Text("$title",
           style:
@@ -17,7 +17,7 @@ Widget subMenuWidget({String? title, Function()? taped}) {
       onTap: taped,
       child: Container(
           width: Adaptive.w(100),
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
           decoration:
               BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
           child: Text("$title",

@@ -1,7 +1,9 @@
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/home/catalog/view/catalog_screen.dart';
+import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/view/components/todays_magazine_widget.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/home/components/main_carousel.dart';
-import 'package:aroundus_app/modules/home/components/catalog.dart';
+import 'package:aroundus_app/modules/home/components/catalog_list.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -14,42 +16,76 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late AuthenticationRepository _authenticationRepository;
+  late MagazineCubit _magazineCubit;
 
   @override
   void initState() {
     super.initState();
-    _authenticationRepository =
-        RepositoryProvider.of<AuthenticationRepository>(context);
+    _magazineCubit = BlocProvider.of<MagazineCubit>(context);
+    _magazineCubit.getMainMagazines();
+    _magazineCubit.getBannerMagazines();
+    _magazineCubit.getCatalogMagazine();
   }
-
-  final _images = [
-    'assets/images/1.jpg',
-    'assets/images/01-full.jpg',
-    'assets/images/01-thumbnail.jpg',
-    'assets/images/02-full.jpg',
-    'assets/images/04-thumbnail.jpg',
-  ];
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: <Widget>[
-      // 메인 캐러셀 부분입니다.
-      MainCarousel(images: _images),
+    return BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
+      return CustomScrollView(slivers: <Widget>[
+        // 메인 캐러셀 부분입니다.
+        SliverAppBar(
+            // actions: [
+            //   GestureDetector(
+            //       child: Padding(
+            //           padding: EdgeInsets.only(right: Adaptive.w(5)),
+            //           child: Icon(Icons.search, color: Colors.white)))
+            // ],
+            backgroundColor: Colors.white,
+            brightness: Brightness.dark,
+            expandedHeight: Adaptive.h(50),
+            floating: false,
+            pinned: false,
+            flexibleSpace: FlexibleSpaceBar(
+                background: Stack(alignment: Alignment.bottomLeft, children: [
+              state.bannerMagazines != null
+                  ? BannerMagazines(state.bannerMagazines!)
+                  : Container(color: Colors.grey)
+            ]))),
 
-      // 카탈로그 시작 전
-      SliverToBoxAdapter(
-          child: Padding(
-        padding: EdgeInsets.all(Adaptive.w(5)),
-        child: TitleWithUnderline(
-            title: "MD's PICK", subtitle: '어스테인 MD의 추천 상품을 모아봤어요.'),
-      )),
-
-      // 카탈로그 카드 들어갈 곳
-      SliverList(
-          delegate: SliverChildBuilderDelegate(
-              (context, index) => CatalogCard(index: index + 1),
-              childCount: 10))
-    ]);
+        // 메인 매거진 부분입니다.
+        SliverToBoxAdapter(
+            child: Padding(
+                padding: EdgeInsets.only(
+                    top: Adaptive.w(5),
+                    bottom: Adaptive.w(5),
+                    left: Adaptive.w(5)),
+                child: state.todaysMagazines != null
+                    ? TodaysMagazine(state.todaysMagazines!)
+                    : Container(
+                        height: Adaptive.h(40),
+                        child: Center(child: CircularProgressIndicator())))),
+        // 카탈로그 시작 전
+        SliverToBoxAdapter(
+            child: Padding(
+                padding:
+                    EdgeInsets.only(left: Adaptive.w(5), bottom: Adaptive.w(5)),
+                child: TitleWithUnderline(
+                    title: "MD's PICK", subtitle: '어스테인 MD의 추천 상품을 모아봤어요.'))),
+        // 카탈로그 카드 들어갈 곳
+        state.catalogMagazines != null
+            ? SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => GestureDetector(
+                        onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CatalogScreen(
+                                      id: state.catalogMagazines![index].id!)),
+                            ),
+                        child: CatalogCard(
+                            state.catalogMagazines![index], index + 1)),
+                    childCount: state.catalogMagazines!.length))
+            : SliverToBoxAdapter(child: Container())
+      ]);
+    });
   }
 }

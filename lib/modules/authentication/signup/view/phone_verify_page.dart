@@ -164,45 +164,61 @@ class PhoneNumberInputField extends StatelessWidget {
                 allowedCharMatcher: RegExp('[0-9]'))
           ],
           decoration: InputDecoration(
-              labelText: '휴대폰 번호',
-              errorText: state.phoneNumber.invalid ? '숫자만 입력 가능합니다.' : null,
-              suffixIcon: GestureDetector(
-                onTap: state.phoneNumber.valid &&
-                        state.phoneNumberVerifyStatus != VerifyStatus.verified
-                    ? () {
-                        if (state.phoneNumberVerifyStatus !=
-                            VerifyStatus.init) {
-                          context
-                              .read<SignupCubit>()
-                              .phoneNumberVerifyRequest();
-                          context.read<SignupCubit>().republishAuth();
-                        } else {
-                          context
-                              .read<SignupCubit>()
-                              .phoneNumberVerifyRequest();
-                        }
+            labelText: '휴대폰 번호',
+            errorText: state.phoneNumber.invalid ? '숫자만 입력 가능합니다.' : null,
+            suffixIcon:
+                // IconButton(
+                //   icon: Icon(Icons.send),
+                //   onPressed: state.phoneNumber.valid &&
+                //           state.phoneNumberVerifyStatus != VerifyStatus.verified
+                //       ? () {
+                //           if (state.phoneNumberVerifyStatus !=
+                //               VerifyStatus.init) {
+                //             context
+                //                 .read<SignupCubit>()
+                //                 .phoneNumberVerifyRequest();
+                //             context.read<SignupCubit>().republishAuth();
+                //           } else {
+                //             context
+                //                 .read<SignupCubit>()
+                //                 .phoneNumberVerifyRequest();
+                //           }
+                //         }
+                //       : null,
+                // )
+                InkWell(
+              onTap: state.phoneNumber.valid &&
+                      state.phoneNumberVerifyStatus != VerifyStatus.verified
+                  ? () {
+                      if (state.phoneNumberVerifyStatus != VerifyStatus.init) {
+                        context.read<SignupCubit>().phoneNumberVerifyRequest();
+                        context.read<SignupCubit>().republishAuth();
+                      } else {
+                        context.read<SignupCubit>().phoneNumberVerifyRequest();
                       }
-                    : null,
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: state.phoneNumberVerifyStatus != VerifyStatus.init
-                      ? Text(
-                          '인증 재발급',
-                          style: theme.textTheme.bodyText2!
-                              .copyWith(color: Colors.white),
-                        )
-                      : Text(
-                          '전송',
-                          style: theme.textTheme.bodyText2!
-                              .copyWith(color: Colors.white),
-                        ),
+                    }
+                  : null,
+              child: Container(
+                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-              )),
+                child: state.phoneNumberVerifyStatus != VerifyStatus.init
+                    ? Text(
+                        '인증 재발급',
+                        style: theme.textTheme.bodyText2!
+                            .copyWith(color: Colors.white),
+                      )
+                    : Text(
+                        '전송',
+                        style: theme.textTheme.bodyText2!
+                            .copyWith(color: Colors.white),
+                      ),
+              ),
+            ),
+          ),
         );
       },
     );

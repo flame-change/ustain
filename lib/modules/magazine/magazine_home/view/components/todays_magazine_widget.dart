@@ -7,9 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 class TodaysMagazine extends StatefulWidget {
-  final List<Magazine> todaysMaagazines;
+  final List<Magazine> todaysMagazines;
 
-  TodaysMagazine(this.todaysMaagazines);
+  TodaysMagazine(this.todaysMagazines);
 
   @override
   State<StatefulWidget> createState() => _TodaysMagazineState();
@@ -17,22 +17,11 @@ class TodaysMagazine extends StatefulWidget {
 
 class _TodaysMagazineState extends State<TodaysMagazine>
     with SingleTickerProviderStateMixin {
-  List<Magazine> get _todaysMaagazines => this.widget.todaysMaagazines;
-
-  final _scrollController = ScrollController();
+  List<Magazine> get _todaysMagazines => this.widget.todaysMagazines;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll == 0) {
-      // _broadcastCubit.getLiveBroadcastListInit();
-    }
   }
 
   @override
@@ -51,11 +40,12 @@ class _TodaysMagazineState extends State<TodaysMagazine>
                   direction: Axis.horizontal,
                   spacing: 30,
                   children: List.generate(
-                      _todaysMaagazines.length,
-                      (index) => Container(
-                          width: sizeWith(60),
-                          child: todaysMagazineCard(
-                              context, _todaysMaagazines[index])))))),
+                          _todaysMagazines.length,
+                          (index) => Container(
+                              width: sizeWith(60),
+                              child: todaysMagazineCard(
+                                  context, _todaysMagazines[index]))) +
+                      [Container()]))),
       Divider(height: 0)
     ]);
   }
