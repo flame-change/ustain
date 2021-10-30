@@ -96,35 +96,34 @@ class productGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => BlocProvider<ProductCubit>(
-                      create: (_) => ProductCubit(
-                          RepositoryProvider.of<ProductRepository>(context)),
-                      child: ProductDetailPage(product['Id']),
-                    )));
-      },
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          height: Adaptive.h(20),
-          decoration: BoxDecoration(
-              color: Colors.red,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(product['thumbnail']!))),
-        ),
-        SizedBox(height: Adaptive.h(0.5)),
-        RichText(
-            text: TextSpan(style: theme.textTheme.bodyText1!, children: [
-          TextSpan(
-              text: '${product['brand']!}\n',
-              style: theme.textTheme.bodyText2!.copyWith(color: Colors.grey)),
-          TextSpan(text: '${product['name']!}\n'),
-          TextSpan(text: '${product['discountPrice']!} 원')
-        ]))
-      ])
-    );
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider<ProductCubit>(
+                        create: (_) => ProductCubit(
+                            RepositoryProvider.of<ProductRepository>(context)),
+                        child: ProductDetailPage(product['Id']),
+                      )));
+        },
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            height: Adaptive.h(20),
+            decoration: BoxDecoration(
+                color: Colors.red,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(product['thumbnail']!))),
+          ),
+          SizedBox(height: Adaptive.h(0.5)),
+          RichText(
+              text: TextSpan(style: theme.textTheme.bodyText1!, children: [
+            TextSpan(
+                text: '${product['brand']!}\n',
+                style: theme.textTheme.bodyText2!.copyWith(color: Colors.grey)),
+            TextSpan(text: '${product['name']!}\n'),
+            TextSpan(text: '${product['discountPrice']!} 원')
+          ]))
+        ]));
   }
 }
