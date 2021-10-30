@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/support/base_component/bottom_navbar.dart';
+import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,8 +35,8 @@ class _HomeScreen extends State<HomeScreen>
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => BlocProvider.of<AuthenticationBloc>(context),
-          ),
+              create: (_) => MagazineCubit(
+                  RepositoryProvider.of<MagazineRepository>(context)))
         ],
         child: Scaffold(
           body: HomePage(),

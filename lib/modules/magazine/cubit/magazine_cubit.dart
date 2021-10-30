@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/catalog.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
@@ -26,7 +27,7 @@ class MagazineCubit extends Cubit<MagazineState> {
 
     apiResult.when(success: (List? listResponse) {
       emit(state.copyWith(
-        todaysMaagazines: listResponse!
+        todaysMagazines: listResponse!
             .map((response) => Magazine.fromJson(response!))
             .toList(),
         isLoaded: true,
@@ -38,9 +39,61 @@ class MagazineCubit extends Cubit<MagazineState> {
     });
   }
 
-  Future<void> getMagazinesByCategory({MagazineCategory? magazineCategory}) async {
+  Future<void> getBannerMagazines() async {
+    ApiResult<List> apiResult = await _magazineRepository.getBannerMagazine();
+
+    apiResult.when(success: (List? listResponse) {
+      emit(state.copyWith(
+        bannerMagazines: listResponse!
+            .map((response) => Magazine.fromJson(response!))
+            .toList(),
+        isLoaded: true,
+        isLoading: false,
+      ));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> getCatalogMagazine() async {
+    ApiResult<List> apiResult = await _magazineRepository.getCatalogMagazine();
+
+    apiResult.when(success: (List? listResponse) {
+      emit(state.copyWith(
+        catalogMagazines: listResponse!
+            .map((response) => Catalog.fromJson(response!))
+            .toList(),
+        isLoaded: true,
+        isLoading: false,
+      ));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> getCatalogMagazineDetail(int id) async {
+    ApiResult<Catalog> apiResult =
+        await _magazineRepository.getCatalogMagazineDetail(id);
+
+    apiResult.when(success: (Catalog? catalog) {
+      emit(state.copyWith(
+        catalogMagazineDetail: catalog!,
+        isLoaded: true,
+        isLoading: false,
+      ));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> getMagazinesByCategory(
+      {MagazineCategory? magazineCategory}) async {
     if (state.magazineCategory != magazineCategory) {
-      print("state.magazineCategory != magazineCategory ${state.magazineCategory} ${magazineCategory}");
+      print(
+          "state.magazineCategory != magazineCategory ${state.magazineCategory} ${magazineCategory}");
       emit(state.copyWith(
           magazines: [],
           magazineCategory: magazineCategory,
@@ -50,7 +103,8 @@ class MagazineCubit extends Cubit<MagazineState> {
 
     print("state.magazineCategory ${state.magazineCategory}");
 
-    String category = state.magazineCategory == MagazineCategory.empty || magazineCategory==MagazineCategory.empty
+    String category = state.magazineCategory == MagazineCategory.empty ||
+            magazineCategory == MagazineCategory.empty
         ? ""
         : "\"" + state.magazineCategory!.mid! + "\"";
 

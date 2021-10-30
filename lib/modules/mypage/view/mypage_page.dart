@@ -33,17 +33,14 @@ class _MyPageState extends State<MyPage> {
     return Container(
         child: Column(children: [
       Container(
-          height: Adaptive.h(15),
-          padding: EdgeInsets.symmetric(vertical: 30),
-          color: Colors.black,
-          child: myPageInfo()),
+          height: Adaptive.h(15), color: Colors.black, child: myPageInfo()),
       Container(
           height: Adaptive.h(10),
           decoration:
               BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
           child: orderInfo()),
       Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(Adaptive.w(5)),
           child: Column(children: [
             menuWidget("SHOPPING"),
             subMenuWidget(title: "배송지 관리"),
@@ -51,7 +48,7 @@ class _MyPageState extends State<MyPage> {
             subMenuWidget(title: "내 리뷰")
           ])),
       Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(Adaptive.w(5)),
           child: Column(children: [
             menuWidget("HELP CENTER"),
             subMenuWidget(title: "1:1 문의하기", taped: () {}),
@@ -78,11 +75,11 @@ class _MyPageState extends State<MyPage> {
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               Container(
-                  width: 50,
-                  height: 50,
-                  margin: EdgeInsets.only(right: 20),
+                  width: Adaptive.w(13),
+                  height: Adaptive.w(13),
+                  margin: EdgeInsets.only(right: Adaptive.w(5)),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(100),
                       color: theme.accentColor)),
               RichText(
                   text: TextSpan(style: theme.textTheme.headline4, children: [
@@ -95,8 +92,9 @@ class _MyPageState extends State<MyPage> {
                         .copyWith(height: 1.5, color: Color(0xFF979797))),
                 WidgetSpan(
                     child: Padding(
-                        padding: EdgeInsets.only(bottom: 8),
-                        child: Icon(Icons.info, size: 12, color: Colors.grey)))
+                        padding: EdgeInsets.only(bottom: Adaptive.h(1.3)),
+                        child: Icon(Icons.info,
+                            size: Adaptive.dp(10), color: Colors.grey)))
               ]))
             ])));
   }

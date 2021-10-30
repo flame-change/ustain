@@ -62,10 +62,10 @@ class _MagazineHomePageState extends State<MagazineHomePage>
       controller: _scrollController,
       child:
           BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
-        if (state.todaysMaagazines != null && state.magazines != null) {
+        if (state.todaysMagazines != null && state.magazines != null) {
           return Wrap(runSpacing: 15, children: [
             // 오늘의 매거진
-            TodaysMagazine(state.todaysMaagazines!),
+            TodaysMagazine(state.todaysMagazines!),
             // 모아보기
             TitleWithUnderline(
                 title: "WHAT'S NEW?", subtitle: "어스테인의 정기 간행물 입니다."),

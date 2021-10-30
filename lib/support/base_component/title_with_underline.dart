@@ -1,6 +1,7 @@
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class TitleWithUnderline extends StatelessWidget {
   const TitleWithUnderline({required this.title, required this.subtitle});
@@ -24,6 +25,7 @@ class TitleWithUnderline extends StatelessWidget {
                   fontStyle: FontStyle.italic, fontWeight: FontWeight.w700)),
         )
       ]),
+      SizedBox(height: Adaptive.h(0.3)),
       Text('${subtitle}', style: theme.textTheme.subtitle2)
     ]);
   }

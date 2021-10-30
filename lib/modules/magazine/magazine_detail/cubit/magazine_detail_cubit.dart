@@ -51,11 +51,22 @@ class MagazineDetailCubit extends Cubit<MagazineDetailState> {
     });
   }
 
+  Future<void> getIsScrapped(int id) async {
+    ApiResult<Map> apiResult = await _magazineRepository.getIsScrapped(id);
+
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(isScrapped: mapResponse!["isScrapped"]));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
   Future<void> updateIsScrapped(int id) async {
     ApiResult<Map> apiResult = await _magazineRepository.updateScrapped(id);
 
     apiResult.when(success: (Map? mapResponse) {
-      emit(state.copyWith(isLike: mapResponse!["isScrapped"]));
+      emit(state.copyWith(isScrapped: mapResponse!["isScrapped"]));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
