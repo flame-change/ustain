@@ -10,7 +10,7 @@ class ShippingRequest extends Equatable {
     this.content,
   );
 
-  final String id;
+  final int id;
   final String content;
 
   factory ShippingRequest.fromJson(Map<String, dynamic> json) =>

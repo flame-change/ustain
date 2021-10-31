@@ -8,7 +8,7 @@ part of 'shipping_request.dart';
 
 ShippingRequest _$ShippingRequestFromJson(Map<String, dynamic> json) {
   return ShippingRequest(
-    json['id'] as String,
+    json['id'] as int,
     json['content'] as String,
   );
 }

@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 Widget orderDelivery(BuildContext context, CustomerRequests customerRequests,
     OrderCubit orderCubit) {
   int _result = 0;
-  print(customerRequests.shippingRequest);
-  print(customerRequests.additionalRequest);
   return Wrap(runSpacing: 15, children: [
     GestureDetector(
       onTap: () {
@@ -46,7 +44,7 @@ Widget orderDelivery(BuildContext context, CustomerRequests customerRequests,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("배송 요청사항을 선택해주세요."),
+              Text(orderCubit.state.selectedShippingRequest==null?"배송 요청사항을 선택해주세요.":orderCubit.state.selectedShippingRequest!.content),
               Icon(Icons.keyboard_arrow_down),
             ],
           )),

@@ -2,7 +2,8 @@ part of 'order_cubit.dart';
 
 class OrderState extends Equatable {
   const OrderState({
-    this.order,
+    this.orderTemp,
+    this.selectedShippingRequest,
     this.error,
     this.agreed = false,
     this.isLoaded = false,
@@ -10,7 +11,8 @@ class OrderState extends Equatable {
     this.errorMessage,
   });
 
-  final Order? order;
+  final OrderTemp? orderTemp;
+  final ShippingRequest? selectedShippingRequest;
   final bool agreed;
   final bool isLoaded;
   final bool isLoading;
@@ -19,7 +21,8 @@ class OrderState extends Equatable {
 
   @override
   List<Object?> get props => [
-        order,
+        orderTemp,
+        selectedShippingRequest,
         error,
         agreed,
         isLoaded,
@@ -28,7 +31,8 @@ class OrderState extends Equatable {
       ];
 
   OrderState copyWith({
-    Order? order,
+    OrderTemp? orderTemp,
+    ShippingRequest? selectedShippingRequest,
     bool? agreed,
     NetworkExceptions? error,
     bool? isLoading,
@@ -36,7 +40,9 @@ class OrderState extends Equatable {
     String? errorMessage,
   }) {
     return OrderState(
-      order: order ?? this.order,
+      orderTemp: orderTemp ?? this.orderTemp,
+      selectedShippingRequest:
+          selectedShippingRequest ?? this.selectedShippingRequest,
       agreed: agreed ?? this.agreed,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
