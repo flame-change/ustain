@@ -8,24 +8,22 @@ part of 'order.dart';
 
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
-    products: (json['products'] as List<dynamic>?)
-        ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    address: json['address'] == null
-        ? null
-        : Address.fromJson(json['address'] as Map<String, dynamic>),
-    request: json['request'] == null
-        ? null
-        : CustomerRequests.fromJson(json['request'] as Map<String, dynamic>),
-    coupon: json['coupon'] == null
-        ? null
-        : Coupon.fromJson(json['coupon'] as Map<String, dynamic>),
+    merchantUid: json['merchantUid'] as String?,
+    name: json['name'] as String?,
+    amount: json['amount'] as int?,
+    currency: json['currency'] as String?,
+    buyerName: json['buyerName'] as String?,
+    buyerTel: json['buyerTel'] as String?,
+    buyerEmail: json['buyerEmail'] as String?,
   );
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
-      'products': instance.products,
-      'address': instance.address,
-      'request': instance.request,
-      'coupon': instance.coupon,
+      'merchantUid': instance.merchantUid,
+      'name': instance.name,
+      'amount': instance.amount,
+      'currency': instance.currency,
+      'buyerName': instance.buyerName,
+      'buyerTel': instance.buyerTel,
+      'buyerEmail': instance.buyerEmail,
     };
