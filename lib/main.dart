@@ -7,10 +7,14 @@ import 'package:flutter/material.dart';
 
 import 'repositories/authentication_repository/src/authentication_repository.dart';
 
+import 'package:dart_json_mapper/dart_json_mapper.dart' show JsonMapper, jsonSerializable, JsonProperty;
+import 'main.mapper.g.dart' show initializeJsonMapper;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioClient dioClient = DioClient(Dio());
+  initializeJsonMapper();
 
   runApp(App(
     authenticationRepository: AuthenticationRepository(dioClient),
