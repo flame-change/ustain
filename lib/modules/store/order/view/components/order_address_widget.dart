@@ -19,7 +19,7 @@ Widget orderAddress(BuildContext context, Address address) {
           alignment: Alignment.centerRight,
           child: Text("변경/추가")),
     ),
-    RichText(
+    address!=Address.empty? RichText(
       text: TextSpan(
           style: theme.textTheme.bodyText1!
               .copyWith(fontSize: Adaptive.dp(14), fontWeight: FontWeight.w400),
@@ -29,6 +29,6 @@ Widget orderAddress(BuildContext context, Address address) {
             ),
             TextSpan(text: "${address.bigAddress} ${address.smallAddress}"),
           ]),
-    ),
+    ):Container(alignment: Alignment.center, child: Text("배송지가 없습니다.")),
   ]);
 }

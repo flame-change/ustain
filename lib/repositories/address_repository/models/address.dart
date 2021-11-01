@@ -12,7 +12,7 @@ class Address extends Equatable {
       this.smallAddress,
       this.postalCode,
       this.phoneNumber,
-      this.isDefault=false});
+      this.isDefault = false});
 
   final int? id;
   final String? name;
@@ -22,30 +22,32 @@ class Address extends Equatable {
   final String? phoneNumber;
   final bool? isDefault;
 
-  factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
 
   Map<String, dynamic> toJson() => _$AddressToJson(this);
 
+  static const empty = Address(
+      id: null,
+      name: "",
+      bigAddress: "",
+      smallAddress: "",
+      postalCode: "",
+      phoneNumber: "",
+      isDefault: false);
+
   @override
   List<Object?> get props =>
-      [
-        id,
-        name,
-        bigAddress,
-        smallAddress,
-        postalCode,
-        phoneNumber,
-        isDefault
-      ];
+      [id, name, bigAddress, smallAddress, postalCode, phoneNumber, isDefault];
 
   Address copyWith({
-     int? id,
-     String? name,
-     String? bigAddress,
-     String? smallAddress,
-     String? postalCode,
-     String? phoneNumber,
-     bool? isDefault,
+    int? id,
+    String? name,
+    String? bigAddress,
+    String? smallAddress,
+    String? postalCode,
+    String? phoneNumber,
+    bool? isDefault,
   }) {
     return Address(
       id: id ?? this.id,

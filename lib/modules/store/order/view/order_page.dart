@@ -1,7 +1,10 @@
 import 'package:aroundus_app/modules/mypage/address/cubit/address_cubit.dart';
 import 'package:aroundus_app/modules/store/coupon/cubit/coupon_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
+import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
+import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart';
+import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'components/views.dart';
+import 'order_result_page.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -33,9 +37,9 @@ class _OrderPageState extends State<OrderPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(builder: (context, state) {
       if (state.isLoaded) {
-        return BlocSelector<OrderCubit, OrderState, Order>(
-            selector: (state) => state.order!,
-            builder: (context, order) {
+        return BlocSelector<OrderCubit, OrderState, OrderTemp>(
+            selector: (state) => state.orderTemp!,
+            builder: (context, orderTemp) {
               return Stack(
                 children: [
                   SingleChildScrollView(
@@ -44,28 +48,32 @@ class _OrderPageState extends State<OrderPage> {
                       child: Wrap(
                         children: [
                           orderCompose(
-                            title: "주문상품 (${order.products!.length}건)",
+                            title: "주문상품 (${orderTemp.products!.length}건)",
                             child: Column(
                               children: List.generate(
-                                  order.products!.length,
+                                  orderTemp.products!.length,
                                   (index) => orderItemTile(
-                                      _orderCubit, order.products![index])),
+                                      _orderCubit, orderTemp.products![index])),
                             ),
                           ),
                           orderCompose(
                               title: "쿠폰 사용",
-                              child: orderCoupon(context, order.coupon, _couponCubit, _orderCubit)),
+                              child: orderCoupon(context, orderTemp.coupon,
+                                  _couponCubit, _orderCubit)),
                           orderCompose(
-                              title: "배송지/주문자 정보",
-                              child: orderAddress(context, order.address!)),
+                            title: "배송지/주문자 정보",
+                            child: orderAddress(context, orderTemp.address!),
+                          ),
                           orderCompose(
                               title: "배송 요청사항",
-                              child: orderDelivery(order.request!)),
+                              child: orderDelivery(
+                                  context, orderTemp.request!, _orderCubit),
+                              isRequired: true),
                           orderCompose(
                               title: "결제 수단", child: Text("아임포트 확인할 것")),
                           orderCompose(
                               title: "결제 정보",
-                              child: orderPayment(order.products!)),
+                              child: orderPayment(orderTemp.products!)),
                           Column(
                             children: [
                               Row(
@@ -103,7 +111,40 @@ class _OrderPageState extends State<OrderPage> {
                     alignment: Alignment.bottomCenter,
                     child: GestureDetector(
                       onTap: () {
-                        print("결제 페이지로 이동");
+                        if (state.agreed &&
+                            state.selectedShippingRequest != null) {
+                          // Order 생성 페이지로 이동
+
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => MultiBlocProvider(providers: [
+                                        BlocProvider<OrderCubit>.value(
+                                            value: _orderCubit),
+                                        BlocProvider(
+                                            create: (_) => PaymentCubit(
+                                                RepositoryProvider.of<
+                                                    OrderRepository>(context)))
+                                      ], child: OrderResultPage())),
+                              (route) => false);
+                          // OrderResultPage
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("필수 항목을 채워주세요."),
+                                  actions: [
+                                    MaterialButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("확인"),
+                                    ),
+                                  ],
+                                );
+                              });
+                        }
                       },
                       child: Container(
                         height: Adaptive.h(10),

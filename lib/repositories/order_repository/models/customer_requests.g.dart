@@ -8,10 +8,10 @@ part of 'customer_requests.dart';
 
 CustomerRequests _$CustomerRequestsFromJson(Map<String, dynamic> json) {
   return CustomerRequests(
-    json['additionalRequest'] as String,
-    (json['shippingRequest'] as List<dynamic>)
-        .map((e) => e as Map<String, dynamic>)
+    shippingRequest: (json['shippingRequest'] as List<dynamic>?)
+        ?.map((e) => ShippingRequest.fromJson(e as Map<String, dynamic>))
         .toList(),
+    additionalRequest: json['additionalRequest'] as String?,
   );
 }
 

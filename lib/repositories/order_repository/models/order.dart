@@ -9,40 +9,48 @@ part 'order.g.dart';
 @JsonSerializable()
 class Order extends Equatable {
   const Order({
-    this.products,
-    this.address,
-    this.request,
-    this.coupon,
+    this.merchantUid,
+    this.name,
+    this.amount,
+    this.currency,
+    this.buyerName,
+    this.buyerTel,
+    this.buyerEmail,
   });
 
-  final List<OrderItem>? products;
-  final Address? address;
-  final CustomerRequests? request;
-  final Coupon? coupon;
+  final String? merchantUid;
+  final String? name;
+  final int? amount;
+  final String? currency;
+  final String? buyerName;
+  final String? buyerTel;
+  final String? buyerEmail;
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 
   Map<String, dynamic> toJson() => _$OrderToJson(this);
 
   Order copyWith({
-    List<OrderItem>? products,
-    Address? address,
-    CustomerRequests? request,
-    Coupon? coupon,
+    String? merchantUid,
+    String? name,
+    int? amount,
+    String? currency,
+    String? buyerName,
+    String? buyerTel,
+    String? buyerEmail,
   }) {
     return Order(
-      products: products ?? this.products,
-      address: address ?? this.address,
-      request: request ?? this.request,
-      coupon: coupon ?? this.coupon,
+      merchantUid: merchantUid ?? this.merchantUid,
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
+      buyerName: buyerName ?? this.buyerName,
+      buyerTel: buyerTel ?? this.buyerTel,
+      buyerEmail: buyerEmail ?? this.buyerEmail,
     );
   }
 
   @override
-  List<Object?> get props => [
-        products,
-        address,
-        request,
-        coupon,
-      ];
+  List<Object?> get props =>
+      [merchantUid, name, amount, currency, buyerName, buyerEmail, buyerEmail];
 }
