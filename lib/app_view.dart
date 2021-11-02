@@ -27,9 +27,8 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterSizer(
-      builder: (context, orientation, deviceType) {
-        return FlutterWebFrame(
+    return FlutterSizer(builder: (context, orientation, deviceType) {
+      return FlutterWebFrame(
           builder: (context) {
             return MaterialApp(
               theme: theme,
@@ -56,36 +55,33 @@ class _AppViewState extends State<AppView> {
               routes: routes,
             );
           },
-          maximumSize: Size(375.0, 812.0),
+          maximumSize: Size(475.0, 812.0),
           enabled: kIsWeb,
-          backgroundColor: Colors.grey,
-        );
-      },
-    );
+          backgroundColor: Colors.grey);
+    });
   }
 
   MultiBlocListener buildMultiBlocListener(Widget child) {
     return MultiBlocListener(listeners: [
       BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-          switch (state.status) {
-            case AuthenticationStatus.profile:
-              _navigator!.pushNamedAndRemoveUntil(
-                  'signup_nickname_page', (route) => false);
-              break;
-            case AuthenticationStatus.authenticated:
-              _navigator!
-                  .pushNamedAndRemoveUntil('main_screen', (route) => false);
-              break;
-            case AuthenticationStatus.unauthenticated:
-              _navigator!.pushNamedAndRemoveUntil(
-                  'login_home_screen', (route) => false);
-              break;
-            default:
-              break;
-          }
-        },
-      ),
+          listener: (context, state) {
+        switch (state.status) {
+          case AuthenticationStatus.profile:
+            _navigator!.pushNamedAndRemoveUntil(
+                'signup_nickname_page', (route) => false);
+            break;
+          case AuthenticationStatus.authenticated:
+            _navigator!
+                .pushNamedAndRemoveUntil('main_screen', (route) => false);
+            break;
+          case AuthenticationStatus.unauthenticated:
+            _navigator!
+                .pushNamedAndRemoveUntil('login_home_screen', (route) => false);
+            break;
+          default:
+            break;
+        }
+      })
     ], child: child);
   }
 }
