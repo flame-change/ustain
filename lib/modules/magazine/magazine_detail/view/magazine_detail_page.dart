@@ -38,87 +38,78 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    late bool _isLike = context.read<MagazineDetailCubit>().state.isLike!;
-    late bool _isScrapped =
-        context.read<MagazineDetailCubit>().state.isScrapped!;
-
-    return BlocSelector<MagazineDetailCubit, MagazineDetailState,
-            MagazineDetail?>(
-        selector: (state) => state.magazineDetail,
-        builder: (context, magazineDetail) {
-          if (magazineDetail != null) {
-            return Scaffold(
-                bottomNavigationBar: magazineBottomNavigator(id: _id),
-                body: CustomScrollView(slivers: <Widget>[
-                  SliverAppBar(
-                      backgroundColor: Colors.transparent,
-                      leading: IconButton(
-                          padding: EdgeInsets.only(left: 30),
-                          icon: Icon(Icons.arrow_back_ios_outlined),
-                          iconSize: 20,
-                          alignment: Alignment.centerLeft,
-                          onPressed: () => Navigator.pop(context)),
-                      pinned: false,
-                      snap: false,
-                      floating: true,
-                      expandedHeight:
-                          Adaptive.h(50) - AppBar().preferredSize.height,
-                      flexibleSpace: FlexibleSpaceBar(
-                          background: Stack(children: [
-                        Image.network(magazineDetail.bannerImage!,
-                            color: Colors.black12,
-                            colorBlendMode: BlendMode.multiply,
-                            fit: BoxFit.cover,
-                            height: Adaptive.h(50)),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 20),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${magazineDetail.title}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(color: Colors.white)),
-                                  SizedBox(height: 10),
-                                  Text("${magazineDetail.subtitle}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline5!
-                                          .copyWith(color: Colors.white)),
-                                  SizedBox(height: 10),
-                                  getCategories(magazineDetail.categories!)
-                                ]))
-                      ]))),
-                  SliverToBoxAdapter(
-                      child: SafeArea(
-                          top: false,
-                          child: Container(
-                              width: Adaptive.w(100),
-                              padding: EdgeInsets.only(
-                                left: sizeWith(5),
-                                right: sizeWith(5),
-                                top: 15,
-                              ),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Html(
-                                        data: magazineDetail.content,
-                                        shrinkWrap: true),
-                                    Divider(),
-                                    magazineDetail.products != null
-                                        ? productCard(
-                                            context, magazineDetail.products!)
-                                        : SizedBox(height: 0)
-                                  ]))))
-                ]));
-          } else {
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }
-        });
+    return BlocBuilder<MagazineDetailCubit, MagazineDetailState>(
+        builder: (context, state) {
+      if (state.magazineDetail != null) {
+        return Scaffold(
+            bottomNavigationBar: magazineBottomNavigator(id: _id),
+            body: CustomScrollView(slivers: <Widget>[
+              SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  leading: GestureDetector(
+                      child: Icon(Icons.arrow_back_ios_outlined),
+                      onTap: () => Navigator.pop(context)),
+                  pinned: false,
+                  snap: false,
+                  floating: true,
+                  expandedHeight:
+                      Adaptive.h(50) - AppBar().preferredSize.height,
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Stack(children: [
+                    Image.network(state.magazineDetail!.bannerImage!,
+                        color: Colors.black12,
+                        colorBlendMode: BlendMode.multiply,
+                        fit: BoxFit.cover,
+                        height: Adaptive.h(50)),
+                    Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${state.magazineDetail!.title}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(color: Colors.white)),
+                              SizedBox(height: 10),
+                              Text("${state.magazineDetail!.subtitle}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.white)),
+                              SizedBox(height: 10),
+                              getCategories(state.magazineDetail!.categories!)
+                            ]))
+                  ]))),
+              SliverToBoxAdapter(
+                  child: SafeArea(
+                      top: false,
+                      child: Container(
+                          width: Adaptive.w(100),
+                          padding: EdgeInsets.only(
+                            left: sizeWith(5),
+                            right: sizeWith(5),
+                            top: 15,
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Html(
+                                    data: state.magazineDetail!.content,
+                                    shrinkWrap: true),
+                                Divider(),
+                                state.magazineDetail!.products != null
+                                    ? productCard(context,
+                                        state.magazineDetail!.products!)
+                                    : SizedBox(height: 0)
+                              ]))))
+            ]));
+      } else {
+        return Scaffold(body: Center(child: CircularProgressIndicator()));
+      }
+    });
   }
 
   Widget getCategories(List<String> categories) {

@@ -1,4 +1,3 @@
-
 import 'package:aroundus_app/modules/store/cart/cubit/cart_cubit.dart';
 import 'package:aroundus_app/repositories/cart_repository/src/cart_repository.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +17,15 @@ class _CartScreen extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+            child: Icon(Icons.arrow_back_ios_outlined, color: Colors.black),
+            onTap: () => Navigator.pop(context)),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
       ),
       body: BlocProvider(
-        create: (_) => CartCubit(RepositoryProvider.of<CartRepository>(context)),
+        create: (_) =>
+            CartCubit(RepositoryProvider.of<CartRepository>(context)),
         child: CartPage(),
       ),
     );

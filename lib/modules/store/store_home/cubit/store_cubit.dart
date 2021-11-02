@@ -15,12 +15,23 @@ class StoreCubit extends Cubit<StoreState> {
 
   final StoreRepository _storeRepository;
 
-  void initMenu(Collection collection) {
+  Future<void> initMenu(Collection collection) async {
     emit(state.copyWith(selectedMenu: collection));
   }
 
-  void selectedCollection(Collection selected) {
+  Future<void> selectedCollection(Collection selected) async {
     emit(state.copyWith(selectedMenu: selected));
+  }
+
+  Future<void> getCollections() async {
+    ApiResult<List> apiResult = await _storeRepository.getCollection();
+
+    apiResult.when(success: (List? listResponse) {
+      emit(state.copyWith(
+          collections: listResponse!.map((e) => Menu.fromJson(e)).toList()));
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
   }
 
   Future<void> getProductsByCollection(

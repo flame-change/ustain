@@ -4,6 +4,7 @@ class StoreState extends Equatable {
   const StoreState({
     this.products,
     this.selectedMenu,
+    this.collections,
     this.subCollections,
     this.count = 0,
     this.previous,
@@ -17,6 +18,7 @@ class StoreState extends Equatable {
 
   final List<Product>? products;
   final Collection? selectedMenu;
+  final List<Menu>? collections;
   final List<Collection>? subCollections;
   final int? count;
   final String? previous;
@@ -31,6 +33,7 @@ class StoreState extends Equatable {
   List<Object?> get props => [
         products,
         selectedMenu,
+        collections,
         subCollections,
         count,
         previous,
@@ -45,6 +48,7 @@ class StoreState extends Equatable {
   StoreState copyWith({
     List<Product>? products,
     Collection? selectedMenu,
+    List<Menu>? collections,
     List<Collection>? subCollections,
     int? count,
     String? previous,
@@ -58,6 +62,7 @@ class StoreState extends Equatable {
     return StoreState(
       products: products ?? this.products,
       selectedMenu: selectedMenu ?? this.selectedMenu,
+      collections: collections ?? this.collections,
       subCollections: subCollections ?? this.subCollections,
       count: count ?? this.count,
       previous: previous ?? this.previous,

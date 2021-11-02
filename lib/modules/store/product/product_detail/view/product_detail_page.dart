@@ -47,94 +47,93 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded) {
             product = state.products!.first;
-            return SingleChildScrollView(
-                child: Column(children: [
-              Container(
-                  height: 50.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(product.thumbnail!))),
-                  child: PageWire(
-                      child: Column(children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.arrow_back_ios_outlined),
-                              iconSize: 20,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }),
-                          GestureDetector(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, 'cart_screen'),
-                              child: SvgPicture.asset("assets/icons/cart.svg"))
-                        ]),
-                  ]))),
-              SafeArea(
-                  top: false,
-                  child: Container(
-                      padding: basePadding(vertical: 20),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // categoryTag(context, product.socialValues!),
-                            GestureDetector(
-                                onTap: () {
-                                  // TODO 브랜드 페이지 이동
-                                  print("브랜드 페이지 이동");
-                                },
-                                child: Row(children: [
-                                  Container(
-                                      width: 20,
-                                      height: 20,
-                                      margin: EdgeInsets.only(right: 10),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  product.brand!.url!)))),
-                                  Text("${product.brand!.name}",
-                                      style: theme.textTheme.button)
-                                ])),
-                            SizedBox(height: 10),
-                            Text("${product.name}",
-                                style: theme.textTheme.headline4),
-                            SizedBox(height: 10),
-                            Text("${product.summary}"),
-                            Divider(),
-                            RichText(
-                              text: TextSpan(
-                                  style: theme.textTheme.headline4,
-                                  children: [
-                                    TextSpan(
-                                        text:
-                                            "${currencyFromString(product.discountPrice.toString())}\n",
-                                        style: theme.textTheme.subtitle1!
-                                            .copyWith(
-                                                fontSize: Adaptive.dp(12),
-                                                decoration: TextDecoration
-                                                    .lineThrough)),
-                                    TextSpan(
-                                        text: "${product.discountRate}%\t",
-                                        style: TextStyle(
-                                            fontSize: Adaptive.dp(15))),
-                                    TextSpan(
-                                      text:
-                                          "${currencyFromString(product.discountPrice.toString())}",
-                                      style: TextStyle(
-                                          fontSize: Adaptive.sp(20),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ]),
-                            ),
-                            Html(
-                              data: product.description,
-                            )
-                          ])))
-            ]));
+
+            return CustomScrollView(slivers: [
+              SliverAppBar(
+                  leading: IconButton(
+                      icon: Icon(Icons.arrow_back_ios_outlined,
+                          color: Colors.black),
+                      onPressed: () => Navigator.of(context).pop()),
+                  actions: [
+                    GestureDetector(
+                        onTap: () =>
+                            Navigator.pushNamed(context, 'cart_screen'),
+                        child: Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
+                            child: SvgPicture.asset("assets/icons/cart.svg")))
+                  ],
+                  backgroundColor: Colors.white,
+                  expandedHeight: Adaptive.h(50),
+                  floating: false,
+                  pinned: false,
+                  snap: false,
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Image.network(product.thumbnail!,
+                          fit: BoxFit.cover))),
+              SliverToBoxAdapter(
+                  child: SafeArea(
+                      top: false,
+                      child: Container(
+                          padding: basePadding(vertical: 20),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // categoryTag(context, product.socialValues!),
+                                GestureDetector(
+                                    onTap: () {
+                                      // TODO 브랜드 페이지 이동
+                                      print("브랜드 페이지 이동");
+                                    },
+                                    child: Row(children: [
+                                      Container(
+                                          width: 20,
+                                          height: 20,
+                                          margin: EdgeInsets.only(right: 10),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      product.brand!.url!)))),
+                                      Text("${product.brand!.name}",
+                                          style: theme.textTheme.button)
+                                    ])),
+                                SizedBox(height: 10),
+                                Text("${product.name}",
+                                    style: theme.textTheme.headline4),
+                                SizedBox(height: 10),
+                                Text("${product.summary}"),
+                                Divider(),
+                                RichText(
+                                  text: TextSpan(
+                                      style: theme.textTheme.headline4,
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                "${currencyFromString(product.discountPrice.toString())}\n",
+                                            style: theme.textTheme.subtitle1!
+                                                .copyWith(
+                                                    fontSize: Adaptive.dp(12),
+                                                    decoration: TextDecoration
+                                                        .lineThrough)),
+                                        TextSpan(
+                                            text: "${product.discountRate}%\t",
+                                            style: TextStyle(
+                                                fontSize: Adaptive.dp(15))),
+                                        TextSpan(
+                                          text:
+                                              "${currencyFromString(product.discountPrice.toString())}",
+                                          style: TextStyle(
+                                              fontSize: Adaptive.sp(20),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ]),
+                                ),
+                                Html(
+                                  data: product.description,
+                                )
+                              ]))))
+            ]);
           } else {
             return Center(child: CircularProgressIndicator());
           }
