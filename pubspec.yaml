@@ -50,9 +50,7 @@ dependencies:
   flutter_swiper_plus: ^2.0.4
   kpostal: ^0.3.2
   flutter_share: ^2.0.0
-  firebase_core: ^1.8.0
   flutter_local_notifications: ^6.0.0
-  firebase_messaging: ^10.0.1
   iamport_flutter: ^0.10.0-dev.4
   dart_json_mapper: ^2.1.2
 
