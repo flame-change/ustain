@@ -1,7 +1,9 @@
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart';
+import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order_item.dart';
+import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
@@ -19,18 +21,26 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(agreed: !state.agreed));
   }
 
-  // void setCoupon(Coupon coupon) {
-  //   emit(state.copyWith(
-  //     order: state.order!.copyWith(coupon: coupon)
-  //   ));
-  // }
+  void setDeliveryMessage(String message) {
+    emit(state.copyWith(
+      orderTemp: state.orderTemp!.copyWith(request: state.orderTemp!.request!.copyWith(
+        additionalRequest: message
+      ))
+    ));
+  }
+
+  void setShippingRequest(ShippingRequest shippingRequest) {
+    emit(state.copyWith(
+      selectedShippingRequest: shippingRequest
+    ));
+  }
 
   Future<Coupon?> getCoupon(dynamic couponId) async {
     ApiResult<Coupon> apiResult = await _orderRepository.getCoupon(couponId);
 
     apiResult.when(success: (Coupon? response) {
       emit(state.copyWith(
-        order: state.order!.copyWith(coupon: response),
+        orderTemp: state.orderTemp!.copyWith(coupon: response),
         isLoading: false,
         isLoaded: true,
       ));
@@ -54,13 +64,11 @@ class OrderCubit extends Cubit<OrderState> {
             Id: e.Id))
         .toList();
 
-    ApiResult<Map<String, dynamic>> apiResult =
-        await _orderRepository.createOrder(orderItems);
+    ApiResult<OrderTemp> apiResult = await _orderRepository.createOrderTemp(orderItems);
 
-    apiResult.when(success: (Map<String, dynamic>? mapResponse) {
-      print(mapResponse);
+    apiResult.when(success: (OrderTemp? response) {
       emit(state.copyWith(
-        order: Order.fromJson(mapResponse!),
+        orderTemp: response,
         isLoaded: true,
         isLoading: false,
       ));

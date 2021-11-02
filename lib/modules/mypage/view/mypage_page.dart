@@ -57,7 +57,15 @@ class _MyPageState extends State<MyPage> {
           ])),
       SizedBox(height: Adaptive.h(5)),
       GestureDetector(
-          onTap: () {},
+          onTap: () => showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
+                  MaterialButton(
+                      onPressed: () => _authenticationRepository.logOut(),
+                      child: Text("확인"))
+                ]);
+              }),
           child: Center(
               child: Text('로그아웃',
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
