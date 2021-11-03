@@ -46,17 +46,3 @@ void showLoginNeededDialog(context) {
     },
   );
 }
-
-//
-// class LoginNeededAlert extends StatelessWidget {
-//   LoginNeededAlert(this.context);
-//
-//   final BuildContext context;
-//
-//   @override
-//   Widget build(context) {
-//     return AlertDialog(content: LoginNeeded(), actions: <Widget>[
-//       FlatButton(child: new Text("닫기"), onPressed: () => Navigator.pop(context))
-//     ]);
-//   }
-// }
