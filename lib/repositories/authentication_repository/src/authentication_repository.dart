@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:aroundus_app/modules/authentication/authentication.dart';
-import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated, profile }
 
@@ -36,10 +34,17 @@ class AuthenticationRepository {
     _controller.add(AuthenticationStatus.authenticated);
   }
 
+  Future<void> travel() async {
+    _controller.add(AuthenticationStatus.unknown);
+  }
+
   void logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("clayful");
+    prefs.remove("refresh");
     prefs.remove("access");
     _controller.add(AuthenticationStatus.unauthenticated);
+    _controller.add(AuthenticationStatus.unknown);
   }
 
   void dispose() => _controller.close();
@@ -49,7 +54,8 @@ class AuthenticationRepository {
   }) async {
     try {
       String body = json.encode({"phone": phoneNumber});
-      var response = await _dioClient.post('/api/v1/user/phone-verifier/', data: body);
+      var response =
+          await _dioClient.post('/api/v1/user/phone-verifier/', data: body);
       return ApiResult.success(
         data: response,
       );
@@ -110,7 +116,6 @@ class AuthenticationRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
-
 
   Future<ApiResult<Map>> signUp(
       {required String password,
@@ -244,7 +249,8 @@ class AuthenticationRepository {
         "password": password,
         "password_confirm": passwordConfirm,
       });
-      var response = await _dioClient.post('/api/v1/user/password-reset/', data: body);
+      var response =
+          await _dioClient.post('/api/v1/user/password-reset/', data: body);
       return ApiResult.success(
         data: response['phone'],
       );

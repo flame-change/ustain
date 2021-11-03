@@ -10,8 +10,8 @@ class ProductRepository {
 
   Future<ApiResult<Product>> getProductDetail(String productId) async {
     try {
-      var response = await _dioClient
-          .getWithAuth('/api/v1/commerce/product/detail/$productId');
+      var response =
+          await _dioClient.get('/api/v1/commerce/product/detail/$productId');
 
       return ApiResult.success(data: Product.fromJson(response));
     } catch (e) {

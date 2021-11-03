@@ -1,6 +1,9 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
+import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
+import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -22,6 +25,7 @@ class _StorePageState extends State<StorePage>
     with SingleTickerProviderStateMixin {
   PageController get pageController => this.widget.pageController;
 
+  late AuthenticationStatus user_status;
   late StoreCubit _storeCubit;
   late Collection _selectedMenu;
   bool isOpen = false;
@@ -32,10 +36,10 @@ class _StorePageState extends State<StorePage>
   void initState() {
     super.initState();
     _storeCubit = BlocProvider.of<StoreCubit>(context);
+    user_status = context.read<AuthenticationBloc>().state.status;
     _storeCubit.getCollections();
     _storeCubit.getSubCollection();
     _selectedMenu = _storeCubit.state.selectedMenu!;
-
     _storeCubit.state.collections!.forEach((menu) {
       if (menu.collection.contains(_selectedMenu)) {
         collPath = _storeCubit.state.collections!.indexOf(menu);
@@ -51,6 +55,7 @@ class _StorePageState extends State<StorePage>
       return state.collections != null
           ? Scaffold(
               appBar: AppBar(
+                  automaticallyImplyLeading: false,
                   backgroundColor: Colors.white,
                   centerTitle: true,
                   elevation: 0,
@@ -83,8 +88,10 @@ class _StorePageState extends State<StorePage>
                                 ])),
                         Row(children: [
                           GestureDetector(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, 'cart_screen'),
+                              onTap: () => user_status ==
+                                      AuthenticationStatus.authenticated
+                                  ? Navigator.pushNamed(context, 'cart_screen')
+                                  : showLoginNeededDialog(context),
                               child: SvgPicture.asset("assets/icons/cart.svg"))
                         ])
                       ])),

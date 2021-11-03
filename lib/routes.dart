@@ -1,18 +1,17 @@
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
-import 'package:aroundus_app/modules/main/main_screen.dart';
-import 'package:aroundus_app/modules/mypage/user_profile/view/user_profile_screen.dart';
-import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
+import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
 import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
+import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
-import 'package:flutter/widgets.dart';
-import 'modules/authentication/account/view/view.dart';
-import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
+import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'modules/authentication/login_home/view/view.dart';
 import 'package:aroundus_app/modules/mypage/mypage.dart';
+import 'modules/authentication/account/view/view.dart';
 import 'modules/authentication/signup/view/view.dart';
 import 'package:aroundus_app/modules/home/home.dart';
+import 'package:flutter/widgets.dart';
 import 'modules/splash/splash.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -34,7 +33,6 @@ final Map<String, WidgetBuilder> routes = {
   CouponScreen.routeName: (context) => CouponScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
-  UserProfileScreen.routeName: (context) => UserProfileScreen(),
 };
 
 Route routePage(Widget nextPage) {

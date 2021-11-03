@@ -1,6 +1,6 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -29,11 +29,14 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   @override
   void initState() {
     super.initState();
+    user = context.read<AuthenticationBloc>().state.user;
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
-    _magazineDetailCubit.getIsLike(_id);
-    _magazineDetailCubit.getIsScrapped(_id);
-    user = context.read<AuthenticationBloc>().state.user;
+    if (context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated) {
+      _magazineDetailCubit.getIsLike(_id);
+      _magazineDetailCubit.getIsScrapped(_id);
+    }
   }
 
   @override
@@ -55,11 +58,12 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                   expandedHeight:
                       Adaptive.h(50) - AppBar().preferredSize.height,
                   flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(children: [
+                      background: Stack(fit: StackFit.expand, children: [
                     Image.network(state.magazineDetail!.bannerImage!,
                         color: Colors.black12,
                         colorBlendMode: BlendMode.multiply,
                         fit: BoxFit.cover,
+                        width: Adaptive.w(100),
                         height: Adaptive.h(50)),
                     Padding(
                         padding:

@@ -29,6 +29,7 @@ class MainScreenWire extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+              automaticallyImplyLeading: false,
               brightness: brightness,
               backgroundColor: appBarBackgroundColor,
               elevation: 0,

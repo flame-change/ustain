@@ -1,9 +1,9 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/components/product_sale_bottom_navigator.dart';
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
-import 'package:aroundus_app/repositories/user_repository/models/user.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -27,16 +27,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   String get _productId => this.widget.productId;
 
   late Product product;
-  late User user;
-
   late ProductCubit _productCubit;
+  late AuthenticationStatus user_status;
 
   @override
   void initState() {
     super.initState();
+    user_status = context.read<AuthenticationBloc>().state.status;
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
-    user = context.read<AuthenticationBloc>().state.user;
   }
 
   @override
@@ -57,7 +56,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   actions: [
                     GestureDetector(
                         onTap: () =>
-                            Navigator.pushNamed(context, 'cart_screen'),
+                            user_status == AuthenticationStatus.authenticated
+                                ? Navigator.pushNamed(context, 'cart_screen')
+                                : showLoginNeededDialog(context),
                         child: Padding(
                             padding:
                                 EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
@@ -105,30 +106,28 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                 Text("${product.summary}"),
                                 Divider(),
                                 RichText(
-                                  text: TextSpan(
-                                      style: theme.textTheme.headline4,
-                                      children: [
-                                        TextSpan(
-                                            text:
-                                                "${currencyFromString(product.discountPrice.toString())}\n",
-                                            style: theme.textTheme.subtitle1!
-                                                .copyWith(
-                                                    fontSize: Adaptive.dp(12),
-                                                    decoration: TextDecoration
-                                                        .lineThrough)),
-                                        TextSpan(
-                                            text: "${product.discountRate}%\t",
-                                            style: TextStyle(
-                                                fontSize: Adaptive.dp(15))),
-                                        TextSpan(
+                                    text: TextSpan(
+                                        style: theme.textTheme.headline4,
+                                        children: [
+                                      TextSpan(
+                                          text:
+                                              "${currencyFromString(product.discountPrice.toString())}\n",
+                                          style: theme.textTheme.subtitle1!
+                                              .copyWith(
+                                                  fontSize: Adaptive.dp(12),
+                                                  decoration: TextDecoration
+                                                      .lineThrough)),
+                                      TextSpan(
+                                          text: "${product.discountRate}%\t",
+                                          style: TextStyle(
+                                              fontSize: Adaptive.dp(15))),
+                                      TextSpan(
                                           text:
                                               "${currencyFromString(product.discountPrice.toString())}",
                                           style: TextStyle(
                                               fontSize: Adaptive.sp(20),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ]),
-                                ),
+                                              fontWeight: FontWeight.bold))
+                                    ])),
                                 Html(
                                   data: product.description,
                                 )
