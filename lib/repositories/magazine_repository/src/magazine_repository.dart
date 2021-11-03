@@ -64,8 +64,7 @@ class MagazineRepository {
 
   Future<ApiResult<MagazineDetail>> getMagazineDetail(int id) async {
     try {
-      var response =
-          await _dioClient.getWithAuth('/api/v1/magazine/detail/$id');
+      var response = await _dioClient.get('/api/v1/magazine/detail/$id');
       return ApiResult.success(data: MagazineDetail.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));

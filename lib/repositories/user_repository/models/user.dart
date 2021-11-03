@@ -1,4 +1,3 @@
-import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/repositories/store_repository/models/menu.dart';
 import 'package:equatable/equatable.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
@@ -42,7 +41,7 @@ class User extends Equatable {
         selectedCategories,
         categories,
         collections,
-    cartCount,
+        cartCount,
       ];
 
   User copyWith({

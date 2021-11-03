@@ -39,126 +39,104 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
         backgroundColor: Colors.black,
-        title: mainLogo(),
-      ),
-      bottomNavigationBar: PlainButton(
-        onPressed: () => _signupCubit.updateUserProfile(
-            nickName: _signupCubit.state.nickName.value.toString(),
-            categories: selectedCategory),
-        text: "설정 완료",
-        height: 10,
-      ),
-      body: Column(
-        children: [
-          Flexible(
-            flex: 3,
-            child: Container(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: mainLogo(),
+        ),
+        bottomNavigationBar: PlainButton(
+          onPressed: () => _signupCubit.updateUserProfile(
+              nickName: _signupCubit.state.nickName.value.toString(),
+              categories: selectedCategory),
+          text: "설정 완료",
+          height: 10,
+        ),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          Container(
               alignment: Alignment.centerLeft,
-              padding: basePadding(),
+              padding: basePadding(vertical: Adaptive.h(5)),
               child: RichText(
-                text: TextSpan(
-                    style: theme.textTheme.headline3!
-                        .copyWith(color: Colors.white, height: 1.5),
-                    children: [
-                      TextSpan(text: "가입을 "),
-                      TextSpan(
-                          text: "축하드려요!\n",
-                          style: TextStyle(color: theme.accentColor)),
-                      TextSpan(text: "어떤 분야에 가장\n"),
-                      TextSpan(text: "관심이 많으신가요?"),
-                    ]),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 7,
-            child: Container(
-              padding: basePadding(),
-              height: Adaptive.h(100),
+                  text: TextSpan(
+                      style: theme.textTheme.headline3!
+                          .copyWith(color: Colors.white, height: 1.5),
+                      children: [
+                    TextSpan(text: "가입을 "),
+                    TextSpan(
+                        text: "축하드려요!\n",
+                        style: TextStyle(color: theme.accentColor)),
+                    TextSpan(text: "어떤 분야에 가장\n"),
+                    TextSpan(text: "관심이 많으신가요?")
+                  ]))),
+          Container(
+              padding: basePadding(vertical: Adaptive.w(5)),
               width: sizeWith(100),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25),
                       topLeft: Radius.circular(25))),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: Adaptive.h(5)),
-                child: Wrap(runSpacing: 15, children: [
-                  Text("PREFERENCES",
-                      style: theme.textTheme.headline2!
-                          .copyWith(fontSize: Adaptive.dp(20))),
-                  //   Wrap(
-                  //       runSpacing: 20,
-                  //       children: List.generate(
-                  //         user.categories!.length,
-                  //         (index) => GestureDetector(
-                  //           onTap: () {
-                  //             print("${user.categories![index].mid}");
-                  //             setState(() {
-                  //               if (selectedCategory
-                  //                   .contains(user.categories![index].mid)) {
-                  //                 selectedCategory
-                  //                     .remove(user.categories![index].mid!);
-                  //               } else {
-                  //                 if (selectedCategory.length < 3) {
-                  //                   selectedCategory
-                  //                       .add(user.categories![index].mid!);
-                  //                 } else {
-                  //                   ScaffoldMessenger.of(context).showSnackBar(
-                  //                     SnackBar(
-                  //                       content: Text('관심사는 최대 3개까지만 가능합니다.'),
-                  //                     ),
-                  //                   );
-                  //                 }
-                  //               }
-                  //             });
-                  //           },
-                  //           // child: Container(
-                  //           //   height: Adaptive.h(10),
-                  //           //   decoration: BoxDecoration(
-                  //           //       color: selectedCategory
-                  //           //               .contains(user.categories![index].mid)
-                  //           //           ? theme.accentColor
-                  //           //           : Colors.white,
-                  //           //       border:
-                  //           //           Border.all(color: Colors.black, width: 1)),
-                  //           //   child: Row(
-                  //           //     children: [
-                  //           //       Image.network(
-                  //           //         "${user.categories![index].snapshotImage}",
-                  //           //         width: Adaptive.h(10),
-                  //           //         height: Adaptive.h(10),
-                  //           //         fit: BoxFit.cover,
-                  //           //       ),
-                  //           //       Padding(
-                  //           //         padding: EdgeInsets.only(left: Adaptive.w(5)),
-                  //           //         child: RichText(
-                  //           //           text: TextSpan(
-                  //           //               style: theme.textTheme.headline4!,
-                  //           //               children: [
-                  //           //                 TextSpan(
-                  //           //                     text:
-                  //           //                         "${user.categories![index].mid}\n"),
-                  //           //                 TextSpan(
-                  //           //                     text:
-                  //           //                         "${user.categories![index].title}"),
-                  //           //               ]),
-                  //           //         ),
-                  //           //       ),
-                  //           //     ],
-                  //           //   ),
-                  //           // ),
-                  //         ),
-                  //       )),
-                ]),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+              child: Wrap(runSpacing: 15, children: [
+                Text("PREFERENCES",
+                    style: theme.textTheme.headline2!
+                        .copyWith(fontSize: Adaptive.dp(20))),
+                Wrap(
+                    runSpacing: 20,
+                    children: List.generate(
+                        user.categories!.length,
+                        (index) => GestureDetector(
+                            onTap: () {
+                              print("${user.categories![index].mid}");
+                              setState(() {
+                                if (selectedCategory
+                                    .contains(user.categories![index].mid)) {
+                                  selectedCategory
+                                      .remove(user.categories![index].mid!);
+                                } else {
+                                  if (selectedCategory.length < 3) {
+                                    selectedCategory
+                                        .add(user.categories![index].mid!);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text('관심사는 최대 3개까지만 가능합니다.')));
+                                  }
+                                }
+                              });
+                            },
+                            child: Container(
+                                height: Adaptive.h(10),
+                                decoration: BoxDecoration(
+                                    color: selectedCategory.contains(
+                                            user.categories![index].mid)
+                                        ? theme.accentColor
+                                        : Colors.white,
+                                    border: Border.all(
+                                        color: Colors.black, width: 1)),
+                                child: Row(children: [
+                                  Image.network(
+                                    "${user.categories![index].snapshotImage}",
+                                    width: Adaptive.h(10),
+                                    height: Adaptive.h(10),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(left: Adaptive.w(5)),
+                                      child: RichText(
+                                          text: TextSpan(
+                                              style: theme.textTheme.headline4!,
+                                              children: [
+                                            TextSpan(
+                                                text:
+                                                    "${user.categories![index].mid}\n"),
+                                            TextSpan(
+                                                text:
+                                                    "${user.categories![index].title}")
+                                          ])))
+                                ])))))
+              ]))
+        ])));
   }
 }

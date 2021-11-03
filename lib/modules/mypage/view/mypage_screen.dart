@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dar
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'mypage_page.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -24,14 +25,6 @@ class _MyPageScreen extends State<MyPageScreen>
   @override
   bool get wantKeepAlive => true;
 
-  late AuthenticationBloc _authenticationBloc;
-
-  @override
-  void initSate() {
-    super.initState();
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -41,6 +34,7 @@ class _MyPageScreen extends State<MyPageScreen>
         ],
         child: Scaffold(
             appBar: AppBar(
+                automaticallyImplyLeading: false,
                 brightness: Brightness.dark,
                 backgroundColor: Colors.black,
                 centerTitle: false,
@@ -54,9 +48,8 @@ class _MyPageScreen extends State<MyPageScreen>
                       onTap: () => Navigator.pushNamed(
                           context, SettingsScreen.routeName),
                       child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Icon(Icons.settings,
-                              color: Colors.white, size: 25)))
+                          padding: EdgeInsets.only(right: Adaptive.w(5)),
+                          child: Icon(Icons.settings, color: Colors.white)))
                 ]),
             body: SingleChildScrollView(child: MyPage())));
   }

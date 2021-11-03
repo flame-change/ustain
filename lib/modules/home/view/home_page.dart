@@ -33,23 +33,21 @@ class _HomePageState extends State<HomePage> {
       return CustomScrollView(slivers: <Widget>[
         // 메인 캐러셀 부분입니다.
         SliverAppBar(
-            // actions: [
-            //   GestureDetector(
-            //       child: Padding(
-            //           padding: EdgeInsets.only(right: Adaptive.w(5)),
-            //           child: Icon(Icons.search, color: Colors.white)))
-            // ],
+            leading: Container(),
             backgroundColor: Colors.white,
             brightness: Brightness.dark,
             expandedHeight: Adaptive.h(50),
             floating: false,
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
-                background: Stack(alignment: Alignment.bottomLeft, children: [
-              state.bannerMagazines != null
-                  ? BannerMagazines(state.bannerMagazines!)
-                  : Container(color: Colors.grey)
-            ]))),
+                background: Stack(
+                    alignment: Alignment.bottomLeft,
+                    fit: StackFit.expand,
+                    children: [
+                  state.bannerMagazines != null
+                      ? BannerMagazines(state.bannerMagazines!)
+                      : Container(color: Colors.grey)
+                ]))),
 
         // 메인 매거진 부분입니다.
         SliverToBoxAdapter(

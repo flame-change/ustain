@@ -11,14 +11,15 @@ jobs:
       # Install Flutter command
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'dev'
+          channel: 'stable'
 
       # Build Website
       - name: Build Website
         run: |
           flutter config --enable-web
           flutter pub get
-          flutter build web --release
+          flutter pub upgrade
+          flutter build web --web-renderer html --release
         working-directory: ./
 
       # Deploy Firebase Hosting

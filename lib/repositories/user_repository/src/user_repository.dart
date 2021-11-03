@@ -43,4 +43,27 @@ class UserRepository {
       throw UserGetFailure();
     }
   }
+
+  Future<ApiResult<User>> getUnknownUser() async {
+    List? category = await getCategories();
+
+    try {
+      var response = await _dioClient.get('/api/v1/user/unknown/profile/');
+
+      return ApiResult.success(
+          data: User(
+        groups: response['groups'],
+        phone: response['phone'],
+        email: response['email'],
+        name: response['name'],
+        profileArticle: response['profileArticle'],
+        sexChoices: response['sexChoices'],
+        birthday: response['birthday'],
+        selectedCategories: response['categories'],
+        categories: category.map((e) => MagazineCategory.fromJson(e)).toList(),
+      ));
+    } on Exception {
+      throw UserGetFailure();
+    }
+  }
 }

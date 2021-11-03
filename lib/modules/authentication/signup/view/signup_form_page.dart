@@ -1,5 +1,4 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signup/view/view.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -28,36 +27,35 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: mainLogo(),
-        backgroundColor: Colors.black,
-      ),
-      body: BlocListener<SignupCubit, SignupState>(
-        listener: (context, state) async {
-          // if (state.status.isSubmissionFailure) {
-          //   Scaffold.of(context)
-          //     ..hideCurrentSnackBar()
-          //     ..showSnackBar(
-          //       SnackBar(content: Text('${state.errorMessage}')),
-          //     );
-          // }
-          // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
-          //   Scaffold.of(context)
-          //     ..hideCurrentSnackBar()
-          //     ..showSnackBar(
-          //       SnackBar(content: Text('${state.errorMessage}')),
-          //     );
-          //   context.read<SignupCubit>().errorMessageInit();
-          // }
-        },
-        child: Column(
-          children: [
-            Flexible(
-              flex: 3,
-              child: Container(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: mainLogo(),
+          backgroundColor: Colors.black,
+        ),
+        body: BlocListener<SignupCubit, SignupState>(
+            listener: (context, state) async {
+              // if (state.status.isSubmissionFailure) {
+              //   Scaffold.of(context)
+              //     ..hideCurrentSnackBar()
+              //     ..showSnackBar(
+              //       SnackBar(content: Text('${state.errorMessage}')),
+              //     );
+              // }
+              // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
+              //   Scaffold.of(context)
+              //     ..hideCurrentSnackBar()
+              //     ..showSnackBar(
+              //       SnackBar(content: Text('${state.errorMessage}')),
+              //     );
+              //   context.read<SignupCubit>().errorMessageInit();
+              // }
+            },
+            child: SingleChildScrollView(
+                child: Column(children: [
+              Container(
+                  padding: basePadding(vertical: Adaptive.h(10)),
+                  color: Colors.black,
                   alignment: Alignment.centerLeft,
-                  padding: basePadding(),
                   child: RichText(
                     text: TextSpan(
                         style: theme.textTheme.headline2!
@@ -67,21 +65,16 @@ class _SignupFormState extends State<SignupForm> {
                           TextSpan(text: "조금만 더 힘내세요!"),
                         ]),
                   )),
-            ),
-            Flexible(
-                flex: 6,
-                child: Container(
-                    padding: basePadding(vertical: Adaptive.h(4)),
-                    height: Adaptive.h(100),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(25),
-                            topLeft: Radius.circular(25))),
-                    child: Wrap(
-                      runSpacing: 15,
-                      spacing: 5,
-                      children: [
+              Container(
+                  color: Colors.black,
+                  child: Container(
+                      padding: basePadding(vertical: Adaptive.w(5)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(25),
+                              topLeft: Radius.circular(25))),
+                      child: Wrap(runSpacing: 15, spacing: 5, children: [
                         Text("SIGN UP",
                             style: theme.textTheme.headline2!
                                 .copyWith(fontSize: Adaptive.dp(20))),
@@ -92,13 +85,9 @@ class _SignupFormState extends State<SignupForm> {
                         ),
                         _PasswordInput(),
                         _ConfirmPasswordInput(),
-                        _SignUpButton(),
-                      ],
-                    )))
-          ],
-        ),
-      ),
-    );
+                        _SignUpButton()
+                      ])))
+            ]))));
   }
 }
 
@@ -106,24 +95,22 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignupCubit, SignupState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<SignupCubit>().passwordChanged(password),
-          maxLength: 60,
-          obscureText: true,
-          decoration: InputDecoration(
-            counterText: '',
-            labelText: '비밀번호',
-            helperText: '',
-            errorText:
-                state.password.invalid ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.' : null,
-          ),
-        );
-      },
-    );
+        buildWhen: (previous, current) => previous.password != current.password,
+        builder: (context, state) {
+          return TextField(
+              key: const Key('signUpForm_passwordInput_textField'),
+              onChanged: (password) =>
+                  context.read<SignupCubit>().passwordChanged(password),
+              maxLength: 60,
+              obscureText: true,
+              decoration: InputDecoration(
+                  counterText: '',
+                  labelText: '비밀번호',
+                  helperText: '',
+                  errorText: state.password.invalid
+                      ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.'
+                      : null));
+        });
   }
 }
 
@@ -131,27 +118,25 @@ class _ConfirmPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignupCubit, SignupState>(
-      buildWhen: (previous, current) =>
-          previous.password != current.password ||
-          previous.confirmedPassword != current.confirmedPassword,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_confirmedPasswordInput_textField'),
-          onChanged: (confirmPassword) => context
-              .read<SignupCubit>()
-              .confirmedPasswordChanged(confirmPassword),
-          maxLength: 60,
-          obscureText: true,
-          decoration: InputDecoration(
-            counterText: '',
-            labelText: '비밀번호 확인',
-            helperText: '',
-            errorText:
-                state.confirmedPassword.invalid ? '비밀번호가 일치하지 않습니다.' : null,
-          ),
-        );
-      },
-    );
+        buildWhen: (previous, current) =>
+            previous.password != current.password ||
+            previous.confirmedPassword != current.confirmedPassword,
+        builder: (context, state) {
+          return TextField(
+              key: const Key('signUpForm_confirmedPasswordInput_textField'),
+              onChanged: (confirmPassword) => context
+                  .read<SignupCubit>()
+                  .confirmedPasswordChanged(confirmPassword),
+              maxLength: 60,
+              obscureText: true,
+              decoration: InputDecoration(
+                  counterText: '',
+                  labelText: '비밀번호 확인',
+                  helperText: '',
+                  errorText: state.confirmedPassword.invalid
+                      ? '비밀번호가 일치하지 않습니다.'
+                      : null));
+        });
   }
 }
 
@@ -169,8 +154,7 @@ class _SignUpButton extends StatelessWidget {
                     ? () =>
                         context.read<SignupCubit>().signUpFormSubmitted(state)
                     : null,
-                text: '회원가입',
-              );
+                text: '회원가입');
         // Container(
         //         margin: EdgeInsets.only(top: 10),
         //         width: double.infinity,

@@ -40,12 +40,14 @@ class _BannerMagazinesState extends State<BannerMagazines> {
           );
         },
         itemCount: _bannerMagazines.length,
-        itemBuilder: (BuildContext context, int index) => Stack(children: [
+        itemBuilder: (BuildContext context, int index) =>
+            Stack(fit: StackFit.expand, children: [
               Image.network(_bannerMagazines[index].bannerImage!,
                   height: Adaptive.h(50) + AppBar().preferredSize.height,
+                  width: Adaptive.w(100),
                   color: Colors.black12,
                   colorBlendMode: BlendMode.multiply,
-                  fit: BoxFit.fitHeight),
+                  fit: BoxFit.cover),
               Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: Adaptive.w(5), vertical: Adaptive.w(8)),
