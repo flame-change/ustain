@@ -51,41 +51,43 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: PageView(
-            children: pageList,
-            controller: pageController,
-            onPageChanged: _onPageChanged,
-            physics: NeverScrollableScrollPhysics()),
-        bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-                border:
-                    Border(top: BorderSide(color: Colors.black, width: 1.0))),
-            child: BottomNavigationBar(
-                items: List.generate(
-                    MenuState.values.length,
-                    (index) => BottomNavigationBarItem(
-                        icon: ImageIcon(Svg(
-                            "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
-                            size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
-                        label: "${MenuState.values[index].nickName}")),
-                onTap: _onItemTapped,
-                selectedItemColor: theme.accentColor,
-                unselectedItemColor: Color(0xFF8C8C8C),
-                unselectedLabelStyle: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: Adaptive.dp(8),
-                  fontWeight: FontWeight.w900,
-                ),
-                selectedLabelStyle: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontSize: Adaptive.dp(8),
-                  fontWeight: FontWeight.w900,
-                ),
-                currentIndex: pageIndex,
-                selectedFontSize: 12,
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.white,
-                elevation: 0)));
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: PageView(
+                children: pageList,
+                controller: pageController,
+                onPageChanged: _onPageChanged,
+                physics: NeverScrollableScrollPhysics()),
+            bottomNavigationBar: Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(color: Colors.black, width: 1.0))),
+                child: BottomNavigationBar(
+                    items: List.generate(
+                        MenuState.values.length,
+                        (index) => BottomNavigationBarItem(
+                            icon: ImageIcon(Svg(
+                                "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
+                                size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
+                            label: "${MenuState.values[index].nickName}")),
+                    onTap: _onItemTapped,
+                    selectedItemColor: theme.accentColor,
+                    unselectedItemColor: Color(0xFF8C8C8C),
+                    unselectedLabelStyle: TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontSize: Adaptive.dp(8),
+                      fontWeight: FontWeight.w900,
+                    ),
+                    selectedLabelStyle: TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontSize: Adaptive.dp(8),
+                      fontWeight: FontWeight.w900,
+                    ),
+                    currentIndex: pageIndex,
+                    selectedFontSize: 12,
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: Colors.white,
+                    elevation: 0))));
   }
 }

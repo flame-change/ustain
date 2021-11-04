@@ -20,6 +20,8 @@ class LoginHomeScreen extends StatefulWidget {
 class _LoginHomeScreen extends State<LoginHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black, body: LoginHomePage());
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(backgroundColor: Colors.black, body: LoginHomePage()));
   }
 }

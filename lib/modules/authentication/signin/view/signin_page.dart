@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
+import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -87,16 +88,15 @@ class _SignInPageState extends State<SignInPage> {
                         _phoneNumberInput(),
                         _passwordInput(),
                         PlainButton(
-                          onPressed: () {
-                            _signInCubit.signIn(
-                                phoneNumber: _phoneNumberController.text
-                                    .trim()
-                                    .replaceAll("-", ""),
-                                password: _passwordController.text.trim());
-                          },
-                          text: "로그인",
-                          height: 7,
-                        ),
+                            onPressed: () {
+                              _signInCubit.signIn(
+                                  phoneNumber: _phoneNumberController.text
+                                      .trim()
+                                      .replaceAll("-", ""),
+                                  password: _passwordController.text.trim());
+                            },
+                            text: "로그인",
+                            height: 7),
                         GestureDetector(
                             onTap: () {
                               Navigator.push(

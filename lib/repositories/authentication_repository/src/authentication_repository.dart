@@ -40,14 +40,14 @@ class AuthenticationRepository {
 
   void logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("clayful");
-    prefs.remove("refresh");
-    prefs.remove("access");
-    _controller.add(AuthenticationStatus.unauthenticated);
-    _controller.add(AuthenticationStatus.unknown);
+    await prefs.remove("clayful");
+    await prefs.remove("refresh");
+    await prefs.remove("access").whenComplete(() {
+      _controller.add(AuthenticationStatus.unauthenticated);
+    });
   }
 
-  void dispose() => _controller.close();
+  // void dispose() => _controller.close();
 
   Future<ApiResult<Map>> requestPhoneVerifier({
     required String phoneNumber,

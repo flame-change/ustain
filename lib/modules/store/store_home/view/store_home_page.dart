@@ -1,7 +1,7 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
 import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
+import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -154,6 +154,7 @@ class _StorePageState extends State<StorePage>
                                     },
                                     itemCount: state.subCollections!.length)),
                             GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 5,

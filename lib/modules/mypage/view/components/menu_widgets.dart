@@ -12,9 +12,9 @@ Widget menuWidget(title) {
               theme.textTheme.headline3!.copyWith(fontSize: Adaptive.dp(15))));
 }
 
-Widget subMenuWidget({String? title, Function()? taped}) {
+Widget subMenuWidget({String? title, Function()? tapped}) {
   return GestureDetector(
-      onTap: taped,
+      onTap: tapped,
       child: Container(
           width: Adaptive.w(100),
           padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),

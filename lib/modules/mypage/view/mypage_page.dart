@@ -19,6 +19,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   late AuthenticationRepository _authenticationRepository;
   late User user;
+  late bool is_authenticated;
 
   @override
   void initState() {
@@ -26,22 +27,22 @@ class _MyPageState extends State<MyPage> {
     _authenticationRepository =
         RepositoryProvider.of<AuthenticationRepository>(context);
     user = context.read<AuthenticationBloc>().state.user;
+    is_authenticated = context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Column(children: [
-      if (context.read<AuthenticationBloc>().state.status ==
-          AuthenticationStatus.authenticated)
+      if (is_authenticated)
         Container(
             height: Adaptive.h(15), color: Colors.black, child: myPageInfo())
       else
         Padding(
             padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
             child: LoginNeeded()),
-      if (context.read<AuthenticationBloc>().state.status ==
-          AuthenticationStatus.authenticated)
+      if (is_authenticated)
         Container(
             height: Adaptive.h(10),
             decoration:
@@ -51,21 +52,36 @@ class _MyPageState extends State<MyPage> {
           padding: EdgeInsets.all(Adaptive.w(5)),
           child: Column(children: [
             menuWidget("SHOPPING"),
-            subMenuWidget(title: "배송지 관리"),
-            subMenuWidget(title: "주문 / 취소내역"),
-            subMenuWidget(title: "내 리뷰")
+            subMenuWidget(
+                title: "배송지 관리",
+                tapped: () {
+                  is_authenticated ? null : showLoginNeededDialog(context);
+                }),
+            subMenuWidget(
+                title: "주문 / 취소내역",
+                tapped: () {
+                  is_authenticated ? null : showLoginNeededDialog(context);
+                }),
+            subMenuWidget(
+                title: "내 리뷰",
+                tapped: () {
+                  is_authenticated ? null : showLoginNeededDialog(context);
+                })
           ])),
       Container(
           padding: EdgeInsets.all(Adaptive.w(5)),
           child: Column(children: [
             menuWidget("HELP CENTER"),
-            subMenuWidget(title: "1:1 문의하기", taped: () {}),
+            subMenuWidget(
+                title: "1:1 문의하기",
+                tapped: () {
+                  is_authenticated ? null : showLoginNeededDialog(context);
+                }),
             subMenuWidget(title: "FAQ"),
             subMenuWidget(title: "공지사항")
           ])),
       SizedBox(height: Adaptive.h(5)),
-      if (context.read<AuthenticationBloc>().state.status ==
-          AuthenticationStatus.authenticated)
+      if (is_authenticated)
         GestureDetector(
             onTap: () => showDialog(
                 context: context,
@@ -81,9 +97,7 @@ class _MyPageState extends State<MyPage> {
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: Colors.grey,
                         decoration: TextDecoration.underline)))),
-      if (context.read<AuthenticationBloc>().state.status ==
-          AuthenticationStatus.authenticated)
-        SizedBox(height: Adaptive.h(10))
+      if (is_authenticated) SizedBox(height: Adaptive.h(10))
     ]));
   }
 
