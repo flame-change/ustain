@@ -38,13 +38,8 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
               padding: basePadding(vertical: Adaptive.h(3)),
               child:
                   Stack(alignment: AlignmentDirectional.topCenter, children: [
-                Padding(
-                  padding: EdgeInsets.only(top: Adaptive.h(15)),
-                  child: Image.asset(
-                    'assets/images/logo_group.png',
-                    width: sizeWith(30),
-                  ),
-                ),
+                Image.asset('assets/images/splash_screen.png',
+                    width: sizeWith(50)),
                 Align(
                     alignment: Alignment.bottomLeft,
                     child: Column(

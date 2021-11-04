@@ -88,19 +88,15 @@ class _SignInPageState extends State<SignInPage> {
                         _phoneNumberInput(),
                         _passwordInput(),
                         PlainButton(
-                          onPressed: () {
-                            _signInCubit
-                                .signIn(
-                                    phoneNumber: _phoneNumberController.text
-                                        .trim()
-                                        .replaceAll("-", ""),
-                                    password: _passwordController.text.trim())
-                                .whenComplete(() => Navigator.pushNamed(
-                                    context, MainScreen.routeName));
-                          },
-                          text: "로그인",
-                          height: 7,
-                        ),
+                            onPressed: () {
+                              _signInCubit.signIn(
+                                  phoneNumber: _phoneNumberController.text
+                                      .trim()
+                                      .replaceAll("-", ""),
+                                  password: _passwordController.text.trim());
+                            },
+                            text: "로그인",
+                            height: 7),
                         GestureDetector(
                             onTap: () {
                               Navigator.push(

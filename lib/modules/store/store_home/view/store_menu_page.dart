@@ -2,9 +2,9 @@ import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class StoreMenuPage extends StatefulWidget {
   StoreMenuPage(this.pageController);
@@ -37,16 +37,11 @@ class _StoreMenuPage extends State<StoreMenuPage>
                 child: SingleChildScrollView(
                     child: Column(children: [
           Container(
+              padding: EdgeInsets.only(top: Adaptive.w(5)),
               width: sizeWith(100),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("CATEGORIES",
-                      style: theme.textTheme.headline3!
-                          .copyWith(fontSize: Adaptive.dp(20))),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.search))
-                ],
-              )),
+              child: Text("CATEGORIES",
+                  style: theme.textTheme.headline3!
+                      .copyWith(fontSize: Adaptive.dp(20)))),
           Column(
               children: List.generate(
                   _storeCubit.state.collections!.length,

@@ -28,36 +28,35 @@ class MainScreenWire extends StatelessWidget {
         initialIndex: 0,
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-              automaticallyImplyLeading: false,
-              brightness: brightness,
-              backgroundColor: appBarBackgroundColor,
-              elevation: 0,
-              title: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      child: TabBar(
-                          isScrollable: true,
-                          tabs: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(right: 20),
-                                child: page1Title),
-                            Padding(
-                                padding: EdgeInsets.only(right: 20),
-                                child: page2Ttile)
-                          ],
-                          indicator: UnderlineTabIndicator(
-                              borderSide: BorderSide(
-                                  width: indicatorWidth,
-                                  color: theme.accentColor),
-                              insets: EdgeInsets.only(bottom: -6)),
-                          labelStyle: theme.textTheme.button!
-                              .copyWith(fontSize: Adaptive.dp(20)),
-                          labelColor: Colors.black,
-                          labelPadding: EdgeInsets.zero,
-                          indicatorPadding: EdgeInsets.only(right: 20)))),
-              actions: [action]),
-          body: TabBarView(children: [firstPage, secondPage]),
-        ));
+            appBar: AppBar(
+                automaticallyImplyLeading: false,
+                brightness: brightness,
+                backgroundColor: appBarBackgroundColor,
+                elevation: 0,
+                title: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                        child: TabBar(
+                            isScrollable: true,
+                            tabs: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: page1Title),
+                              Padding(
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: page2Ttile)
+                            ],
+                            indicator: UnderlineTabIndicator(
+                                borderSide: BorderSide(
+                                    width: indicatorWidth,
+                                    color: theme.accentColor),
+                                insets: EdgeInsets.only(bottom: -6)),
+                            labelStyle: theme.textTheme.button!
+                                .copyWith(fontSize: Adaptive.dp(20)),
+                            labelColor: Colors.black,
+                            labelPadding: EdgeInsets.zero,
+                            indicatorPadding: EdgeInsets.only(right: 20)))),
+                actions: [action]),
+            body: TabBarView(children: [firstPage, secondPage])));
   }
 }
