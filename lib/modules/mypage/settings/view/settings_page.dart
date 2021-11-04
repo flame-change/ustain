@@ -28,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+          padding: EdgeInsets.symmetric(vertical: Adaptive.w(5)),
           child: Column(children: [
             menuWidget("ACCOUNT"),
             subMenuWidget(
@@ -43,14 +43,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 })
           ])),
       Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+          padding: EdgeInsets.symmetric(vertical: Adaptive.w(5)),
           child: Column(children: [
             menuWidget("SERVICE"),
             subMenuWidget(title: "개인정보 처리방침"),
             subMenuWidget(title: "서비스 이용약관")
           ])),
       Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+          padding: EdgeInsets.symmetric(vertical: Adaptive.w(5)),
           child: Column(children: [
             menuWidget("ETC."),
             subMenuWidget(title: "버전 정보"),
@@ -59,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
         GestureDetector(
             onTap: () {},
             child: Padding(
-                padding: EdgeInsets.all(Adaptive.w(5)),
+                padding: EdgeInsets.symmetric(vertical: Adaptive.w(5)),
                 child: Text('회원 탈퇴',
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: Colors.grey,

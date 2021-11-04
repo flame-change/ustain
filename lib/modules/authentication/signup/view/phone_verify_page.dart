@@ -115,6 +115,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                   child: Container(
                       padding: basePadding(vertical: Adaptive.h(4)),
                       decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(25),

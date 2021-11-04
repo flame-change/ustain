@@ -70,6 +70,7 @@ class _SignupFormState extends State<SignupForm> {
                   child: Container(
                       padding: basePadding(vertical: Adaptive.w(5)),
                       decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(25),

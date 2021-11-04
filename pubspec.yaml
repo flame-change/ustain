@@ -97,6 +97,8 @@ flutter:
 flutter_native_splash:
 
   background_image: assets/images/splash_screen.png
+  web_image_mode: center
+  full_screen: true
   android: true
   ios: true
   web: true

@@ -39,47 +39,45 @@ class _MyPageState extends State<MyPage> {
         Container(
             height: Adaptive.h(15), color: Colors.black, child: myPageInfo())
       else
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
-            child: LoginNeeded()),
+        PageWire(child: LoginNeeded()),
       if (is_authenticated)
         Container(
             height: Adaptive.h(10),
             decoration:
                 BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
             child: orderInfo()),
-      Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+      SizedBox(height: Adaptive.w(5)),
+      PageWire(
           child: Column(children: [
-            menuWidget("SHOPPING"),
-            subMenuWidget(
-                title: "배송지 관리",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(
-                title: "주문 / 취소내역",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(
-                title: "내 리뷰",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                })
-          ])),
-      Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+        menuWidget("SHOPPING"),
+        subMenuWidget(
+            title: "배송지 관리",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(
+            title: "주문 / 취소내역",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(
+            title: "내 리뷰",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            })
+      ])),
+      SizedBox(height: Adaptive.w(5)),
+      PageWire(
           child: Column(children: [
-            menuWidget("HELP CENTER"),
-            subMenuWidget(
-                title: "1:1 문의하기",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(title: "FAQ"),
-            subMenuWidget(title: "공지사항")
-          ])),
+        menuWidget("HELP CENTER"),
+        subMenuWidget(
+            title: "1:1 문의하기",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(title: "FAQ"),
+        subMenuWidget(title: "공지사항")
+      ])),
       SizedBox(height: Adaptive.h(5)),
       if (is_authenticated)
         GestureDetector(
