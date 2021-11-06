@@ -37,4 +37,13 @@ class OrderRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<Map>> getOrderLedgerById(String orderId) async {
+    try {
+      var response = await _dioClient.getWithClayful('/api/v1/commerce/order/$orderId/');
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }
