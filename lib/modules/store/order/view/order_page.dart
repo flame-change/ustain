@@ -12,8 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
-import 'components/views.dart';
-import 'order_result_page.dart';
+import 'views.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -125,7 +124,7 @@ class _OrderPageState extends State<OrderPage> {
                                             create: (_) => PaymentCubit(
                                                 RepositoryProvider.of<
                                                     OrderRepository>(context)))
-                                      ], child: OrderResultPage())),
+                                      ], child: OrderPaymentPage())),
                               (route) => false);
                           // OrderResultPage
                         } else {
