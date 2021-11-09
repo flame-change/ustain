@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class FindingPasswordPage extends StatefulWidget {
   static String routeName = 'finding_password_page';
@@ -30,132 +31,108 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: mainLogo(),
-        ),
+        backgroundColor: Colors.white,
+        appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
-          bloc: _findingAccountCubit,
-          listener: (context, state) async {
-            if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-              if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호가 발급되었습니다.')),
-                  );
-              } else if (state.republishFlag) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호가 재발급되었습니다.')),
-                  );
+            bloc: _findingAccountCubit,
+            listener: (context, state) async {
+              if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
+                if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
+                  showTopSnackBar(
+                      context, CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
+                } else if (state.republishFlag) {
+                  showTopSnackBar(context,
+                      CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
+                }
+                setState(() {
+                  phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
+                  _findingAccountCubit.republishAuthInit();
+                });
               }
-              setState(() {
-                phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-                _findingAccountCubit.republishAuthInit();
-              });
-            }
-            if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
-                state.expiredFlag) {
-              Scaffold.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(content: Text('인증번호 입력시간이 만료되었습니다.')),
-                );
-              setState(() {
-                _findingAccountCubit.expiredFlagFalse();
-              });
-            }
-            if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
-                state.unverifiedFlag) {
-              Scaffold.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(content: Text('인증번호가 일치하지 않습니다.')),
-                );
-              setState(() {
-                _findingAccountCubit.unverifiedFlagFalse();
-              });
-            }
-          },
-          child: Column(children: [
-            Flexible(
-              flex: 3,
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: basePadding(),
-                  child: RichText(
-                    text: TextSpan(
-                        style: theme.textTheme.headline2!
-                            .copyWith(color: Colors.white, height: 1.5),
-                        children: [
+              if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
+                  state.expiredFlag) {
+                showTopSnackBar(context,
+                    CustomSnackBar.info(message: "인증번호 입력시간이 만료 되었습니다."));
+                setState(() {
+                  _findingAccountCubit.expiredFlagFalse();
+                });
+              }
+              if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
+                  state.unverifiedFlag) {
+                showTopSnackBar(
+                    context, CustomSnackBar.info(message: "인증번호가 일치하지 않습니다."));
+                setState(() {
+                  _findingAccountCubit.unverifiedFlagFalse();
+                });
+              }
+              if (state.errorMessage != null && state.errorMessage.length > 0) {
+                showTopSnackBar(context,
+                    CustomSnackBar.info(message: "${state.errorMessage}"));
+              }
+            },
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    padding: basePadding(),
+                    child: RichText(
+                        text: TextSpan(
+                            style: theme.textTheme.headline2!
+                                .copyWith(color: Colors.white, height: 1.5),
+                            children: [
                           TextSpan(
                               text: "인증번호",
                               style: theme.textTheme.headline2!
                                   .copyWith(color: theme.accentColor)),
                           TextSpan(text: "를\n"),
-                          TextSpan(text: "입력 해 주세요!"),
-                        ]),
-                  )),
-            ),
-            Flexible(
-              flex: 6,
-              child: Container(
-                padding: basePadding(vertical: Adaptive.h(4)),
-                height: Adaptive.h(100),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25))),
-                child: Wrap(
-                  runSpacing: 15,
-                  children: [
-                    Text("FIND PASSWORD",
-                        style: theme.textTheme.headline2!
-                            .copyWith(fontSize: Adaptive.dp(20))),
-                    TextFormField(
-                      key:
-                      Key('finding_account_phoneNumber_code_textFormField'),
-                      inputFormatters: [
-                        MaskedInputFormatter('000-0000-0000',
-                            allowedCharMatcher: RegExp('[0-9]'))
-                      ],
-                      onChanged: (phoneNumber) =>
-                          context
-                              .read<FindingAccountCubit>()
-                              .phoneNumberChanged(phoneNumber),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: '휴대폰 번호',
+                          TextSpan(text: "입력 해 주세요!")
+                        ]))),
+                Container(
+                    padding: basePadding(vertical: Adaptive.h(4)),
+                    height: Adaptive.h(100),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(25),
+                            topLeft: Radius.circular(25))),
+                    child: Wrap(runSpacing: 15, children: [
+                      Text("FIND PASSWORD",
+                          style: theme.textTheme.headline2!
+                              .copyWith(fontSize: Adaptive.dp(20))),
+                      TextFormField(
+                        key: Key(
+                            'finding_account_phoneNumber_code_textFormField'),
+                        inputFormatters: [
+                          MaskedInputFormatter('000-0000-0000',
+                              allowedCharMatcher: RegExp('[0-9]'))
+                        ],
+                        onChanged: (phoneNumber) => context
+                            .read<FindingAccountCubit>()
+                            .phoneNumberChanged(phoneNumber),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: '휴대폰 번호',
+                        ),
                       ),
-                    ),
-                    PlainButton(
-                      text: "인증번호 전송",
-                      onPressed: () {
-                        _findingAccountCubit
-                            .findingPhoneNumberVerifyRequest()
-                            .whenComplete(() {
+                      PlainButton(
+                          text: "인증번호 전송",
+                          onPressed: () {
+                            _findingAccountCubit
+                                .findingPhoneNumberVerifyRequest()
+                                .whenComplete(() {
                               Future.delayed(Duration(seconds: 3));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                BlocProvider<FindingAccountCubit>.value(
-                                  value: _findingAccountCubit,
-                                  child: FindingPasswordRequestPage(),
-                                ),
-                              ));
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ]),
-        ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => BlocProvider<
+                                              FindingAccountCubit>.value(
+                                          value: _findingAccountCubit,
+                                          child:
+                                              FindingPasswordRequestPage())));
+                            });
+                          })
+                    ]))
+              ]),
+            )));
   }
 }

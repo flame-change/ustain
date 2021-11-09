@@ -27,6 +27,8 @@ class _MyPageState extends State<MyPage> {
     _authenticationRepository =
         RepositoryProvider.of<AuthenticationRepository>(context);
     user = context.read<AuthenticationBloc>().state.user;
+    if (context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated) {}
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
   }
@@ -39,47 +41,45 @@ class _MyPageState extends State<MyPage> {
         Container(
             height: Adaptive.h(15), color: Colors.black, child: myPageInfo())
       else
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
-            child: LoginNeeded()),
+        PageWire(child: LoginNeeded()),
       if (is_authenticated)
         Container(
             height: Adaptive.h(10),
             decoration:
                 BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
             child: orderInfo()),
-      Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+      SizedBox(height: Adaptive.w(5)),
+      PageWire(
           child: Column(children: [
-            menuWidget("SHOPPING"),
-            subMenuWidget(
-                title: "배송지 관리",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(
-                title: "주문 / 취소내역",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(
-                title: "내 리뷰",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                })
-          ])),
-      Container(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+        menuWidget("SHOPPING"),
+        subMenuWidget(
+            title: "배송지 관리",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(
+            title: "주문 / 취소내역",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(
+            title: "내 리뷰",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            })
+      ])),
+      SizedBox(height: Adaptive.w(5)),
+      PageWire(
           child: Column(children: [
-            menuWidget("HELP CENTER"),
-            subMenuWidget(
-                title: "1:1 문의하기",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(title: "FAQ"),
-            subMenuWidget(title: "공지사항")
-          ])),
+        menuWidget("HELP CENTER"),
+        subMenuWidget(
+            title: "1:1 문의하기",
+            tapped: () {
+              is_authenticated ? null : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(title: "FAQ"),
+        subMenuWidget(title: "공지사항")
+      ])),
       SizedBox(height: Adaptive.h(5)),
       if (is_authenticated)
         GestureDetector(
@@ -108,9 +108,8 @@ class _MyPageState extends State<MyPage> {
           width: Adaptive.w(13),
           height: Adaptive.w(13),
           margin: EdgeInsets.only(right: Adaptive.w(5)),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: theme.accentColor)),
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
       RichText(
           text: TextSpan(style: theme.textTheme.headline4, children: [
         TextSpan(text: "${user.name} ", style: TextStyle(color: Colors.white)),
@@ -119,10 +118,15 @@ class _MyPageState extends State<MyPage> {
             style: theme.textTheme.bodyText2!
                 .copyWith(height: 1.5, color: Color(0xFF979797))),
         WidgetSpan(
-            child: Padding(
-                padding: EdgeInsets.only(bottom: Adaptive.h(1.3)),
-                child: Icon(Icons.info,
-                    size: Adaptive.dp(10), color: Colors.grey)))
+            child: SizedBox(
+                height: Adaptive.dp(18),
+                width: Adaptive.dp(10),
+                child: IconButton(
+                    padding: EdgeInsets.only(bottom: Adaptive.dp(10)),
+                    onPressed: () => _authenticationRepository.signOut(),
+                    iconSize: Adaptive.dp(10),
+                    icon: Icon(Icons.info),
+                    color: Colors.grey)))
       ]))
     ]));
   }

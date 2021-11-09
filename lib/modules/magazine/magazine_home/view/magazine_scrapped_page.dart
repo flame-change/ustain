@@ -16,11 +16,7 @@ class MagazineScrappedPage extends StatefulWidget {
   _MagazineScrappedPageState createState() => _MagazineScrappedPageState();
 }
 
-class _MagazineScrappedPageState extends State<MagazineScrappedPage>
-    with AutomaticKeepAliveClientMixin<MagazineScrappedPage> {
-  @override
-  bool get wantKeepAlive => true;
-
+class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
   late MagazineScrappedCubit _magazineScrappedCubit;
   final _scrollController = ScrollController();
 

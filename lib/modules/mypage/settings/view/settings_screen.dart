@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/mypage/settings/view/settings_page.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -23,6 +24,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.black),
                 onPressed: () => Navigator.of(context).pop())),
-        body: SingleChildScrollView(child: SettingsPage()));
+        body: SingleChildScrollView(child: PageWire(child: SettingsPage())));
   }
 }

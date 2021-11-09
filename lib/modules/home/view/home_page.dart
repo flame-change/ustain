@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/todays_magazine_widget.dart';
+import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/home/components/main_carousel.dart';
@@ -50,21 +51,17 @@ class _HomePageState extends State<HomePage> {
 
         // 메인 매거진 부분입니다.
         SliverToBoxAdapter(
-            child: Padding(
-                padding: EdgeInsets.only(
-                    top: Adaptive.w(5),
-                    bottom: Adaptive.w(5),
-                    left: Adaptive.w(5)),
+            child: LeftPageWire(
                 child: state.todaysMagazines != null
-                    ? TodaysMagazine(state.todaysMagazines!)
+                    ? Padding(
+                        padding: EdgeInsets.only(top: Adaptive.w(5)),
+                        child: TodaysMagazine(state.todaysMagazines!))
                     : Container(
                         height: Adaptive.h(40),
                         child: Center(child: CircularProgressIndicator())))),
         // 카탈로그 시작 전
         SliverToBoxAdapter(
-            child: Padding(
-                padding:
-                    EdgeInsets.only(left: Adaptive.w(5), bottom: Adaptive.w(5)),
+            child: PageWire(
                 child: TitleWithUnderline(
                     title: "MD's PICK", subtitle: '어스테인 MD의 추천 상품을 모아봤어요.'))),
         // 카탈로그 카드 들어갈 곳
