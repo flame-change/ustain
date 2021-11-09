@@ -18,6 +18,8 @@ OrderItem _$OrderItemFromJson(Map<String, dynamic> json) {
     salePrice: json['salePrice'] as int?,
     quantity: json['quantity'] as int?,
     Id: json['Id'] as String?,
+    status: json['status'] as String?,
+    tracking: json['tracking'] as Map<String, dynamic>?,
   );
 }
 
@@ -32,4 +34,6 @@ Map<String, dynamic> _$OrderItemToJson(OrderItem instance) => <String, dynamic>{
       'salePrice': instance.salePrice,
       'quantity': instance.quantity,
       'Id': instance.Id,
+      'status': instance.status,
+      'tracking': instance.tracking,
     };

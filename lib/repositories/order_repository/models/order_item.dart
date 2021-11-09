@@ -16,6 +16,8 @@ class OrderItem extends Equatable {
     this.salePrice,
     this.quantity,
     this.Id,
+    this.status,
+    this.tracking,
   });
 
   final String? brand;
@@ -28,6 +30,8 @@ class OrderItem extends Equatable {
   final int? salePrice;
   final int? quantity;
   final String? Id;
+  final String? status;
+  final Map? tracking;
 
   factory OrderItem.fromJson(Map<String, dynamic> json) =>
       _$OrderItemFromJson(json);
@@ -45,6 +49,8 @@ class OrderItem extends Equatable {
         available,
         salePrice,
         quantity,
-        Id
+        Id,
+        status,
+        tracking,
       ];
 }
