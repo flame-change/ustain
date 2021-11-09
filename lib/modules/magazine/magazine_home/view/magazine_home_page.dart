@@ -1,6 +1,5 @@
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
-import 'package:flutter/material.dart'
-    hide RefreshIndicator, RefreshIndicatorState;
+import 'package:flutter/material.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'components/todays_magazine_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components/magazine_card_widget.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MagazineHomePage extends StatefulWidget {
   static String routeName = 'magazine_home_page';
@@ -18,26 +16,18 @@ class MagazineHomePage extends StatefulWidget {
   _MagazineHomePageState createState() => _MagazineHomePageState();
 }
 
-class _MagazineHomePageState extends State<MagazineHomePage>
-    with AutomaticKeepAliveClientMixin<MagazineHomePage> {
+class _MagazineHomePageState extends State<MagazineHomePage> {
   late MagazineCubit _magazineCubit;
   final _scrollController = ScrollController();
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
   late User user;
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
-    _magazineCubit.getMagazinesByCategory(
-        magazineCategory: MagazineCategory.empty);
-    _magazineCubit.getMainMagazines();
     _scrollController.addListener(_onScroll);
     user = context.read<AuthenticationBloc>().state.user;
+    getMagazineMethods(context);
   }
 
   void _onScroll() {
@@ -49,51 +39,61 @@ class _MagazineHomePageState extends State<MagazineHomePage>
     }
   }
 
+  void getMagazineMethods(BuildContext context) {
+    _magazineCubit.getMagazinesByCategory(
+        magazineCategory: MagazineCategory.empty);
+    _magazineCubit.getMainMagazines();
+  }
+
   @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();
-    _refreshController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: _scrollController,
-      child:
-          BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
-        if (state.todaysMagazines != null && state.magazines != null) {
-          return Wrap(runSpacing: 15, children: [
-            // 오늘의 매거진
-            TodaysMagazine(state.todaysMagazines!),
-            // 모아보기
-            TitleWithUnderline(
-                title: "WHAT'S NEW?", subtitle: "어스테인의 정기 간행물 입니다."),
-            // TODO 카테고리들 스크롤링 뷰
-            Container(
-                margin: EdgeInsets.symmetric(vertical: 5),
-                height: 40,
-                child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: categoryTitle())),
-            Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: List.generate(
-                    state.magazines!.length,
-                    (index) => Padding(
-                        padding: EdgeInsets.only(
-                            right: Adaptive.w(100) > 475
-                                ? 475 / 100 * 5
-                                : Adaptive.w(5)),
-                        child: magazineCard(context, state.magazines![index]))))
-          ]);
-        } else {
-          return Container(
-              height: Adaptive.h(100),
-              child: Center(child: CircularProgressIndicator()));
-        }
-      }),
+    return RefreshIndicator(
+      onRefresh: () async => getMagazineMethods(context),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        controller: _scrollController,
+        child: BlocBuilder<MagazineCubit, MagazineState>(
+            builder: (context, state) {
+          if (state.todaysMagazines != null && state.magazines != null) {
+            return Wrap(runSpacing: 15, children: [
+              // 오늘의 매거진
+              TodaysMagazine(state.todaysMagazines!),
+              // 모아보기
+              TitleWithUnderline(
+                  title: "WHAT'S NEW?", subtitle: "어스테인의 정기 간행물 입니다."),
+              // TODO 카테고리들 스크롤링 뷰
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  height: 40,
+                  child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: categoryTitle())),
+              Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: List.generate(
+                      state.magazines!.length,
+                      (index) => Padding(
+                          padding: EdgeInsets.only(
+                              right: Adaptive.w(100) > 475
+                                  ? 475 / 100 * 5
+                                  : Adaptive.w(5)),
+                          child:
+                              magazineCard(context, state.magazines![index]))))
+            ]);
+          } else {
+            return Container(
+                height: Adaptive.h(100),
+                child: Center(child: CircularProgressIndicator()));
+          }
+        }),
+      ),
     );
   }
 

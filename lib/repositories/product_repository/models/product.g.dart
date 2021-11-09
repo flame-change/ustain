@@ -31,6 +31,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     variants: (json['variants'] as List<dynamic>?)
         ?.map((e) => Variants.fromJson(e as Map<String, dynamic>))
         .toList(),
+    notices: json['notices'] as Map<String, dynamic>?,
   );
 }
 
@@ -51,4 +52,5 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'totalReviews': instance.totalReviews,
       'options': instance.options,
       'variants': instance.variants,
+      'notices': instance.notices,
     };

@@ -1,7 +1,9 @@
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,17 +45,11 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
             listener: (context, state) async {
               if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
                 if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
-                  Scaffold.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(content: Text('인증번호가 발급되었습니다.')),
-                    );
+                  showTopSnackBar(
+                      context, CustomSnackBar.info(message: "인증번호가 발급되었습니다."));
                 } else if (state.republishFlag) {
-                  Scaffold.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(content: Text('인증번호가 재발급되었습니다.')),
-                    );
+                  showTopSnackBar(context,
+                      CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
                 }
                 setState(() {
                   phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
@@ -62,22 +58,16 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
               }
               if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
                   state.expiredFlag) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호 입력시간이 만료되었습니다.')),
-                  );
+                showTopSnackBar(
+                    context, CustomSnackBar.error(message: "입력 시간이 만료되었습니다."));
                 setState(() {
                   _signupCubit.expiredFlagFalse();
                 });
               }
               if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
                   state.unverifiedFlag) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('인증번호가 일치하지 않습니다.')),
-                  );
+                showTopSnackBar(
+                    context, CustomSnackBar.error(message: "인증번호가 일치하지 않습니다."));
                 setState(() {
                   _signupCubit.unverifiedFlagFalse();
                 });
@@ -91,6 +81,12 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                         builder: (_) => BlocProvider<SignupCubit>.value(
                             value: BlocProvider.of<SignupCubit>(context),
                             child: SignupForm())));
+              }
+
+              if (state.errorMessage != null &&
+                  state.errorMessage!.length > 0) {
+                showTopSnackBar(
+                    context, CustomSnackBar.error(message: "이미 가입된 번호입니다."));
               }
             },
             child: SingleChildScrollView(

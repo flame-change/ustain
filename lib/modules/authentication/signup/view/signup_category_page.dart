@@ -7,6 +7,8 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SignupCategoryPage extends StatefulWidget {
   static String routeName = 'signup_category_page';
@@ -97,10 +99,11 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                                     selectedCategory
                                         .add(user.categories![index].mid!);
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content:
-                                                Text('관심사는 최대 3개까지만 가능합니다.')));
+                                    showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.info(
+                                            message:
+                                                "관심사는 최대 3개까지만 선택 가능합니다."));
                                   }
                                 }
                               });

@@ -27,6 +27,8 @@ class _MyPageState extends State<MyPage> {
     _authenticationRepository =
         RepositoryProvider.of<AuthenticationRepository>(context);
     user = context.read<AuthenticationBloc>().state.user;
+    if (context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated) {}
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
   }
@@ -106,9 +108,8 @@ class _MyPageState extends State<MyPage> {
           width: Adaptive.w(13),
           height: Adaptive.w(13),
           margin: EdgeInsets.only(right: Adaptive.w(5)),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: theme.accentColor)),
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
       RichText(
           text: TextSpan(style: theme.textTheme.headline4, children: [
         TextSpan(text: "${user.name} ", style: TextStyle(color: Colors.white)),
@@ -117,10 +118,15 @@ class _MyPageState extends State<MyPage> {
             style: theme.textTheme.bodyText2!
                 .copyWith(height: 1.5, color: Color(0xFF979797))),
         WidgetSpan(
-            child: Padding(
-                padding: EdgeInsets.only(bottom: Adaptive.h(1.3)),
-                child: Icon(Icons.info,
-                    size: Adaptive.dp(10), color: Colors.grey)))
+            child: SizedBox(
+                height: Adaptive.dp(18),
+                width: Adaptive.dp(10),
+                child: IconButton(
+                    padding: EdgeInsets.only(bottom: Adaptive.dp(10)),
+                    onPressed: () => _authenticationRepository.signOut(),
+                    iconSize: Adaptive.dp(10),
+                    icon: Icon(Icons.info),
+                    color: Colors.grey)))
       ]))
     ]));
   }

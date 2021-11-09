@@ -1,7 +1,6 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
-import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -10,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SignInPage extends StatefulWidget {
   static String routeName = 'signIn_page';
@@ -46,12 +47,8 @@ class _SignInPageState extends State<SignInPage> {
             listener: (context, state) async {
               if (state.errorMessage != null &&
                   state.errorMessage!.length > 0) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(content: Text('${state.errorMessage}')),
-                  );
-                _signInCubit.errorMsg();
+                showTopSnackBar(context,
+                    CustomSnackBar.error(message: "${state.errorMessage}"));
               }
             },
             child: SingleChildScrollView(

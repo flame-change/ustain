@@ -208,10 +208,7 @@ class SignupCubit extends Cubit<SignupState> {
     ));
   }
 
-  void completeVerify(){
-    emit(state.copyWith(
-        phoneNumberVerifyStatus: VerifyStatus.complete
-    ));
+  void completeVerify() {
+    emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.complete));
   }
-
 }

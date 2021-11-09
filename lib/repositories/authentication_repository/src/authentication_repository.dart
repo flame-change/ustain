@@ -47,7 +47,21 @@ class AuthenticationRepository {
     });
   }
 
-  // void dispose() => _controller.close();
+  void signOut() async {
+    try {
+      _dioClient
+          .deleteWithClayful('/api/v1/user/profile/')
+          .whenComplete(() async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.remove("clayful");
+        await prefs.remove("refresh");
+        await prefs.remove("access").whenComplete(
+            () => _controller.add(AuthenticationStatus.unauthenticated));
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   Future<ApiResult<Map>> requestPhoneVerifier({
     required String phoneNumber,
