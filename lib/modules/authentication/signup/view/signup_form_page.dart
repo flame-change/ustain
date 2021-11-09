@@ -28,10 +28,7 @@ class _SignupFormState extends State<SignupForm> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: mainLogo(),
-          backgroundColor: Colors.black,
-        ),
+        appBar: AppBar(title: mainLogo(), backgroundColor: Colors.black),
         body: BlocListener<SignupCubit, SignupState>(
             listener: (context, state) async {
               // if (state.status.isSubmissionFailure) {
@@ -70,6 +67,7 @@ class _SignupFormState extends State<SignupForm> {
                   child: Container(
                       padding: basePadding(vertical: Adaptive.w(5)),
                       decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(25),
@@ -143,34 +141,16 @@ class _ConfirmPasswordInput extends StatelessWidget {
 class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignupCubit, SignupState>(
-      builder: (context, state) {
-        return state.status.isSubmissionInProgress
-            ? Center(
-                child: const CircularProgressIndicator(),
-              )
-            : PlainButton(
-                onPressed: state.password.valid
-                    ? () =>
-                        context.read<SignupCubit>().signUpFormSubmitted(state)
-                    : null,
-                text: '회원가입');
-        // Container(
-        //         margin: EdgeInsets.only(top: 10),
-        //         width: double.infinity,
-        //         child: FlatButton(
-        //           padding: EdgeInsets.all(15),
-        //           color: Colors.black,
-        //           key: Key('signUpForm_continue_raisedButton'),
-        //           child: Text('회원가입'),
-        //           onPressed: state.confirmedPassword.valid &&
-        //                   state.password.valid
-        //               ? () =>
-        //                   context.read<SignupCubit>().signUpFormSubmitted(state)
-        //               : null,
-        //         ),
-        //       );
-      },
-    );
+    return BlocBuilder<SignupCubit, SignupState>(builder: (context, state) {
+      return state.status.isSubmissionInProgress
+          ? Center(
+              child: const CircularProgressIndicator(),
+            )
+          : PlainButton(
+              onPressed: state.password.valid
+                  ? () => context.read<SignupCubit>().signUpFormSubmitted(state)
+                  : null,
+              text: '회원가입');
+    });
   }
 }

@@ -8,24 +8,24 @@ part 'product.g.dart';
 
 @JsonSerializable()
 class Product extends Equatable {
-  const Product({
-    this.Id,
-    this.name,
-    this.keywords,
-    this.summary,
-    this.description,
-    this.rating,
-    this.originalPrice,
-    this.discountPrice,
-    this.discountRate,
-    this.brand,
-    this.thumbnail,
-    this.available,
-    this.hashtags,
-    this.totalReviews,
-    this.options,
-    this.variants,
-  });
+  const Product(
+      {this.Id,
+      this.name,
+      this.keywords,
+      this.summary,
+      this.description,
+      this.rating,
+      this.originalPrice,
+      this.discountPrice,
+      this.discountRate,
+      this.brand,
+      this.thumbnail,
+      this.available,
+      this.hashtags,
+      this.totalReviews,
+      this.options,
+      this.variants,
+      this.notices});
 
   final String? Id;
   final String? name;
@@ -43,6 +43,7 @@ class Product extends Equatable {
   final int? totalReviews;
   final List<Option>? options;
   final List<Variants>? variants;
+  final Map? notices;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -67,26 +68,27 @@ class Product extends Equatable {
         totalReviews,
         options,
         variants,
+        notices,
       ];
 
-  Product copyWith({
-    String? Id,
-    String? name,
-    String? summary,
-    String? description,
-    int? rating,
-    int? originalPrice,
-    int? discountPrice,
-    int? discountRate,
-    Brand? brand,
-    String? thumbnail,
-    String? keywords,
-    bool? available,
-    List<String>? hashtags,
-    int? totalReviews,
-    List<Option>? options,
-    List<Variants>? variants,
-  }) {
+  Product copyWith(
+      {String? Id,
+      String? name,
+      String? summary,
+      String? description,
+      int? rating,
+      int? originalPrice,
+      int? discountPrice,
+      int? discountRate,
+      Brand? brand,
+      String? thumbnail,
+      String? keywords,
+      bool? available,
+      List<String>? hashtags,
+      int? totalReviews,
+      List<Option>? options,
+      List<Variants>? variants,
+      Map? notices}) {
     return Product(
       Id: Id ?? this.Id,
       name: name ?? this.name,
@@ -103,6 +105,7 @@ class Product extends Equatable {
       brand: brand ?? this.brand,
       options: options ?? this.options,
       variants: variants ?? this.variants,
+      notices: notices ?? this.notices,
     );
   }
 }

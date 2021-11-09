@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class FindingPasswordRequestPage extends StatefulWidget {
   static String routeName = 'finding_password_request_page';
@@ -37,118 +39,100 @@ class _FindingPasswordRequestPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: mainLogo(),
-        ),
+        backgroundColor: Colors.white,
+        appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
-          bloc: _findingAccountCubit,
-          listener: (context, state) async {
-            // 인증에 성공한 경우
-            if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-              _findingAccountCubit.completeVerify();
+            bloc: _findingAccountCubit,
+            listener: (context, state) async {
+              // 인증에 성공한 경우
+              if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
+                _findingAccountCubit.completeVerify();
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BlocProvider<FindingAccountCubit>.value(
-                      value: _findingAccountCubit,
-                      child: FindingPasswordResultPage(),
-                    ),
-                  ));
-            }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => BlocProvider<FindingAccountCubit>.value(
+                            value: _findingAccountCubit,
+                            child: FindingPasswordResultPage())));
+              }
 
-            // 만료된 경우 - 현재 사용 안됨
-            if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
-                state.expiredFlag) {
-              Scaffold.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(content: Text('인증번호 입력시간이 만료되었습니다.')),
-                );
-              setState(() {
-                _findingAccountCubit.expiredFlagFalse();
-              });
-            }
+              // 만료된 경우 - 현재 사용 안됨
+              if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
+                  state.expiredFlag) {
+                showTopSnackBar(context,
+                    CustomSnackBar.info(message: '인증번호 입력 시간이 만료 되었습니다.'));
+                setState(() {
+                  _findingAccountCubit.expiredFlagFalse();
+                });
+              }
 
-            // 일치하지 않는 경우
-            if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
-                state.unverifiedFlag) {
-              Scaffold.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(content: Text('인증번호가 일치하지 않습니다.')),
-                );
-              setState(() {
-                _findingAccountCubit.unverifiedFlagFalse();
-                controller.clear();
-              });
-            }
-          },
-          child: Column(children: [
-            Flexible(
-              flex: 3,
-              child: Container(
+              // 일치하지 않는 경우
+              if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
+                  state.unverifiedFlag) {
+                showTopSnackBar(
+                    context, CustomSnackBar.info(message: '인증번호가 일치하지 않습니다.'));
+                setState(() {
+                  _findingAccountCubit.unverifiedFlagFalse();
+                  controller.clear();
+                });
+              }
+
+              if (state.errorMessage != null && state.errorMessage.length > 0) {
+                showTopSnackBar(context,
+                    CustomSnackBar.info(message: "${state.errorMessage}"));
+              }
+            },
+            child: SingleChildScrollView(
+                child: Column(children: [
+              Container(
                   alignment: Alignment.centerLeft,
-                  padding: basePadding(),
+                  padding: basePadding(vertical: Adaptive.h(10)),
                   child: RichText(
-                    text: TextSpan(
-                        style: theme.textTheme.headline2!
-                            .copyWith(color: Colors.white, height: 1.5),
-                        children: [
-                          TextSpan(
-                              text: "휴대폰번호",
-                              style: theme.textTheme.headline2!
-                                  .copyWith(color: theme.accentColor)),
-                          TextSpan(text: "를\n"),
-                          TextSpan(text: "입력 해 주세요!"),
-                        ]),
-                  )),
-            ),
-            Flexible(
-              flex: 6,
-              child: Container(
-                padding: basePadding(vertical: Adaptive.h(4)),
-                height: Adaptive.h(100),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25))),
-                child: Wrap(
-                  runSpacing: 15,
-                  children: [
-                    Text("OTP CERTIFICATE",
-                        style: theme.textTheme.headline2!
-                            .copyWith(fontSize: Adaptive.dp(20))),
-                    PinCodeTextField(
-                      appContext: context,
-                      length: 6,
-                      controller: controller,
-                      animationType: AnimationType.fade,
-                      animationDuration: Duration(milliseconds: 100),
-                      cursorColor: theme.accentColor,
-                      pinTheme: PinTheme(
-                        activeColor: Colors.grey,
-                        inactiveColor: Colors.black,
-                        selectedColor: theme.accentColor,
-                      ),
-                      onChanged: (value) {
-                        _findingAccountCubit.verifyNumberChanged(value);
-                      },
-                    ),
-                    PlainButton(
-                      text: "인증 완료",
-                      onPressed: () {
-                        _findingAccountCubit.findingPassWordVerify();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ]),
-        ));
+                      text: TextSpan(
+                          style: theme.textTheme.headline2!
+                              .copyWith(color: Colors.white, height: 1.5),
+                          children: [
+                        TextSpan(
+                            text: "휴대폰번호",
+                            style: theme.textTheme.headline2!
+                                .copyWith(color: theme.accentColor)),
+                        TextSpan(text: "를\n"),
+                        TextSpan(text: "입력 해 주세요!")
+                      ]))),
+              Container(
+                  color: Colors.black,
+                  child: Container(
+                      padding: basePadding(vertical: Adaptive.h(4)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(25),
+                              topLeft: Radius.circular(25))),
+                      child: Wrap(runSpacing: 15, children: [
+                        Text("OTP CERTIFICATE",
+                            style: theme.textTheme.headline2!
+                                .copyWith(fontSize: Adaptive.dp(20))),
+                        PinCodeTextField(
+                            appContext: context,
+                            length: 6,
+                            controller: controller,
+                            animationType: AnimationType.fade,
+                            animationDuration: Duration(milliseconds: 100),
+                            cursorColor: theme.accentColor,
+                            pinTheme: PinTheme(
+                              activeColor: Colors.grey,
+                              inactiveColor: Colors.black,
+                              selectedColor: theme.accentColor,
+                            ),
+                            onChanged: (value) {
+                              _findingAccountCubit.verifyNumberChanged(value);
+                            }),
+                        PlainButton(
+                            text: "인증 완료",
+                            onPressed: () {
+                              _findingAccountCubit.findingPassWordVerify();
+                            })
+                      ])))
+            ]))));
   }
 }

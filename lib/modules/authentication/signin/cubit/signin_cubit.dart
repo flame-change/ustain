@@ -27,7 +27,7 @@ class SignInCubit extends Cubit<SignInState> {
       prefs.setString('clayful', response['clayful']);
       prefs.setString('refresh', response['refresh']);
       _authenticationRepository.logIn();
-      emit(state.copyWith(auth: true));
+      emit(state.copyWith(auth: true, errorMessage: ''));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
           error: error,

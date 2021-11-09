@@ -15,9 +15,9 @@ Widget productSaleBottomNavigator(
       padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
       decoration: BoxDecoration(border: Border.all(color: Colors.black)),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Wrap(runAlignment: WrapAlignment.center, spacing: 10, children: [
+        Wrap(runAlignment: WrapAlignment.center, children: [
           SvgPicture.asset('assets/icons/like.svg', color: theme.accentColor),
-          SizedBox(width: 20),
+          SizedBox(width: Adaptive.w(10)),
           SvgPicture.asset('assets/icons/share.svg', color: theme.accentColor)
         ]),
         Container(

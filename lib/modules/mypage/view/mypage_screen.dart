@@ -1,16 +1,12 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'mypage_page.dart';
 
 class MyPageScreen extends StatefulWidget {
   static String routeName = 'my_page_screen';
-
-  MyPageScreen({
-    Key? key,
-  }) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => MyPageScreen());
@@ -20,11 +16,7 @@ class MyPageScreen extends StatefulWidget {
   State<MyPageScreen> createState() => _MyPageScreen();
 }
 
-class _MyPageScreen extends State<MyPageScreen>
-    with AutomaticKeepAliveClientMixin<MyPageScreen> {
-  @override
-  bool get wantKeepAlive => true;
-
+class _MyPageScreen extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
