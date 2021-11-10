@@ -13,6 +13,12 @@ class OrderFormCubit extends Cubit<OrderFormState> {
   final OrderRepository _orderRepository;
 
   Future<void> getOrderForm() async {
+    emit(state.copyWith(
+      orderForm: [],
+      isLoaded: false,
+      isLoading: true,
+    ));
+
     ApiResult<PageResponse> apiResult =
         await _orderRepository.getOrderForm(state.page);
 
@@ -41,7 +47,7 @@ class OrderFormCubit extends Cubit<OrderFormState> {
         await _orderRepository.getOrderFormById(orderId);
 
     apiResult.when(success: (OrderForm? response) {
-      emit(state.copyWith(orderForm: [response!]));
+      emit(state.copyWith(orderForm: [response!], isLoading: false, isLoaded: true));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
         error: error,

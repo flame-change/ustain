@@ -74,7 +74,7 @@ class OrderResultPage extends StatelessWidget {
                                                           OrderRepository>(
                                                       context)),
                                               child: OrderFormPage(
-                                                  result['merchant_uid']!),
+                                                  result['merchant_uid']!, false),
                                             )),
                                     (route) => false);
                               },
