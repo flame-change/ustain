@@ -1,180 +1,108 @@
-import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
-import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
-import 'package:aroundus_app/repositories/order_repository/models/models.dart';
+import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
+import 'package:aroundus_app/modules/orderForm/view/orderForm_page.dart';
+import 'package:aroundus_app/repositories/order_repository/order_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/base_component/plain_button.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iamport_flutter/model/payment_data.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-/* 아임포트 결제 모듈을 불러옵니다. */
-import 'package:iamport_flutter/iamport_payment.dart';
+class OrderResultPage extends StatelessWidget {
+  static String routeName = 'order_result_page';
 
-/* 아임포트 결제 데이터 모델을 불러옵니다. */
-// import 'package:iamport_flutter/model/payment_data.dart' as \;
+  OrderResultPage(this.result);
 
-class OrderResultPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _OrderResultPageState();
-}
+  final Map<String, String> result;
 
-class _OrderResultPageState extends State<OrderResultPage> {
-  late OrderCubit _orderCubit;
-  late PaymentCubit _paymentCubit;
-
-  late Map<String, dynamic> orderTemp;
-
-  @override
-  void initState() {
-    super.initState();
-    _orderCubit = BlocProvider.of<OrderCubit>(context);
-    _paymentCubit = BlocProvider.of<PaymentCubit>(context);
-    orderTemp = {
-      "products": _orderCubit.state.orderTemp!.products!
-          .map((p) => p.toJson())
-          .toList(),
-      "address": _orderCubit.state.orderTemp!.address!.toJson(),
-      "request": {
-        "shippingRequest": _orderCubit.state.selectedShippingRequest!.toJson(),
-        "additionalRequest":
-            _orderCubit.state.orderTemp!.request!.additionalRequest
-      },
-      "coupon": _orderCubit.state.orderTemp!.coupon!.toJson(),
-      "agreed": _orderCubit.state.agreed
-    };
-    _paymentCubit.createOrder(orderTemp);
+  bool getIsSuccessed(Map<String, String> result) {
+    if (result['imp_success'] == 'true') {
+      return true;
+    }
+    if (result['success'] == 'true') {
+      return true;
+    }
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
-        if (state.isLoaded) {
-          return IamportPayment(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
-            initialChild: Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-                      child:
-                          Text('잠시만 기다려주세요...', style: TextStyle(fontSize: 20.0)),
-                    ),
-                  ],
-                ),
+    bool isSuccessed = getIsSuccessed(result);
+
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
+      body: PageWire(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: Adaptive.h(25)),
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    isSuccessed
+                        ? 'assets/icons/success.svg'
+                        : 'assets/icons/error.svg',
+                    color: theme.accentColor,
+                    width: Adaptive.w(35),
+                  ),
+                  Text(isSuccessed ? '주문 완료!' : '주문 실패!',
+                      style: theme.textTheme.headline1!.copyWith(height: 1.5)),
+                ],
               ),
             ),
-
-            userCode: 'imp03489525',
-            // 가맹점 식별코드
-
-            /* [필수입력] 결제 데이터 */
-            data: PaymentData(
-              pg: 'nice',
-              // PG사
-              payMethod: 'card',
-              // 결제수단
-              name: '아임포트 결제데이터 분석',
-              // 주문명
-              merchantUid: '${state.order!.merchantUid}',
-              // 주문번호
-              amount: state.order!.amount!.toInt(),
-              // 결제금액
-              buyerName: '${state.order!.buyerName}',
-              // 구매자 이름
-              buyerTel: '${state.order!.buyerTel}',
-              // 구매자 연락처
-              buyerEmail: '${state.order!.buyerEmail}',
-              // 구매자 이메일
-              buyerAddr: '${_orderCubit.state.orderTemp!.address!.bigAddress}',
-              // 구매자 주소
-              buyerPostcode:
-                  '${_orderCubit.state.orderTemp!.address!.postalCode}',
-              // 구매자 우편번호
-              appScheme: 'aroundus', // 앱 URL scheme
-              // display : {
-              //   'cardQuota' : [2,3]                                            //결제창 UI 내 할부개월수 제한
-              // }
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Wrap(
+                    runSpacing: 10,
+                    children: [
+                      isSuccessed
+                          ? PlainButton(
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            BlocProvider<OrderFormCubit>(
+                                              create: (_) => OrderFormCubit(
+                                                  RepositoryProvider.of<
+                                                          OrderRepository>(
+                                                      context)),
+                                              child: OrderFormPage(
+                                                  result['merchant_uid']!, false),
+                                            )),
+                                    (route) => false);
+                              },
+                              text: '주문내역 확인')
+                          : PlainButton(
+                              onPressed: () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, 'cart_screen', (route) => false);
+                              },
+                              text: '장바구니로 돌아가'),
+                      PlainButton(
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, 'main_screen', (route) => false);
+                        },
+                        text: '더 둘러보기',
+                        textColor: theme.accentColor,
+                        color: Colors.white,
+                        borderColor: theme.accentColor,
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-            /* [필수입력] 콜백 함수 */
-            callback: (Map<String, String> result) {
-              print(result);
-              // Navigator.pushReplacementNamed(
-              //   context,
-              //   '/result',
-              //   arguments: result,
-              // );
-            },
-          );
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      }),
+          ],
+        ),
+      ),
     );
   }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         iconTheme: IconThemeData(color: Colors.black),
-//         elevation: 0,
-//       ),
-//       body: BlocBuilder<PaymentCubit, PaymentState>(
-//         builder: (context, state) {
-//           if (state.isLoaded) {
-//             return BlocSelector<PaymentCubit, PaymentState, Order>(
-//                 selector: (state) => state.order!,
-//                 builder: (context, order) {
-//                   return PageWire(
-//                     child: Stack(
-//                       children: [
-//                         Text("$order"),
-//                         Align(
-//                           alignment: Alignment.bottomCenter,
-//                           child: Wrap(
-//                             runSpacing: 10,
-//                             spacing: 10,
-//                             children: [
-//                               PlainButton(
-//                                   onPressed: () {
-//                                     Navigator.pop(context);
-//                                     Navigator.pop(context);
-//                                     // Navigator.pushNamedAndRemoveUntil(
-//                                     //     context, 'cart_screen', (route) => false);
-//                                   },
-//                                   text: "장바구니로 돌아가기"),
-//                               PlainButton(
-//                                 onPressed: () {
-//                                   Navigator.pop(context);
-//                                   Navigator.pop(context);
-//                                   Navigator.pop(context);
-//                                   Navigator.pop(context);
-//                                 },
-//                                 text: "더 둘러보기",
-//                                 color: Colors.white,
-//                                 borderColor: theme.accentColor,
-//                               ),
-//                               SizedBox(height: 0)
-//                             ],
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   );
-//                 });
-//           } else {
-//             return Center(child: CircularProgressIndicator());
-//           }
-//         },
-//       ));
-// }
 }

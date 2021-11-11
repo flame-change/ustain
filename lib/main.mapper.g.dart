@@ -2,7 +2,7 @@
 // https://github.com/k-paxian/dart-json-mapper
 // @dart = 2.12
 import 'package:aroundus_app/repositories/address_repository/models/address.dart' as x15 show Address;
-import 'package:aroundus_app/repositories/cart_repository/models/cart.dart' as x22 show Cart;
+import 'package:aroundus_app/repositories/cart_repository/models/cart.dart' as x23 show Cart;
 import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart' as x14 show CartTemp;
 import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart' as x16 show Coupon;
 import 'package:aroundus_app/repositories/magazine_repository/models/catalog.dart' as x12 show Catalog;
@@ -12,6 +12,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/magazine_co
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine_detail.dart' as x4 show MagazineDetail;
 import 'package:aroundus_app/repositories/order_repository/models/customer_requests.dart' as x17 show CustomerRequests;
 import 'package:aroundus_app/repositories/order_repository/models/order.dart' as x19 show Order;
+import 'package:aroundus_app/repositories/order_repository/models/order_form.dart' as x22 show OrderForm;
 import 'package:aroundus_app/repositories/order_repository/models/order_item.dart' as x21 show OrderItem;
 import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart' as x20 show OrderTemp;
 import 'package:aroundus_app/repositories/order_repository/models/shipping_request.dart' as x18 show ShippingRequest;
@@ -108,8 +109,10 @@ final mainAdapter = JsonMapperAdapter(
     typeOf<Set<x20.OrderTemp>>(): (value) => value.cast<x20.OrderTemp>(),
     typeOf<List<x21.OrderItem>>(): (value) => value.cast<x21.OrderItem>(),
     typeOf<Set<x21.OrderItem>>(): (value) => value.cast<x21.OrderItem>(),
-    typeOf<List<x22.Cart>>(): (value) => value.cast<x22.Cart>(),
-    typeOf<Set<x22.Cart>>(): (value) => value.cast<x22.Cart>()
+    typeOf<List<x22.OrderForm>>(): (value) => value.cast<x22.OrderForm>(),
+    typeOf<Set<x22.OrderForm>>(): (value) => value.cast<x22.OrderForm>(),
+    typeOf<List<x23.Cart>>(): (value) => value.cast<x23.Cart>(),
+    typeOf<Set<x23.Cart>>(): (value) => value.cast<x23.Cart>()
 },
   enumValues: {
 

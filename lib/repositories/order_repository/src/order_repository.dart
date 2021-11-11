@@ -4,6 +4,7 @@ import 'package:aroundus_app/repositories/order_repository/models/order_temp.dar
 import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
+import 'package:aroundus_app/support/networks/page_response.dart';
 
 class OrderRepository {
   OrderRepository(this._dioClient);
@@ -37,4 +38,23 @@ class OrderRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult<OrderForm>> getOrderFormById(String orderId) async {
+    try {
+      var response = await _dioClient.getWithClayful('/api/v1/commerce/order/$orderId/');
+      return ApiResult.success(data: OrderForm.fromJson(response));
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future<ApiResult<PageResponse>> getOrderForm(int page) async {
+    try {
+      var response = await _dioClient.getWithClayful('/api/v1/commerce/order/list/?page=$page');
+      return ApiResult.success(data: PageResponse.fromJson(response));
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
+
 }
