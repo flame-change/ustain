@@ -84,7 +84,6 @@ class _FindingPasswordResultPageState extends State<FindingPasswordResultPage> {
                                       await context
                                           .read<FindingAccountCubit>()
                                           .resetPassWord();
-
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                               'login_home_screen',

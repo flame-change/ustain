@@ -86,7 +86,12 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
               if (state.errorMessage != null &&
                   state.errorMessage!.length > 0) {
                 showTopSnackBar(
-                    context, CustomSnackBar.error(message: "이미 가입된 번호입니다."));
+                    context,
+                    CustomSnackBar.error(
+                        message: phoneNumberVerifyStatus != VerifyStatus.request
+                            ? "이미 가입된 번호입니다."
+                            : "인증번호를 다시 한 번 확인 해 주세요."));
+                context.read<SignupCubit>().errorMsg();
               }
             },
             child: SingleChildScrollView(

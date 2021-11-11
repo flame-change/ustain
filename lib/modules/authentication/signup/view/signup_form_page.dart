@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -147,7 +148,7 @@ class _SignUpButton extends StatelessWidget {
               child: const CircularProgressIndicator(),
             )
           : PlainButton(
-              onPressed: state.password.valid
+              onPressed: state.password.valid && state.confirmedPassword.valid
                   ? () => context.read<SignupCubit>().signUpFormSubmitted(state)
                   : null,
               text: '회원가입');

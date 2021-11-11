@@ -49,6 +49,7 @@ class _SignInPageState extends State<SignInPage> {
                   state.errorMessage!.length > 0) {
                 showTopSnackBar(context,
                     CustomSnackBar.error(message: "${state.errorMessage}"));
+                context.read<SignInCubit>().errorMsg();
               }
             },
             child: SingleChildScrollView(

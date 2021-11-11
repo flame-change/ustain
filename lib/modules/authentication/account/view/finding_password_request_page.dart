@@ -57,14 +57,14 @@ class _FindingPasswordRequestPageState
               }
 
               // 만료된 경우 - 현재 사용 안됨
-              if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
-                  state.expiredFlag) {
-                showTopSnackBar(context,
-                    CustomSnackBar.info(message: '인증번호 입력 시간이 만료 되었습니다.'));
-                setState(() {
-                  _findingAccountCubit.expiredFlagFalse();
-                });
-              }
+              // if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
+              //     state.expiredFlag) {
+              //   showTopSnackBar(context,
+              //       CustomSnackBar.info(message: '인증번호 입력 시간이 만료 되었습니다.'));
+              //   setState(() {
+              //     _findingAccountCubit.expiredFlagFalse();
+              //   });
+              // }
 
               // 일치하지 않는 경우
               if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
