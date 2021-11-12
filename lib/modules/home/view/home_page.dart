@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     _magazineCubit.getMainMagazines();
     _magazineCubit.getBannerMagazines();
     // 카탈로그 매거진 api콜 너무 많아서 우선 주석 처리함.
-    // _magazineCubit.getCatalogMagazine();
+    _magazineCubit.getCatalogMagazine();
   }
 
   @override
@@ -81,20 +81,21 @@ class _HomePageState extends State<HomePage> {
             )),
             // 카탈로그 카드 들어갈 곳
             // api 콜 너무 많이 해서 서버 적용 전까지 임시로 주석 처리함.
-            // state.catalogMagazines != null
-            //     ? SliverList(
-            //         delegate: SliverChildBuilderDelegate(
-            //             (context, index) => GestureDetector(
-            //                 onTap: () => Navigator.push(
-            //                       context,
-            //                       MaterialPageRoute(
-            //                           builder: (context) => CatalogScreen(
-            //                               id: state.catalogMagazines![index].id!)),
-            //                     ),
-            //                 child: CatalogCard(
-            //                     state.catalogMagazines![index], index + 1)),
-            //             childCount: state.catalogMagazines!.length))
-            //     : SliverToBoxAdapter(child: Container())
+            state.catalogMagazines != null
+                ? SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => GestureDetector(
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CatalogScreen(
+                                          id: state
+                                              .catalogMagazines![index].id!)),
+                                ),
+                            child: CatalogCard(
+                                state.catalogMagazines![index], index + 1)),
+                        childCount: state.catalogMagazines!.length))
+                : SliverToBoxAdapter(child: Container()),
             SliverToBoxAdapter(
                 child: MediaQuery.removePadding(
                     context: context, removeTop: true, child: CompanyInfo()))

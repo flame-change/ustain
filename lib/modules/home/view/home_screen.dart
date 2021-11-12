@@ -39,7 +39,6 @@ class _HomeScreen extends State<HomeScreen>
                   RepositoryProvider.of<MagazineRepository>(context)))
         ],
         child: Scaffold(
-          backgroundColor: Colors.black,
           body: HomePage(),
         ));
   }

@@ -1,15 +1,17 @@
 import 'package:aroundus_app/modules/store/product/product_detail/components/product_sale_bottom_navigator.dart';
-import 'package:aroundus_app/modules/store/product/product_detail/components/product_detail_tabs.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProductDetailPage extends StatefulWidget {
   ProductDetailPage(this.productId);
@@ -27,12 +29,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   late Product product;
   late ProductCubit _productCubit;
   late AuthenticationStatus user_status;
-  ScrollController _scrollController = ScrollController();
-  PageController _pageController = PageController(initialPage: 0);
-  int pageIndex = 0;
-
-  final sliverMinHeight = Adaptive.h(10) + AppBar().preferredSize.height;
-  final sliverMaxHeight = Adaptive.h(55);
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -40,12 +37,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     user_status = context.read<AuthenticationBloc>().state.status;
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
+    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _pageController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -58,12 +55,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           if (state.isLoaded == true) {
             product = state.products!.first;
             return NestedScrollView(
-                controller: _scrollController,
+                floatHeaderSlivers: true,
                 headerSliverBuilder: headerSliverBuilder,
-                body: Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    child: mainPageView()));
+                body: TabBarView(
+                  controller: _tabController,
+                  children: mainPageView(),
+                ));
           } else {
             return Container();
           }
@@ -73,98 +70,55 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   List<Widget> headerSliverBuilder(
       BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
-      SliverOverlapAbsorber(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-          sliver: SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverHeaderDelegate(
-                  minHeight: sliverMinHeight,
-                  maxHeight: sliverMaxHeight,
-                  minChild: minTopChild(context, user_status),
-                  maxChild: topChild())))
+      SliverAppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: true,
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
+          pinned: true,
+          expandedHeight: Adaptive.h(53),
+          flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(product.thumbnail!,
+                  fit: BoxFit.cover, width: Adaptive.w(100))),
+          actions: [
+            GestureDetector(
+                onTap: () => user_status == AuthenticationStatus.authenticated
+                    ? Navigator.pushNamed(context, 'cart_screen')
+                    : showLoginNeededDialog(context),
+                child: Padding(
+                    padding: EdgeInsets.only(right: Adaptive.w(3)),
+                    child: SvgPicture.asset("assets/icons/cart.svg")))
+          ],
+          floating: true,
+          bottom: TabBar(
+              indicatorColor: Colors.black,
+              controller: _tabController,
+              tabs: [
+                Container(
+                    height: Adaptive.h(5),
+                    child: Center(
+                        child: Text("SPECS",
+                            style: Theme.of(context).textTheme.headline6))),
+                Container(
+                    height: Adaptive.h(5),
+                    child: Center(
+                        child: Text("REVIEWS",
+                            style: Theme.of(context).textTheme.headline6))),
+                Container(
+                    height: Adaptive.h(5),
+                    child: Center(
+                        child: Text("INFO",
+                            style: Theme.of(context).textTheme.headline6)))
+              ]))
     ];
   }
 
-  Widget minTopChild(context, user_status) {
-    return Column(children: <Widget>[
-      Padding(
-          padding: EdgeInsets.only(top: AppBar().preferredSize.height),
-          child: appbarRow(context: context, user_status: user_status)),
-      pageButtonLayout()
-    ]);
-  }
-
-  Widget topChild() {
-    return Column(children: <Widget>[
-      Stack(children: [
-        Image.network(product.thumbnail!,
-            fit: BoxFit.cover, width: Adaptive.w(100), height: Adaptive.h(50)),
-        Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: AppBar().preferredSize.height),
-            child: appbarRow(context: context, user_status: user_status))
-      ]),
-      pageButtonLayout()
-    ]);
-  }
-
-  Widget pageButtonLayout() {
-    return SizedBox(
-        height: Adaptive.h(5),
-        child: Row(children: <Widget>[
-          Expanded(child: pageButton("SPECS", 0)),
-          Expanded(child: pageButton("REVIEWS", 1)),
-          Expanded(child: pageButton("INFO", 2))
-        ]));
-  }
-
-  Widget pageButton(String title, int page) {
-    final fontColor = pageIndex == page ? Colors.white : Colors.black;
-    final lineColor = pageIndex == page ? Colors.black : Colors.white;
-
-    return InkWell(
-        splashColor: Color(0xFF204D7E),
-        onTap: () => pageBtnOnTap(page),
-        child: Column(children: <Widget>[
-          Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      color: lineColor),
-                  width: double.infinity,
-                  height: Adaptive.h(3),
-                  child: Center(
-                    child: Text(title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: fontColor)),
-                  )))
-        ]));
-  }
-
-  pageBtnOnTap(int page) {
-    setState(() {
-      pageIndex = page;
-      _pageController.animateToPage(pageIndex,
-          duration: Duration(milliseconds: 700), curve: Curves.easeOutCirc);
-    });
-  }
-
-  Widget mainPageView() {
-    return PageView(
-        controller: _pageController,
-        children: <Widget>[
-          pageItem(firstPage()),
-          pageItem(Center(
-            child: Text(
-              "page 2\n\n두번재\n\n페이지\n\n스크롤이\n\n되도록\n\n내용을\n\n길게\n\n길게",
-              style: TextStyle(fontSize: 50),
-            ),
-          )),
-          pageItem(thirdPage())
-        ],
-        onPageChanged: (index) => setState(() => pageIndex = index));
+  List<Widget> mainPageView() {
+    return <Widget>[
+      SingleChildScrollView(child: PageWire(child: firstPage())),
+      Center(child: Text('아직 리뷰가 없습니다.')),
+      SingleChildScrollView(child: PageWire(child: thirdPage()))
+    ];
   }
 
   Column firstPage() {
@@ -226,19 +180,5 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ])
       ])
     ]);
-  }
-
-  Widget pageItem(Widget child) {
-    double statusHeight = MediaQuery.of(context).padding.top;
-    double height = MediaQuery.of(context).size.height;
-    double minHeight = height - statusHeight - sliverMinHeight;
-
-    return SingleChildScrollView(
-        child: Container(
-            padding: EdgeInsets.only(
-                top: Adaptive.h(13), left: Adaptive.w(5), right: Adaptive.w(5)),
-            color: Colors.white,
-            constraints: BoxConstraints(minHeight: minHeight),
-            child: child));
   }
 }
