@@ -76,17 +76,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           pinned: true,
-          expandedHeight: Adaptive.h(53),
+          expandedHeight: Adaptive.h(55),
           flexibleSpace: FlexibleSpaceBar(
               background: Image.network(product.thumbnail!,
-                  fit: BoxFit.cover, width: Adaptive.w(100))),
+                  height: Adaptive.h(55),
+                  fit: BoxFit.cover,
+                  width: Adaptive.w(100))),
           actions: [
             GestureDetector(
                 onTap: () => user_status == AuthenticationStatus.authenticated
                     ? Navigator.pushNamed(context, 'cart_screen')
                     : showLoginNeededDialog(context),
                 child: Padding(
-                    padding: EdgeInsets.only(right: Adaptive.w(3)),
+                    padding: EdgeInsets.only(right: 10),
                     child: SvgPicture.asset("assets/icons/cart.svg")))
           ],
           floating: true,
@@ -115,9 +117,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   List<Widget> mainPageView() {
     return <Widget>[
-      SingleChildScrollView(child: PageWire(child: firstPage())),
+      SingleChildScrollView(
+          child: Padding(padding: EdgeInsets.all(20), child: firstPage())),
       Center(child: Text('아직 리뷰가 없습니다.')),
-      SingleChildScrollView(child: PageWire(child: thirdPage()))
+      SingleChildScrollView(
+          child: Padding(padding: EdgeInsets.all(20), child: thirdPage()))
     ];
   }
 
