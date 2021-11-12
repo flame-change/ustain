@@ -6,6 +6,7 @@ import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,9 +116,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   List<Widget> mainPageView() {
     return <Widget>[
-      SingleChildScrollView(child: PageWire(child: firstPage())),
+      SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.all(webPadding()), child: firstPage())),
       Center(child: Text('아직 리뷰가 없습니다.')),
-      SingleChildScrollView(child: PageWire(child: thirdPage()))
+      SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.all(webPadding()), child: thirdPage()))
     ];
   }
 
@@ -129,8 +134,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           },
           child: Row(children: [
             Container(
-                width: Adaptive.w(5),
-                height: Adaptive.w(5),
+                width: webPadding(),
+                height: webPadding(),
                 margin: EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,

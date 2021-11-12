@@ -8,5 +8,7 @@ double sizeWith(int n) {
 EdgeInsetsGeometry basePadding({double? vertical}) {
   return EdgeInsets.symmetric(
       vertical: vertical == null ? 0 : vertical,
-      horizontal: Adaptive.w(100) > 475 ? 475 / 100 * 5 : Adaptive.w(5));
+      horizontal: Adaptive.w(100) > 475 ? 475 / 100 * 5 : webPadding());
 }
+
+double webPadding() => Adaptive.w(100) > 475 ? 475 / 100 * 5 : webPadding();

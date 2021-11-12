@@ -37,7 +37,7 @@ class _StoreMenuPage extends State<StoreMenuPage>
                 child: SingleChildScrollView(
                     child: Column(children: [
           Container(
-              padding: EdgeInsets.only(top: Adaptive.w(5)),
+              padding: EdgeInsets.only(top: webPadding()),
               width: sizeWith(100),
               child: Text("CATEGORIES",
                   style: theme.textTheme.headline3!

@@ -4,6 +4,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +96,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                                           comments[index].reply!.length,
                                           (i) => Padding(
                                             padding: EdgeInsets.only(
-                                                left: Adaptive.w(5)),
+                                                left: webPadding()),
                                             child: commentTile(
                                                 comments[index].reply![i]),
                                           ),

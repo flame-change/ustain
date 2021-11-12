@@ -59,52 +59,48 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(25), topLeft: Radius.circular(25))),
-          padding: EdgeInsets.all(Adaptive.w(5)),
-          child: SafeArea(
-              top: false,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    PlainButton(
-                        text: "로그인",
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => BlocProvider(
-                                        create: (_) => SignInCubit(
-                                            RepositoryProvider.of<
-                                                    AuthenticationRepository>(
-                                                context)),
-                                        child: SignInPage(),
-                                      )));
-                        },
-                        height: 7),
-                    PlainButton(
-                        text: "회원가입",
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => BlocProvider(
-                                      create: (context) => SignupCubit(
-                                          RepositoryProvider.of<
-                                                  AuthenticationRepository>(
-                                              context)),
-                                      child: PhoneVerifyPage())));
-                        },
-                        height: 7,
-                        color: Colors.white,
-                        borderColor: theme.accentColor),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, MainScreen.routeName);
-                          _authenticationRepository.travel();
-                        },
-                        child: Text("둘러보기",
-                            style: theme.textTheme.subtitle1!.copyWith(
-                                decoration: TextDecoration.underline)))
-                  ])))
+          padding: EdgeInsets.all(webPadding()),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                PlainButton(
+                    text: "로그인",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                    create: (_) => SignInCubit(
+                                        RepositoryProvider.of<
+                                            AuthenticationRepository>(context)),
+                                    child: SignInPage(),
+                                  )));
+                    },
+                    height: 7),
+                PlainButton(
+                    text: "회원가입",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                  create: (context) => SignupCubit(
+                                      RepositoryProvider.of<
+                                          AuthenticationRepository>(context)),
+                                  child: PhoneVerifyPage())));
+                    },
+                    height: 7,
+                    color: Colors.white,
+                    borderColor: theme.accentColor),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, MainScreen.routeName);
+                      _authenticationRepository.travel();
+                    },
+                    child: Text("둘러보기",
+                        style: theme.textTheme.subtitle1!
+                            .copyWith(decoration: TextDecoration.underline)))
+              ]))
     ]);
   }
 }

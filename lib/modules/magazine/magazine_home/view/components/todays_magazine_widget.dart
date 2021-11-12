@@ -28,7 +28,7 @@ class _TodaysMagazineState extends State<TodaysMagazine>
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
-          padding: EdgeInsets.symmetric(vertical: Adaptive.w(5)),
+          padding: EdgeInsets.symmetric(vertical: webPadding()),
           child: TitleWithUnderline(
               title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
       Container(

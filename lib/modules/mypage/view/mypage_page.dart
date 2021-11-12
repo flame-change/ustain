@@ -8,6 +8,7 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,7 @@ class _MyPageState extends State<MyPage> {
                 decoration:
                     BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
                 child: orderInfo()),
-          SizedBox(height: Adaptive.w(5)),
+          SizedBox(height: webPadding()),
           PageWire(
               child: Column(children: [
             menuWidget("SHOPPING"),
@@ -74,7 +75,7 @@ class _MyPageState extends State<MyPage> {
                   is_authenticated ? null : showLoginNeededDialog(context);
                 })
           ])),
-          SizedBox(height: Adaptive.w(5)),
+          SizedBox(height: webPadding()),
           PageWire(
               child: Column(children: [
             menuWidget("HELP CENTER"),
@@ -130,7 +131,7 @@ class _MyPageState extends State<MyPage> {
       Container(
           width: Adaptive.w(13),
           height: Adaptive.w(13),
-          margin: EdgeInsets.only(right: Adaptive.w(5)),
+          margin: EdgeInsets.only(right: webPadding()),
           decoration:
               BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
       RichText(

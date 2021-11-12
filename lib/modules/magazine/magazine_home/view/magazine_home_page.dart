@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
@@ -83,7 +84,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                           padding: EdgeInsets.only(
                               right: Adaptive.w(100) > 475
                                   ? 475 / 100 * 5
-                                  : Adaptive.w(5)),
+                                  : webPadding()),
                           child:
                               magazineCard(context, state.magazines![index]))))
             ]);

@@ -1,5 +1,6 @@
 import 'package:aroundus_app/repositories/magazine_repository/models/catalog.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -29,8 +30,8 @@ class CatalogCard extends StatelessWidget {
                     end: FractionalOffset.bottomCenter,
                     colors: [Colors.transparent, Colors.white]))),
         Positioned(
-            top: Adaptive.w(5),
-            left: Adaptive.w(5),
+            top: webPadding(),
+            left: webPadding(),
             child: Container(
                 width: Adaptive.w(8),
                 height: Adaptive.w(8),
@@ -42,7 +43,7 @@ class CatalogCard extends StatelessWidget {
                       color: theme.accentColor, fontWeight: FontWeight.w900),
                 )))),
         Padding(
-            padding: EdgeInsets.all(Adaptive.w(5)),
+            padding: EdgeInsets.all(webPadding()),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('#${catalog!.title!}',
@@ -53,7 +54,7 @@ class CatalogCard extends StatelessWidget {
             ]))
       ]),
       Padding(
-          padding: EdgeInsets.all(Adaptive.w(5)),
+          padding: EdgeInsets.all(webPadding()),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,

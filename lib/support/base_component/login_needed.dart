@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/authentication/login_home/view/login_home_screen.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class LoginNeeded extends StatelessWidget {
               SizedBox(height: Adaptive.h(1)),
               Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Adaptive.w(5), vertical: Adaptive.h(1)),
+                      horizontal: webPadding(), vertical: Adaptive.h(1)),
                   child: MaterialButton(
                       minWidth: Adaptive.w(90),
                       padding: EdgeInsets.symmetric(vertical: Adaptive.h(2)),
