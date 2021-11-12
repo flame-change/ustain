@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'achievement_page.dart';
 
 class AchievementScreen extends StatefulWidget {
+  static String routeName = 'achievement_screen';
+
   @override
   _AchievementScreenState createState() => _AchievementScreenState();
 }

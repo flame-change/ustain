@@ -1,7 +1,6 @@
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
-import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';

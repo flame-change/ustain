@@ -8,6 +8,14 @@ class AchievementPage extends StatefulWidget {
 class _AchievementPageState extends State<AchievementPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+            elevation: 0),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          ListTile(),
+        ])));
   }
 }

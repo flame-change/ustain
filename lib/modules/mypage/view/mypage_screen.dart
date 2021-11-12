@@ -25,6 +25,7 @@ class _MyPageScreen extends State<MyPageScreen> {
               create: (context) => BlocProvider.of<AuthenticationBloc>(context))
         ],
         child: Scaffold(
+            backgroundColor: Colors.black,
             appBar: AppBar(
                 automaticallyImplyLeading: false,
                 brightness: Brightness.dark,
@@ -43,6 +44,7 @@ class _MyPageScreen extends State<MyPageScreen> {
                           padding: EdgeInsets.only(right: Adaptive.w(5)),
                           child: Icon(Icons.settings, color: Colors.white)))
                 ]),
-            body: SingleChildScrollView(child: MyPage())));
+            body: SingleChildScrollView(
+                physics: ClampingScrollPhysics(), child: MyPage())));
   }
 }

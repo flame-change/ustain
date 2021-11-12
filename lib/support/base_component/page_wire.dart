@@ -25,7 +25,8 @@ class LeftPageWire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Padding(
+        child: Container(
+            color: Colors.white,
             padding: EdgeInsets.only(
                 left: Adaptive.w(100) > 475 ? 475 / 100 * 5 : Adaptive.w(5)),
             child: child));

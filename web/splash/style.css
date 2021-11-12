@@ -37,11 +37,11 @@ body, html {
 @media (prefers-color-scheme: dark) {
   body {
     margin:0 auto;
-    height:100%;
+    width: 100%;
     background: #000000;
     background-image: url("img/light-background.png");
-    background-size: 46% 100%;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-position: center;
   }
 }
