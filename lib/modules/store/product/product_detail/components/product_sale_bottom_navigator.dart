@@ -12,25 +12,21 @@ Widget productSaleBottomNavigator(
       decoration: BoxDecoration(
           color: Colors.black, border: Border.all(color: Colors.black)),
       child: Center(
-        child: GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25))),
-                builder: (context) => BlocProvider<ProductCubit>.value(
-                    value: _productCubit, child: ProductPurchaseSheet()),
-                isScrollControlled: true);
-          },
-          child: Text(
-            '구매하기',
-            style: Theme.of(context)
-                .textTheme
-                .headline5!
-                .copyWith(color: Colors.white),
-          ),
-        ),
-      ));
+          child: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25))),
+                    builder: (context) => BlocProvider<ProductCubit>.value(
+                        value: _productCubit, child: ProductPurchaseSheet()),
+                    isScrollControlled: true);
+              },
+              child: Text('구매하기',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Colors.white)))));
 }

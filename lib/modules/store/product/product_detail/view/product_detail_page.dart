@@ -58,9 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 floatHeaderSlivers: true,
                 headerSliverBuilder: headerSliverBuilder,
                 body: TabBarView(
-                  controller: _tabController,
-                  children: mainPageView(),
-                ));
+                    controller: _tabController, children: mainPageView()));
           } else {
             return Container();
           }
