@@ -30,6 +30,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   late ProductCubit _productCubit;
   late AuthenticationStatus user_status;
   late TabController _tabController;
+  late int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -38,6 +39,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _selectedIndex = _tabController.index;
+      });
+    });
   }
 
   @override
@@ -54,73 +60,67 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded == true) {
             product = state.products!.first;
-            return NestedScrollView(
-                floatHeaderSlivers: true,
-                headerSliverBuilder: headerSliverBuilder,
-                body: TabBarView(
-                    controller: _tabController, children: mainPageView()));
+            return CustomScrollView(shrinkWrap: true, slivers: [
+              SliverAppBar(
+                  backgroundColor: Colors.white,
+                  automaticallyImplyLeading: true,
+                  floating: true,
+                  pinned: true,
+                  snap: false,
+                  iconTheme: IconThemeData(color: Colors.black),
+                  expandedHeight: Adaptive.h(55),
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Image.network(product.thumbnail!,
+                          height: Adaptive.h(55),
+                          fit: BoxFit.cover,
+                          width: Adaptive.w(100))),
+                  actions: [
+                    GestureDetector(
+                        onTap: () =>
+                            user_status == AuthenticationStatus.authenticated
+                                ? Navigator.pushNamed(context, 'cart_screen')
+                                : showLoginNeededDialog(context),
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: SvgPicture.asset("assets/icons/cart.svg")))
+                  ],
+                  bottom: TabBar(
+                      indicatorColor: Colors.black,
+                      controller: _tabController,
+                      tabs: [
+                        Container(
+                            height: Adaptive.h(5),
+                            child: Center(
+                                child: Text("SPECS",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6))),
+                        Container(
+                            height: Adaptive.h(5),
+                            child: Center(
+                                child: Text("REVIEWS",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6))),
+                        Container(
+                            height: Adaptive.h(5),
+                            child: Center(
+                                child: Text("INFO",
+                                    style:
+                                        Theme.of(context).textTheme.headline6)))
+                      ])),
+              SliverToBoxAdapter(
+                  child: _selectedIndex == 0
+                      ? Padding(padding: EdgeInsets.all(20), child: firstPage())
+                      : _selectedIndex == 1
+                          ? Center(child: Text('아직 리뷰가 없습니다.'))
+                          : Padding(
+                              padding: EdgeInsets.all(20), child: thirdPage()))
+            ]);
           } else {
             return Container();
           }
         }));
-  }
-
-  List<Widget> headerSliverBuilder(
-      BuildContext context, bool innerBoxIsScrolled) {
-    return <Widget>[
-      SliverAppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: true,
-          iconTheme: IconThemeData(color: Colors.black),
-          centerTitle: true,
-          pinned: true,
-          expandedHeight: Adaptive.h(55),
-          flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(product.thumbnail!,
-                  height: Adaptive.h(55),
-                  fit: BoxFit.cover,
-                  width: Adaptive.w(100))),
-          actions: [
-            GestureDetector(
-                onTap: () => user_status == AuthenticationStatus.authenticated
-                    ? Navigator.pushNamed(context, 'cart_screen')
-                    : showLoginNeededDialog(context),
-                child: Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: SvgPicture.asset("assets/icons/cart.svg")))
-          ],
-          floating: true,
-          bottom: TabBar(
-              indicatorColor: Colors.black,
-              controller: _tabController,
-              tabs: [
-                Container(
-                    height: Adaptive.h(5),
-                    child: Center(
-                        child: Text("SPECS",
-                            style: Theme.of(context).textTheme.headline6))),
-                Container(
-                    height: Adaptive.h(5),
-                    child: Center(
-                        child: Text("REVIEWS",
-                            style: Theme.of(context).textTheme.headline6))),
-                Container(
-                    height: Adaptive.h(5),
-                    child: Center(
-                        child: Text("INFO",
-                            style: Theme.of(context).textTheme.headline6)))
-              ]))
-    ];
-  }
-
-  List<Widget> mainPageView() {
-    return <Widget>[
-      SingleChildScrollView(
-          child: Padding(padding: EdgeInsets.all(20), child: firstPage())),
-      Center(child: Text('아직 리뷰가 없습니다.')),
-      SingleChildScrollView(
-          child: Padding(padding: EdgeInsets.all(20), child: thirdPage()))
-    ];
   }
 
   Column firstPage() {
