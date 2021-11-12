@@ -96,7 +96,7 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                         height: 7,
                         color: Colors.white,
                         borderColor: theme.accentColor),
-                    InkWell(
+                    GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, MainScreen.routeName);
                           _authenticationRepository.travel();
