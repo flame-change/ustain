@@ -67,12 +67,7 @@ class _SignupFormState extends State<SignupForm> {
                   color: Colors.black,
                   child: Container(
                       padding: basePadding(vertical: Adaptive.w(5)),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              topLeft: Radius.circular(25))),
+                      color: Colors.white,
                       child: Wrap(runSpacing: 15, spacing: 5, children: [
                         Text("SIGN UP",
                             style: theme.textTheme.headline2!

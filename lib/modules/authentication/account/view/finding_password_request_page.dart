@@ -85,8 +85,10 @@ class _FindingPasswordRequestPageState
             child: SingleChildScrollView(
                 child: Column(children: [
               Container(
+                color: Colors.black,
+                  height: Adaptive.h(30),
                   alignment: Alignment.centerLeft,
-                  padding: basePadding(vertical: Adaptive.h(10)),
+                  padding: basePadding(),
                   child: RichText(
                       text: TextSpan(
                           style: theme.textTheme.headline2!
@@ -100,14 +102,8 @@ class _FindingPasswordRequestPageState
                         TextSpan(text: "입력 해 주세요!")
                       ]))),
               Container(
-                  color: Colors.black,
                   child: Container(
                       padding: basePadding(vertical: Adaptive.h(4)),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              topLeft: Radius.circular(25))),
                       child: Wrap(runSpacing: 15, children: [
                         Text("OTP CERTIFICATE",
                             style: theme.textTheme.headline2!

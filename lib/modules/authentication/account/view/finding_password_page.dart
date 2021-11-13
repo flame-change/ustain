@@ -36,38 +36,47 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
             bloc: _findingAccountCubit,
             listener: (context, state) async {
-              if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-                if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
-                  showTopSnackBar(
-                      context, CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
-                } else if (state.republishFlag) {
-                  showTopSnackBar(context,
-                      CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
-                }
-                setState(() {
-                  phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-                  _findingAccountCubit.republishAuthInit();
-                });
-              }
-              if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
-                  state.expiredFlag) {
-                showTopSnackBar(context,
-                    CustomSnackBar.info(message: "인증번호 입력시간이 만료 되었습니다."));
-                setState(() {
-                  _findingAccountCubit.expiredFlagFalse();
-                });
-              }
-              if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
-                  state.unverifiedFlag) {
-                showTopSnackBar(
-                    context, CustomSnackBar.info(message: "인증번호가 일치하지 않습니다."));
-                setState(() {
-                  _findingAccountCubit.unverifiedFlagFalse();
-                });
-              }
               if (state.errorMessage != null && state.errorMessage.length > 0) {
                 showTopSnackBar(context,
-                    CustomSnackBar.info(message: "${state.errorMessage}"));
+                    CustomSnackBar.error(message: "${state.errorMessage}"));
+              } else {
+                if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
+                  if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
+                    showTopSnackBar(
+                        context, CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => BlocProvider<
+                                FindingAccountCubit>.value(
+                                value: _findingAccountCubit,
+                                child:
+                                FindingPasswordRequestPage())));
+                  } else if (state.republishFlag) {
+                    showTopSnackBar(context,
+                        CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
+                  }
+                  setState(() {
+                    phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
+                    _findingAccountCubit.republishAuthInit();
+                  });
+                }
+                if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
+                    state.expiredFlag) {
+                  showTopSnackBar(context,
+                      CustomSnackBar.info(message: "인증번호 입력시간이 만료 되었습니다."));
+                  setState(() {
+                    _findingAccountCubit.expiredFlagFalse();
+                  });
+                }
+                if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
+                    state.unverifiedFlag) {
+                  showTopSnackBar(
+                      context, CustomSnackBar.info(message: "인증번호가 일치하지 않습니다."));
+                  setState(() {
+                    _findingAccountCubit.unverifiedFlagFalse();
+                  });
+                }
               }
             },
             child: SingleChildScrollView(
@@ -75,6 +84,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 Container(
                     alignment: Alignment.centerLeft,
                     padding: basePadding(),
+                    height: Adaptive.h(30),
+                    color: Colors.black,
                     child: RichText(
                         text: TextSpan(
                             style: theme.textTheme.headline2!
@@ -90,11 +101,6 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 Container(
                     padding: basePadding(vertical: Adaptive.h(4)),
                     height: Adaptive.h(100),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(25),
-                            topLeft: Radius.circular(25))),
                     child: Wrap(runSpacing: 15, children: [
                       Text("FIND PASSWORD",
                           style: theme.textTheme.headline2!
@@ -118,18 +124,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                           text: "인증번호 전송",
                           onPressed: () {
                             _findingAccountCubit
-                                .findingPhoneNumberVerifyRequest()
-                                .whenComplete(() {
-                              Future.delayed(Duration(seconds: 3));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => BlocProvider<
-                                              FindingAccountCubit>.value(
-                                          value: _findingAccountCubit,
-                                          child:
-                                              FindingPasswordRequestPage())));
-                            });
+                                .findingPhoneNumberVerifyRequest();
                           })
                     ]))
               ]),
