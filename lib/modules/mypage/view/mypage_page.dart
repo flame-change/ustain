@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/mypage/achievements/view/achievement_screen.dart';
+import 'package:aroundus_app/modules/orderForm/view/orderForm_list_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_divider.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_info.dart';
@@ -66,7 +67,12 @@ class _MyPageState extends State<MyPage> {
             subMenuWidget(
                 title: "주문 / 취소내역",
                 tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
+                  if (is_authenticated) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => OrderFormListScreen()));
+                  } else {
+                    showLoginNeededDialog(context);
+                  }
                 }),
             subMenuWidget(
                 title: "내 리뷰",
