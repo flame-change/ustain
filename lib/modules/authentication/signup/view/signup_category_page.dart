@@ -73,11 +73,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
           Container(
               padding: basePadding(vertical: Adaptive.w(5)),
               width: sizeWith(100),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      topLeft: Radius.circular(25))),
+              color: Colors.white,
               child: Wrap(runSpacing: 15, children: [
                 Text("PREFERENCES",
                     style: theme.textTheme.headline2!
