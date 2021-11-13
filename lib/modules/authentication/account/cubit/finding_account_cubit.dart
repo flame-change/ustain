@@ -32,6 +32,9 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(
+        errorMessage: NetworkExceptions.getErrorMessage(error!)
+      ));
     });
   }
 

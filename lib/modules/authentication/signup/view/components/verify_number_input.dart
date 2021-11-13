@@ -26,32 +26,7 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
 
   @override
   void dispose() {
-    cancelTimer();
     super.dispose();
-  }
-
-  void startTimer() {
-    const period = const Duration(seconds: 1);
-    _timer = Timer.periodic(period, (timer) {
-      if (seconds! < 1) {
-        cancelTimer();
-        setState(() {
-          seconds = 0;
-        });
-      } else {
-        setState(() {
-          seconds = seconds! - 1;
-        });
-      }
-    });
-  }
-
-  void cancelTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-      _timer = null;
-      _signupCubit!.phoneNumberVerifyExpired();
-    }
   }
 
   VerifyStatus verifyStatus = VerifyStatus.init;
@@ -63,25 +38,6 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
           previous.verifyNumber != current.verifyNumber ||
           previous.phoneNumberVerifyStatus != current.phoneNumberVerifyStatus,
       builder: (context, state) {
-        if (state.phoneNumberVerifyStatus != verifyStatus) {
-          verifyStatus = state.phoneNumberVerifyStatus;
-          if (verifyStatus == VerifyStatus.request) {
-            //요청을 줬을 때 타이머 재시작 로직
-
-            var date = DateTime.now().add(Duration(minutes: 3));
-            var now = DateTime.now();
-            var twoHours = date.difference(now);
-            if (twoHours.inSeconds > 0) {
-              seconds = twoHours.inSeconds;
-              startTimer();
-            } else {
-              seconds = 0;
-            }
-          } else if (verifyStatus == VerifyStatus.verified) {
-            _timer!.cancel();
-            _timer = null;
-          }
-        }
         return Column(
           children: [
             TextField(
@@ -96,20 +52,6 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 labelText: '인증번호',
                 errorText: state.verifyNumber.invalid ? '숫자만 입력 가능합니다.' : null,
-                suffixIcon: Container(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Text('$seconds'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 suffixIconConstraints: BoxConstraints(
                   minHeight: 32,
                   minWidth: 32,
@@ -119,13 +61,11 @@ class _VerifyNumberInputState extends State<VerifyNumberInput> {
             ),
             PlainButton(
               onPressed:
-                      (verifyStatus == VerifyStatus.request ||
-                          verifyStatus == VerifyStatus.unverified)
+                      (state.phoneNumberVerifyStatus == VerifyStatus.request ||
+                          state.phoneNumberVerifyStatus == VerifyStatus.unverified)
                   ? () => _signupCubit!.phoneNumberVerify()
                   : null,
-              text: verifyStatus == VerifyStatus.expiered
-                  ? "시간만료"
-                  : verifyStatus == VerifyStatus.verified
+              text: verifyStatus == VerifyStatus.complete
                       ? "인증성공"
                       : "인증완료",
             )

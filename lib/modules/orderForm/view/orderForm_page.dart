@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
+import 'components/components.dart';
+
 class OrderFormPage extends StatefulWidget {
   OrderFormPage(this.orderId, this.viewingNavigator);
 
@@ -59,71 +61,41 @@ class _OrderFormPageState extends State<OrderFormPage>
                       Navigator.pushNamed(context, 'main_screen');
                     }),
               ),
-        body: BlocBuilder<OrderFormCubit, OrderFormState>(
-          builder: (context, state) {
-            if (state.isLoaded) {
-              orderForm = _orderFormCubit.state.orderForm!.first;
-              return PageWire(
-                  child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        body: SingleChildScrollView(
+          child: BlocBuilder<OrderFormCubit, OrderFormState>(
+            builder: (context, state) {
+              if (state.isLoaded) {
+                orderForm = _orderFormCubit.state.orderForm!.first;
+                return PageWire(
+                    child: Wrap(
+                  runSpacing: 10,
                   children: [
-                    Text("${orderForm.orderDate}",
-                        style: theme.textTheme.headline4),
-                    Blank(color: Colors.black, height: 6),
-                    Expanded(
-                      child: ListView.builder(
-                          itemBuilder: (context, index) => Row(
-                                children: [
-                                  Container(
-                                    width: 85,
-                                    height: 85,
-                                    margin: EdgeInsets.only(right: 10),
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                "${orderForm.itemsInfo![index].productThumbnail}"))),
-                                  ),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            "${orderForm.itemsInfo!.first.productName}",
-                                            style: theme.textTheme.headline5),
-                                        Text(
-                                          "${orderForm.itemsInfo![index].variantName}",
-                                          style: theme.textTheme.subtitle2!
-                                              .copyWith(
-                                                  fontSize: Adaptive.dp(10)),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                "수량 : ${orderForm.itemsInfo![index].quantity}개"),
-                                            Text(
-                                                "${currencyFromString(orderForm.itemsInfo![index].salePrice.toString())}",
-                                                style:
-                                                    theme.textTheme.headline5),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                          itemCount: orderForm.itemsInfo!.length),
-                    )
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${orderForm.orderDate}",
+                              style: theme.textTheme.bodyText1!
+                                  .copyWith(fontWeight: FontWeight.w700)),
+                          Text(
+                            "주문번호 ${orderForm.Id}",
+                            style: TextStyle(color: Color(0xFF606060)),
+                          ),
+                          Blank(),
+                        ],
+                      ),
+                    ),
+                    orderFormOrderItemsWidget(orderForm.itemsInfo!),
+                    orderFormPaymentsWidget(orderForm.paymentInfo!),
+                    orderFormCustomerWidget(orderForm.customerInfo!),
+                    orderFormAddressWidget(orderForm.addressInfo!),
                   ],
-                ),
-              ));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
+                ));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ));
   }
 }
