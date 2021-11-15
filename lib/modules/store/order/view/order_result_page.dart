@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
 class OrderResultPage extends StatelessWidget {
-  static String routeName = 'order_result_page';
+  static String routeName = '/order_result_page';
 
   OrderResultPage(this.result);
 

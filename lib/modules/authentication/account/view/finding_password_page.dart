@@ -12,7 +12,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class FindingPasswordPage extends StatefulWidget {
-  static String routeName = 'finding_password_page';
+  static String routeName = '/finding_password_page';
 
   @override
   State<StatefulWidget> createState() => _FindingPasswordPageState();
@@ -41,17 +41,17 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                     CustomSnackBar.error(message: "${state.errorMessage}"));
               } else {
                 if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-                  if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
-                    showTopSnackBar(
-                        context, CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
+                  if (state.phoneNumberVerifyStatus !=
+                      phoneNumberVerifyStatus) {
+                    showTopSnackBar(context,
+                        CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => BlocProvider<
-                                FindingAccountCubit>.value(
-                                value: _findingAccountCubit,
-                                child:
-                                FindingPasswordRequestPage())));
+                            builder: (_) =>
+                                BlocProvider<FindingAccountCubit>.value(
+                                    value: _findingAccountCubit,
+                                    child: FindingPasswordRequestPage())));
                   } else if (state.republishFlag) {
                     showTopSnackBar(context,
                         CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
@@ -71,8 +71,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                 }
                 if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
                     state.unverifiedFlag) {
-                  showTopSnackBar(
-                      context, CustomSnackBar.info(message: "인증번호가 일치하지 않습니다."));
+                  showTopSnackBar(context,
+                      CustomSnackBar.info(message: "인증번호가 일치하지 않습니다."));
                   setState(() {
                     _findingAccountCubit.unverifiedFlagFalse();
                   });

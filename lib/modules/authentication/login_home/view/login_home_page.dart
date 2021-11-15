@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 class LoginHomePage extends StatefulWidget {
-  static String routeName = 'login_home_page';
+  static String routeName = '/login_home_page';
 
   @override
   _LoginHomePagePageState createState() => _LoginHomePagePageState();

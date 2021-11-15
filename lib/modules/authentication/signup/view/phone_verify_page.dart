@@ -16,7 +16,7 @@ import 'signup_form_page.dart';
 var logger = Logger(printer: PrettyPrinter());
 
 class PhoneVerifyPage extends StatefulWidget {
-  static String routeName = 'phone_verify_page';
+  static String routeName = '/phone_verify_page';
 
   @override
   State<StatefulWidget> createState() => _PhoneVerifyPageState();

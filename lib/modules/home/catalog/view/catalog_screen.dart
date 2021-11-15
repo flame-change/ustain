@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../catalog/view/catalog_page.dart';
 
 class CatalogScreen extends StatefulWidget {
-  static String routeName = 'catalog_screen';
+  static String routeName = '/catalog_screen';
   final int id;
 
   CatalogScreen({required this.id});

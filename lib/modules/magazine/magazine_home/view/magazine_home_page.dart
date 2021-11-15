@@ -11,7 +11,7 @@ import 'components/magazine_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class MagazineHomePage extends StatefulWidget {
-  static String routeName = 'magazine_home_page';
+  static String routeName = '/magazine_home_page';
 
   @override
   _MagazineHomePageState createState() => _MagazineHomePageState();

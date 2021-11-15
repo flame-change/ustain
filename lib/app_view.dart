@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/routes.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
@@ -31,6 +29,7 @@ class _AppViewState extends State<AppView> {
       return FlutterWebFrame(
           builder: (context) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: theme,
               navigatorKey: _navigatorKey,
               builder: (context, child) {
@@ -68,13 +67,13 @@ class _AppViewState extends State<AppView> {
         switch (state.status) {
           case AuthenticationStatus.profile:
             _navigator!.pushNamedAndRemoveUntil(
-                'signup_nickname_page', (route) => false);
+                '/signup_nickname_page', (route) => false);
             break;
           case AuthenticationStatus.authenticated:
-            _navigator!.pushNamed('main_screen');
+            _navigator!.pushNamed('/main_screen');
             break;
           case AuthenticationStatus.unauthenticated:
-            _navigator!.pushNamed('login_home_screen');
+            _navigator!.pushNamed('/login_home_screen');
             break;
           default:
             break;

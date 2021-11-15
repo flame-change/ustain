@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'signup_category_page.dart';
 
 class SignupNicknamePage extends StatefulWidget {
-  static String routeName = 'signup_nickname_page';
+  static String routeName = '/signup_nickname_page';
 
   @override
   State<StatefulWidget> createState() => _SignupNicknamePageState();

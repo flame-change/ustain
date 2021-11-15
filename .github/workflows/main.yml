@@ -19,7 +19,7 @@ jobs:
           flutter config --enable-web
           flutter pub get
           flutter pub upgrade
-          flutter build web --web-renderer html --release
+          flutter build web --web-renderer html --debug
         working-directory: ./
 
       # Deploy Firebase Hosting

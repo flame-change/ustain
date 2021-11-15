@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class MagazineScrappedPage extends StatefulWidget {
-  static String routeName = 'magazine_scrapped_page';
+  static String routeName = '/magazine_scrapped_page';
 
   @override
   _MagazineScrappedPageState createState() => _MagazineScrappedPageState();

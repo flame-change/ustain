@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cart_page.dart';
 
 class CartScreen extends StatefulWidget {
-  static String routeName = 'cart_screen';
+  static String routeName = '/cart_screen';
 
   @override
   State<StatefulWidget> createState() => _CartScreen();

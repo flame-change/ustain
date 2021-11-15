@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'address_page.dart';
 
 class AddressScreen extends StatefulWidget {
-  static String routeName = 'address_screen';
+  static String routeName = '/address_screen';
 
   AddressScreen({
     Key? key,

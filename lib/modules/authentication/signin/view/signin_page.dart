@@ -13,7 +13,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SignInPage extends StatefulWidget {
-  static String routeName = 'signIn_page';
+  static String routeName = '/signIn_page';
 
   @override
   _SignInPageState createState() => _SignInPageState();

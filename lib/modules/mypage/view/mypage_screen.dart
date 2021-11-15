@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'mypage_page.dart';
 
 class MyPageScreen extends StatefulWidget {
-  static String routeName = 'my_page_screen';
+  static String routeName = '/my_page_screen';
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => MyPageScreen());
