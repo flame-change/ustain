@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../login_home.dart';
 
 class LoginHomeScreen extends StatefulWidget {
-  static String routeName = 'login_home_screen';
+  static String routeName = '/login_home_screen';
 
   LoginHomeScreen({
     Key? key,

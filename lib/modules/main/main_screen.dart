@@ -21,7 +21,7 @@ extension MenuStateToString on MenuState {
 }
 
 class MainScreen extends StatefulWidget {
-  static String routeName = 'main_screen';
+  static String routeName = '/main_screen';
 
   @override
   _MainScreenState createState() => _MainScreenState();

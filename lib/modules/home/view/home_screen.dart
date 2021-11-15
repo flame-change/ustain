@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../home.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = 'home_screen';
+  static String routeName = '/home_screen';
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => HomeScreen());

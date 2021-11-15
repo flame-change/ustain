@@ -8,7 +8,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:formz/formz.dart';
 
 class FindingPasswordResultPage extends StatefulWidget {
-  static String routeName = 'finding_password_result_page';
+  static String routeName = '/finding_password_result_page';
 
   @override
   State<StatefulWidget> createState() => _FindingPasswordResultPageState();

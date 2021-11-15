@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StoreHomeScreen extends StatefulWidget {
-  static String routeName = 'store_home_screen';
+  static String routeName = '/store_home_screen';
 
   @override
   State<StatefulWidget> createState() => _StoreHomeScreen();

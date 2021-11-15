@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineHomeScreen extends StatefulWidget {
-  static String routeName = 'magazine_home_screen';
+  static String routeName = '/magazine_home_screen';
 
   @override
   State<StatefulWidget> createState() => _MagazineHomeScreen();

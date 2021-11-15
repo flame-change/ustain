@@ -5,9 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'coupon_page.dart';
 
-
 class CouponScreen extends StatefulWidget {
-  static String routeName = 'coupon_screen';
+  static String routeName = '/coupon_screen';
 
   CouponScreen({
     Key? key,

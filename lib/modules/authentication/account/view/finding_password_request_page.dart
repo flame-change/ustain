@@ -12,7 +12,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class FindingPasswordRequestPage extends StatefulWidget {
-  static String routeName = 'finding_password_request_page';
+  static String routeName = '/finding_password_request_page';
 
   @override
   State<StatefulWidget> createState() => _FindingPasswordRequestPageState();
@@ -85,7 +85,7 @@ class _FindingPasswordRequestPageState
             child: SingleChildScrollView(
                 child: Column(children: [
               Container(
-                color: Colors.black,
+                  color: Colors.black,
                   height: Adaptive.h(30),
                   alignment: Alignment.centerLeft,
                   padding: basePadding(),

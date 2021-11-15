@@ -3,7 +3,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static String routeName = 'settings_screen';
+  static String routeName = '/settings_screen';
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => SettingsScreen());

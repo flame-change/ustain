@@ -10,7 +10,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:formz/formz.dart';
 
 class SignupForm extends StatefulWidget {
-  static String routeName = 'signup_form_page';
+  static String routeName = '/signup_form_page';
 
   @override
   _SignupFormState createState() => _SignupFormState();

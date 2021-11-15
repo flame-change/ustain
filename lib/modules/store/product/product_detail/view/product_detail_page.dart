@@ -3,7 +3,6 @@ import 'package:aroundus_app/repositories/authentication_repository/authenticati
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/theme.dart';
@@ -60,7 +59,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded == true) {
             product = state.products!.first;
-            return CustomScrollView(shrinkWrap: true, slivers: [
+            return CustomScrollView(slivers: [
               SliverAppBar(
                   backgroundColor: Colors.white,
                   automaticallyImplyLeading: true,
@@ -71,8 +70,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   expandedHeight: Adaptive.h(55),
                   flexibleSpace: FlexibleSpaceBar(
                       background: Image.network(product.thumbnail!,
-                          height: Adaptive.h(55),
                           fit: BoxFit.cover,
+                          height: Adaptive.h(55),
                           width: Adaptive.w(100))),
                   actions: [
                     GestureDetector(
@@ -91,6 +90,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         controller: _tabController,
                         tabs: [
                           Container(
+                              width: Adaptive.w(33.3),
                               height: Adaptive.h(5),
                               child: Center(
                                   child: Text("SPECS",
@@ -98,6 +98,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           .textTheme
                                           .headline6))),
                           Container(
+                              width: Adaptive.w(33.3),
                               height: Adaptive.h(5),
                               child: Center(
                                   child: Text("REVIEWS",
@@ -105,6 +106,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                                           .textTheme
                                           .headline6))),
                           Container(
+                              width: Adaptive.w(33.3),
                               height: Adaptive.h(5),
                               child: Center(
                                   child: Text("INFO",
@@ -164,7 +166,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             style: TextStyle(
                 fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold))
       ])),
-      Center(child: Html(data: product.description))
+      Html(data: product.description, shrinkWrap: true)
     ]);
   }
 
