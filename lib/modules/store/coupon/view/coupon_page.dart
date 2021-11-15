@@ -39,42 +39,41 @@ class _CouponPage extends State<CouponPage> {
                   children: [
                     PageWire(
                         child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("COUPON", style: theme.textTheme.headline3),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (_) => BlocProvider<AddressCubit>.value(
-                              //               value: _addressCubit,
-                              //               child: AddressFormPage(),
-                              //             )));
-                              //   },
-                              //   child: Text("배송지 추가",
-                              //       style: theme.textTheme.headline5!.copyWith(
-                              //           decoration: TextDecoration.underline)),
-                              // ),
-                            ],
-                          ),
-                          SingleChildScrollView(
-                              padding: EdgeInsets.symmetric(vertical: 30),
-                              child: Column(children: List.generate(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("COUPON", style: theme.textTheme.headline3),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (_) => BlocProvider<AddressCubit>.value(
+                          //               value: _addressCubit,
+                          //               child: AddressFormPage(),
+                          //             )));
+                          //   },
+                          //   child: Text("배송지 추가",
+                          //       style: theme.textTheme.headline5!.copyWith(
+                          //           decoration: TextDecoration.underline)),
+                          // ),
+                        ],
+                      ),
+                      SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(vertical: 30),
+                          child: Column(
+                              children: List.generate(
                                   coupons.length,
-                                      (index) =>
-                                      GestureDetector(
+                                  (index) => GestureDetector(
                                         onTap: () {
                                           setState(() {
                                             selected = index;
                                           });
                                         },
-                                        child: couponTile(
-                                            _couponCubit, coupons[index]!,
-                                            selected == index),
+                                        child: couponTile(_couponCubit,
+                                            coupons[index]!, selected == index),
                                       )))),
-                        ])),
+                    ])),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
@@ -83,7 +82,7 @@ class _CouponPage extends State<CouponPage> {
                         },
                         child: Container(
                           height: Adaptive.h(10),
-                          width: sizeWith(100),
+                          width: sizeWidth(100),
                           color: Colors.black,
                           alignment: Alignment.center,
                           child: Text(

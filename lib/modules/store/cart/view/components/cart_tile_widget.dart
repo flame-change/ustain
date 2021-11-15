@@ -40,7 +40,8 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: CircleAvatar(
                                 radius: 10,
                                 // Todo 브랜드 이미지 삽입
@@ -71,14 +72,14 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                               right: Adaptive.h(1), bottom: Adaptive.h(1)),
                           child: Image.network(
                             "${cart.productThumbnail}",
-                            height: sizeWith(20),
-                            width: sizeWith(20),
+                            height: sizeWidth(20),
+                            width: sizeWidth(20),
                             fit: BoxFit.cover,
                           ),
                         ),
                         Flexible(
                           child: Container(
-                            height: sizeWith(20),
+                            height: sizeWidth(20),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,

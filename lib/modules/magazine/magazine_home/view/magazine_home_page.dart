@@ -1,13 +1,14 @@
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'components/todays_magazine_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components/magazine_card_widget.dart';
+import 'package:flutter/material.dart';
 
 class MagazineHomePage extends StatefulWidget {
   static String routeName = 'magazine_home_page';
@@ -80,10 +81,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                   children: List.generate(
                       state.magazines!.length,
                       (index) => Padding(
-                          padding: EdgeInsets.only(
-                              right: Adaptive.w(100) > 475
-                                  ? 475 / 100 * 5
-                                  : Adaptive.w(5)),
+                          padding: EdgeInsets.only(right: sizeWidth(5)),
                           child:
                               magazineCard(context, state.magazines![index]))))
             ]);

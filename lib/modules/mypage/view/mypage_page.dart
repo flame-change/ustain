@@ -9,6 +9,7 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +56,7 @@ class _MyPageState extends State<MyPage> {
                 decoration:
                     BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
                 child: orderInfo()),
-          SizedBox(height: Adaptive.w(5)),
+          SizedBox(height: sizeWidth(5)),
           PageWire(
               child: Column(children: [
             menuWidget("SHOPPING"),
@@ -68,8 +69,10 @@ class _MyPageState extends State<MyPage> {
                 title: "주문 / 취소내역",
                 tapped: () {
                   if (is_authenticated) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => OrderFormListScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => OrderFormListScreen()));
                   } else {
                     showLoginNeededDialog(context);
                   }
@@ -80,7 +83,7 @@ class _MyPageState extends State<MyPage> {
                   is_authenticated ? null : showLoginNeededDialog(context);
                 })
           ])),
-          SizedBox(height: Adaptive.w(5)),
+          SizedBox(height: sizeWidth(5)),
           PageWire(
               child: Column(children: [
             menuWidget("HELP CENTER"),
@@ -134,9 +137,9 @@ class _MyPageState extends State<MyPage> {
     return PageWire(
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Container(
-          width: Adaptive.w(13),
-          height: Adaptive.w(13),
-          margin: EdgeInsets.only(right: Adaptive.w(5)),
+          width: sizeWidth(13),
+          height: sizeWidth(13),
+          margin: EdgeInsets.only(right: sizeWidth(5)),
           decoration:
               BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
       RichText(

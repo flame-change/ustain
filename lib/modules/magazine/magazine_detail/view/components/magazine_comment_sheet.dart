@@ -1,13 +1,14 @@
-import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_comment_cubit.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
-import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/modules/authentication/authentication.dart';
+import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class MagazineCommentSheet extends StatefulWidget {
   final int id;
@@ -95,7 +96,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                                           comments[index].reply!.length,
                                           (i) => Padding(
                                             padding: EdgeInsets.only(
-                                                left: Adaptive.w(5)),
+                                                left: sizeWidth(5)),
                                             child: commentTile(
                                                 comments[index].reply![i]),
                                           ),

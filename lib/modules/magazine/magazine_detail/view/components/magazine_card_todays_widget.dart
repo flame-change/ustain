@@ -22,7 +22,7 @@ Widget todaysMagazineCard(BuildContext context, Magazine magazine) {
       },
       child: Stack(children: [
         Container(
-            width: sizeWith(100),
+            width: sizeWidth(100),
             height: Adaptive.h(40),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -37,7 +37,7 @@ Widget todaysMagazineCard(BuildContext context, Magazine magazine) {
                     fit: BoxFit.cover,
                     image: NetworkImage(magazine.bannerImage!)))),
         Container(
-            width: sizeWith(100),
+            width: sizeWidth(100),
             height: Adaptive.h(40),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(

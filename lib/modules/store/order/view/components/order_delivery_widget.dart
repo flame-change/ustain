@@ -19,7 +19,8 @@ Widget orderDelivery(BuildContext context, CustomerRequests customerRequests,
                     backgroundColor: Colors.white,
                     itemExtent: 50,
                     onSelectedItemChanged: (int index) {
-                      orderCubit.setShippingRequest(customerRequests.shippingRequest![index]);
+                      orderCubit.setShippingRequest(
+                          customerRequests.shippingRequest![index]);
                     },
                     scrollController:
                         FixedExtentScrollController(initialItem: _result),
@@ -35,7 +36,7 @@ Widget orderDelivery(BuildContext context, CustomerRequests customerRequests,
                 ));
       },
       child: Container(
-          width: sizeWith(100),
+          width: sizeWidth(100),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
@@ -44,7 +45,9 @@ Widget orderDelivery(BuildContext context, CustomerRequests customerRequests,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(orderCubit.state.selectedShippingRequest==null?"배송 요청사항을 선택해주세요.":orderCubit.state.selectedShippingRequest!.content),
+              Text(orderCubit.state.selectedShippingRequest == null
+                  ? "배송 요청사항을 선택해주세요."
+                  : orderCubit.state.selectedShippingRequest!.content),
               Icon(Icons.keyboard_arrow_down),
             ],
           )),

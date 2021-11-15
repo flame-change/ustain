@@ -7,12 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget cartSummary(List<Cart> carts) {
-
-  List<Cart> checkedCart = carts.fold(<Cart>[], (pre, cart) => cart.isChecked!?pre+[cart]:pre+[]);
-  final num totalPrice = checkedCart.fold(0, (pre, cart) => pre+(cart.quantity!*cart.salePrice!));
+  List<Cart> checkedCart = carts
+      .fold(<Cart>[], (pre, cart) => cart.isChecked! ? pre + [cart] : pre + []);
+  final num totalPrice = checkedCart.fold(
+      0, (pre, cart) => pre + (cart.quantity! * cart.salePrice!));
 
   return Container(
-    width: sizeWith(100),
+    width: sizeWidth(100),
     margin: EdgeInsets.symmetric(vertical: 15),
     color: Colors.white,
     child: Column(
@@ -22,7 +23,8 @@ Widget cartSummary(List<Cart> carts) {
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
                 height: 1.6,
-                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(14)),
+                fontWeight: FontWeight.w700,
+                fontSize: Adaptive.dp(14)),
             contentStyle: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: Adaptive.sp(14),
@@ -32,7 +34,8 @@ Widget cartSummary(List<Cart> carts) {
             content: "전 상품 무료배송",
             titleStyle: TextStyle(
                 height: 1.6,
-                fontWeight: FontWeight.w700, fontSize: Adaptive.dp(14)),
+                fontWeight: FontWeight.w700,
+                fontSize: Adaptive.dp(14)),
             contentStyle: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: Adaptive.dp(14),
@@ -43,7 +46,8 @@ Widget cartSummary(List<Cart> carts) {
             content: "${currencyFromString(totalPrice.toString())}",
             titleStyle: TextStyle(
                 height: 1.6,
-                fontWeight: FontWeight.w300, fontSize: Adaptive.dp(16)),
+                fontWeight: FontWeight.w300,
+                fontSize: Adaptive.dp(16)),
             contentStyle: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: theme.accentColor,

@@ -1,12 +1,13 @@
-import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
-import 'package:aroundus_app/repositories/product_repository/models/models.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
+import 'package:aroundus_app/repositories/product_repository/models/models.dart';
+import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget productCard(BuildContext context, List<Map> mapProducts) {
   List<Product> products = mapProducts
@@ -26,7 +27,8 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
     children: <Widget>[
           Text(
             "연관상품",
-            style: TextStyle(fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
           )
         ] +
         List.generate(
@@ -46,7 +48,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
             child: Column(
               children: [
                 Container(
-                  width: Adaptive.w(100),
+                  width: sizeWidth(100),
                   height: Adaptive.h(10),
                   child: Row(
                     children: [

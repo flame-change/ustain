@@ -1,6 +1,7 @@
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
           elevation: 4,
           child: Column(children: [
             Container(
-                width: Adaptive.w(100),
+                width: sizeWidth(100),
                 height: Adaptive.h(20),
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -32,7 +33,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
                         image: NetworkImage(magazine.bannerImage!)))),
             Container(
                 color: Colors.white,
-                width: Adaptive.w(100),
+                width: sizeWidth(100),
                 padding: EdgeInsets.all(10),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,11 +1,10 @@
-import 'dart:async';
-
-import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_result_page.dart';
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
 
 class FindingVerifyNumberInput extends StatefulWidget {
   @override
@@ -63,23 +62,22 @@ class _FindingVerifyNumberInputState extends State<FindingVerifyNumberInput> {
   Widget build(BuildContext context) {
     return BlocConsumer<FindingAccountCubit, FindingAccountState>(
       listener: (context, state) {
-        if(state.phoneNumberVerifyStatus == VerifyStatus.verified){
+        if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
           _findingAccountCubit!.completeVerify();
 
           Navigator.of(context).push(
             MaterialPageRoute(
-                builder: (_) =>
-                BlocProvider<FindingAccountCubit>.value(
-                  value: _findingAccountCubit!,
-                  child: FindingPasswordResultPage(),
-                )),
+                builder: (_) => BlocProvider<FindingAccountCubit>.value(
+                      value: _findingAccountCubit!,
+                      child: FindingPasswordResultPage(),
+                    )),
           );
         }
       },
       buildWhen: (previous, current) =>
           previous.verifyNumber != current.verifyNumber ||
           previous.phoneNumberVerifyStatus != current.phoneNumberVerifyStatus &&
-              current.phoneNumberVerifyStatus != VerifyStatus.verified ,
+              current.phoneNumberVerifyStatus != VerifyStatus.verified,
       builder: (context, state) {
         if (state.phoneNumberVerifyStatus != verifyStatus) {
           verifyStatus = state.phoneNumberVerifyStatus;
@@ -134,7 +132,7 @@ class _FindingVerifyNumberInputState extends State<FindingVerifyNumberInput> {
               ),
             ),
             MaterialButton(
-              minWidth: Adaptive.w(100),
+              minWidth: sizeWidth(100),
               color: Colors.grey,
               onPressed: state.verifyNumber.valid &&
                       (verifyStatus == VerifyStatus.request ||

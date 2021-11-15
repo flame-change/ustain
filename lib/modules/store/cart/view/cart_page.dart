@@ -119,7 +119,7 @@ class _CartPageState extends State<CartPage> {
                                   builder: (context) => OrderScreen(carts)));
                         },
                         color: Colors.black,
-                        minWidth: sizeWith(100),
+                        minWidth: sizeWidth(100),
                         height: Adaptive.h(10),
                         child: Text(
                           "결제하기",

@@ -33,7 +33,7 @@ Widget couponTile(CouponCubit couponCubit, Coupon coupon, bool isSelected) {
                           style: TextStyle(fontSize: Adaptive.sp(16))),
                       // 쿠폰 정보
                       Container(
-                        width: sizeWith(100),
+                        width: sizeWidth(100),
                         child: Wrap(
                           runSpacing: 10,
                           children: [

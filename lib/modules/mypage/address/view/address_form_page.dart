@@ -81,7 +81,7 @@ class _AddressFormPage extends State<AddressFormPage> {
                                 height: 50,
                                 padding: EdgeInsets.symmetric(horizontal: 15),
                                 alignment: Alignment.center,
-                                width: sizeWith(25),
+                                width: sizeWidth(25),
                                 decoration: BoxDecoration(
                                     border: Border.all(color: Colors.grey),
                                     borderRadius:
@@ -113,7 +113,7 @@ class _AddressFormPage extends State<AddressFormPage> {
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(left: 10),
                                   height: 50,
-                                  width: sizeWith(35),
+                                  width: sizeWidth(35),
                                   color: Colors.black,
                                   child: Text(
                                     "우편번호 검색",
@@ -128,7 +128,7 @@ class _AddressFormPage extends State<AddressFormPage> {
                             height: 50,
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             alignment: Alignment.centerLeft,
-                            width: sizeWith(100),
+                            width: sizeWidth(100),
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey),
                                 borderRadius:
@@ -196,12 +196,11 @@ class _AddressFormPage extends State<AddressFormPage> {
                     } else {
                       _addressCubit.createAddress(address);
                       Navigator.pop(context);
-
                     }
                   },
                   child: Container(
                     height: Adaptive.h(10),
-                    width: sizeWith(100),
+                    width: sizeWidth(100),
                     color: Colors.black,
                     alignment: Alignment.center,
                     child: Text(

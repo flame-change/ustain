@@ -10,25 +10,26 @@ Widget orderAddress(BuildContext context, Address address) {
     GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => AddressScreen()));
+            context, MaterialPageRoute(builder: (_) => AddressScreen()));
       },
       child: Container(
-          width: sizeWith(100),
+          width: sizeWidth(100),
           alignment: Alignment.centerRight,
           child: Text("변경/추가")),
     ),
-    address!=Address.empty? RichText(
-      text: TextSpan(
-          style: theme.textTheme.bodyText1!
-              .copyWith(fontSize: Adaptive.dp(14), fontWeight: FontWeight.w400),
-          children: [
-            TextSpan(
-              text: "${address.name} ${address.phoneNumber}\n",
-            ),
-            TextSpan(text: "${address.bigAddress} ${address.smallAddress}"),
-          ]),
-    ):Container(alignment: Alignment.center, child: Text("배송지가 없습니다.")),
+    address != Address.empty
+        ? RichText(
+            text: TextSpan(
+                style: theme.textTheme.bodyText1!.copyWith(
+                    fontSize: Adaptive.dp(14), fontWeight: FontWeight.w400),
+                children: [
+                  TextSpan(
+                    text: "${address.name} ${address.phoneNumber}\n",
+                  ),
+                  TextSpan(
+                      text: "${address.bigAddress} ${address.smallAddress}"),
+                ]),
+          )
+        : Container(alignment: Alignment.center, child: Text("배송지가 없습니다.")),
   ]);
 }

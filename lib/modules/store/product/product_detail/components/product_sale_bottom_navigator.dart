@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ Widget productSaleBottomNavigator(
     BuildContext context, ProductCubit _productCubit) {
   return Container(
       height: Adaptive.h(10),
-      width: Adaptive.w(100),
+      width: sizeWidth(100),
       decoration: BoxDecoration(
           color: Colors.black, border: Border.all(color: Colors.black)),
       child: Center(

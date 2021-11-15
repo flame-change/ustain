@@ -1,12 +1,13 @@
+import 'package:aroundus_app/repositories/order_repository/order_repository.dart';
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/modules/orderForm/view/orderForm_page.dart';
-import 'package:aroundus_app/repositories/order_repository/order_repository.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
 
 class OrderResultPage extends StatelessWidget {
   static String routeName = 'order_result_page';
@@ -48,7 +49,7 @@ class OrderResultPage extends StatelessWidget {
                         ? 'assets/icons/success.svg'
                         : 'assets/icons/error.svg',
                     color: theme.accentColor,
-                    width: Adaptive.w(35),
+                    width: sizeWidth(35),
                   ),
                   Text(isSuccessed ? '주문 완료!' : '주문 실패!',
                       style: theme.textTheme.headline1!.copyWith(height: 1.5)),
@@ -74,7 +75,8 @@ class OrderResultPage extends StatelessWidget {
                                                           OrderRepository>(
                                                       context)),
                                               child: OrderFormPage(
-                                                  result['merchant_uid']!, false),
+                                                  result['merchant_uid']!,
+                                                  false),
                                             )),
                                     (route) => false);
                               },
