@@ -1,6 +1,6 @@
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'mypage_page.dart';
@@ -41,7 +41,7 @@ class _MyPageScreen extends State<MyPageScreen> {
                       onTap: () => Navigator.pushNamed(
                           context, SettingsScreen.routeName),
                       child: Padding(
-                          padding: EdgeInsets.only(right: Adaptive.w(5)),
+                          padding: EdgeInsets.only(right: sizeWidth(5)),
                           child: Icon(Icons.settings, color: Colors.white)))
                 ]),
             body: SingleChildScrollView(

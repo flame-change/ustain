@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_det
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,8 +42,8 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
   Widget build(BuildContext context) {
     return Container(
         height: Adaptive.h(10),
-        width: Adaptive.w(100),
-        padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
+        width: sizeWidth(100),
+        padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.black, width: 1)),
@@ -111,7 +112,7 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
                   child: Text("댓글 달기", style: TextStyle(color: Colors.white)),
                   color: Colors.black,
                   padding: EdgeInsets.symmetric(
-                      vertical: Adaptive.h(2), horizontal: Adaptive.w(8)))
+                      vertical: Adaptive.h(2), horizontal: sizeWidth(8)))
             ]));
   }
 }

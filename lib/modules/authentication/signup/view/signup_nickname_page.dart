@@ -37,7 +37,7 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
               Container(
                   color: Colors.black,
                   alignment: Alignment.centerLeft,
-                  padding: basePadding(vertical: Adaptive.w(5)),
+                  padding: basePadding(vertical: sizeWidth(5)),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
               Container(
                   color: Colors.black,
                   child: Container(
-                      padding: basePadding(vertical: Adaptive.w(5)),
+                      padding: basePadding(vertical: sizeWidth(5)),
                       color: Colors.white,
                       child: Wrap(runSpacing: 15, children: [
                         Text("NICKNAME",

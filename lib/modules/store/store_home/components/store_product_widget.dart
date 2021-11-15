@@ -32,7 +32,7 @@ Widget storeProduct(BuildContext context, Product product) {
               height: Adaptive.h(15),
               color: Colors.white,
               padding:
-                  EdgeInsets.symmetric(horizontal: sizeWith(1), vertical: 5),
+                  EdgeInsets.symmetric(horizontal: sizeWidth(1), vertical: 5),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

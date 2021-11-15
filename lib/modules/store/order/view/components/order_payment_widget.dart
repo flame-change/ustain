@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget orderPayment(List<OrderItem> orderItems) {
-  final num totalPrice = orderItems.fold(0, (pre, cart) => pre + (cart.quantity! * cart.salePrice!));
+  final num totalPrice = orderItems.fold(
+      0, (pre, cart) => pre + (cart.quantity! * cart.salePrice!));
 
   return Wrap(runSpacing: 15, children: [
     Container(
-      width: sizeWith(100),
+      width: sizeWidth(100),
       margin: EdgeInsets.symmetric(vertical: 15),
       color: Colors.white,
       child: Column(

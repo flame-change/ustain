@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
         child: BlocBuilder<OrderFormCubit, OrderFormState>(
             builder: (context, state) {
           if (state.isLoaded) {
-            if(state.orderForm!.length>0) {
+            if (state.orderForm!.length > 0) {
               return ListView.builder(
                 controller: _scrollController,
                 itemBuilder: (context, index) => Container(
@@ -60,90 +61,91 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                         mainAxisSize: MainAxisSize.max,
                         children: List.generate(
                             state.orderForm![index].itemsInfo!.length,
-                                (i) => GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => BlocProvider<
-                                            OrderFormCubit>.value(
-                                            value: _orderFormCubit,
-                                            child: OrderFormPage(
-                                                state.orderForm![index].Id!,
-                                                true))));
-                                // _orderFormCubit.getOrderForm();
-                              },
-                              child: Container(
-                                width: Adaptive.w(100),
-                                height: Adaptive.h(10),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        width: 85,
-                                        height: 85,
-                                        margin: EdgeInsets.only(right: 10),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    "${state.orderForm![index].itemsInfo![i].productThumbnail}"))),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: Stack(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
+                            (i) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => BlocProvider<
+                                                    OrderFormCubit>.value(
+                                                value: _orderFormCubit,
+                                                child: OrderFormPage(
+                                                    state.orderForm![index].Id!,
+                                                    true))));
+                                    // _orderFormCubit.getOrderForm();
+                                  },
+                                  child: Container(
+                                    width: sizeWidth(100),
+                                    height: Adaptive.h(10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            width: 85,
+                                            height: 85,
+                                            margin: EdgeInsets.only(right: 10),
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        "${state.orderForm![index].itemsInfo![i].productThumbnail}"))),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Stack(
                                             children: [
-                                              Text(
-                                                "${state.orderForm![index].itemsInfo![i].status}",
-                                                style: theme
-                                                    .textTheme.headline5!
-                                                    .copyWith(
-                                                    color: theme
-                                                        .accentColor),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "${state.orderForm![index].itemsInfo![i].status}",
+                                                    style: theme
+                                                        .textTheme.headline5!
+                                                        .copyWith(
+                                                            color: theme
+                                                                .accentColor),
+                                                  ),
+                                                  Text(
+                                                      "${state.orderForm![index].itemsInfo![i].productName}",
+                                                      style: theme
+                                                          .textTheme.headline5),
+                                                  Text(
+                                                      "${state.orderForm![index].itemsInfo![i].variantName}",
+                                                      style: theme
+                                                          .textTheme.subtitle2!
+                                                          .copyWith(
+                                                              fontSize:
+                                                                  Adaptive.dp(
+                                                                      10))),
+                                                  Text(
+                                                      "수량 : ${state.orderForm![index].itemsInfo![i].quantity}개",
+                                                      style: theme
+                                                          .textTheme.subtitle2!
+                                                          .copyWith(
+                                                              fontSize:
+                                                                  Adaptive.dp(
+                                                                      10))),
+                                                ],
                                               ),
-                                              Text(
-                                                  "${state.orderForm![index].itemsInfo![i].productName}",
-                                                  style: theme
-                                                      .textTheme.headline5),
-                                              Text(
-                                                  "${state.orderForm![index].itemsInfo![i].variantName}",
-                                                  style: theme
-                                                      .textTheme.subtitle2!
-                                                      .copyWith(
-                                                      fontSize:
-                                                      Adaptive.dp(
-                                                          10))),
-                                              Text(
-                                                  "수량 : ${state.orderForm![index].itemsInfo![i].quantity}개",
-                                                  style: theme
-                                                      .textTheme.subtitle2!
-                                                      .copyWith(
-                                                      fontSize:
-                                                      Adaptive.dp(
-                                                          10))),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Text(
+                                                    "${currencyFromString(state.orderForm![index].itemsInfo![i].salePrice.toString())}",
+                                                    style: theme
+                                                        .textTheme.headline5),
+                                              ),
                                             ],
                                           ),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                                "${currencyFromString(state.orderForm![index].itemsInfo![i].salePrice.toString())}",
-                                                style: theme
-                                                    .textTheme.headline5),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            )),
+                                  ),
+                                )),
                       )
                     ],
                   ),

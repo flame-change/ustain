@@ -1,11 +1,12 @@
-import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
-import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
+import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class CatalogPage extends StatefulWidget {
   CatalogPage({required this.id});
@@ -49,7 +50,7 @@ class _CatalogPageState extends State<CatalogPage> {
                           fit: BoxFit.cover))),
               SliverToBoxAdapter(
                   child: Padding(
-                      padding: EdgeInsets.all(Adaptive.w(5)),
+                      padding: EdgeInsets.all(sizeWidth(5)),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -60,7 +61,7 @@ class _CatalogPageState extends State<CatalogPage> {
                           ]))),
               SliverToBoxAdapter(
                   child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
+                      padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -72,8 +73,8 @@ class _CatalogPageState extends State<CatalogPage> {
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 crossAxisCount: 2,
-                                crossAxisSpacing: Adaptive.w(5),
-                                mainAxisSpacing: Adaptive.w(0),
+                                crossAxisSpacing: sizeWidth(5),
+                                mainAxisSpacing: sizeWidth(0),
                                 childAspectRatio: 0.6,
                                 children: [
                                   for (var product

@@ -1,5 +1,5 @@
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 
 class PageWire extends StatelessWidget {
   PageWire({required this.child});
@@ -10,9 +10,7 @@ class PageWire extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal:
-                    Adaptive.w(100) > 475 ? 475 / 100 * 5 : Adaptive.w(5)),
+            padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
             child: child));
   }
 }
@@ -27,8 +25,7 @@ class LeftPageWire extends StatelessWidget {
     return SafeArea(
         child: Container(
             color: Colors.white,
-            padding: EdgeInsets.only(
-                left: Adaptive.w(100) > 475 ? 475 / 100 * 5 : Adaptive.w(5)),
+            padding: EdgeInsets.only(left: sizeWidth(5)),
             child: child));
   }
 }

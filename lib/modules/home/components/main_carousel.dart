@@ -1,12 +1,13 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/cubit/magazine_detail_cubit.dart';
 import 'package:aroundus_app/modules/magazine/magazine_detail/view/magazine_detail_page.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
-import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class BannerMagazines extends StatefulWidget {
@@ -44,13 +45,13 @@ class _BannerMagazinesState extends State<BannerMagazines> {
             Stack(fit: StackFit.expand, children: [
               Image.network(_bannerMagazines[index].bannerImage!,
                   height: Adaptive.h(50) + AppBar().preferredSize.height,
-                  width: Adaptive.w(100),
+                  width: sizeWidth(100),
                   color: Colors.black12,
                   colorBlendMode: BlendMode.multiply,
                   fit: BoxFit.cover),
               Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Adaptive.w(5), vertical: Adaptive.w(8)),
+                      horizontal: sizeWidth(5), vertical: sizeWidth(8)),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -73,7 +74,7 @@ class _BannerMagazinesState extends State<BannerMagazines> {
           return Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  margin: EdgeInsets.all(Adaptive.w(5)),
+                  margin: EdgeInsets.all(sizeWidth(5)),
                   child: LinearProgressIndicator(
                       value: (config.activeIndex + 1) / config.itemCount,
                       valueColor: AlwaysStoppedAnimation(theme.accentColor))));

@@ -32,14 +32,14 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-          width: sizeWith(100),
+          width: sizeWidth(100),
           height: Adaptive.h(70),
           child: Padding(
               padding: basePadding(vertical: Adaptive.h(3)),
               child:
                   Stack(alignment: AlignmentDirectional.topCenter, children: [
                 Image.asset('assets/images/splash_screen.png',
-                    width: sizeWith(50)),
+                    width: sizeWidth(50)),
                 Align(
                     alignment: Alignment.bottomLeft,
                     child: Column(
@@ -59,7 +59,7 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(25), topLeft: Radius.circular(25))),
-          padding: EdgeInsets.all(Adaptive.w(5)),
+          padding: EdgeInsets.all(sizeWidth(5)),
           child: SafeArea(
               top: false,
               child: Column(

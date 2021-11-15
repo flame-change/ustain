@@ -10,8 +10,8 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
   return Column(children: [
     Card(
-        color: Colors.transparent,
-        shadowColor: Colors.transparent,
+      color: Colors.transparent,
+      shadowColor: Colors.transparent,
       child: Wrap(
         runSpacing: Adaptive.h(1),
         children: [
@@ -47,14 +47,14 @@ Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
                     right: Adaptive.h(1), bottom: Adaptive.h(1)),
                 child: Image.network(
                   "${orderItem.productThumbnail}",
-                  height: sizeWith(20),
-                  width: sizeWith(20),
+                  height: sizeWidth(20),
+                  width: sizeWidth(20),
                   fit: BoxFit.cover,
                 ),
               ),
               Flexible(
                 child: Container(
-                  height: sizeWith(20),
+                  height: sizeWidth(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +64,7 @@ Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
                       Container(
                         alignment: Alignment.bottomRight,
                         child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "수량 : ${orderItem.quantity}개",

@@ -47,7 +47,7 @@ class _PlainButtonState extends State<PlainButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: sizeWith(width!),
+      width: sizeWidth(width!),
       // color: color,
       decoration: BoxDecoration(
           color: color,
@@ -56,12 +56,12 @@ class _PlainButtonState extends State<PlainButton> {
       height: Adaptive.h(height!),
       child: _onPressed == null
           ? Align(
-        alignment: Alignment.center,
-            child: Text(
+              alignment: Alignment.center,
+              child: Text(
                 text,
                 style: theme.textTheme.button!.copyWith(color: textColor),
               ),
-          )
+            )
           : MaterialButton(
               onPressed: _onPressed,
               textColor: borderColor == null ? textColor : borderColor,

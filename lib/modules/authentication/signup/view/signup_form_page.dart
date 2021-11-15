@@ -66,7 +66,7 @@ class _SignupFormState extends State<SignupForm> {
               Container(
                   color: Colors.black,
                   child: Container(
-                      padding: basePadding(vertical: Adaptive.w(5)),
+                      padding: basePadding(vertical: sizeWidth(5)),
                       color: Colors.white,
                       child: Wrap(runSpacing: 15, spacing: 5, children: [
                         Text("SIGN UP",

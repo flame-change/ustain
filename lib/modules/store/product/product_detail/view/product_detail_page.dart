@@ -84,31 +84,35 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             padding: EdgeInsets.only(right: 10),
                             child: SvgPicture.asset("assets/icons/cart.svg")))
                   ],
-                  bottom: TabBar(
-                      indicatorColor: Colors.black,
-                      controller: _tabController,
-                      tabs: [
-                        Container(
-                            height: Adaptive.h(5),
-                            child: Center(
-                                child: Text("SPECS",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6))),
-                        Container(
-                            height: Adaptive.h(5),
-                            child: Center(
-                                child: Text("REVIEWS",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6))),
-                        Container(
-                            height: Adaptive.h(5),
-                            child: Center(
-                                child: Text("INFO",
-                                    style:
-                                        Theme.of(context).textTheme.headline6)))
-                      ])),
+                  bottom: PreferredSize(
+                    preferredSize: Size(Adaptive.w(100), Adaptive.h(5.3)),
+                    child: TabBar(
+                        indicatorColor: Colors.black,
+                        controller: _tabController,
+                        tabs: [
+                          Container(
+                              height: Adaptive.h(5),
+                              child: Center(
+                                  child: Text("SPECS",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6))),
+                          Container(
+                              height: Adaptive.h(5),
+                              child: Center(
+                                  child: Text("REVIEWS",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6))),
+                          Container(
+                              height: Adaptive.h(5),
+                              child: Center(
+                                  child: Text("INFO",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6)))
+                        ]),
+                  )),
               SliverToBoxAdapter(
                   child: _selectedIndex == 0
                       ? Padding(padding: EdgeInsets.all(20), child: firstPage())

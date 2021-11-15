@@ -49,10 +49,11 @@ class _AddressPage extends State<AddressPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => BlocProvider<AddressCubit>.value(
-                                        value: _addressCubit,
-                                        child: AddressFormPage(),
-                                      )));
+                                      builder: (_) =>
+                                          BlocProvider<AddressCubit>.value(
+                                            value: _addressCubit,
+                                            child: AddressFormPage(),
+                                          )));
                             },
                             child: Text("배송지 추가",
                                 style: theme.textTheme.headline5!.copyWith(
@@ -61,27 +62,32 @@ class _AddressPage extends State<AddressPage> {
                         ],
                       ),
                       SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(vertical: 30),
-                          child: Column(children: List.generate(
-                              addresses.length,
+                          padding: EdgeInsets.symmetric(vertical: 30),
+                          child: Column(
+                              children: List.generate(
+                                  addresses.length,
                                   (index) => GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selected = index;
-                                      });
-                                    },
-                                    child: addressTile(_addressCubit, addresses[index]!, selected==index),
-                                  )))),
+                                        onTap: () {
+                                          setState(() {
+                                            selected = index;
+                                          });
+                                        },
+                                        child: addressTile(
+                                            _addressCubit,
+                                            addresses[index]!,
+                                            selected == index),
+                                      )))),
                     ])),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
                         onTap: () {
-                          _addressCubit.updateDefaultAddress(state.addresses![selected].id!);
+                          _addressCubit.updateDefaultAddress(
+                              state.addresses![selected].id!);
                         },
                         child: Container(
                           height: Adaptive.h(10),
-                          width: sizeWith(100),
+                          width: sizeWidth(100),
                           color: Colors.black,
                           alignment: Alignment.center,
                           child: Text(
@@ -116,10 +122,11 @@ class _AddressPage extends State<AddressPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => BlocProvider<AddressCubit>.value(
-                                    value: _addressCubit,
-                                    child: AddressFormPage(),
-                                  )));
+                                  builder: (_) =>
+                                      BlocProvider<AddressCubit>.value(
+                                        value: _addressCubit,
+                                        child: AddressFormPage(),
+                                      )));
                         },
                         child: Text("배송지 추가",
                             style: theme.textTheme.headline5!.copyWith(

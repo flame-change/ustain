@@ -71,8 +71,8 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                     TextSpan(text: "관심이 많으신가요?")
                   ]))),
           Container(
-              padding: basePadding(vertical: Adaptive.w(5)),
-              width: sizeWith(100),
+              padding: basePadding(vertical: sizeWidth(5)),
+              width: sizeWidth(100),
               color: Colors.white,
               child: Wrap(runSpacing: 15, children: [
                 Text("PREFERENCES",
@@ -122,7 +122,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                                   ),
                                   Padding(
                                       padding:
-                                          EdgeInsets.only(left: Adaptive.w(5)),
+                                          EdgeInsets.only(left: sizeWidth(5)),
                                       child: RichText(
                                           text: TextSpan(
                                               style: theme.textTheme.headline4!,

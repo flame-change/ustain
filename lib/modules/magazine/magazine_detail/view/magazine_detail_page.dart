@@ -63,7 +63,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                         color: Colors.black12,
                         colorBlendMode: BlendMode.multiply,
                         fit: BoxFit.cover,
-                        width: Adaptive.w(100),
+                        width: sizeWidth(100),
                         height: Adaptive.h(50)),
                     Padding(
                         padding:
@@ -91,10 +91,10 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                   child: SafeArea(
                       top: false,
                       child: Container(
-                          width: Adaptive.w(100),
+                          width: sizeWidth(100),
                           padding: EdgeInsets.only(
-                            left: sizeWith(5),
-                            right: sizeWith(5),
+                            left: sizeWidth(5),
+                            right: sizeWidth(5),
                             top: 15,
                           ),
                           child: Column(
