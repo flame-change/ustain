@@ -35,7 +35,6 @@ Widget storeProduct(BuildContext context, Product product) {
                   EdgeInsets.symmetric(horizontal: sizeWidth(1), vertical: 5),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RichText(
                       text: TextSpan(
