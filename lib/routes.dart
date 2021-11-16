@@ -12,6 +12,7 @@ import 'modules/authentication/account/view/view.dart';
 import 'modules/authentication/signup/view/view.dart';
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:flutter/widgets.dart';
+import 'modules/brands/brand_home/view/brand_screen.dart';
 import 'modules/mypage/achievements/view/achievement_screen.dart';
 import 'modules/splash/splash.dart';
 
@@ -35,6 +36,7 @@ final Map<String, WidgetBuilder> routes = {
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
   AchievementScreen.routeName: (context) => AchievementScreen(),
+  BrandScreen.routeName: (context) => BrandScreen(),
 };
 
 Route routePage(Widget nextPage) {
