@@ -2,7 +2,7 @@ import 'package:aroundus_app/modules/brands/brand_home/models/RecipeBundel.dart'
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
 import 'categories.dart';
-import 'recipe_bundel_card.dart';
+import 'brand_list_card.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -17,8 +17,8 @@ class Body extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: recipeBundles.length,
-                itemBuilder: (context, index) => RecipeBundelCard(
-                  recipeBundle: recipeBundles[index],
+                itemBuilder: (context, index) => BrandListCard(
+                  brandcard: recipeBundles[index],
                   press: () {},
                 ),
               ),

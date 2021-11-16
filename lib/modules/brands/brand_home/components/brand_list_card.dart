@@ -2,11 +2,11 @@ import 'package:aroundus_app/modules/brands/brand_home/models/RecipeBundel.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class RecipeBundelCard extends StatelessWidget {
-  final RecipeBundle? recipeBundle;
+class BrandListCard extends StatelessWidget {
+  final BrandCard? brandcard;
   final Function()? press;
 
-  const RecipeBundelCard({this.recipeBundle, this.press});
+  const BrandListCard({this.brandcard, this.press});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class RecipeBundelCard extends StatelessWidget {
         width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
-          color: recipeBundle!.color,
+          color: brandcard!.color,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
@@ -29,25 +29,25 @@ class RecipeBundelCard extends StatelessWidget {
                   children: <Widget>[
                     Spacer(),
                     Text(
-                      recipeBundle!.title!,
+                      brandcard!.title!,
                       style: TextStyle(color: Colors.white),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      recipeBundle!.description!,
+                      brandcard!.description!,
                       style: TextStyle(color: Colors.white54),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
                     buildInfoRow(
-                      text: "${recipeBundle!.recipes!} Recipes",
+                      text: "${brandcard!.recipes!} Recipes",
                     ),
                     SizedBox(height: 5), //5
                     buildInfoRow(
-                      text: "${recipeBundle!.chefs!} Chefs",
+                      text: "${brandcard!.chefs!} Chefs",
                     ),
                     Spacer(),
                   ],

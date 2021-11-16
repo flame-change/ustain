@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class RecipeBundle {
+class BrandCard {
   final int? id, chefs, recipes;
   final String? title, description, imageSrc;
   final Color? color;
 
-  RecipeBundle(
+  BrandCard(
       {this.id,
       this.chefs,
       this.recipes,
@@ -16,8 +16,8 @@ class RecipeBundle {
 }
 
 // Demo list
-List<RecipeBundle> recipeBundles = [
-  RecipeBundle(
+List<BrandCard> recipeBundles = [
+  BrandCard(
     id: 1,
     chefs: 16,
     recipes: 95,
@@ -26,7 +26,7 @@ List<RecipeBundle> recipeBundles = [
     imageSrc: "assets/images/cook_new@2x.png",
     color: Color(0xFFD82D40),
   ),
-  RecipeBundle(
+  BrandCard(
     id: 2,
     chefs: 8,
     recipes: 26,
@@ -35,7 +35,7 @@ List<RecipeBundle> recipeBundles = [
     imageSrc: "assets/images/best_2020@2x.png",
     color: Color(0xFF90AF17),
   ),
-  RecipeBundle(
+  BrandCard(
     id: 3,
     chefs: 10,
     recipes: 43,
