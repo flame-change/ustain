@@ -11,7 +11,11 @@ class BrandScreen extends StatefulWidget {
   _BrandScreenState createState() => _BrandScreenState();
 }
 
-class _BrandScreenState extends State<BrandScreen> {
+class _BrandScreenState extends State<BrandScreen>
+    with AutomaticKeepAliveClientMixin<BrandScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -21,17 +25,16 @@ class _BrandScreenState extends State<BrandScreen> {
                   BrandCubit(RepositoryProvider.of<BrandRepository>(context))),
         ],
         child: Scaffold(
+            backgroundColor: Colors.grey.shade100,
             appBar: AppBar(
                 elevation: 0,
                 automaticallyImplyLeading: false,
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.grey.shade100,
                 centerTitle: false,
                 title:
                     Text('브랜드', style: Theme.of(context).textTheme.headline4),
                 actions: [
                   GestureDetector(
-                      // onTap: () => Navigator.pushNamed(
-                      //     context, SettingsScreen.routeNameName),
                       child: Padding(
                           padding: EdgeInsets.only(right: 10),
                           child: Icon(Icons.search, color: Colors.black)))

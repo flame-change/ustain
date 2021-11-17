@@ -11,13 +11,32 @@ class BrandDetailScreen extends StatefulWidget {
   _BrandDetailScreenState createState() => _BrandDetailScreenState();
 }
 
-class _BrandDetailScreenState extends State<BrandDetailScreen> {
+class _BrandDetailScreenState extends State<BrandDetailScreen>
+    with AutomaticKeepAliveClientMixin<BrandDetailScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider(
-          create: (context) => BrandDetailCubit(
-              RepositoryProvider.of<BrandRepository>(context))),
-    ], child: BrandDetailPage());
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => BrandDetailCubit(
+                  RepositoryProvider.of<BrandRepository>(context)))
+        ],
+        child: Scaffold(
+            appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                iconTheme: IconThemeData(color: Colors.black),
+                actions: [
+                  GestureDetector(
+                      child: Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.search, color: Colors.black)))
+                ]),
+            body: BrandDetailPage(Id: arguments['Id'])));
   }
 }

@@ -5,25 +5,43 @@ class BrandDetailState extends Equatable {
       {required this.isLoaded,
       required this.isLoading,
       this.error,
-      this.brandDetail});
+      this.products,
+      this.magazines,
+      this.name,
+      this.description,
+      this.logo,
+      this.Id});
 
   final bool isLoading;
   final bool isLoaded;
   final NetworkExceptions? error;
-  final BrandDetail? brandDetail;
+  final List<Magazine>? magazines;
+  final List<Product>? products;
+  final String? Id, description, logo, name;
 
   @override
-  List<Object?> get props => [brandDetail, error, isLoaded, isLoading];
+  List<Object?> get props => [error, isLoaded, isLoading, magazines, products];
 
   BrandDetailState copyWith(
-      {BrandDetail? brandDetail,
+      {String? Id,
+      String? name,
+      String? logo,
+      String? description,
+      List<Product>? products,
+      List<Magazine>? magazines,
       NetworkExceptions? error,
       bool? isLoading,
       bool? isLoaded}) {
     return BrandDetailState(
-        brandDetail: brandDetail ?? this.brandDetail,
-        error: error ?? this.error,
-        isLoaded: isLoaded ?? this.isLoaded,
-        isLoading: isLoading ?? this.isLoading);
+      error: error ?? this.error,
+      isLoaded: isLoaded ?? this.isLoaded,
+      isLoading: isLoading ?? this.isLoading,
+      Id: Id ?? this.Id,
+      name: name ?? this.name,
+      logo: logo ?? this.logo,
+      description: description ?? this.description,
+      magazines: magazines ?? this.magazines,
+      products: products ?? this.products,
+    );
   }
 }

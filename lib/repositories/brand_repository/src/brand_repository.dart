@@ -12,19 +12,18 @@ class BrandRepository {
   Future<ApiResult<PageResponse>> getBrandList(int page) async {
     try {
       var response = await _dioClient
-          .getWithClayful('/api/v1/commerce/brand/brands/list/?page=${page}');
+          .get('/api/v1/commerce/brand/brands/list/?page=${page}');
       return ApiResult.success(data: PageResponse.fromJson(response));
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
 
-  Future<ApiResult<BrandDetail>> getBrand(String brandId) async {
+  Future<ApiResult<Map>> getBrand(String brandId) async {
     try {
-      var response = await _dioClient
-          .postWithClayful('/api/v1/commerce/brand/${brandId}/');
+      var response = await _dioClient.get('/api/v1/commerce/brand/${brandId}/');
 
-      return ApiResult.success(data: BrandDetail.fromJson(response));
+      return ApiResult.success(data: response);
     } catch (e) {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }

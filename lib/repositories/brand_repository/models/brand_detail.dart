@@ -1,3 +1,5 @@
+import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/repositories/product_repository/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,8 +14,8 @@ class BrandDetail extends Equatable {
   final String? description;
   final String? name;
   final String? logo;
-  final List<Map>? magazines;
-  final List<Map>? products;
+  final List<Magazine>? magazines;
+  final List<Product>? products;
 
   factory BrandDetail.fromJson(Map<String, dynamic> json) =>
       _$BrandDetailFromJson(json);

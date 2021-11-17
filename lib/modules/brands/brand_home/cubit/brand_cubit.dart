@@ -19,7 +19,7 @@ class BrandCubit extends Cubit<BrandListState> {
 
   final BrandRepository _brandRepository;
 
-  Future<void> getMainMagazines() async {
+  Future<void> getBrands() async {
     ApiResult<PageResponse> apiResult =
         await _brandRepository.getBrandList(state.page);
 
