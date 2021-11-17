@@ -232,23 +232,41 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _productCubit.createCard(_product, cartTempList);
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("장바구니에 상품이 담겼습니다."),
-                              actions: [
-                                MaterialButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("확인"),
-                                ),
-                              ],
-                            );
-                          });
+                      if(cartTempList.length>0) {
+                        _productCubit.createCard(_product, cartTempList);
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("장바구니에 상품이 담겼습니다."),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("확인"),
+                                  ),
+                                ],
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("상품을 선택해주세요."),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("확인"),
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     },
                     child: Container(
                         width: sizeWidth(50),
@@ -362,6 +380,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
   }
 
   Widget purchaseSummary() {
+    print(cartTempList);
     num total = cartTempList.fold(
         0,
         (pre, cartTemp) =>
