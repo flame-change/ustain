@@ -88,7 +88,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         GestureDetector(
                             onTap: () => user_status ==
                                     AuthenticationStatus.authenticated
-                                ? Navigator.pushNamed(context, 'cart_screen')
+                                ? Navigator.pushNamed(context, '/cart_screen')
                                 : showLoginNeededDialog(context),
                             child: Padding(
                                 padding: EdgeInsets.only(right: 10),
