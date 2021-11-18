@@ -1,5 +1,7 @@
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
+import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
+import 'package:aroundus_app/modules/search/search_result/view/search_result_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
@@ -39,6 +41,8 @@ final Map<String, WidgetBuilder> routes = {
   AchievementScreen.routeName: (context) => AchievementScreen(),
   BrandScreen.routeName: (context) => BrandScreen(),
   BrandDetailScreen.routeName: (context) => BrandDetailScreen(),
+  SearchScreen.routeName: (context) => BrandDetailScreen(),
+  SearchResultScreen.routeName: (context) => SearchResultScreen()
 };
 
 Route routePage(Widget nextPage) {
