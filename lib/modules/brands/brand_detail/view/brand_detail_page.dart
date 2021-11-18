@@ -60,8 +60,8 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                       CircleAvatar(
                           backgroundImage: NetworkImage(state.logo!),
-                          radius: sizeWidth(3)),
-                      SizedBox(width: sizeWidth(5)),
+                          radius: sizeWidth(5)),
+                      SizedBox(width: sizeWidth(3)),
                       Text(state.name!,
                           style: Theme.of(context).textTheme.headline5)
                     ]),

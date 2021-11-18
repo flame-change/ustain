@@ -1,9 +1,9 @@
 import 'package:aroundus_app/modules/store/product/product_detail/components/product_sale_bottom_navigator.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -30,7 +30,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   late Product product;
   late ProductCubit _productCubit;
   late AuthenticationStatus user_status;
-  late TabController _tabController;
   late int _selectedIndex = 0;
 
   @override
@@ -39,18 +38,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     user_status = context.read<AuthenticationBloc>().state.status;
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
-    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _selectedIndex = _tabController.index;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -59,137 +46,130 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         bottomNavigationBar: productSaleBottomNavigator(context, _productCubit),
         body:
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
-          if (state.isLoaded) {
+          if (state.isLoaded == true) {
             product = state.products!.first;
-            return DefaultTabController(
-              length: 3,
-              child: NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverAppBar(
-                      forceElevated: innerBoxIsScrolled,
-                      elevation: 0,
-                      backgroundColor: Colors.white,
-                      automaticallyImplyLeading: true,
-                      floating: true,
-                      pinned: false,
-                      snap: false,
-                      iconTheme: IconThemeData(color: Colors.black),
-                      expandedHeight: Adaptive.h(55),
-                      flexibleSpace: FlexibleSpaceBar(
-                          background: Image.network(
-                        product.thumbnail!,
+            return CustomScrollView(slivers: [
+              SliverAppBar(
+                  backgroundColor: Colors.white,
+                  automaticallyImplyLeading: true,
+                  floating: true,
+                  pinned: true,
+                  snap: false,
+                  iconTheme: IconThemeData(color: Colors.black),
+                  expandedHeight: Adaptive.h(55),
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Stack(children: [
+                    Image.network(product.thumbnail!,
                         fit: BoxFit.cover,
                         height: Adaptive.h(55),
+                        width: sizeWidth(100)),
+                    Container(
+                        margin: EdgeInsets.only(top: Adaptive.h(50)),
+                        height: Adaptive.h(5),
                         width: sizeWidth(100),
-                      )),
-                      actions: [
-                        GestureDetector(
-                            onTap: () => user_status ==
-                                    AuthenticationStatus.authenticated
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: FractionalOffset.topCenter,
+                                end: FractionalOffset.bottomCenter,
+                                colors: [Colors.transparent, Colors.white])))
+                  ])),
+                  actions: [
+                    GestureDetector(
+                        onTap: () =>
+                            user_status == AuthenticationStatus.authenticated
                                 ? Navigator.pushNamed(context, 'cart_screen')
                                 : showLoginNeededDialog(context),
-                            child: Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child:
-                                    SvgPicture.asset("assets/icons/cart.svg")))
-                      ],
-                    ),
-                    SliverPersistentHeader(
-                      delegate: _SliverAppBarDelegate(TabBar(
-                          indicatorColor: Colors.black,
-                          controller: _tabController,
-                          tabs: [
-                            Tab(
-                                child: Container(
-                                    height: Adaptive.h(5),
-                                    color: Colors.white,
-                                    alignment: Alignment.center,
-                                    child: Text("SPECS",
-                                        style: theme.textTheme.headline6))),
-                            Tab(
-                                // width: sizeWidth(33),
-
-                                child: Container(
-                                    height: Adaptive.h(5),
-                                    color: Colors.white,
-                                    alignment: Alignment.center,
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: SvgPicture.asset("assets/icons/cart.svg")))
+                  ],
+                  bottom: PreferredSize(
+                      preferredSize: Size(sizeWidth(100), Adaptive.h(5.5)),
+                      child: Row(children: [
+                        InkWell(
+                          onTap: () => setState(() => _selectedIndex = 0),
+                          child: Container(
+                              width: sizeWidth(33),
+                              height: Adaptive.h(5),
+                              child: Center(
+                                  child: Text("SPECS",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6))),
+                        ),
+                        InkWell(
+                            onTap: () => setState(() => _selectedIndex = 1),
+                            child: Container(
+                                width: sizeWidth(33),
+                                height: Adaptive.h(5),
+                                child: Center(
                                     child: Text("REVIEWS",
-                                        style: theme.textTheme.headline6))),
-                            Tab(
-                                child: Container(
-                                    height: Adaptive.h(5),
-                                    color: Colors.white,
-                                    alignment: Alignment.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6)))),
+                        InkWell(
+                            onTap: () => setState(() => _selectedIndex = 2),
+                            child: Container(
+                                width: sizeWidth(33),
+                                height: Adaptive.h(5),
+                                child: Center(
                                     child: Text("INFO",
-                                        style: theme.textTheme.headline6)))
-                          ])),
-                      pinned: true,
-                    )
-                  ];
-                },
-                body: PageWire(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      firstPage(),
-                      Center(child: Text('아직 리뷰가 없습니다.')),
-                      thirdPage(),
-                    ],
-                  ),
-                ),
-              ),
-            );
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6))))
+                      ]))),
+              SliverToBoxAdapter(
+                  child: _selectedIndex == 0
+                      ? Padding(padding: EdgeInsets.all(20), child: firstPage())
+                      : _selectedIndex == 1
+                          ? Center(child: Text('아직 리뷰가 없습니다.'))
+                          : Padding(
+                              padding: EdgeInsets.all(20), child: thirdPage()))
+            ]);
           } else {
-            return Container(
-              child: Text("잠시만요"),
-            );
+            return Container();
           }
         }));
   }
 
-  Widget firstPage() {
-    return SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        GestureDetector(
-            onTap: () {
-              print("브랜드 페이지 이동");
-            },
-            child: Row(children: [
-              Container(
-                  width: Adaptive.w(5),
-                  height: Adaptive.w(5),
-                  margin: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(product.brand!.url!)))),
-              Text("${product.brand!.name}", style: theme.textTheme.button)
-            ])),
-        SizedBox(height: Adaptive.w(3)),
-        Text("${product.name}", style: theme.textTheme.headline4),
-        SizedBox(height: Adaptive.w(3)),
-        Text("${product.summary}"),
-        Divider(),
-        RichText(
-            text: TextSpan(style: theme.textTheme.headline4, children: [
-          TextSpan(
-              text: "${currencyFromString(product.discountPrice.toString())}\n",
-              style: theme.textTheme.subtitle1!.copyWith(
-                  fontSize: Adaptive.dp(12),
-                  decoration: TextDecoration.lineThrough)),
-          TextSpan(
-              text: "${product.discountRate}%\t",
-              style: TextStyle(fontSize: Adaptive.dp(15))),
-          TextSpan(
-              text: "${currencyFromString(product.discountPrice.toString())}",
-              style: TextStyle(
-                  fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold))
-        ])),
-        // Html(data: product.description, shrinkWrap: true)
-      ]),
-    );
+  Column firstPage() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      GestureDetector(
+          onTap: () => Navigator.pushNamed(context, BrandDetailScreen.routeName,
+              arguments: {'Id': product.brand!.Id!}),
+          child: Row(children: [
+            Container(
+                width: sizeWidth(5),
+                height: sizeWidth(5),
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(product.brand!.url!)))),
+            Text("${product.brand!.name}", style: theme.textTheme.button)
+          ])),
+      SizedBox(height: sizeWidth(3)),
+      Text("${product.name}", style: theme.textTheme.headline4),
+      SizedBox(height: sizeWidth(3)),
+      Text("${product.summary}"),
+      Divider(),
+      RichText(
+          text: TextSpan(style: theme.textTheme.headline4, children: [
+        TextSpan(
+            text: "${currencyFromString(product.discountPrice.toString())}\n",
+            style: theme.textTheme.subtitle1!.copyWith(
+                fontSize: Adaptive.dp(12),
+                decoration: TextDecoration.lineThrough)),
+        TextSpan(
+            text: "${product.discountRate}%\t",
+            style: TextStyle(fontSize: Adaptive.dp(15))),
+        TextSpan(
+            text: "${currencyFromString(product.discountPrice.toString())}",
+            style: TextStyle(
+                fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold))
+      ])),
+      Html(data: product.description, shrinkWrap: true)
+    ]);
   }
 
   Wrap thirdPage() {
@@ -210,30 +190,5 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ])
       ])
     ]);
-  }
-}
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate(this._tabBar);
-
-  final TabBar _tabBar;
-
-  @override
-  double get minExtent => _tabBar.preferredSize.height;
-
-  @override
-  double get maxExtent => _tabBar.preferredSize.height;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Container(
-      child: _tabBar,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return false;
   }
 }
