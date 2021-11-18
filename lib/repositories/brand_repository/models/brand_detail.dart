@@ -14,8 +14,8 @@ class BrandDetail extends Equatable {
   final String? description;
   final String? name;
   final String? logo;
-  final List<Magazine>? magazines;
-  final List<Product>? products;
+  final List? magazines;
+  final List? products;
 
   factory BrandDetail.fromJson(Map<String, dynamic> json) =>
       _$BrandDetailFromJson(json);

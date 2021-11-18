@@ -15,8 +15,8 @@ class BrandDetailState extends Equatable {
   final bool isLoading;
   final bool isLoaded;
   final NetworkExceptions? error;
-  final List<Magazine>? magazines;
-  final List<Product>? products;
+  final List? magazines;
+  final List? products;
   final String? Id, description, logo, name;
 
   @override
@@ -27,8 +27,8 @@ class BrandDetailState extends Equatable {
       String? name,
       String? logo,
       String? description,
-      List<Product>? products,
-      List<Magazine>? magazines,
+      List? products,
+      List? magazines,
       NetworkExceptions? error,
       bool? isLoading,
       bool? isLoaded}) {

@@ -7,9 +7,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 class TodaysMagazine extends StatefulWidget {
-  final List<Magazine> todaysMagazines;
+  final List<Magazine>? todaysMagazines;
+  final bool isMain;
 
-  TodaysMagazine(this.todaysMagazines);
+  TodaysMagazine({@required this.todaysMagazines, this.isMain = true});
 
   @override
   State<StatefulWidget> createState() => _TodaysMagazineState();
@@ -17,7 +18,7 @@ class TodaysMagazine extends StatefulWidget {
 
 class _TodaysMagazineState extends State<TodaysMagazine>
     with SingleTickerProviderStateMixin {
-  List<Magazine> get _todaysMagazines => this.widget.todaysMagazines;
+  List<Magazine>? get _todaysMagazines => this.widget.todaysMagazines;
 
   @override
   void initState() {
@@ -27,10 +28,11 @@ class _TodaysMagazineState extends State<TodaysMagazine>
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-          padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
-          child: TitleWithUnderline(
-              title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
+      if (widget.isMain == true)
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
+            child: TitleWithUnderline(
+                title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
       Container(
           height: Adaptive.h(40),
           margin: EdgeInsets.only(bottom: Adaptive.h(3)),
@@ -40,11 +42,11 @@ class _TodaysMagazineState extends State<TodaysMagazine>
                   direction: Axis.horizontal,
                   spacing: 30,
                   children: List.generate(
-                          _todaysMagazines.length,
+                          _todaysMagazines!.length,
                           (index) => Container(
                               width: sizeWidth(60),
                               child: todaysMagazineCard(
-                                  context, _todaysMagazines[index]))) +
+                                  context, _todaysMagazines![index]))) +
                       [Container()]))),
       Divider(height: 0)
     ]);

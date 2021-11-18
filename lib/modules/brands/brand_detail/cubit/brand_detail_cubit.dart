@@ -23,8 +23,8 @@ class BrandDetailCubit extends Cubit<BrandDetailState> {
           name: mapResponse['name'],
           description: mapResponse['description'],
           logo: mapResponse['logo'],
-          magazines: mapResponse['magazines']?.cast<Magazine>(),
-          products: mapResponse['products']?.cast<Product>(),
+          magazines: mapResponse['magazines'],
+          products: mapResponse['products'],
           isLoading: false,
           isLoaded: true));
     }, failure: (NetworkExceptions? error) {

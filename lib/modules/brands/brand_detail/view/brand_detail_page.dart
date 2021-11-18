@@ -1,5 +1,9 @@
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/todays_magazine_widget.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
+import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/repositories/product_repository/models/brand.dart';
+import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -31,6 +35,18 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
     return BlocBuilder<BrandDetailCubit, BrandDetailState>(
         builder: (context, state) {
       if (state.isLoaded == true) {
+        var products = state.products as List;
+        List<Product> productList = List<Product>.from(products.map((model) =>
+            Product(
+                Id: model['Id'],
+                name: model['name'],
+                rating: model['rating'],
+                originalPrice: model['originalPrice'],
+                discountPrice: model['discountPrice'],
+                discountRate: model['discountRate'],
+                thumbnail: model['thumbnail'],
+                brand: Brand(name: model['brand']))));
+
         return SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -54,20 +70,49 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
                     Divider(height: Adaptive.h(5))
                   ])),
           LeftPageWire(
-            child: Column(
-              children: [
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                 TitleWithUnderline(
                     title: 'BRAND MAGS',
                     subtitle: '${state.name!}에서 직접 운영하는 브랜드 스토리입니다.'),
-                // state.brandDetail!.magazines! != []
-                //     ? TodaysMagazine(state.brandDetail!.magazines!)
-                //     : Container()
-              ],
-            ),
-          ),
-          PageWire(
-            child: Container(color: Colors.grey, height: 100),
-          )
+                SizedBox(height: sizeWidth(5)),
+                state.magazines!.length != 0
+                    ? TodaysMagazine(
+                        todaysMagazines: List<Magazine>.from(state.magazines!
+                            .map((model) => Magazine.fromJson(model))),
+                        isMain: false)
+                    : Container(
+                        color: Colors.white,
+                        height: Adaptive.h(20),
+                        child: Center(child: Text('아직 등록된 브랜드 스토리가 없습니다.')))
+              ])),
+          Padding(
+              padding: EdgeInsets.only(left: sizeWidth(5), right: sizeWidth(5)),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TitleWithUnderline(
+                        title: 'PRODUCTS',
+                        subtitle: '${state.name!}의 상품을 만나보세요.'),
+                    SizedBox(height: sizeWidth(5)),
+                    productList.length != 0
+                        ? GridView.count(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: (4 / 7),
+                            children: List.generate(
+                                state.products!.length,
+                                (index) =>
+                                    storeProduct(context, productList[index])))
+                        : Container(
+                            color: Colors.white,
+                            height: Adaptive.h(20),
+                            child: Center(child: Text('아직 등록된 상품이 없습니다.')))
+                  ]))
         ]));
       }
       return Center(child: CircularProgressIndicator());

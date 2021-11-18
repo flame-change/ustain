@@ -12,12 +12,8 @@ BrandDetail _$BrandDetailFromJson(Map<String, dynamic> json) {
     json['description'] as String?,
     json['name'] as String?,
     json['logo'] as String?,
-    (json['magazines'] as List<dynamic>?)
-        ?.map((e) => Magazine.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    (json['products'] as List<dynamic>?)
-        ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    json['magazines'] as List<dynamic>?,
+    json['products'] as List<dynamic>?,
   );
 }
 
