@@ -64,7 +64,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
           if (state.todaysMagazines != null && state.magazines != null) {
             return Wrap(runSpacing: 15, children: [
               // 오늘의 매거진
-              TodaysMagazine(state.todaysMagazines!),
+              TodaysMagazine(todaysMagazines: state.todaysMagazines!),
               // 모아보기
               TitleWithUnderline(
                   title: "WHAT'S NEW?", subtitle: "어스테인의 정기 간행물 입니다."),

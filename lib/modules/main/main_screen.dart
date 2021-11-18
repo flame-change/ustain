@@ -1,22 +1,23 @@
-import 'package:aroundus_app/modules/home/home.dart';
-import 'package:aroundus_app/modules/home/view/home_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_screen.dart';
-import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
-import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:aroundus_app/modules/brands/brand_home/view/brand_screen.dart';
+import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
+import 'package:aroundus_app/modules/home/view/home_screen.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:aroundus_app/support/style/theme.dart';
+import 'package:aroundus_app/modules/home/home.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter/material.dart';
 
-enum MenuState { home, store, magazine, my_page }
+enum MenuState { home, magazine, store, brands, my_page }
 
 extension MenuStateToString on MenuState {
   String get name {
-    return ["home", "store", "magazine", "my_page"][this.index];
+    return ["home", "magazine", "store", "brands", "my_page"][this.index];
   }
 
   String get nickName {
-    return ["홈", "스토어", "매거진", "내 계정"][this.index];
+    return ["홈", "매거진", "스토어", "브랜드", "내 계정"][this.index];
   }
 }
 
@@ -38,8 +39,9 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> pageList = [
     HomeScreen(),
-    StoreHomeScreen(),
     MagazineHomeScreen(),
+    StoreHomeScreen(),
+    BrandScreen(),
     MyPageScreen()
   ];
 

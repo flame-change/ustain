@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
+import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
@@ -12,6 +13,7 @@ import 'modules/authentication/account/view/view.dart';
 import 'modules/authentication/signup/view/view.dart';
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:flutter/widgets.dart';
+import 'modules/brands/brand_home/view/brand_screen.dart';
 import 'modules/mypage/achievements/view/achievement_screen.dart';
 import 'modules/splash/splash.dart';
 
@@ -35,6 +37,8 @@ final Map<String, WidgetBuilder> routes = {
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
   AchievementScreen.routeName: (context) => AchievementScreen(),
+  BrandScreen.routeName: (context) => BrandScreen(),
+  BrandDetailScreen.routeName: (context) => BrandDetailScreen(),
 };
 
 Route routePage(Widget nextPage) {
