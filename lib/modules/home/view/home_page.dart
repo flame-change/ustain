@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               removeTop: true,
               child: LeftPageWire(
                   child: state.todaysMagazines != null
-                      ? TodaysMagazine(state.todaysMagazines!)
+                      ? TodaysMagazine(todaysMagazines: state.todaysMagazines!)
                       : Container(
                           height: Adaptive.h(40),
                           child: Center(child: CircularProgressIndicator()))),
