@@ -70,7 +70,7 @@ class _AppViewState extends State<AppView> {
                 '/signup_nickname_page', (route) => false);
             break;
           case AuthenticationStatus.authenticated:
-            _navigator!.pushNamed('/main_screen');
+            _navigator!.pushNamed('');
             break;
           case AuthenticationStatus.unauthenticated:
             _navigator!.pushNamed('/login_home_screen');
