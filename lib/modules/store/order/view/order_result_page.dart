@@ -90,7 +90,7 @@ class OrderResultPage extends StatelessWidget {
                       PlainButton(
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
-                              context, 'main_screen', (route) => false);
+                              context, '', (route) => false);
                         },
                         text: '더 둘러보기',
                         textColor: theme.accentColor,
