@@ -113,10 +113,13 @@ class _CartPageState extends State<CartPage> {
                       child: MaterialButton(
                         onPressed: () {
                           print("결제하기");
+                          List<Cart> checkedCart = carts
+                              .fold(<Cart>[], (pre, cart) => cart.isChecked! ? pre + [cart] : pre + []);
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OrderScreen(carts)));
+                                  builder: (context) => OrderScreen(checkedCart)));
                         },
                         color: Colors.black,
                         minWidth: sizeWidth(100),

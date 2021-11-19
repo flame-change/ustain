@@ -88,10 +88,11 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
                               ? Icon(Icons.bookmark)
                               : Icon(Icons.bookmark_outline_rounded),
                       color: theme.accentColor),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.share, semanticLabel: "공유"),
-                  color: theme.accentColor),
+              // TODO 공유 기능 (현재는 미사용)
+              // IconButton(
+              //     onPressed: () {},
+              //     icon: Icon(Icons.share, semanticLabel: "공유"),
+              //     color: theme.accentColor),
               Container(width: 1, height: Adaptive.h(6), color: Colors.black38),
               MaterialButton(
                   onPressed: () => user_status ==
