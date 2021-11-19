@@ -49,7 +49,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   flutter_swiper_plus: ^2.0.4
   kpostal: ^0.3.2
-  flutter_share: ^2.0.0
+#  flutter_share: ^2.0.0 // 공유기능 관련 패키지 (현재 미사용)
   flutter_local_notifications: ^6.0.0
   iamport_flutter: ^0.10.0-dev.3
   dart_json_mapper: ^2.1.2
