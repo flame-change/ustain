@@ -11,9 +11,11 @@ import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'components/menu_widgets.dart';
 
 class MyPage extends StatefulWidget {
@@ -89,27 +91,35 @@ class _MyPageState extends State<MyPage> {
             menuWidget("HELP CENTER"),
             subMenuWidget(
                 title: "1:1 문의하기",
-                tapped: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) =>
-                            ExternalLink(url: 'https://ed83p.channel.io/')))),
+                tapped: () => kIsWeb == false
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                ExternalLink(url: 'https://ed83p.channel.io/')))
+                    : launch('https://ed83p.channel.io/')),
             subMenuWidget(
                 title: "FAQ",
-                tapped: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => ExternalLink(
-                            url:
-                                'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')))),
+                tapped: () => kIsWeb == false
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ExternalLink(
+                                url:
+                                    'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')))
+                    : launch(
+                        'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')),
             subMenuWidget(
                 title: "공지사항",
-                tapped: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => ExternalLink(
-                            url:
-                                'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558'))))
+                tapped: () => kIsWeb == false
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ExternalLink(
+                                url:
+                                    'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558')))
+                    : launch(
+                        'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558'))
           ])),
           SizedBox(height: Adaptive.h(5)),
           if (is_authenticated)
