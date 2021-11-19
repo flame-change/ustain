@@ -16,20 +16,16 @@ Widget storeProduct(BuildContext context, Product product) {
             context,
             MaterialPageRoute(
                 builder: (_) => BlocProvider<ProductCubit>(
-                      create: (_) => ProductCubit(
-                          RepositoryProvider.of<ProductRepository>(context)),
-                      child: ProductDetailPage(product.Id!),
-                    )));
+                    create: (_) => ProductCubit(
+                        RepositoryProvider.of<ProductRepository>(context)),
+                    child: ProductDetailPage(product.Id!))));
       },
       child: GridTile(
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(product.thumbnail!))),
-          ),
+          child: Container(),
+          header: Image.network(product.thumbnail!,
+              fit: BoxFit.cover, height: sizeWidth(45) - 2.5),
           footer: Container(
-              height: Adaptive.h(15),
+              height: sizeWidth(33),
               color: Colors.white,
               padding:
                   EdgeInsets.symmetric(horizontal: sizeWidth(1), vertical: 5),
@@ -37,44 +33,45 @@ Widget storeProduct(BuildContext context, Product product) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RichText(
-                      text: TextSpan(
-                          style:
-                              theme.textTheme.bodyText1!.copyWith(height: 1.3),
-                          children: [
-                            TextSpan(
-                                text: "${product.brand!.name}\n",
-                                style: theme.textTheme.subtitle1!.copyWith(
-                                    fontSize: Adaptive.dp(10),
-                                    color: Color(0xFF979797))),
-                            TextSpan(
-                                text: "${product.name}",
-                                style: theme.textTheme.bodyText2!.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: Adaptive.dp(15))),
-                          ]),
-                    ),
-                    // Text("키워드1"),
+                        text: TextSpan(children: [
+                      WidgetSpan(
+                          child: Text("${product.brand!.name}",
+                              style: theme.textTheme.subtitle1!.copyWith(
+                                  fontSize: Adaptive.dp(10),
+                                  color: Color(0xFF979797)),
+                              maxLines: 1)),
+                      TextSpan(
+                          text: "\n",
+                          style: theme.textTheme.subtitle1!
+                              .copyWith(fontSize: Adaptive.dp(10))),
+                      WidgetSpan(
+                          child: Text("${product.name}",
+                              style: theme.textTheme.bodyText2!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: Adaptive.dp(15)),
+                              maxLines: 2))
+                    ])),
+                    SizedBox(height: Adaptive.dp(5)),
                     RichText(
-                        text: TextSpan(
-                            style: theme.textTheme.bodyText2!.copyWith(
-                                height: 1.3, fontWeight: FontWeight.w700),
-                            children: [
-                          TextSpan(
-                              text: "${product.discountRate}%\n",
-                              style: theme.textTheme.bodyText2!.copyWith(
-                                  color: theme.accentColor,
-                                  fontWeight: FontWeight.w700)),
-                          TextSpan(
-                            text:
-                                "${currencyFromString(product.discountPrice.toString())}\t",
-                          ),
-                          TextSpan(
-                              text:
-                                  "${currencyFromString(product.originalPrice.toString())}",
-                              style: theme.textTheme.bodyText2!.copyWith(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: Adaptive.dp(9),
-                                  color: Color(0xFF767676)))
-                        ]))
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "${product.discountRate}%\n",
+                          style: theme.textTheme.bodyText2!.copyWith(
+                              color: theme.accentColor,
+                              fontWeight: FontWeight.w700)),
+                      WidgetSpan(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                            Text(
+                                "${currencyFromString(product.discountPrice.toString())}\t"),
+                            Text(
+                                "${currencyFromString(product.originalPrice.toString())}",
+                                style: theme.textTheme.bodyText2!.copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: Adaptive.dp(8),
+                                    color: Color(0xFF767676)))
+                          ]))
+                    ]))
                   ]))));
 }
