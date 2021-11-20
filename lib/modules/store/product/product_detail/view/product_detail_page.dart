@@ -63,21 +63,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         fit: BoxFit.cover,
                         height: Adaptive.h(55),
                         width: sizeWidth(100)),
-                    Container(
-                        margin: EdgeInsets.only(top: Adaptive.h(50)),
-                        height: Adaptive.h(5),
-                        width: sizeWidth(100),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [Colors.transparent, Colors.white])))
                   ])),
                   actions: [
                     GestureDetector(
                         onTap: () =>
                             user_status == AuthenticationStatus.authenticated
-                                ? Navigator.pushNamed(context, 'cart_screen')
+                                ? Navigator.pushNamed(context, '/cart_screen')
                                 : showLoginNeededDialog(context),
                         child: Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -87,36 +78,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       preferredSize: Size(sizeWidth(100), Adaptive.h(5.5)),
                       child: Row(children: [
                         InkWell(
-                          onTap: () => setState(() => _selectedIndex = 0),
-                          child: Container(
-                              width: sizeWidth(33),
-                              height: Adaptive.h(5),
-                              child: Center(
-                                  child: Text("SPECS",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6))),
-                        ),
+                            onTap: () => setState(() => _selectedIndex = 0),
+                            child: _detailTab(context, 0, "SPECS", 33)),
                         InkWell(
                             onTap: () => setState(() => _selectedIndex = 1),
-                            child: Container(
-                                width: sizeWidth(33),
-                                height: Adaptive.h(5),
-                                child: Center(
-                                    child: Text("REVIEWS",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6)))),
+                            child: _detailTab(context, 1, "REVIEWS", 34)),
                         InkWell(
                             onTap: () => setState(() => _selectedIndex = 2),
-                            child: Container(
-                                width: sizeWidth(33),
-                                height: Adaptive.h(5),
-                                child: Center(
-                                    child: Text("INFO",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6))))
+                            child: _detailTab(context, 2, "INFO", 33))
                       ]))),
               SliverToBoxAdapter(
                   child: _selectedIndex == 0
@@ -130,6 +99,23 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             return Container();
           }
         }));
+  }
+
+  Container _detailTab(
+      BuildContext context, int index, String title, int Width) {
+    return Container(
+        decoration: BoxDecoration(
+          color: _selectedIndex == index ? Colors.black : Colors.white,
+          border: Border.all(color: Colors.black),
+        ),
+        width: sizeWidth(Width),
+        height: Adaptive.h(5.5),
+        child: Center(
+            child: Text(title,
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: _selectedIndex == index
+                        ? Colors.white
+                        : Colors.black))));
   }
 
   Column firstPage() {
@@ -168,7 +154,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             style: TextStyle(
                 fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold))
       ])),
-      Html(data: product.description, shrinkWrap: true)
+      Html(data: product.description, shrinkWrap: true, customImageRenders: {
+        networkSourceMatcher(): networkImageRender(
+            loadingWidget: () => Container(color: Colors.white))
+      })
     ]);
   }
 

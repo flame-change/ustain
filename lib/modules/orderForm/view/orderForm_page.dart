@@ -58,7 +58,7 @@ class _OrderFormPageState extends State<OrderFormPage>
                     child: Icon(Icons.arrow_back_ios_outlined,
                         color: Colors.black),
                     onTap: () {
-                      Navigator.pushNamed(context, 'main_screen');
+                      Navigator.pushNamed(context, '');
                     }),
               ),
         body: SingleChildScrollView(

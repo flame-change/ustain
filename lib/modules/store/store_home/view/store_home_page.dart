@@ -45,7 +45,6 @@ class _StorePageState extends State<StorePage>
         collPath = _storeCubit.state.collections!.indexOf(menu);
       }
     });
-
     _storeCubit.getProductsByCollection(_selectedMenu, "price.sale");
   }
 
@@ -68,11 +67,7 @@ class _StorePageState extends State<StorePage>
                                 curve: Curves.easeOut),
                             child: Icon(Icons.menu, color: Colors.black)),
                         GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isOpen = !isOpen;
-                              });
-                            },
+                            onTap: () => setState(() => isOpen = !isOpen),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -80,11 +75,11 @@ class _StorePageState extends State<StorePage>
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black)),
-                                  isOpen
-                                      ? Icon(Icons.keyboard_arrow_up_sharp,
-                                          color: Colors.black)
-                                      : Icon(Icons.keyboard_arrow_down_sharp,
-                                          color: Colors.black)
+                                  Icon(
+                                      isOpen
+                                          ? Icons.keyboard_arrow_up_sharp
+                                          : Icons.keyboard_arrow_down_sharp,
+                                      color: Colors.black)
                                 ])),
                         Row(children: [
                           GestureDetector(
@@ -123,16 +118,14 @@ class _StorePageState extends State<StorePage>
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _selectedCollection =
-                                                  state.subCollections![index];
-                                              _storeCubit
-                                                  .getProductsByCollection(
-                                                      _selectedCollection,
-                                                      "price.sale");
-                                            });
-                                          },
+                                          onTap: () => setState(() {
+                                                _selectedCollection = state
+                                                    .subCollections![index];
+                                                _storeCubit
+                                                    .getProductsByCollection(
+                                                        _selectedCollection,
+                                                        "price.sale");
+                                              }),
                                           child: Container(
                                               color: _selectedCollection ==
                                                       state.subCollections![
@@ -175,11 +168,9 @@ class _StorePageState extends State<StorePage>
                       opacity: isOpen ? 0.3 : 0,
                       duration: Duration(milliseconds: 700),
                       child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isOpen = !isOpen;
-                            });
-                          },
+                          onTap: () => setState(() {
+                                isOpen = !isOpen;
+                              }),
                           child: Container(
                               height: Adaptive.h(100), color: Colors.black))),
                   AnimatedContainer(
@@ -194,22 +185,22 @@ class _StorePageState extends State<StorePage>
                       child: ListView.builder(
                           itemBuilder: (context, index) {
                             return ListTile(
-                                onTap: () {
-                                  setState(() {
-                                    isOpen = !isOpen;
-                                    _selectedMenu = _storeCubit
-                                        .state
-                                        .collections![collPath]
-                                        .collection[index];
-                                    _storeCubit.getProductsByCollection(
-                                        _selectedMenu, "price.sale");
-                                  });
-                                },
+                                onTap: () => setState(() {
+                                      isOpen = !isOpen;
+                                      _selectedMenu = _storeCubit
+                                          .state
+                                          .collections![collPath]
+                                          .collection[index];
+                                      _storeCubit.getProductsByCollection(
+                                          _selectedMenu, "price.sale");
+                                    }),
                                 title: Text(
                                     "${_storeCubit.state.collections![collPath].collection[index].name}",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold)));
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(fontSize: Adaptive.dp(12))));
                           },
                           itemCount: _storeCubit
                               .state.collections![collPath].collection.length,
