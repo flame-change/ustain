@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
     _magazineCubit.getMainMagazines();
     _magazineCubit.getBannerMagazines();
-    // _magazineCubit.getCatalogMagazine();
+    _magazineCubit.getCatalogMagazine();
   }
 
   @override
@@ -77,21 +77,20 @@ class _HomePageState extends State<HomePage> {
                   title: "MD's PICK", subtitle: '어스테인 MD의 추천 상품을 모아봤어요.')),
         )),
         // 카탈로그 카드 들어갈 곳
-        // state.catalogMagazines != null
-        //     ? SliverList(
-        //         delegate: SliverChildBuilderDelegate(
-        //             (context, index) => GestureDetector(
-        //                 onTap: () => Navigator.push(
-        //                       context,
-        //                       MaterialPageRoute(
-        //                           builder: (context) => CatalogScreen(
-        //                               id: state
-        //                                   .catalogMagazines![index].id!)),
-        //                     ),
-        //                 child: CatalogCard(
-        //                     state.catalogMagazines![index], index + 1)),
-        //             childCount: state.catalogMagazines!.length))
-        //     : SliverToBoxAdapter(child: Container()),
+        state.catalogMagazines != null
+            ? SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => GestureDetector(
+                        onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CatalogScreen(
+                                      id: state.catalogMagazines![index].id!)),
+                            ),
+                        child: CatalogCard(
+                            state.catalogMagazines![index], index + 1)),
+                    childCount: state.catalogMagazines!.length))
+            : SliverToBoxAdapter(child: Container()),
         SliverToBoxAdapter(
             child: MediaQuery.removePadding(
                 context: context, removeTop: true, child: CompanyInfo()))
