@@ -102,7 +102,13 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                               children: [
                                 Html(
                                     data: state.magazineDetail!.content,
-                                    shrinkWrap: true),
+                                    shrinkWrap: true,
+                                    customImageRenders: {
+                                      networkSourceMatcher():
+                                          networkImageRender(
+                                              loadingWidget: () => Container(
+                                                  color: Colors.white))
+                                    }),
                                 Divider(),
                                 state.magazineDetail!.products != null
                                     ? productCard(context,
