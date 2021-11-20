@@ -14,12 +14,15 @@ class SearchResultCubit extends Cubit<SearchResultState> {
 
   final SearchRepository _searchRepository;
 
-  Future<void> search(String keyword) async {
-    ApiResult<PageResponse> apiResult =
-        await _searchRepository.search(keyword, state.page!);
-
-    apiResult.when(success: (PageResponse? pageResponse) {
-      emit(state.copyWith(isLoaded: true, isLoading: false));
+  Future<void> search(String keyword, int page) async {
+    ApiResult<Map> apiResult = await _searchRepository.search(keyword, page);
+    apiResult.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+        isLoaded: true,
+        isLoading: false,
+        products: mapResponse!['results']['products'],
+        brands: mapResponse['results']['brands'],
+      ));
     }, failure: (NetworkExceptions? error) {
       logger.w("error $error!");
       emit(state.copyWith(error: error));
