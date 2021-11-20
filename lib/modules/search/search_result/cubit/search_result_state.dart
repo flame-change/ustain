@@ -1,39 +1,37 @@
-part of 'search_cubit.dart';
+part of 'search_result_cubit.dart';
 
-class SearchState extends Equatable {
-  const SearchState(
+class SearchResultState extends Equatable {
+  const SearchResultState(
       {required this.isLoaded,
       required this.isLoading,
       this.error,
+      this.page,
       this.products,
-      this.magazines,
-      this.keyword,
       this.brands});
 
   final bool isLoading, isLoaded;
   final NetworkExceptions? error;
-  final List? magazines, products, brands;
-  final String? keyword;
+  final List? products, brands;
+  final int? page;
 
   @override
   List<Object?> get props =>
-      [error, isLoaded, isLoading, products, magazines, keyword, brands];
+      [error, page, isLoaded, isLoading, products, brands];
 
-  SearchState copyWith(
+  SearchResultState copyWith(
       {String? keyword,
       List? products,
-      List? magazines,
       List? brands,
       NetworkExceptions? error,
       bool? isLoading,
+      int? page,
       bool? isLoaded}) {
-    return SearchState(
+    return SearchResultState(
       error: error ?? this.error,
       isLoaded: isLoaded ?? this.isLoaded,
       isLoading: isLoading ?? this.isLoading,
       brands: brands ?? this.brands,
-      keyword: keyword ?? this.keyword,
-      magazines: magazines ?? this.magazines,
+      page: page ?? this.page,
       products: products ?? this.products,
     );
   }

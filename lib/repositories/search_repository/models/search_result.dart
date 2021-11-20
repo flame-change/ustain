@@ -4,10 +4,9 @@ part 'search_result.g.dart';
 
 @JsonSerializable()
 class SearchResult extends Equatable {
-  const SearchResult(this.keyword, this.magazines, this.brands, this.products);
+  const SearchResult(this.keyword, this.brands, this.products);
 
   final String? keyword;
-  final List? magazines;
   final List? products;
   final List? brands;
 
@@ -17,5 +16,5 @@ class SearchResult extends Equatable {
   Map<String, dynamic> toJson() => _$SearchResultToJson(this);
 
   @override
-  List<Object?> get props => [keyword, products, magazines, products];
+  List<Object?> get props => [keyword, products, products];
 }
