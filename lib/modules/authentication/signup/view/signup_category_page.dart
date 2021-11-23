@@ -47,9 +47,15 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
           title: mainLogo(),
         ),
         bottomNavigationBar: PlainButton(
-          onPressed: () => _signupCubit.updateUserProfile(
-              nickName: _signupCubit.state.nickName.value.toString(),
-              categories: selectedCategory),
+          onPressed: () {
+            if(selectedCategory.length==0) {
+              showTopSnackBar(context, CustomSnackBar.error(message: "관심사를 선택해주세요."));
+            } else {
+              _signupCubit.updateUserProfile(
+                  nickName: _signupCubit.state.nickName.value.toString(),
+                  categories: selectedCategory);
+            }
+          },
           text: "설정 완료",
           height: 10,
         ),
@@ -119,6 +125,12 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                                     width: Adaptive.h(10),
                                     height: Adaptive.h(10),
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return Image.network(
+                                          'https://via.placeholder.com/150/000000/FFFFFF/?text=Image');
+                                    },
                                   ),
                                   Padding(
                                       padding:
