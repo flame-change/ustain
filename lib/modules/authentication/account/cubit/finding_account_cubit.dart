@@ -24,16 +24,16 @@ class FindingAccountCubit extends Cubit<FindingAccountState> {
 
   Future<void> findingPhoneNumberVerifyRequest() async {
     if (!state.phoneNumber.valid) return;
-    emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
-    ApiResult<Map> apiResult = await _authenticationRepository
-        .requestFindingPassWordVerifier(
+    // emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
+    ApiResult<Map> apiResult = await _authenticationRepository.requestFindingPassWordVerifier(
       phoneNumber: state.phoneNumber.value.replaceAll("-", ""),
     );
     apiResult.when(success: (Map? response) {
       emit(state.copyWith(phoneNumberVerifyStatus: VerifyStatus.request));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
-        errorMessage: NetworkExceptions.getErrorMessage(error!)
+        errorMessage: NetworkExceptions.getErrorMessage(error!),
+        phoneNumberVerifyStatus: VerifyStatus.unverified
       ));
     });
   }

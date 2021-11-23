@@ -36,13 +36,11 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
         body: BlocListener<FindingAccountCubit, FindingAccountState>(
             bloc: _findingAccountCubit,
             listener: (context, state) async {
-              if (state.errorMessage != null && state.errorMessage.length > 0) {
-                showTopSnackBar(context,
-                    CustomSnackBar.error(message: "${state.errorMessage}"));
+              if (state.errorMessage.length > 0) {
+                showTopSnackBar(context, CustomSnackBar.error(message: "${state.errorMessage}"));
               } else {
                 if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-                  if (state.phoneNumberVerifyStatus !=
-                      phoneNumberVerifyStatus) {
+                  if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
                     showTopSnackBar(context,
                         CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
                     Navigator.push(
@@ -54,12 +52,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                                     child: FindingPasswordRequestPage())));
                   } else if (state.republishFlag) {
                     showTopSnackBar(context,
-                        CustomSnackBar.info(message: "인증번호가 재발급 되었습니다.."));
+                        CustomSnackBar.info(message: "인증번호가 재발급 되었습니다."));
                   }
-                  setState(() {
-                    phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-                    _findingAccountCubit.republishAuthInit();
-                  });
                 }
                 if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
                     state.expiredFlag) {
@@ -123,8 +117,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                       PlainButton(
                           text: "인증번호 전송",
                           onPressed: () {
-                            _findingAccountCubit
-                                .findingPhoneNumberVerifyRequest();
+                            _findingAccountCubit.findingPhoneNumberVerifyRequest();
                           })
                     ]))
               ]),
