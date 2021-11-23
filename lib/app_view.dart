@@ -1,16 +1,16 @@
-import 'package:aroundus_app/modules/authentication/authentication.dart';
-import 'package:aroundus_app/routes.dart';
-import 'package:aroundus_app/support/networks/dio_client.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:flutter_web_frame/flutter_web_frame.dart';
-import 'modules/authentication/bloc/authentication_bloc.dart';
-import 'modules/splash/splash.dart';
 import 'repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/authentication/authentication.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:aroundus_app/support/networks/dio_client.dart';
+import 'modules/authentication/bloc/authentication_bloc.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:aroundus_app/routes.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'modules/splash/splash.dart';
 import 'support/style/theme.dart';
 
 class AppView extends StatefulWidget {

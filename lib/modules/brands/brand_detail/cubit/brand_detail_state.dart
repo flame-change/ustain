@@ -20,7 +20,17 @@ class BrandDetailState extends Equatable {
   final String? Id, description, logo, name;
 
   @override
-  List<Object?> get props => [error, isLoaded, isLoading, magazines, products];
+  List<Object?> get props => [
+        error,
+        isLoaded,
+        isLoading,
+        magazines,
+        products,
+        Id,
+        name,
+        logo,
+        description
+      ];
 
   BrandDetailState copyWith(
       {String? Id,

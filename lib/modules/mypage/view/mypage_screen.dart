@@ -44,7 +44,6 @@ class _MyPageScreen extends State<MyPageScreen> {
                           padding: EdgeInsets.only(right: sizeWidth(5)),
                           child: Icon(Icons.settings, color: Colors.white)))
                 ]),
-            body: SingleChildScrollView(
-                physics: ClampingScrollPhysics(), child: MyPage())));
+            body: SingleChildScrollView(child: MyPage())));
   }
 }
