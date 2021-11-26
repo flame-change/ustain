@@ -73,9 +73,8 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                TitleWithUnderline(
-                    title: 'BRAND MAGS',
-                    subtitle: '${state.name!}에서 직접 운영하는 브랜드 스토리입니다.'),
+                Text('BRAND MAGS',
+                    style: Theme.of(context).textTheme.headline5),
                 SizedBox(height: sizeWidth(5)),
                 state.magazines!.length != 0
                     ? TodaysMagazine(
@@ -92,9 +91,8 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TitleWithUnderline(
-                        title: 'PRODUCTS',
-                        subtitle: '${state.name!}의 상품을 만나보세요.'),
+                    Text('PRODUCTS',
+                        style: Theme.of(context).textTheme.headline5),
                     SizedBox(height: sizeWidth(5)),
                     productList.length != 0
                         ? GridView.count(

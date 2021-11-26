@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
 import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
@@ -85,7 +86,8 @@ class _StorePageState extends State<StorePage>
                           GestureDetector(
                               onTap: () => user_status ==
                                       AuthenticationStatus.authenticated
-                                  ? Navigator.pushNamed(context, 'cart_screen')
+                                  ? Navigator.pushNamed(
+                                      context, CartScreen.routeName)
                                   : showLoginNeededDialog(context),
                               child: SvgPicture.asset("assets/icons/cart.svg"))
                         ])
