@@ -62,7 +62,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                   text: TextSpan(
                       style: TextStyle(color: Colors.white, height: 1.5),
                       children: [
-                    TextSpan(text: '어라운드어스  대표 : 김은지 / 노종혁\n'),
+                    TextSpan(text: '어라운드어스\n'),
                     TextSpan(text: '사업자등록번호: 211-36-08033 '),
                     WidgetSpan(
                         child: GestureDetector(

@@ -25,11 +25,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
   return Wrap(
     runSpacing: 20,
     children: <Widget>[
-          Text(
-            "연관상품",
-            style: TextStyle(
-                fontSize: Adaptive.sp(20), fontWeight: FontWeight.bold),
-          )
+          Text("연관상품", style: Theme.of(context).textTheme.headline5)
         ] +
         List.generate(
           products.length,

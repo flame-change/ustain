@@ -1,4 +1,5 @@
 import 'package:aroundus_app/repositories/magazine_repository/models/catalog.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -89,7 +90,7 @@ class CatalogProduct extends StatelessWidget {
                   height: 1.5,
                   fontSize: Adaptive.dp(9),
                   fontWeight: FontWeight.bold)),
-          Text(_catalogProducts['discountPrice'].toString(),
+          Text(currencyFromString(_catalogProducts['discountPrice'].toString()),
               overflow: TextOverflow.fade,
               style: TextStyle(
                   height: 1.5,
