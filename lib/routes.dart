@@ -34,7 +34,6 @@ final Map<String, WidgetBuilder> routes = {
   SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
-  AddressScreen.routeName: (context) => AddressScreen(),
   CouponScreen.routeName: (context) => CouponScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
