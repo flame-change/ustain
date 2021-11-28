@@ -13,9 +13,9 @@ import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'components/menu_widgets.dart';
 
 class MyPage extends StatefulWidget {
