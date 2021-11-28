@@ -4,7 +4,6 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 
 class User extends Equatable {
   const User({
-    this.groups,
     this.phone,
     this.email,
     this.name,
@@ -17,7 +16,6 @@ class User extends Equatable {
     this.cartCount,
   });
 
-  final String? groups;
   final String? phone;
   final String? email;
   final String? name;
@@ -31,7 +29,6 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [
-        groups,
         phone,
         email,
         name,
@@ -45,7 +42,6 @@ class User extends Equatable {
       ];
 
   User copyWith({
-    String? groups,
     String? phone,
     String? email,
     String? name,
@@ -58,7 +54,6 @@ class User extends Equatable {
     int? cartCount,
   }) {
     return User(
-      groups: groups ?? this.groups,
       phone: phone ?? this.phone,
       email: email ?? this.email,
       name: name ?? this.name,

@@ -1,4 +1,6 @@
 import 'package:aroundus_app/modules/mypage/external_link/external_link.dart';
+import 'package:aroundus_app/modules/mypage/view/components/menu_widgets.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,43 +20,40 @@ class _CompanyInfoState extends State<CompanyInfo> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         color: Colors.black,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Wrap(children: [
-              GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ExternalLink(
-                              url:
-                                  'https://rhinestone-gladiolus-89e.notion.site/b1425602b3864b129181151c266944a9/'))),
-                  child: Text('이용 약관',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold))),
-              Text('     ', style: TextStyle(color: Colors.white)),
-              GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ExternalLink(
-                              url:
-                                  'https://rhinestone-gladiolus-89e.notion.site/5a3f67e9cc7b4db7acf216a07b3559db/'))),
-                  child: Text('개인정보 처리방침',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)))
-            ]),
-            GestureDetector(
-                onTap: () => setState(() => isOpened = !isOpened),
-                child: Wrap(children: [
-                  Text('사업자 정보', style: TextStyle(color: Colors.white)),
-                  Icon(
-                    isOpened == true
-                        ? Icons.arrow_drop_up
-                        : Icons.arrow_drop_down,
-                    color: Colors.white,
-                    size: Adaptive.dp(13),
-                  )
-                ]))
-          ]),
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  SvgPicture.asset('assets/icons/aroundus.svg',
+                      height: Adaptive.dp(12)),
+                  SizedBox(height: Adaptive.dp(10)),
+                  Row(children: [
+                    GestureDetector(
+                        onTap: () => isWebRouter(context,
+                            'https://www.instagram.com/ustain.official/'),
+                        child: SvgPicture.asset('assets/icons/instagram.svg',
+                            height: Adaptive.dp(13))),
+                    SizedBox(width: sizeWidth(3)),
+                    GestureDetector(
+                        onTap: () =>
+                            isWebRouter(context, 'https://ustain.oopy.io'),
+                        child: SvgPicture.asset('assets/icons/website.svg',
+                            height: Adaptive.dp(13)))
+                  ])
+                ]),
+                GestureDetector(
+                    onTap: () => setState(() => isOpened = !isOpened),
+                    child: Wrap(children: [
+                      Text('사업자 정보', style: TextStyle(color: Colors.white)),
+                      Icon(
+                          isOpened == true
+                              ? Icons.arrow_drop_up
+                              : Icons.arrow_drop_down,
+                          color: Colors.white,
+                          size: Adaptive.dp(13))
+                    ]))
+              ]),
           if (isOpened == true)
             Column(children: [
               SizedBox(height: Adaptive.h(3)),
@@ -66,12 +65,8 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     TextSpan(text: '사업자등록번호: 211-36-08033 '),
                     WidgetSpan(
                         child: GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ExternalLink(
-                                        url:
-                                            'http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2113608033/'))),
+                            onTap: () => isWebRouter(context,
+                                'http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2113608033/'),
                             child: Text('정보 확인',
                                 style: TextStyle(
                                     color: Colors.white,
