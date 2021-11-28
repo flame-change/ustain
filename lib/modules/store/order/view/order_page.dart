@@ -61,15 +61,13 @@ class _OrderPageState extends State<OrderPage> {
                                   _couponCubit, _orderCubit)),
                           orderCompose(
                             title: "배송지/주문자 정보",
-                            child: orderAddress(context, orderTemp.address!),
+                            child: orderAddress(context, orderTemp.address!, _orderCubit),
                           ),
                           orderCompose(
                               title: "배송 요청사항",
                               child: orderDelivery(
                                   context, orderTemp.request!, _orderCubit),
                               isRequired: true),
-                          orderCompose(
-                              title: "결제 수단", child: Text("아임포트 확인할 것")),
                           orderCompose(
                               title: "결제 정보",
                               child: orderPayment(orderTemp.products!)),

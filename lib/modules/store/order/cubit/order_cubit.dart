@@ -1,3 +1,4 @@
+import 'package:aroundus_app/repositories/address_repository/models/address.dart';
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart';
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
@@ -23,16 +24,18 @@ class OrderCubit extends Cubit<OrderState> {
 
   void setDeliveryMessage(String message) {
     emit(state.copyWith(
-      orderTemp: state.orderTemp!.copyWith(request: state.orderTemp!.request!.copyWith(
-        additionalRequest: message
-      ))
-    ));
+        orderTemp: state.orderTemp!.copyWith(
+            request: state.orderTemp!.request!
+                .copyWith(additionalRequest: message))));
   }
 
   void setShippingRequest(ShippingRequest shippingRequest) {
+    emit(state.copyWith(selectedShippingRequest: shippingRequest));
+  }
+
+  void updateAddress(Address updateAddress) {
     emit(state.copyWith(
-      selectedShippingRequest: shippingRequest
-    ));
+        orderTemp: state.orderTemp!.copyWith(address: updateAddress)));
   }
 
   Future<Coupon?> getCoupon(dynamic couponId) async {
@@ -64,7 +67,8 @@ class OrderCubit extends Cubit<OrderState> {
             Id: e.Id))
         .toList();
 
-    ApiResult<OrderTemp> apiResult = await _orderRepository.createOrderTemp(orderItems);
+    ApiResult<OrderTemp> apiResult =
+        await _orderRepository.createOrderTemp(orderItems);
 
     apiResult.when(success: (OrderTemp? response) {
       emit(state.copyWith(

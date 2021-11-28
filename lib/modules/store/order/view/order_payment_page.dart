@@ -62,7 +62,27 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
               centerTitle: false,
               title: IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'login_home_screen');
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("결제를 취소합니다."),
+                            actions: [
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '');
+                                },
+                                child: Text("확인"),
+                              ),
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("취소"),
+                              ),
+                            ],
+                          );
+                        });
                   },
                   icon: Icon(Icons.arrow_back_ios_rounded)),
             ),

@@ -1,16 +1,21 @@
 import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
+import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/repositories/address_repository/models/address.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
-Widget orderAddress(BuildContext context, Address address) {
+Widget orderAddress(
+    BuildContext context, Address address, OrderCubit orderCubit) {
   return Wrap(runSpacing: 15, children: [
     GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => AddressScreen()));
+                context,
+                MaterialPageRoute(
+                    builder: (_) => AddressScreen(isOrdering: true)))
+            .then((updateAddress) => orderCubit.updateAddress(updateAddress));
       },
       child: Container(
           width: sizeWidth(100),

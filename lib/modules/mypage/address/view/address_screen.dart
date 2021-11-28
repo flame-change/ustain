@@ -8,19 +8,21 @@ import 'address_page.dart';
 class AddressScreen extends StatefulWidget {
   static String routeName = '/address_screen';
 
+  final bool isOrdering;
+
   AddressScreen({
     Key? key,
+    required this.isOrdering,
   }) : super(key: key);
-
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => AddressScreen());
-  }
 
   @override
   State<AddressScreen> createState() => _AddressScreen();
 }
 
-class _AddressScreen extends State<AddressScreen> {
+class _AddressScreen extends State<AddressScreen>
+    with SingleTickerProviderStateMixin {
+  bool? get isOrdering => this.widget.isOrdering;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +34,7 @@ class _AddressScreen extends State<AddressScreen> {
       body: BlocProvider<AddressCubit>(
         create: (context) =>
             AddressCubit(RepositoryProvider.of<AddressRepository>(context)),
-        child: AddressPage(),
+        child: AddressPage(isOrdering: isOrdering!),
       ),
     );
   }

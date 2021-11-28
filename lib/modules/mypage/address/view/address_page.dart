@@ -12,11 +12,18 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddressPage extends StatefulWidget {
+  final bool isOrdering;
+
+  const AddressPage({Key? key, required this.isOrdering}) : super(key: key);
+
   @override
   State<AddressPage> createState() => _AddressPage();
 }
 
-class _AddressPage extends State<AddressPage> {
+class _AddressPage extends State<AddressPage>
+    with SingleTickerProviderStateMixin {
+  bool get isOrdering => this.widget.isOrdering;
+
   late AddressCubit _addressCubit;
 
   int selected = 0;
@@ -80,23 +87,40 @@ class _AddressPage extends State<AddressPage> {
                     ])),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: GestureDetector(
-                        onTap: () {
-                          _addressCubit.updateDefaultAddress(
-                              state.addresses![selected].id!);
-                        },
-                        child: Container(
-                          height: Adaptive.h(10),
-                          width: sizeWidth(100),
-                          color: Colors.black,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "설정완료",
-                            style: theme.textTheme.button!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      child: isOrdering
+                          ? GestureDetector( // 결제 페이지인 경우
+                              onTap: () {
+                               Navigator.pop(context, state.addresses![selected]);
+                              },
+                              child: Container(
+                                height: Adaptive.h(10),
+                                width: sizeWidth(100),
+                                color: Colors.black,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "선택하기",
+                                  style: theme.textTheme.button!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                _addressCubit.updateDefaultAddress(
+                                    state.addresses![selected].id!);
+                              },
+                              child: Container(
+                                height: Adaptive.h(10),
+                                width: sizeWidth(100),
+                                color: Colors.black,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "설정완료",
+                                  style: theme.textTheme.button!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
                     )
                   ],
                 );
