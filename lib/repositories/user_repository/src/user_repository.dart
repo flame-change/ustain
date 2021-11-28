@@ -29,7 +29,6 @@ class UserRepository {
 
       return ApiResult.success(
           data: User(
-        groups: response['groups'],
         phone: response['phone'],
         email: response['email'],
         name: response['name'],
@@ -52,7 +51,6 @@ class UserRepository {
 
       return ApiResult.success(
           data: User(
-        groups: response['groups'],
         phone: response['phone'],
         email: response['email'],
         name: response['name'],
