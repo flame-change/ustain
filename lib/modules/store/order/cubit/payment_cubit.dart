@@ -24,4 +24,12 @@ class PaymentCubit extends Cubit<PaymentState> {
       ));
     });
   }
+
+  void failureOrder(String? error){
+    emit(state.copyWith(
+      isLoaded: false,
+      isLoading: true,
+      errorMessage: error
+    ));
+  }
 }
