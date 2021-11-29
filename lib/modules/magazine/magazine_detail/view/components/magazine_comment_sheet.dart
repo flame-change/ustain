@@ -119,7 +119,9 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
         dense: true,
         contentPadding: EdgeInsets.zero,
         // leading: Text("${comment.id}"),
-        leading: CircleAvatar(child: Image.asset('assets/images/ut-face.png')),
+        leading: CircleAvatar(
+            backgroundColor: HexColor("${user!.group![0]['hexCode']}"),
+            backgroundImage: AssetImage('assets/images/ut-face.png')),
         title: Text("${comment.name}",
             style: theme.textTheme.subtitle2!
                 .copyWith(fontWeight: FontWeight.bold)),

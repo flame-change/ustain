@@ -9,10 +9,10 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
+import 'package:aroundus_app/support/style/theme.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -139,16 +139,16 @@ class _MyPageState extends State<MyPage> {
           height: sizeWidth(13),
           margin: EdgeInsets.only(right: sizeWidth(5)),
           child: CircleAvatar(
+              backgroundColor: HexColor("${user.group![0]['hexCode']}"),
               backgroundImage: AssetImage('assets/images/ut-face.png')),
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
+          decoration: BoxDecoration(shape: BoxShape.circle)),
       Flexible(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
             Row(children: [
-              Text("Lv.5 ${user.name}",
+              Text("Lv.${user.group![0]['level']} ${user.name}",
                   style: Theme.of(context)
                       .textTheme
                       .headline5!

@@ -36,6 +36,7 @@ class UserRepository {
         sexChoices: response['sexChoices'],
         birthday: response['birthday'],
         selectedCategories: response['categories'],
+        group: response['group'],
         categories: category.map((e) => MagazineCategory.fromJson(e)).toList(),
       ));
     } on Exception {
@@ -57,6 +58,7 @@ class UserRepository {
         profileArticle: response['profileArticle'],
         sexChoices: response['sexChoices'],
         birthday: response['birthday'],
+        group: response['group'],
         selectedCategories: response['categories'],
         categories: category.map((e) => MagazineCategory.fromJson(e)).toList(),
       ));
