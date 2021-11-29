@@ -7,6 +7,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:iamport_flutter/model/payment_data.dart';
 
 /* 아임포트 결제 모듈을 불러옵니다. */
@@ -46,15 +47,17 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
       "coupon": _orderCubit.state.orderTemp!.coupon!.toJson(),
       "agreed": _orderCubit.state.agreed
     };
-    _paymentCubit.createOrder(orderTemp);
+    _paymentCubit
+        .createOrder(orderTemp)
+        .catchError((error) => _paymentCubit.failureOrder(error));
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
-        if (state.isLoaded) {
-          return IamportPayment(
+    return BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
+      if (state.isLoaded) {
+        return SafeArea(
+          child: IamportPayment(
             appBar: AppBar(
               backgroundColor: Colors.white,
               iconTheme: IconThemeData(color: Colors.black),
@@ -140,12 +143,36 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                   MaterialPageRoute(
                       builder: (context) => OrderResultPage(result)));
             },
-          );
+          ),
+        );
+      } else {
+        if (state.errorMessage != null) {
+          return Scaffold(
+              body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                    child: Text("${state.errorMessage}",
+                        style: theme.textTheme.headline4)),
+                PlainButton(
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "", (route) => false);
+                  },
+                  text: "홈 화면으로 이동",
+                  width: 50,
+                )
+              ],
+            ),
+          ));
         } else {
           return Center(child: CircularProgressIndicator());
         }
-      }),
-    );
+      }
+    });
   }
 
 // @override
