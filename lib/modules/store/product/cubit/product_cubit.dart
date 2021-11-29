@@ -29,7 +29,7 @@ class ProductCubit extends Cubit<ProductState> {
     });
   }
 
-  Future<void> createCard(Product product, List<CartTemp> cartTemp) async {
+  Future<List?> createCard(Product product, List<CartTemp> cartTemp) async {
     List<dynamic> body = cartTemp
         .map((temp) => {
               "product": product.Id,
@@ -38,13 +38,15 @@ class ProductCubit extends Cubit<ProductState> {
             })
         .toList();
 
-    print(body);
-    ApiResult<Map> apiResult = await _productRepository.createCard(body);
+    ApiResult<List> apiResult = await _productRepository.createCard(body);
 
-    apiResult.when(success: (Map? mapResponse) {
-      print(mapResponse);
+    apiResult.when(success: (List? listResponse) {
+      // return listResponse!.map((e) => e[]);
+      return [];
+      // List<String> newCartIds = mapResponse!.
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(error: error));
     });
   }
 }
+// [{product: HS3QRF3RPGHK, variant: 2FQRP8P8H7NA, quantity: 1}, {product: HS3QRF3RPGHK, variant: G8PMPUDXYSWP, quantity: 1}]

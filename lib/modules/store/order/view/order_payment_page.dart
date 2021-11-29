@@ -47,6 +47,9 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
       "coupon": _orderCubit.state.orderTemp!.coupon!.toJson(),
       "agreed": _orderCubit.state.agreed
     };
+
+    print(orderTemp);
+
     _paymentCubit
         .createOrder(orderTemp)
         .catchError((error) => _paymentCubit.failureOrder(error));
