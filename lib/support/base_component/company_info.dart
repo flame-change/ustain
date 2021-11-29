@@ -25,8 +25,8 @@ class _CompanyInfoState extends State<CompanyInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SvgPicture.asset('assets/icons/aroundus.svg',
-                      height: Adaptive.dp(12)),
+                  Image.asset('assets/images/aroundus.png',
+                      height: Adaptive.dp(13)),
                   SizedBox(height: Adaptive.dp(10)),
                   Row(children: [
                     GestureDetector(
@@ -45,7 +45,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 GestureDetector(
                     onTap: () => setState(() => isOpened = !isOpened),
                     child: Wrap(children: [
-                      Text('사업자 정보', style: TextStyle(color: Colors.white)),
+                      Text('사업자 정보',
+                          style: TextStyle(
+                              color: Colors.white, fontSize: Adaptive.dp(13))),
                       Icon(
                           isOpened == true
                               ? Icons.arrow_drop_up

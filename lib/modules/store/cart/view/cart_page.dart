@@ -35,6 +35,8 @@ class _CartPageState extends State<CartPage> {
             selector: (state) => state.carts,
             builder: (context, carts) {
               if (carts != null && carts.isNotEmpty) {
+                print(carts.map((e) => e.Id));
+
                 bool allCheckBox = !(carts
                     .map((cart) => cart.isChecked)
                     .toList()

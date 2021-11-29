@@ -1,20 +1,19 @@
-import 'package:aroundus_app/modules/mypage/achievements/view/achievement_screen.dart';
-import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
-import 'package:aroundus_app/modules/orderForm/view/orderForm_list_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_divider.dart';
+import 'package:aroundus_app/modules/mypage/achievements/view/achievement_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_info.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/modules/mypage/external_link/external_link.dart';
+import 'package:aroundus_app/modules/orderForm/view/orderForm_list_screen.dart';
+import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:dart_json_mapper/dart_json_mapper.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'components/menu_widgets.dart';
@@ -99,35 +98,16 @@ class _MyPageState extends State<MyPage> {
             menuWidget("HELP CENTER"),
             subMenuWidget(
                 title: "1:1 문의하기",
-                tapped: () => kIsWeb == false
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                ExternalLink(url: 'https://ed83p.channel.io/')))
-                    : launch('https://ed83p.channel.io/')),
+                tapped: () =>
+                    isWebRouter(context, 'https://ed83p.channel.io/')),
             subMenuWidget(
                 title: "FAQ",
-                tapped: () => kIsWeb == false
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => ExternalLink(
-                                url:
-                                    'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')))
-                    : launch(
-                        'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')),
+                tapped: () => isWebRouter(context,
+                    'https://rhinestone-gladiolus-89e.notion.site/FAQ-444b0a8fd5104a5b858ffbfd33c1f516')),
             subMenuWidget(
                 title: "공지사항",
-                tapped: () => kIsWeb == false
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => ExternalLink(
-                                url:
-                                    'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558')))
-                    : launch(
-                        'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558'))
+                tapped: () => isWebRouter(context,
+                    'https://rhinestone-gladiolus-89e.notion.site/d6afc3caa00b48cfa1cd7d4773bec558'))
           ])),
           SizedBox(height: Adaptive.h(5)),
           if (is_authenticated)
@@ -158,26 +138,55 @@ class _MyPageState extends State<MyPage> {
           width: sizeWidth(13),
           height: sizeWidth(13),
           margin: EdgeInsets.only(right: sizeWidth(5)),
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: theme.accentColor)),
-      RichText(
-          text: TextSpan(style: theme.textTheme.headline4, children: [
-        TextSpan(text: "${user.name} ", style: TextStyle(color: Colors.white)),
-        TextSpan(
-            text: "\nLV5. 채식맨 ",
-            style: theme.textTheme.bodyText2!
-                .copyWith(height: 1.5, color: Color(0xFF979797))),
-        WidgetSpan(
-            child: SizedBox(
-                height: Adaptive.dp(18),
-                width: Adaptive.dp(10),
-                child: IconButton(
-                    padding: EdgeInsets.only(bottom: Adaptive.dp(10)),
-                    onPressed: () => _authenticationRepository.signOut(),
-                    iconSize: Adaptive.dp(10),
-                    icon: Icon(Icons.info),
-                    color: Colors.grey)))
-      ]))
+          child: CircleAvatar(
+              backgroundColor: HexColor("${user.group![0]['hexCode']}"),
+              backgroundImage: AssetImage('assets/images/ut-face.png')),
+          decoration: BoxDecoration(shape: BoxShape.circle)),
+      Flexible(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            Row(children: [
+              Text("Lv.${user.group![0]['level']} ${user.name}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Colors.white)),
+              SizedBox(
+                  height: Adaptive.dp(18),
+                  width: Adaptive.dp(10),
+                  child: IconButton(
+                      padding: EdgeInsets.only(
+                          left: Adaptive.dp(3), bottom: Adaptive.dp(10)),
+                      onPressed: () => showTopSnackBar(
+                          context,
+                          CustomSnackBar.info(
+                              message:
+                                  "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
+                      iconSize: Adaptive.dp(10),
+                      icon: Icon(Icons.info),
+                      color: Colors.grey))
+            ]),
+            SizedBox(height: Adaptive.h(1)),
+            RichText(
+                text: TextSpan(children: [
+              for (var category in user.selectedCategories!)
+                WidgetSpan(
+                    child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                        margin: EdgeInsets.only(right: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade700,
+                            borderRadius: BorderRadius.circular(sizeWidth(5))),
+                        child: Text(category.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(color: Colors.white))))
+            ]))
+          ]))
     ]));
   }
 

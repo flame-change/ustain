@@ -30,7 +30,7 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen>
         firstPage: BlocProvider(
             create: (_) => MagazineCubit(
                 RepositoryProvider.of<MagazineRepository>(context)),
-            child: LeftPageWire(child: MagazineHomePage())),
+            child: MagazineHomePage()),
         secondPage: BlocProvider(
             create: (_) => MagazineScrappedCubit(
                 RepositoryProvider.of<MagazineRepository>(context)),

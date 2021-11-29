@@ -61,7 +61,8 @@ class _OrderPageState extends State<OrderPage> {
                                   _couponCubit, _orderCubit)),
                           orderCompose(
                             title: "배송지/주문자 정보",
-                            child: orderAddress(context, orderTemp.address!, _orderCubit),
+                            child: orderAddress(
+                                context, orderTemp.address!, _orderCubit),
                           ),
                           orderCompose(
                               title: "배송 요청사항",
@@ -109,8 +110,12 @@ class _OrderPageState extends State<OrderPage> {
                     child: GestureDetector(
                       onTap: () {
                         if (state.agreed &&
-                            state.selectedShippingRequest != null) {
+                            state.selectedShippingRequest != null &&
+                            state.orderTemp!.address!.id != null) {
                           // Order 생성 페이지로 이동
+
+                          print(state.orderTemp!.address);
+                          print(state.orderTemp!.address!.id != null);
 
                           Navigator.pushAndRemoveUntil(
                               context,

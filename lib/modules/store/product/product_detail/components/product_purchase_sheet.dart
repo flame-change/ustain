@@ -1,4 +1,6 @@
+import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -279,7 +281,21 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // TODO 오더 쪽 하면 작업
+                      List<Cart> carts = cartTempList.map((c) => Cart(
+                        brand: _product.brand!.name,
+                        productId: _product.Id,
+                        productName: _product.name,
+                        productThumbnail: _product.thumbnail,
+                        variantId: c.variants!.Id!,
+                        variantName: c.variants!.variantName,
+                        salePrice: c.variants!.discountPrice,
+                        quantity: c.quantity,
+                      )).toList();
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrderScreen(carts)));
                     },
                     child: Container(
                         color: Colors.black,
