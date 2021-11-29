@@ -48,7 +48,6 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
               return ListView.builder(
                 controller: _scrollController,
                 itemBuilder: (context, index) => Container(
-                  // height: Adaptive.h(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -57,8 +56,8 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                           style: theme.textTheme.headline5!
                               .copyWith(color: Color(0xFF606060))),
                       Blank(height: 6, color: Colors.black),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
+                      Wrap(
+                        runSpacing: 10,
                         children: List.generate(
                             state.orderForm![index].itemsInfo!.length,
                             (i) => GestureDetector(
@@ -79,16 +78,14 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                                     height: Adaptive.h(10),
                                     child: Row(
                                       children: [
-                                        Expanded(
-                                          child: Container(
-                                            width: 85,
-                                            height: 85,
-                                            margin: EdgeInsets.only(right: 10),
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        "${state.orderForm![index].itemsInfo![i].productThumbnail}"))),
-                                          ),
+                                        Container(
+                                          width: 85,
+                                          height: 85,
+                                          margin: EdgeInsets.only(right: 10),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      "${state.orderForm![index].itemsInfo![i].productThumbnail}"),fit: BoxFit.cover)),
                                         ),
                                         Expanded(
                                           flex: 3,
@@ -146,7 +143,8 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                                     ),
                                   ),
                                 )),
-                      )
+                      ),
+                      Blank()
                     ],
                   ),
                 ),
