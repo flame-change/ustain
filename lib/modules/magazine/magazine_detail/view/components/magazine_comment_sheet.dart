@@ -57,137 +57,115 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Adaptive.h(85),
-      child: PageWire(
-        child: BlocSelector<MagazineCommentCubit, MagazineCommentState,
-            List<MagazineComment>?>(
-          selector: (state) => state.comments,
-          builder: (context, comments) {
-            if (comments != null) {
-              return Column(
-                children: [
-                  Container(
-                    height: 50,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                      color: Colors.black38,
-                    ))),
-                    child: Text(
-                      "댓글",
-                      style: theme.textTheme.bodyText1!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 9,
-                    child: comments.isNotEmpty
-                        ? ListView.builder(
-                            controller: _scrollController,
-                            itemCount: comments.length,
-                            itemBuilder: (context, index) => Column(
-                              children: [
-                                commentTile(comments[index]),
-                                comments[index].reply != null
-                                    ? Column(
-                                        children: List.generate(
-                                          comments[index].reply!.length,
-                                          (i) => Padding(
-                                            padding: EdgeInsets.only(
-                                                left: sizeWidth(5)),
-                                            child: commentTile(
-                                                comments[index].reply![i]),
-                                          ),
-                                        ),
-                                      )
-                                    : SizedBox(height: 0)
-                              ],
-                            ),
-                          )
-                        : Center(
-                            heightFactor: Adaptive.h(100),
-                            child: Text("댓글이 없습니다.")),
-                  ),
-                  Flexible(child: messageWidget())
-                ],
-              );
-            } else {
-              return Center(child: Text("잠시만 기다려주세요."));
-            }
-          },
-        ),
-      ),
-    );
+        height: Adaptive.h(85),
+        child: PageWire(
+            child: BlocSelector<MagazineCommentCubit, MagazineCommentState,
+                    List<MagazineComment>?>(
+                selector: (state) => state.comments,
+                builder: (context, comments) {
+                  if (comments != null) {
+                    return Column(
+                      children: [
+                        Container(
+                            height: 50,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(bottom: 10),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(color: Colors.black38))),
+                            child: Text("댓글",
+                                style: theme.textTheme.bodyText1!
+                                    .copyWith(fontWeight: FontWeight.w600))),
+                        Flexible(
+                            flex: 9,
+                            child: comments.isNotEmpty
+                                ? ListView.builder(
+                                    controller: _scrollController,
+                                    itemCount: comments.length,
+                                    itemBuilder: (context, index) =>
+                                        Column(children: [
+                                          commentTile(comments[index]),
+                                          comments[index].reply != null
+                                              ? Column(
+                                                  children: List.generate(
+                                                      comments[index]
+                                                          .reply!
+                                                          .length,
+                                                      (i) => Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left:
+                                                                      sizeWidth(
+                                                                          5)),
+                                                          child: commentTile(
+                                                              comments[index]
+                                                                  .reply![i]))))
+                                              : SizedBox(height: 0)
+                                        ]))
+                                : Center(
+                                    heightFactor: Adaptive.h(100),
+                                    child: Text("댓글이 없습니다."))),
+                        Flexible(child: messageWidget())
+                      ],
+                    );
+                  } else {
+                    return Center(child: Text("잠시만 기다려주세요."));
+                  }
+                })));
   }
 
   Widget commentTile(MagazineComment comment) {
     return ListTile(
-      dense: true,
-      contentPadding: EdgeInsets.zero,
-      // leading: Text("${comment.id}"),
-      leading: Image.network('https://via.placeholder.com/80'),
-      title: Text(
-        "${comment.name}",
-        style: theme.textTheme.subtitle2!.copyWith(fontWeight: FontWeight.bold),
-      ),
-      trailing: user!.name == comment.name
-          ? InkWell(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("댓글을 삭제하시겠습니까?"),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () {
-                              _magazineCommentCubit
-                                  .deleteMagazineComment(comment);
-                              Navigator.pop(context);
-                            },
-                            child: Text("확인"),
-                          ),
-                        ],
-                      );
-                    });
-              },
-              child: Text("삭제"),
-            )
-          : SizedBox(
-              height: 0,
-            ),
-      // TODO 날짜 유틸 후 수정
-      subtitle: Wrap(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
-        runSpacing: 10,
-        children: [
-          Text(
-            "${comment.content}",
-            style: theme.textTheme.subtitle2,
-          ),
-          Row(
-            children: [
-              Text("${comment.createdAt}  ",
-                  style:
-                      theme.textTheme.subtitle2!.copyWith(color: Colors.grey)),
-              InkWell(
+        dense: true,
+        contentPadding: EdgeInsets.zero,
+        // leading: Text("${comment.id}"),
+        leading: CircleAvatar(child: Image.asset('assets/images/ut-face.png')),
+        title: Text("${comment.name}",
+            style: theme.textTheme.subtitle2!
+                .copyWith(fontWeight: FontWeight.bold)),
+        trailing: user!.name == comment.name
+            ? InkWell(
                 onTap: () {
-                  focusNode.requestFocus();
-
-                  setState(() {
-                    editComment = comment;
-                  });
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text("댓글을 삭제하시겠습니까?"),
+                            actions: [
+                              MaterialButton(
+                                  onPressed: () {
+                                    _magazineCommentCubit
+                                        .deleteMagazineComment(comment);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("확인"))
+                            ]);
+                      });
                 },
-                child: Text("답글 달기"),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+                child: Text("삭제"))
+            : SizedBox(height: 0),
+        // TODO 날짜 유틸 후 수정
+        subtitle: Wrap(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              Text("${comment.content}", style: theme.textTheme.subtitle2),
+              Row(children: [
+                Text("${comment.createdAt}  ",
+                    style: theme.textTheme.subtitle2!
+                        .copyWith(color: Colors.grey)),
+                InkWell(
+                    onTap: () {
+                      focusNode.requestFocus();
+
+                      setState(() {
+                        editComment = comment;
+                      });
+                    },
+                    child: Text("답글 달기"))
+              ])
+            ]));
   }
 
   Widget messageWidget() {
@@ -224,9 +202,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                     },
                     minWidth: 60,
                     height: 60,
-                    child: Text(
-                      "등록",
-                      style: TextStyle(color: theme.accentColor),
-                    )))));
+                    child: Text("등록",
+                        style: TextStyle(color: theme.accentColor))))));
   }
 }

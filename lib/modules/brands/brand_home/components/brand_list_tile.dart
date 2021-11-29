@@ -32,6 +32,7 @@ class BrandListTile extends StatelessWidget {
                 context, BrandDetailScreen.routeName,
                 arguments: {'Id': this.Id}),
             leading: CircleAvatar(
+                backgroundColor: Colors.white,
                 backgroundImage: NetworkImage(this.logo!),
                 radius: sizeWidth(8)),
             title:

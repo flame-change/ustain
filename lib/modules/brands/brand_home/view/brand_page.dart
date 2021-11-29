@@ -1,9 +1,11 @@
 import 'package:aroundus_app/modules/brands/brand_home/components/brand_list_tile.dart';
+import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/brands/brand_home/cubit/brand_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class BrandPage extends StatefulWidget {
   @override
@@ -38,26 +40,34 @@ class _BrandPageState extends State<BrandPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageWire(
-        child: SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-          TitleWithUnderline(
-              title: 'TRENDING BRANDS', subtitle: '인기 브랜드의 진솔한 뒷이야기.'),
-          BlocBuilder<BrandCubit, BrandListState>(builder: (context, state) {
-            if (state.isLoaded == true) {
-              return Column(children: [
-                for (var brand in state.brands!)
-                  BrandListTile(
-                      Id: brand.Id,
-                      name: brand.name,
-                      description: brand.description,
-                      logo: brand.logo)
-              ]);
-            }
-            return Center(child: CircularProgressIndicator());
-          })
-        ])));
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        PageWire(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TitleWithUnderline(
+                    title: 'TRENDING BRANDS', subtitle: '인기 브랜드의 진솔한 뒷이야기.'),
+                BlocBuilder<BrandCubit, BrandListState>(
+                    builder: (context, state) {
+                  if (state.isLoaded == true) {
+                    return Column(children: [
+                      for (var brand in state.brands!)
+                        BrandListTile(
+                            Id: brand.Id,
+                            name: brand.name,
+                            description: brand.description,
+                            logo: brand.logo)
+                    ]);
+                  }
+                  return Center(child: CircularProgressIndicator());
+                })
+              ]),
+        ),
+        SizedBox(height: Adaptive.h(5)),
+        CompanyInfo()
+      ],
+    ));
   }
 }
