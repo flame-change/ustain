@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
+import 'package:aroundus_app/modules/mypage/update_profile/view/update_profile_screen.dart';
 import 'package:aroundus_app/modules/search/search_result/view/search_result_screen.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
@@ -8,7 +9,7 @@ import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
 import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
-import 'modules/mypage/achievements/view/achievement_screen.dart';
+import 'modules/mypage/user_info/view/user_info_screen.dart';
 import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'modules/brands/brand_home/view/brand_screen.dart';
 import 'modules/authentication/login_home/view/view.dart';
@@ -37,11 +38,12 @@ final Map<String, WidgetBuilder> routes = {
   CouponScreen.routeName: (context) => CouponScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
-  AchievementScreen.routeName: (context) => AchievementScreen(),
   BrandScreen.routeName: (context) => BrandScreen(),
   BrandDetailScreen.routeName: (context) => BrandDetailScreen(),
   SearchScreen.routeName: (context) => SearchScreen(),
-  SearchResultScreen.routeName: (context) => SearchResultScreen()
+  SearchResultScreen.routeName: (context) => SearchResultScreen(),
+  UserInfoScreen.routeName: (context) => UserInfoScreen(),
+  UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
 };
 
 Route routePage(Widget nextPage) {

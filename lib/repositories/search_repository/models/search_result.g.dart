@@ -17,6 +17,6 @@ SearchResult _$SearchResultFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$SearchResultToJson(SearchResult instance) =>
     <String, dynamic>{
       'keyword': instance.keyword,
-      'brands': instance.brands,
       'products': instance.products,
+      'brands': instance.brands,
     };
