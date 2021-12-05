@@ -1,15 +1,15 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
-import 'package:aroundus_app/modules/authentication/account/view/view.dart';
-import 'package:aroundus_app/modules/authentication/signup/signup.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:aroundus_app/modules/authentication/account/view/view.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/modules/authentication/signup/signup.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class FindingPasswordPage extends StatefulWidget {
   static String routeName = '/finding_password_page';
@@ -37,10 +37,12 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
             bloc: _findingAccountCubit,
             listener: (context, state) async {
               if (state.errorMessage.length > 0) {
-                showTopSnackBar(context, CustomSnackBar.error(message: "${state.errorMessage}"));
+                showTopSnackBar(context,
+                    CustomSnackBar.error(message: "${state.errorMessage}"));
               } else {
                 if (state.phoneNumberVerifyStatus == VerifyStatus.request) {
-                  if (state.phoneNumberVerifyStatus != phoneNumberVerifyStatus) {
+                  if (state.phoneNumberVerifyStatus !=
+                      phoneNumberVerifyStatus) {
                     showTopSnackBar(context,
                         CustomSnackBar.info(message: "인증번호가 발급 되었습니다."));
                     Navigator.push(
@@ -117,7 +119,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                       PlainButton(
                           text: "인증번호 전송",
                           onPressed: () {
-                            _findingAccountCubit.findingPhoneNumberVerifyRequest();
+                            _findingAccountCubit
+                                .findingPhoneNumberVerifyRequest();
                           })
                     ]))
               ]),

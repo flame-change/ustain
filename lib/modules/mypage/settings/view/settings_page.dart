@@ -2,7 +2,6 @@ import 'package:aroundus_app/repositories/authentication_repository/src/authenti
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/view/components//menu_widgets.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
-import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -45,62 +44,42 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      SizedBox(height: Adaptive.h(3)),
       Container(
-          padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
           child: Column(children: [
-            menuWidget("ACCOUNT"),
-            subMenuWidget(
-                title: "닉네임 수정",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                }),
-            subMenuWidget(
-                title: "휴대폰 번호 수정",
-                tapped: () {
-                  is_authenticated ? null : showLoginNeededDialog(context);
-                })
-          ])),
+        menuWidget("SERVICE"),
+        subMenuWidget(
+            title: "개인정보 처리방침",
+            tapped: () => isWebRouter(context,
+                'https://rhinestone-gladiolus-89e.notion.site/5a3f67e9cc7b4db7acf216a07b3559db')),
+        subMenuWidget(
+            title: "서비스 이용약관",
+            tapped: () => isWebRouter(context,
+                'https://rhinestone-gladiolus-89e.notion.site/b1425602b3864b129181151c266944a9'))
+      ])),
+      SizedBox(height: Adaptive.h(3)),
       Container(
-          padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
           child: Column(children: [
-            menuWidget("SERVICE"),
-            subMenuWidget(
-                title: "개인정보 처리방침",
-                tapped: () => isWebRouter(context,
-                    'https://rhinestone-gladiolus-89e.notion.site/5a3f67e9cc7b4db7acf216a07b3559db')),
-            subMenuWidget(
-                title: "서비스 이용약관",
-                tapped: () => isWebRouter(context,
-                    'https://rhinestone-gladiolus-89e.notion.site/b1425602b3864b129181151c266944a9'))
-          ])),
-      Container(
-          padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
-          child: Column(children: [
-            menuWidget("ETC."),
-            Container(
-                width: sizeWidth(100),
-                padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
-                decoration:
-                    BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('버전 정보',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Adaptive.dp(15))),
-                      Text(_packageInfo.version,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Adaptive.dp(15)))
-                    ]))
-          ])),
+        menuWidget("ETC."),
+        Container(
+            width: sizeWidth(100),
+            padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
+            decoration:
+                BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('버전 정보',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: Adaptive.dp(15))),
+                  Text(_packageInfo.version,
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: Adaptive.dp(15)))
+                ]))
+      ])),
+      if (is_authenticated) logoutMethod(context),
       if (is_authenticated)
         GestureDetector(
             onTap: () {
@@ -123,5 +102,23 @@ class _SettingsPageState extends State<SettingsPage> {
                         color: Colors.grey,
                         decoration: TextDecoration.underline))))
     ]);
+  }
+
+  GestureDetector logoutMethod(BuildContext context) {
+    return GestureDetector(
+        onTap: () => showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
+                MaterialButton(
+                    onPressed: () => _authenticationRepository.logOut(),
+                    child: Text("확인"))
+              ]);
+            }),
+        child: Center(
+            child: Text('로그아웃',
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: Colors.grey,
+                    decoration: TextDecoration.underline))));
   }
 }

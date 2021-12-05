@@ -1,12 +1,12 @@
-import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
-import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
-import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_page.dart';
-import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_scrapped_page.dart';
-import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/components/main_screen_wire.dart';
-import 'package:flutter/material.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_scrapped_page.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_page.dart';
+import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
+import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class MagazineHomeScreen extends StatefulWidget {
   static String routeName = '/magazine_home_screen';

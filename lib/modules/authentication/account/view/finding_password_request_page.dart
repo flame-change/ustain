@@ -1,15 +1,15 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/account/view/view.dart';
-import 'package:aroundus_app/modules/authentication/signup/signup.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:aroundus_app/modules/authentication/signup/signup.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:aroundus_app/support/style/theme.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class FindingPasswordRequestPage extends StatefulWidget {
   static String routeName = '/finding_password_request_page';
@@ -55,16 +55,6 @@ class _FindingPasswordRequestPageState
                             value: _findingAccountCubit,
                             child: FindingPasswordResultPage())));
               }
-
-              // 만료된 경우 - 현재 사용 안됨
-              // if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
-              //     state.expiredFlag) {
-              //   showTopSnackBar(context,
-              //       CustomSnackBar.info(message: '인증번호 입력 시간이 만료 되었습니다.'));
-              //   setState(() {
-              //     _findingAccountCubit.expiredFlagFalse();
-              //   });
-              // }
 
               // 일치하지 않는 경우
               if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
