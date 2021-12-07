@@ -7,10 +7,9 @@ import 'coupon_page.dart';
 
 class CouponScreen extends StatefulWidget {
   static String routeName = '/coupon_screen';
+  final bool? isMypage;
 
-  CouponScreen({
-    Key? key,
-  }) : super(key: key);
+  CouponScreen({this.isMypage = false});
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => CouponScreen());
@@ -32,7 +31,7 @@ class _CouponScreen extends State<CouponScreen> {
       body: BlocProvider<CouponCubit>(
         create: (context) =>
             CouponCubit(RepositoryProvider.of<CouponRepository>(context)),
-        child: CouponPage(),
+        child: CouponPage(isMypage: widget.isMypage),
       ),
     );
   }

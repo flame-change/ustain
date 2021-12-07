@@ -1,5 +1,5 @@
-import 'package:aroundus_app/modules/mypage/update_profile/view/update_profile_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/mypage/update_profile/view/update_profile_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_divider.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_info.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
@@ -7,6 +7,7 @@ import 'package:aroundus_app/modules/mypage/user_info/view/user_info_screen.dart
 import 'package:aroundus_app/modules/orderForm/view/orderForm_list_screen.dart';
 import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
+import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
@@ -57,7 +58,7 @@ class _MyPageState extends State<MyPage> {
             PageWire(child: LoginNeeded()),
           if (is_authenticated)
             Container(
-                height: Adaptive.h(10),
+                height: Adaptive.h(7),
                 decoration:
                     BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
                 child: orderInfo()),
@@ -225,9 +226,13 @@ class _MyPageState extends State<MyPage> {
 
   Widget orderInfo() {
     return Row(children: [
-      UserProfileInfo(context: context, count: 3, title: '쿠폰', onTap: () {}),
+      UserProfileInfo(
+          context: context,
+          title: 'MY COUPONS',
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => CouponScreen(isMypage: true)))),
       UserVerticalDivider(),
-      UserProfileInfo(context: context, count: 4, title: '후기 작성', onTap: () {})
+      UserProfileInfo(context: context, title: 'MY REVIEWS', onTap: () {})
     ]);
   }
 }

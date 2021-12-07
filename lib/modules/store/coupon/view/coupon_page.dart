@@ -11,6 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'components/coupon_tile_widget.dart';
 
 class CouponPage extends StatefulWidget {
+  final bool? isMypage;
+
+  CouponPage({this.isMypage});
+
   @override
   State<CouponPage> createState() => _CouponPage();
 }
@@ -42,7 +46,7 @@ class _CouponPage extends State<CouponPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("COUPON", style: theme.textTheme.headline3),
+                          Text("COUPON", style: theme.textTheme.headline4),
                           // GestureDetector(
                           //   onTap: () {
                           //     Navigator.push(
@@ -74,25 +78,26 @@ class _CouponPage extends State<CouponPage> {
                                             coupons[index]!, selected == index),
                                       )))),
                     ])),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: GestureDetector(
-                        onTap: () async {
-                          Navigator.pop(context, coupons[selected]!.Id!);
-                        },
-                        child: Container(
-                          height: Adaptive.h(10),
-                          width: sizeWidth(100),
-                          color: Colors.black,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "설정완료",
-                            style: theme.textTheme.button!
-                                .copyWith(color: Colors.white),
+                    if (widget.isMypage == false)
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: GestureDetector(
+                          onTap: () async {
+                            Navigator.pop(context, coupons[selected]!.Id!);
+                          },
+                          child: Container(
+                            height: Adaptive.h(10),
+                            width: sizeWidth(100),
+                            color: Colors.black,
+                            alignment: Alignment.center,
+                            child: Text(
+                              "설정완료",
+                              style: theme.textTheme.button!
+                                  .copyWith(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
-                    )
+                      )
                   ],
                 );
               } else {
