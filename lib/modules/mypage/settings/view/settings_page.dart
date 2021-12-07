@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/view/components//menu_widgets.dart';
@@ -79,7 +80,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           fontSize: Adaptive.dp(15)))
                 ]))
       ])),
-      if (is_authenticated) logoutMethod(context),
       if (is_authenticated)
         GestureDetector(
             onTap: () {
@@ -90,6 +90,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       MaterialButton(
                           onPressed: () {
                             _authenticationRepository.signOut();
+                            Navigator.pushNamed(
+                                context, LoginHomeScreen.routeName);
                           },
                           child: Text("확인"))
                     ]);
@@ -102,23 +104,5 @@ class _SettingsPageState extends State<SettingsPage> {
                         color: Colors.grey,
                         decoration: TextDecoration.underline))))
     ]);
-  }
-
-  GestureDetector logoutMethod(BuildContext context) {
-    return GestureDetector(
-        onTap: () => showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
-                MaterialButton(
-                    onPressed: () => _authenticationRepository.logOut(),
-                    child: Text("확인"))
-              ]);
-            }),
-        child: Center(
-            child: Text('로그아웃',
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: Colors.grey,
-                    decoration: TextDecoration.underline))));
   }
 }

@@ -3,15 +3,10 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 
 class UserProfileInfo extends StatelessWidget {
   const UserProfileInfo(
-      {Key? key,
-      required this.context,
-      required this.count,
-      required this.title,
-      this.onTap})
+      {Key? key, required this.context, required this.title, this.onTap})
       : super(key: key);
 
   final BuildContext context;
-  final int count;
   final String title;
   final GestureTapCallback? onTap;
 
@@ -20,16 +15,10 @@ class UserProfileInfo extends StatelessWidget {
     return Expanded(
         child: GestureDetector(
       onTap: onTap,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('$count', style: Theme.of(context).textTheme.headline4),
-            SizedBox(height: Adaptive.h(2)),
-            Text('$title',
-                style: TextStyle(
-                    fontSize: Adaptive.dp(10), fontWeight: FontWeight.w400))
-          ]),
+      child: Center(
+          child: Text('$title',
+              style: TextStyle(
+                  fontSize: Adaptive.dp(13), fontWeight: FontWeight.w700))),
     ));
   }
 }
