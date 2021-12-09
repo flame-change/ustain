@@ -2,7 +2,6 @@ import 'package:aroundus_app/repositories/address_repository/models/address.dart
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/coupon_repository/models/coupon.dart';
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
-import 'package:aroundus_app/repositories/order_repository/models/order.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order_item.dart';
 import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
@@ -36,6 +35,16 @@ class OrderCubit extends Cubit<OrderState> {
   void updateAddress(Address updateAddress) {
     emit(state.copyWith(
         orderTemp: state.orderTemp!.copyWith(address: updateAddress)));
+  }
+
+  Future cancelOrder(String? orderId, String? reason) async {
+    ApiResult apiResult = await _orderRepository.cancelOrder(orderId, reason);
+
+    apiResult.when(success: (dynamic response) {
+      return response;
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
   }
 
   Future<Coupon?> getCoupon(dynamic couponId) async {

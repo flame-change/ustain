@@ -7,24 +7,24 @@ import 'product_purchase_sheet.dart';
 
 Widget productSaleBottomNavigator(
     BuildContext context, ProductCubit _productCubit) {
-  return Container(
-      height: Adaptive.h(10),
-      width: sizeWidth(100),
-      decoration: BoxDecoration(
-          color: Colors.black, border: Border.all(color: Colors.black)),
-      child: Center(
-          child: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25))),
-                    builder: (context) => BlocProvider<ProductCubit>.value(
-                        value: _productCubit, child: ProductPurchaseSheet()),
-                    isScrollControlled: true);
-              },
+  return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25))),
+            builder: (context) => BlocProvider<ProductCubit>.value(
+                value: _productCubit, child: ProductPurchaseSheet()),
+            isScrollControlled: true);
+      },
+      child: Container(
+          height: Adaptive.h(10),
+          width: sizeWidth(100),
+          decoration: BoxDecoration(
+              color: Colors.black, border: Border.all(color: Colors.black)),
+          child: Center(
               child: Text('구매하기',
                   style: Theme.of(context)
                       .textTheme

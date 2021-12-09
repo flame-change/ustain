@@ -50,7 +50,7 @@ class _AddressPage extends State<AddressPage>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("ADDRESS", style: theme.textTheme.headline3),
+                          Text("ADDRESS", style: theme.textTheme.headline4),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -88,9 +88,11 @@ class _AddressPage extends State<AddressPage>
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: isOrdering
-                          ? GestureDetector( // 결제 페이지인 경우
+                          ? GestureDetector(
+                              // 결제 페이지인 경우
                               onTap: () {
-                               Navigator.pop(context, state.addresses![selected]);
+                                Navigator.pop(
+                                    context, state.addresses![selected]);
                               },
                               child: Container(
                                 height: Adaptive.h(10),

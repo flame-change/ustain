@@ -68,14 +68,14 @@ class _HomePageState extends State<HomePage> {
         // 카탈로그 시작 전
         SliverToBoxAdapter(
             child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(sizeWidth(5)),
-              child: TitleWithUnderline(
-                  title: "MD's PICK", subtitle: '어스테인 MD의 추천 상품을 모아봤어요.')),
-        )),
+                context: context,
+                removeTop: true,
+                child: Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(sizeWidth(5)),
+                    child: TitleWithUnderline(
+                        title: "MD's PICK",
+                        subtitle: '어스테인 MD의 추천 상품을 모아봤어요.')))),
         // 카탈로그 카드 들어갈 곳
         state.catalogMagazines != null
             ? SliverList(

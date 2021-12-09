@@ -1,12 +1,15 @@
-import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter/gestures.dart';
 import 'package:formz/formz.dart';
 
 class SignupForm extends StatefulWidget {
@@ -18,6 +21,10 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   late SignupCubit _signupCubit;
+  bool _isAdult = false;
+  bool _agreeUsage = false;
+  bool _personalInfo = false;
+  bool _agreeAll = false;
 
   @override
   void initState() {
@@ -79,9 +86,113 @@ class _SignupFormState extends State<SignupForm> {
                         ),
                         _PasswordInput(),
                         _ConfirmPasswordInput(),
-                        _SignUpButton()
+                        _agreementWidget(context),
+                        signupButton()
                       ])))
             ]))));
+  }
+
+  BlocBuilder<SignupCubit, SignupState> signupButton() {
+    return BlocBuilder<SignupCubit, SignupState>(builder: (context, state) {
+      return state.status.isSubmissionInProgress
+          ? Center(
+              child: const CircularProgressIndicator(),
+            )
+          : PlainButton(
+              onPressed: state.password.valid &&
+                      state.confirmedPassword.valid &&
+                      _isAdult == true &&
+                      _personalInfo == true &&
+                      _agreeUsage == true
+                  ? () => context.read<SignupCubit>().signUpFormSubmitted(state)
+                  : null,
+              text: '회원가입');
+    });
+  }
+
+  Container _agreementWidget(BuildContext context) {
+    return Container(
+        color: Colors.grey.shade100,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Center(
+              child: CheckboxListTile(
+                  value: _agreeAll,
+                  title: Row(children: [
+                    Spacer(),
+                    Text('전체 동의', style: TextStyle(fontSize: Adaptive.dp(12)))
+                  ]),
+                  secondary: Text('약관 동의',
+                      style: Theme.of(context).textTheme.headline6),
+                  onChanged: (value) => setState(() {
+                        _agreeAll = value!;
+                        _isAdult = value;
+                        _agreeUsage = value;
+                        _personalInfo = value;
+                      }))),
+          Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade100),
+                  color: Colors.white),
+              padding: EdgeInsets.symmetric(horizontal: sizeWidth(2)),
+              child: Column(children: [
+                CheckboxListTile(
+                    value: _isAdult,
+                    title: Text('(필수) 14세 이상입니다.',
+                        style: TextStyle(fontSize: Adaptive.dp(12))),
+                    onChanged: (value) => setState(() => _isAdult = value!)),
+                CheckboxListTile(
+                    value: _agreeUsage,
+                    title: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              isScrollControlled: false,
+                              isDismissible: true,
+                              backgroundColor: Colors.white,
+                              context: context,
+                              builder: (context) => WebView(
+                                  gestureRecognizers: Set()
+                                    ..add(Factory<
+                                            VerticalDragGestureRecognizer>(
+                                        () => VerticalDragGestureRecognizer())),
+                                  initialUrl: 'https://www.naver.com/',
+                                  javascriptMode: JavascriptMode.unrestricted,
+                                  onPageFinished: (finish) {
+                                    setState(() {});
+                                  }));
+                        },
+                        child: Text('(필수) 서비스 이용약관',
+                            style: TextStyle(
+                                fontSize: Adaptive.dp(12),
+                                decoration: TextDecoration.underline))),
+                    onChanged: (value) => setState(() => _agreeUsage = value!)),
+                CheckboxListTile(
+                    value: _personalInfo,
+                    title: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              isScrollControlled: false,
+                              isDismissible: true,
+                              backgroundColor: Colors.white,
+                              context: context,
+                              builder: (context) => WebView(
+                                  gestureRecognizers: Set()
+                                    ..add(Factory<
+                                            VerticalDragGestureRecognizer>(
+                                        () => VerticalDragGestureRecognizer())),
+                                  initialUrl: 'https://www.naver.com/',
+                                  javascriptMode: JavascriptMode.unrestricted,
+                                  onPageFinished: (finish) {
+                                    setState(() {});
+                                  }));
+                        },
+                        child: Text('(필수) 개인정보 수집 및 이용동의',
+                            style: TextStyle(
+                                fontSize: Adaptive.dp(12),
+                                decoration: TextDecoration.underline))),
+                    onChanged: (value) =>
+                        setState(() => _personalInfo = value!))
+              ]))
+        ]));
   }
 }
 
@@ -131,22 +242,5 @@ class _ConfirmPasswordInput extends StatelessWidget {
                       ? '비밀번호가 일치하지 않습니다.'
                       : null));
         });
-  }
-}
-
-class _SignUpButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignupCubit, SignupState>(builder: (context, state) {
-      return state.status.isSubmissionInProgress
-          ? Center(
-              child: const CircularProgressIndicator(),
-            )
-          : PlainButton(
-              onPressed: state.password.valid && state.confirmedPassword.valid
-                  ? () => context.read<SignupCubit>().signUpFormSubmitted(state)
-                  : null,
-              text: '회원가입');
-    });
   }
 }

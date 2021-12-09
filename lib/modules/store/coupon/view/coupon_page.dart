@@ -39,73 +39,51 @@ class _CouponPage extends State<CouponPage> {
             selector: (state) => state.coupons!,
             builder: (context, coupons) {
               if (coupons != null && coupons.isNotEmpty) {
-                return Stack(
-                  children: [
-                    PageWire(
-                        child: Column(children: [
-                      Row(
+                return Stack(children: [
+                  PageWire(
+                      child: Column(children: [
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("COUPON", style: theme.textTheme.headline4),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (_) => BlocProvider<AddressCubit>.value(
-                          //               value: _addressCubit,
-                          //               child: AddressFormPage(),
-                          //             )));
-                          //   },
-                          //   child: Text("배송지 추가",
-                          //       style: theme.textTheme.headline5!.copyWith(
-                          //           decoration: TextDecoration.underline)),
-                          // ),
-                        ],
-                      ),
-                      SingleChildScrollView(
-                          padding: EdgeInsets.symmetric(vertical: 30),
-                          child: Column(
-                              children: List.generate(
-                                  coupons.length,
-                                  (index) => GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selected = index;
-                                          });
-                                        },
-                                        child: couponTile(_couponCubit,
-                                            coupons[index]!, selected == index),
-                                      )))),
-                    ])),
-                    if (widget.isMypage == false)
-                      Align(
+                          Text("COUPON", style: theme.textTheme.headline4)
+                        ]),
+                    SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(vertical: 30),
+                        child: Column(
+                            children: List.generate(
+                                coupons.length,
+                                (index) => GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selected = index;
+                                        });
+                                      },
+                                      child: couponTile(_couponCubit,
+                                          coupons[index]!, selected == index),
+                                    ))))
+                  ])),
+                  if (widget.isMypage == false)
+                    Align(
                         alignment: Alignment.bottomCenter,
                         child: GestureDetector(
-                          onTap: () async {
-                            Navigator.pop(context, coupons[selected]!.Id!);
-                          },
-                          child: Container(
-                            height: Adaptive.h(10),
-                            width: sizeWidth(100),
-                            color: Colors.black,
-                            alignment: Alignment.center,
-                            child: Text(
-                              "설정완료",
-                              style: theme.textTheme.button!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
-                  ],
-                );
+                            onTap: () async {
+                              Navigator.pop(context, coupons[selected]!.Id!);
+                            },
+                            child: Container(
+                                height: Adaptive.h(10),
+                                width: sizeWidth(100),
+                                color: Colors.black,
+                                alignment: Alignment.center,
+                                child: Text("설정완료",
+                                    style: theme.textTheme.button!
+                                        .copyWith(color: Colors.white)))))
+                ]);
               } else {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                       Container(
                         child: SvgPicture.asset(
                           'assets/images/empty_cart.svg',
@@ -113,13 +91,9 @@ class _CouponPage extends State<CouponPage> {
                           color: theme.accentColor,
                         ),
                       ),
-                      Text(
-                        "아무것도 없어요!",
-                        style: theme.textTheme.headline2!.copyWith(height: 2),
-                      ),
-                    ],
-                  ),
-                );
+                      Text("아무것도 없어요!",
+                          style: theme.textTheme.headline2!.copyWith(height: 2))
+                    ]));
               }
             });
       } else {
