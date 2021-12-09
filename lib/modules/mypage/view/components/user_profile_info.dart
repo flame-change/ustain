@@ -13,12 +13,12 @@ class UserProfileInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: GestureDetector(
-      onTap: onTap,
-      child: Center(
-          child: Text('$title',
-              style: TextStyle(
-                  fontSize: Adaptive.dp(13), fontWeight: FontWeight.w700))),
-    ));
+        child: MaterialButton(
+            onPressed: onTap,
+            child: Center(
+                child: Text('$title',
+                    style: TextStyle(
+                        fontSize: Adaptive.dp(13),
+                        fontWeight: FontWeight.w700)))));
   }
 }

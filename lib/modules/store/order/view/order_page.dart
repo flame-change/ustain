@@ -8,9 +8,12 @@ import 'package:aroundus_app/repositories/order_repository/src/order_repository.
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'views.dart';
 
@@ -39,134 +42,157 @@ class _OrderPageState extends State<OrderPage> {
         return BlocSelector<OrderCubit, OrderState, OrderTemp>(
             selector: (state) => state.orderTemp!,
             builder: (context, orderTemp) {
-              return Stack(
-                children: [
-                  SingleChildScrollView(
+              return Stack(children: [
+                SingleChildScrollView(
                     padding: EdgeInsets.only(bottom: Adaptive.h(10)),
                     child: PageWire(
-                      child: Wrap(
-                        children: [
-                          orderCompose(
-                            title: "주문상품 (${orderTemp.products!.length}건)",
-                            child: Column(
+                        child: Wrap(children: [
+                      orderCompose(
+                          title: "주문상품 (${orderTemp.products!.length}건)",
+                          child: Column(
                               children: List.generate(
                                   orderTemp.products!.length,
-                                  (index) => orderItemTile(
-                                      _orderCubit, orderTemp.products![index])),
-                            ),
-                          ),
-                          orderCompose(
-                              title: "쿠폰 사용",
-                              child: orderCoupon(context, orderTemp.coupon,
-                                  _couponCubit, _orderCubit)),
-                          orderCompose(
-                            title: "배송지/주문자 정보",
-                            child: orderAddress(
-                                context, orderTemp.address!, _orderCubit),
-                          ),
-                          orderCompose(
-                              title: "배송 요청사항",
-                              child: orderDelivery(
-                                  context, orderTemp.request!, _orderCubit),
-                              isRequired: true),
-                          orderCompose(
-                              title: "결제 정보",
-                              child: orderPayment(orderTemp.products!)),
-                          Column(
+                                  (index) => orderItemTile(_orderCubit,
+                                      orderTemp.products![index])))),
+                      orderCompose(
+                          title: "쿠폰 사용",
+                          child: orderCoupon(context, orderTemp.coupon,
+                              _couponCubit, _orderCubit)),
+                      orderCompose(
+                          title: "배송지/주문자 정보",
+                          child: orderAddress(
+                              context, orderTemp.address!, _orderCubit)),
+                      orderCompose(
+                          title: "배송 요청사항",
+                          child: orderDelivery(
+                              context, orderTemp.request!, _orderCubit),
+                          isRequired: true),
+                      orderCompose(
+                          title: "결제 정보",
+                          child: orderPayment(
+                              context, orderTemp.products!, _orderCubit)),
+                      Column(children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("주문 내역 확인 동의 및 결제 동의",
-                                      style: theme.textTheme.bodyText1),
-                                  IconButton(
-                                      onPressed: () {
-                                        _orderCubit.setAgreed();
-                                      },
-                                      icon: Icon(
-                                        state.agreed
-                                            ? Icons.check_box_rounded
-                                            : Icons
-                                                .check_box_outline_blank_rounded,
-                                        color: Color(0xFFC4C4C4),
-                                      )),
-                                ],
-                              ),
-                              Text(
-                                  "주문 상품의 상세 정보, 가격, 환불정책 등을  확인하였으며, 이에 동의합니다.",
-                                  style: TextStyle(
-                                      color: Color(0xFFC4C4C4),
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: Adaptive.dp(12))),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Align(
+                              Text("주문 내역 확인 동의 및 결제 동의 (필수)",
+                                  style: theme.textTheme.bodyText2),
+                              IconButton(
+                                  onPressed: () => _orderCubit.setAgreed(),
+                                  icon: Icon(
+                                      state.agreed
+                                          ? Icons.check_box_rounded
+                                          : Icons
+                                              .check_box_outline_blank_rounded,
+                                      color: Color(0xFFC4C4C4)))
+                            ]),
+                        Text("주문 상품의 상세 정보, 가격, 환불정책 등을  확인하였으며, 이에 동의합니다.",
+                            style: TextStyle(
+                                color: Color(0xFFC4C4C4),
+                                fontWeight: FontWeight.w400,
+                                fontSize: Adaptive.dp(12))),
+                        Container(
+                            padding: EdgeInsets.only(top: Adaptive.h(1)),
+                            child: Column(children: [
+                              agreeRow(title: '개인정보 수집/이용 동의'),
+                              agreeRow(title: '개인정보 제3자 제공 동의'),
+                              agreeRow(
+                                  title: '결제대행 서비스 이용 약관',
+                                  url:
+                                      'https://pages.tosspayments.com/terms/onboarding')
+                            ]))
+                      ])
+                    ]))),
+                Align(
                     alignment: Alignment.bottomCenter,
                     child: GestureDetector(
-                      onTap: () {
-                        if (state.agreed &&
-                            state.selectedShippingRequest != null &&
-                            state.orderTemp!.address!.id != null) {
-                          // Order 생성 페이지로 이동
+                        onTap: () {
+                          if (state.agreed &&
+                              state.selectedShippingRequest != null &&
+                              state.orderTemp!.address!.id != null) {
+                            // Order 생성 페이지로 이동
 
-                          print(state.orderTemp!.address);
-                          print(state.orderTemp!.address!.id != null);
+                            print(state.orderTemp!.address);
+                            print(state.orderTemp!.address!.id != null);
 
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => MultiBlocProvider(providers: [
-                                        BlocProvider<OrderCubit>.value(
-                                            value: _orderCubit),
-                                        BlocProvider(
-                                            create: (_) => PaymentCubit(
-                                                RepositoryProvider.of<
-                                                    OrderRepository>(context)))
-                                      ], child: OrderPaymentPage())),
-                              (route) => false);
-                          // OrderResultPage
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("필수 항목을 채워주세요."),
-                                  actions: [
-                                    MaterialButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("확인"),
-                                    ),
-                                  ],
-                                );
-                              });
-                        }
-                      },
-                      child: Container(
-                        height: Adaptive.h(10),
-                        width: sizeWidth(100),
-                        color: Colors.black,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "결제하기",
-                          style: theme.textTheme.button!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        MultiBlocProvider(providers: [
+                                          BlocProvider<OrderCubit>.value(
+                                              value: _orderCubit),
+                                          BlocProvider(
+                                              create: (_) => PaymentCubit(
+                                                  RepositoryProvider.of<
+                                                          OrderRepository>(
+                                                      context)))
+                                        ], child: OrderPaymentPage())),
+                                (route) => false);
+                            // OrderResultPage
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                      title: Text("필수 항목을 채워주세요."),
+                                      actions: [
+                                        MaterialButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("확인"))
+                                      ]);
+                                });
+                          }
+                        },
+                        child: Container(
+                            height: Adaptive.h(10),
+                            width: sizeWidth(100),
+                            color: Colors.black,
+                            alignment: Alignment.center,
+                            child: Text("결제하기",
+                                style: theme.textTheme.button!
+                                    .copyWith(color: Colors.white)))))
+              ]);
             });
       } else {
         return Center(child: CircularProgressIndicator());
       }
     });
+  }
+}
+
+class agreeRow extends StatelessWidget {
+  const agreeRow({this.title, this.url = 'https://www.naver.com'});
+
+  final String? title;
+  final String? url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Text(title!,
+          style:
+              TextStyle(color: Color(0xFFC4C4C4), fontSize: Adaptive.dp(12))),
+      GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+                isScrollControlled: false,
+                isDismissible: true,
+                backgroundColor: Colors.white,
+                context: context,
+                builder: (context) => WebView(
+                    gestureRecognizers: Set()
+                      ..add(Factory<VerticalDragGestureRecognizer>(
+                          () => VerticalDragGestureRecognizer())),
+                    initialUrl: url!,
+                    javascriptMode: JavascriptMode.unrestricted));
+          },
+          child: Text('확인',
+              style: TextStyle(
+                  fontSize: Adaptive.dp(12),
+                  decoration: TextDecoration.underline)))
+    ]);
   }
 }

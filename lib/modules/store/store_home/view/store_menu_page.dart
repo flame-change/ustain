@@ -62,7 +62,7 @@ class _StoreMenuPage extends State<StoreMenuPage>
                                   Container(
                                       width: double.infinity,
                                       padding: EdgeInsets.symmetric(
-                                          vertical: Adaptive.h(2)),
+                                          vertical: Adaptive.h(4)),
                                       child: Center(
                                           child: Text(
                                               "${_storeCubit.state.collections![i].name.toUpperCase()}",

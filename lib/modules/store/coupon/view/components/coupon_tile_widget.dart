@@ -24,8 +24,17 @@ Widget couponTile(CouponCubit couponCubit, Coupon coupon, bool isSelected) {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   margin: EdgeInsets.only(left: 15),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 3,
+                            offset: Offset(1, 1))
+                      ],
+                      borderRadius: BorderRadius.circular(sizeWidth(5)),
+                      border: Border.all(color: Colors.black),
+                      color: Colors.white),
                   child: Wrap(
                     runSpacing: 15,
                     children: [

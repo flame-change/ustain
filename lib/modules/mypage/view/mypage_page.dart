@@ -142,7 +142,7 @@ class _MyPageState extends State<MyPage> {
             }
           }),
       subMenuWidget(
-          title: "주문 / 취소내역",
+          title: "주문 내역",
           tapped: () {
             if (is_authenticated) {
               Navigator.push(context,
@@ -152,7 +152,7 @@ class _MyPageState extends State<MyPage> {
             }
           }),
       subMenuWidget(
-          title: "내 리뷰",
+          title: "취소 / 환불 내역",
           tapped: () {
             is_authenticated ? null : showLoginNeededDialog(context);
           })
