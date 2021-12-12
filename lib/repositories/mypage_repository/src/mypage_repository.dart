@@ -17,7 +17,7 @@ class MypageRepository {
     }
   }
 
-  Future<ApiResult<Map>> updateMypageInfo(updateInfo) async {
+  Future<ApiResult<Map<String, dynamic>>> updateMypageInfo(updateInfo) async {
     try {
       var response = await _dioClient.postWithAuth('/api/v1/mypage/info/user/',
           data: updateInfo);

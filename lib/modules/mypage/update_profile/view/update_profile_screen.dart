@@ -19,14 +19,18 @@ class UpdateProfileScreen extends StatefulWidget {
 }
 
 class _UpdateProfileScreen extends State<UpdateProfileScreen> {
+
+  late MypageCubit _mypageCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _mypageCubit = MypageCubit(RepositoryProvider.of<MypageRepository>(context));
+    }
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (context) =>
-                  MypageCubit(RepositoryProvider.of<MypageRepository>(context)))
-        ],
+    return BlocProvider.value(value: _mypageCubit,
         child: Scaffold(
           backgroundColor: Colors.grey.shade100,
           appBar: AppBar(
@@ -51,9 +55,12 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                   color: Colors.black, border: Border.all(color: Colors.black)),
               child: Center(
                   child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _mypageCubit.updateMypageInfo();
+                      },
                       child: Text('수정 완료',
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .headline5!
                               .copyWith(color: Colors.white))))),

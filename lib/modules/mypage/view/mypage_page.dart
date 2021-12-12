@@ -1,3 +1,5 @@
+import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
+import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/mypage/update_profile/view/update_profile_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/components/user_profile_divider.dart';
@@ -103,7 +105,19 @@ class _MyPageState extends State<MyPage> {
           tapped: () => is_authenticated == true
               ? Navigator.pushNamed(context, UpdateProfileScreen.routeName)
               : showLoginNeededDialog(context)),
-      subMenuWidget(title: "비밀번호 수정", tapped: () {})
+      subMenuWidget(title: "비밀번호 수정", tapped: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) =>
+                  BlocProvider<FindingAccountCubit>(
+                    create: (context) => FindingAccountCubit(
+                      RepositoryProvider.of<AuthenticationRepository>(context),
+                    ),
+                    child: FindingPasswordPage(),
+                  ),
+            ));
+      })
     ])));
   }
 

@@ -17,6 +17,49 @@ class MypageCubit extends Cubit<MypageState> {
 
   final MypageRepository _mypageRepository;
 
+  void updateSex(String? sexChoice) {
+    Map<String, dynamic> updateMypageInfo =  {
+        "group": state.user!["group"],
+        "phone": state.user!["phone"],
+        "name": state.user!["name"],
+        "profileArticle": state.user!["profileArticle"],
+        "sexChoices": sexChoice,
+        "birthday": state.user!["birthday"],
+        "categories": state.user!["categories"],
+    };
+    emit(state.copyWith(user: updateMypageInfo));
+  }
+
+  void updateName(String? name) {
+    print(state.user);
+
+    Map<String, dynamic> updateMypageInfo =  {
+      "group": state.user!["group"],
+      "phone": state.user!["phone"],
+      "name": name,
+      "profileArticle": state.user!["profileArticle"],
+      "sexChoices": state.user!["sexChoices"],
+      "birthday": state.user!["birthday"],
+      "categories": state.user!["categories"],
+    };
+    emit(state.copyWith(user: updateMypageInfo));
+  }
+
+  void updateBirthDay(String? dateTime) {
+    print(state.user);
+
+    Map<String, dynamic> updateMypageInfo =  {
+      "group": state.user!["group"],
+      "phone": state.user!["phone"],
+      "name": state.user!["name"],
+      "profileArticle": state.user!["profileArticle"],
+      "sexChoices": state.user!["sexChoices"],
+      "birthday": dateTime,
+      "categories": state.user!["categories"],
+    };
+    emit(state.copyWith(user: updateMypageInfo));
+  }
+
   Future<void> getMypageInfo() async {
     ApiResult<Mypage> apiResult = await _mypageRepository.getMyPageInfo();
 
@@ -36,28 +79,15 @@ class MypageCubit extends Cubit<MypageState> {
     });
   }
 
-  Future<void> updateMypageInfo(
-      {String? nickName, List<String>? categories}) async {
-    Map<String, dynamic> updateMypageInfo = {
-      "user": {
-        "group": [
-          {"id": 6, "level": "1", "name": "애기", "hexCode": "FFFFFF"}
-        ],
-        "phone": "01066200465",
-        "name": "은지킴",
-        "profileArticle": null,
-        "sexChoices": "FE",
-        "birthday": null,
-      },
-    };
+  Future<void> updateMypageInfo() async {
+    Map<String, dynamic> updateMypageInfo = state.user!;
 
-    ApiResult<Map> apiResult =
-        await _mypageRepository.updateMypageInfo(updateMypageInfo);
+    ApiResult<Map<String, dynamic>> apiResult = await _mypageRepository.updateMypageInfo(updateMypageInfo);
 
-    apiResult.when(
-        success: (Map? mapResponse) {},
-        failure: (NetworkExceptions? error) {
-          emit(state.copyWith(error: error));
-        });
+    apiResult.when(success: (Map<String, dynamic>? mapResponse) {
+      emit(state.copyWith(user: mapResponse));
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(error: error));
+    });
   }
 }
