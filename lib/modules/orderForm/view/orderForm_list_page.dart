@@ -3,11 +3,12 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'orderForm_page.dart';
 
 class OrderFormListPage extends StatefulWidget {
@@ -40,124 +41,186 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderFormCubit, OrderFormState>(
         builder: (context, state) {
-      return PageWire(
-        child: BlocBuilder<OrderFormCubit, OrderFormState>(
-            builder: (context, state) {
-          if (state.isLoaded) {
-            if (state.orderForm!.length > 0) {
-              return ListView.builder(
+      return PageWire(child: BlocBuilder<OrderFormCubit, OrderFormState>(
+          builder: (context, state) {
+        if (state.isLoaded) {
+          if (state.orderForm!.length > 0) {
+            return ListView.builder(
                 controller: _scrollController,
                 itemBuilder: (context, index) => Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text("${state.orderForm![index].orderDate}",
-                          style: theme.textTheme.headline5!
-                              .copyWith(color: Color(0xFF606060))),
-                      Blank(height: 6, color: Colors.black),
-                      Wrap(
-                        runSpacing: 10,
-                        children: List.generate(
-                            state.orderForm![index].itemsInfo!.length,
-                            (i) => GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => BlocProvider<
-                                                    OrderFormCubit>.value(
-                                                value: _orderFormCubit,
-                                                child: OrderFormPage(
-                                                    state.orderForm![index].Id!,
-                                                    true))));
-                                    // _orderFormCubit.getOrderForm();
-                                  },
-                                  child: Container(
-                                    width: sizeWidth(100),
-                                    height: Adaptive.h(10),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 85,
-                                          height: 85,
-                                          margin: EdgeInsets.only(right: 10),
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      "${state.orderForm![index].itemsInfo![i].productThumbnail}"),fit: BoxFit.cover)),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Stack(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "${state.orderForm![index].itemsInfo![i].status}",
-                                                    style: theme
-                                                        .textTheme.headline5!
-                                                        .copyWith(
-                                                            color: theme
-                                                                .accentColor),
-                                                  ),
-                                                  Text(
-                                                      "${state.orderForm![index].itemsInfo![i].productName}",
-                                                      style: theme
-                                                          .textTheme.headline5),
-                                                  Text(
-                                                      "${state.orderForm![index].itemsInfo![i].variantName}",
-                                                      style: theme
-                                                          .textTheme.subtitle2!
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Adaptive.dp(
-                                                                      10))),
-                                                  Text(
-                                                      "수량 : ${state.orderForm![index].itemsInfo![i].quantity}개",
-                                                      style: theme
-                                                          .textTheme.subtitle2!
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Adaptive.dp(
-                                                                      10))),
-                                                ],
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: Text(
-                                                    "${currencyFromString(state.orderForm![index].itemsInfo![i].salePrice.toString())}",
-                                                    style: theme
-                                                        .textTheme.headline5),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                      ),
-                      Blank()
-                    ],
-                  ),
-                ),
-                itemCount: state.orderForm!.length,
-              );
-            } else {
-              return Center(child: Text("주문상품이 없습니다."));
-            }
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                          Text("${state.orderForm![index].orderDate}",
+                              style: theme.textTheme.headline5!
+                                  .copyWith(color: Color(0xFF606060))),
+                          Blank(height: 6, color: Colors.black),
+                          Wrap(
+                              runSpacing: 10,
+                              children: List.generate(
+                                  state.orderForm![index].itemsInfo!.length,
+                                  (i) => orderTileWidget(
+                                      context, state, index, i))),
+                          GestureDetector(
+                              onTap: () {
+                                showTopSnackBar(
+                                    context,
+                                    CustomSnackBar.info(
+                                        message: "주문이 확정되었습니다."));
+                                _orderFormCubit.getOrderForm();
+                              },
+                              child: Container(
+                                  child: Center(child: Text('주문 확정')),
+                                  height: Adaptive.h(5),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.black)))),
+                          Blank()
+                        ])),
+                itemCount: state.orderForm!.length);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Text("주문상품이 없습니다."));
           }
-        }),
-      );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      }));
     });
+  }
+
+  GestureDetector orderTileWidget(
+      BuildContext context, OrderFormState state, int index, int i) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider<OrderFormCubit>.value(
+                      value: _orderFormCubit,
+                      child:
+                          OrderFormPage(state.orderForm![index].Id!, true))));
+          // _orderFormCubit.getOrderForm();
+        },
+        child: Column(children: [
+          Container(
+              width: sizeWidth(100),
+              height: Adaptive.h(10),
+              child: Row(children: [
+                Container(
+                    width: 85,
+                    height: 85,
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                "${state.orderForm![index].itemsInfo![i].productThumbnail}"),
+                            fit: BoxFit.cover))),
+                Expanded(
+                    flex: 3,
+                    child: Stack(children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      "${state.orderForm![index].itemsInfo![i].status}",
+                                      style: theme.textTheme.headline5!
+                                          .copyWith(color: theme.accentColor)),
+                                  InkWell(
+                                      onTap: () {
+                                        if (state
+                                                .orderForm![index]
+                                                .itemsInfo![i]
+                                                .tracking!['url'] !=
+                                            null)
+                                          showDialog(
+                                              useRootNavigator: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                    title: Text("배송 정보"),
+                                                    actions: [
+                                                      MaterialButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context),
+                                                          child: Text("확인"))
+                                                    ],
+                                                    content: DataTable(
+                                                        columns: const <
+                                                            DataColumn>[
+                                                          DataColumn(
+                                                              label: Text('구분',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w900))),
+                                                          DataColumn(
+                                                              label: Text('설명',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w900)))
+                                                        ],
+                                                        rows: [
+                                                          DataRow(cells: <
+                                                              DataCell>[
+                                                            DataCell(
+                                                                Text('배송업체')),
+                                                            DataCell(Text(state
+                                                                    .orderForm![
+                                                                        index]
+                                                                    .itemsInfo![i]
+                                                                    .tracking![
+                                                                'company']))
+                                                          ]),
+                                                          DataRow(cells: <
+                                                              DataCell>[
+                                                            DataCell(
+                                                                Text('운송장 장보')),
+                                                            DataCell(Text(state
+                                                                    .orderForm![
+                                                                        index]
+                                                                    .itemsInfo![i]
+                                                                    .tracking![
+                                                                'uid']))
+                                                          ])
+                                                        ]));
+                                              });
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3, vertical: 2),
+                                          child: Center(child: Text('배송 확인')),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.black))))
+                                ]),
+                            Text(
+                                "${state.orderForm![index].itemsInfo![i].productName}",
+                                style: theme.textTheme.headline5),
+                            Text(
+                                "${state.orderForm![index].itemsInfo![i].variantName}",
+                                style: theme.textTheme.subtitle2!
+                                    .copyWith(fontSize: Adaptive.dp(10))),
+                            Text(
+                                "수량 : ${state.orderForm![index].itemsInfo![i].quantity}개",
+                                style: theme.textTheme.subtitle2!
+                                    .copyWith(fontSize: Adaptive.dp(10)))
+                          ]),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                              "${currencyFromString(state.orderForm![index].itemsInfo![i].salePrice.toString())}",
+                              style: theme.textTheme.headline5))
+                    ]))
+              ])),
+          SizedBox(height: 10),
+        ]));
   }
 }

@@ -13,6 +13,9 @@ Widget orderPayment(
       0, (pre, cart) => pre! + (cart.quantity! * cart.salePrice!));
 
   String calculatePaymentPrice(dynamic totalPrice, dynamic discountPrice) {
+    if (discountPrice == null) {
+      discountPrice = 0;
+    }
     int paymentPrice = totalPrice.toInt() - discountPrice.toInt();
     paymentPrice < 0 ? paymentPrice = 0 : paymentPrice;
     return paymentPrice.toString();

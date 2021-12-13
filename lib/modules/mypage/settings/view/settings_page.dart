@@ -51,12 +51,15 @@ class _SettingsPageState extends State<SettingsPage> {
         menuWidget("SERVICE"),
         subMenuWidget(
             title: "개인정보 처리방침",
-            tapped: () => isWebRouter(context,
-                'https://rhinestone-gladiolus-89e.notion.site/5a3f67e9cc7b4db7acf216a07b3559db')),
+            tapped: () =>
+                isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
         subMenuWidget(
             title: "서비스 이용약관",
-            tapped: () => isWebRouter(context,
-                'https://rhinestone-gladiolus-89e.notion.site/b1425602b3864b129181151c266944a9'))
+            tapped: () => isWebRouter(context, 'https://arounduspp2.oopy.io/')),
+        subMenuWidget(
+            title: "개인정보 수집, 이용 방침",
+            tapped: () =>
+                isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
       ])),
       SizedBox(height: Adaptive.h(3)),
       Container(

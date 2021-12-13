@@ -13,32 +13,35 @@ Widget orderFormOrderItemsWidget(List<OrderItem> orderItems) {
       isExpansion: true,
       children: List.generate(
           orderItems.length,
-          (index) => Row(children: [
-                Container(
-                    width: 85,
-                    height: 85,
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                "${orderItems[index].productThumbnail}")))),
-                Flexible(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Text("${orderItems.first.productName}",
-                          style: theme.textTheme.headline5),
-                      Text("${orderItems[index].variantName}",
-                          style: theme.textTheme.subtitle2!
-                              .copyWith(fontSize: Adaptive.dp(10))),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          (index) => Container(
+                margin: EdgeInsets.only(bottom: 5),
+                child: Row(children: [
+                  Container(
+                      width: 85,
+                      height: 85,
+                      margin: EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "${orderItems[index].productThumbnail}")))),
+                  Flexible(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("수량 : ${orderItems[index].quantity}개"),
-                            Text(
-                                "${currencyFromString(orderItems[index].salePrice.toString())}",
-                                style: theme.textTheme.headline5)
-                          ])
-                    ]))
-              ])));
+                        Text("${orderItems.first.productName}",
+                            style: theme.textTheme.headline5),
+                        Text("${orderItems[index].variantName}",
+                            style: theme.textTheme.subtitle2!
+                                .copyWith(fontSize: Adaptive.dp(10))),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("수량 : ${orderItems[index].quantity}개"),
+                              Text(
+                                  "${currencyFromString(orderItems[index].salePrice.toString())}",
+                                  style: theme.textTheme.headline5)
+                            ])
+                      ]))
+                ]),
+              )));
 }
