@@ -56,12 +56,12 @@ class _MyPageState extends State<MyPage> {
                 child: myPageInfo())
           else
             PageWire(child: LoginNeeded()),
-          if (is_authenticated)
-            Container(
-                height: Adaptive.h(7),
-                decoration:
-                    BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
-                child: orderInfo()),
+          // if (is_authenticated)
+          //   Container(
+          //       height: Adaptive.h(7),
+          //       decoration:
+          //           BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
+          //       child: orderInfo()),
           SizedBox(height: sizeWidth(5)),
           shoppingWire(context),
           SizedBox(height: sizeWidth(5)),
@@ -130,6 +130,18 @@ class _MyPageState extends State<MyPage> {
         child: Column(children: [
       menuWidget("SHOPPING"),
       subMenuWidget(
+          title: "내 쿠폰",
+          tapped: () {
+            if (is_authenticated) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => CouponScreen(isMypage: true)));
+            } else {
+              showLoginNeededDialog(context);
+            }
+          }),
+      subMenuWidget(
           title: "배송지 관리",
           tapped: () {
             if (is_authenticated) {
@@ -150,11 +162,6 @@ class _MyPageState extends State<MyPage> {
             } else {
               showLoginNeededDialog(context);
             }
-          }),
-      subMenuWidget(
-          title: "취소 / 환불 내역",
-          tapped: () {
-            is_authenticated ? null : showLoginNeededDialog(context);
           })
     ]));
   }
@@ -212,7 +219,7 @@ class _MyPageState extends State<MyPage> {
         WidgetSpan(
             child: Container(
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                margin: EdgeInsets.only(right: 5),
+                margin: EdgeInsets.only(right: 5, bottom: 3),
                 decoration: BoxDecoration(
                     color: Colors.grey.shade700,
                     borderRadius: BorderRadius.circular(sizeWidth(5))),
@@ -224,15 +231,15 @@ class _MyPageState extends State<MyPage> {
     ]));
   }
 
-  Widget orderInfo() {
-    return Row(children: [
-      UserProfileInfo(
-          context: context,
-          title: 'MY COUPONS',
-          onTap: () => Navigator.push(context,
-              MaterialPageRoute(builder: (_) => CouponScreen(isMypage: true)))),
-      UserVerticalDivider(),
-      UserProfileInfo(context: context, title: 'MY REVIEWS', onTap: () {})
-    ]);
-  }
+  // Widget orderInfo() {
+  //   return Row(children: [
+  //     UserProfileInfo(
+  //         context: context,
+  //         title: 'MY COUPONS',
+  //         onTap: () => Navigator.push(context,
+  //             MaterialPageRoute(builder: (_) => CouponScreen(isMypage: true)))),
+  //     // UserVerticalDivider(),
+  //     // UserProfileInfo(context: context, title: 'MY REVIEWS', onTap: () {})
+  //   ]);
+  // }
 }
