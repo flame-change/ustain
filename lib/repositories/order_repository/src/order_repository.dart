@@ -73,4 +73,14 @@ class OrderRepository {
       return ApiResult.failure(error: NetworkExceptions.getDioException(e));
     }
   }
+
+  Future<ApiResult> approveOrder(String? orderId) async {
+    try {
+      var response = await _dioClient
+          .postWithClayful('api/v1/commerce/order/order-done/${orderId}/');
+      return ApiResult.success(data: response);
+    } catch (e) {
+      return ApiResult.failure(error: NetworkExceptions.getDioException(e));
+    }
+  }
 }

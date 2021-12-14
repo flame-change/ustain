@@ -25,59 +25,59 @@ class _BannerMagazinesState extends State<BannerMagazines> {
   @override
   Widget build(BuildContext context) {
     return Swiper(
-        onTap: (int index) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MultiBlocProvider(providers: [
-                      BlocProvider<AuthenticationBloc>(
-                          create: (context) =>
-                              BlocProvider.of<AuthenticationBloc>(context)),
-                      BlocProvider(
-                          create: (context) => MagazineDetailCubit(
-                              RepositoryProvider.of<MagazineRepository>(
-                                  context)))
-                    ], child: MagazineDetailPage(_bannerMagazines[index].id!))),
-          );
-        },
-        itemCount: _bannerMagazines.length,
-        itemBuilder: (BuildContext context, int index) =>
-            Stack(fit: StackFit.expand, children: [
-              Image.network(_bannerMagazines[index].bannerImage!,
-                  height: Adaptive.h(50) + AppBar().preferredSize.height,
-                  width: sizeWidth(100),
-                  color: Colors.black12,
-                  colorBlendMode: BlendMode.multiply,
-                  fit: BoxFit.cover),
-              Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: sizeWidth(5), vertical: sizeWidth(8)),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(_bannerMagazines[index].title!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline3!
-                                .copyWith(color: Colors.white)),
-                        SizedBox(height: Adaptive.h(1)),
-                        Text(_bannerMagazines[index].subtitle!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(color: Colors.white))
-                      ]))
-            ]),
-        pagination: new SwiperCustomPagination(
-            builder: (BuildContext context, SwiperPluginConfig config) {
-          return Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                  margin: EdgeInsets.all(sizeWidth(5)),
-                  child: LinearProgressIndicator(
-                      value: (config.activeIndex + 1) / config.itemCount,
-                      valueColor: AlwaysStoppedAnimation(theme.accentColor))));
-        }));
+      onTap: (int index) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MultiBlocProvider(providers: [
+                    BlocProvider<AuthenticationBloc>(
+                        create: (context) =>
+                            BlocProvider.of<AuthenticationBloc>(context)),
+                    BlocProvider(
+                        create: (context) => MagazineDetailCubit(
+                            RepositoryProvider.of<MagazineRepository>(context)))
+                  ], child: MagazineDetailPage(_bannerMagazines[index].id!))),
+        );
+      },
+      itemCount: _bannerMagazines.length,
+      itemBuilder: (BuildContext context, int index) =>
+          Stack(fit: StackFit.expand, children: [
+        Image.network(_bannerMagazines[index].bannerImage!,
+            height: Adaptive.h(50) + AppBar().preferredSize.height,
+            width: sizeWidth(100),
+            color: Colors.black12,
+            colorBlendMode: BlendMode.multiply,
+            fit: BoxFit.cover),
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: sizeWidth(5), vertical: sizeWidth(8)),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(_bannerMagazines[index].title!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.white)),
+                  SizedBox(height: Adaptive.h(1)),
+                  Text(_bannerMagazines[index].subtitle!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Colors.white))
+                ]))
+      ]),
+      // pagination: new SwiperCustomPagination(
+      //     builder: (BuildContext context, SwiperPluginConfig config) {
+      //   return Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: Container(
+      //           margin: EdgeInsets.all(sizeWidth(5)),
+      //           child: LinearProgressIndicator(
+      //               value: (config.activeIndex + 1) / config.itemCount,
+      //               valueColor: AlwaysStoppedAnimation(theme.accentColor))));
+      // })
+    );
   }
 }

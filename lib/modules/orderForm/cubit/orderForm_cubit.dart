@@ -47,7 +47,22 @@ class OrderFormCubit extends Cubit<OrderFormState> {
         await _orderRepository.getOrderFormById(orderId);
 
     apiResult.when(success: (OrderForm? response) {
-      emit(state.copyWith(orderForm: [response!], isLoading: false, isLoaded: true));
+      emit(state
+          .copyWith(orderForm: [response!], isLoading: false, isLoaded: true));
+    }, failure: (NetworkExceptions? error) {
+      emit(state.copyWith(
+        error: error,
+        errorMessage: NetworkExceptions.getErrorMessage(error!),
+      ));
+    });
+  }
+
+  Future<void> approveOrder(String orderId) async {
+    emit(state.copyWith(isLoaded: false, isLoading: true));
+    ApiResult apiResult = await _orderRepository.approveOrder(orderId);
+
+    apiResult.when(success: (dynamic response) {
+      emit(state.copyWith(isLoaded: true, isLoading: false));
     }, failure: (NetworkExceptions? error) {
       emit(state.copyWith(
         error: error,

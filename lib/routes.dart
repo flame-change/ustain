@@ -1,11 +1,7 @@
-import 'package:aroundus_app/modules/authentication/account/view/finding_password_request_page.dart';
-import 'package:aroundus_app/modules/mypage/update_profile/view/update_profile_screen.dart';
 import 'package:aroundus_app/modules/search/search_result/view/search_result_screen.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
-import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
-import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
 import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
@@ -23,27 +19,23 @@ import 'modules/splash/splash.dart';
 final Map<String, WidgetBuilder> routes = {
   SplashPage.routeName: (context) => SplashPage(),
   MainScreen.routeName: (context) => MainScreen(),
-  LoginHomeScreen.routeName: (context) => LoginHomeScreen(),
-  PhoneVerifyPage.routeName: (context) => PhoneVerifyPage(),
   HomeScreen.routeName: (context) => HomeScreen(),
   SignupForm.routeName: (context) => SignupForm(),
-  MagazineHomeScreen.routeName: (context) => MagazineHomeScreen(),
-  MagazineHomePage.routeName: (context) => MagazineHomePage(),
-  FindingPasswordPage.routeName: (context) => FindingPasswordPage(),
-  FindingPasswordRequestPage.routeName: (context) =>
-      FindingPasswordRequestPage(),
-  SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
-  StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
+  BrandScreen.routeName: (context) => BrandScreen(),
   CouponScreen.routeName: (context) => CouponScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
-  SettingsScreen.routeName: (context) => SettingsScreen(),
-  BrandScreen.routeName: (context) => BrandScreen(),
-  BrandDetailScreen.routeName: (context) => BrandDetailScreen(),
   SearchScreen.routeName: (context) => SearchScreen(),
-  SearchResultScreen.routeName: (context) => SearchResultScreen(),
   UserInfoScreen.routeName: (context) => UserInfoScreen(),
-  UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
+  StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
+  LoginHomeScreen.routeName: (context) => LoginHomeScreen(),
+  PhoneVerifyPage.routeName: (context) => PhoneVerifyPage(),
+  MagazineHomePage.routeName: (context) => MagazineHomePage(),
+  BrandDetailScreen.routeName: (context) => BrandDetailScreen(),
+  MagazineHomeScreen.routeName: (context) => MagazineHomeScreen(),
+  SignupNicknamePage.routeName: (context) => SignupNicknamePage(),
+  SearchResultScreen.routeName: (context) => SearchResultScreen(),
+  FindingPasswordPage.routeName: (context) => FindingPasswordPage(),
 };
 
 Route routePage(Widget nextPage) {

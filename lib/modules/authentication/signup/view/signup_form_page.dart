@@ -154,7 +154,7 @@ class _SignupFormState extends State<SignupForm> {
                                     ..add(Factory<
                                             VerticalDragGestureRecognizer>(
                                         () => VerticalDragGestureRecognizer())),
-                                  initialUrl: 'https://www.naver.com/',
+                                  initialUrl: 'https://arounduspp2.oopy.io/',
                                   javascriptMode: JavascriptMode.unrestricted,
                                   onPageFinished: (finish) {
                                     setState(() {});
@@ -179,7 +179,8 @@ class _SignupFormState extends State<SignupForm> {
                                     ..add(Factory<
                                             VerticalDragGestureRecognizer>(
                                         () => VerticalDragGestureRecognizer())),
-                                  initialUrl: 'https://www.naver.com/',
+                                  initialUrl:
+                                      'ttps://aroundusprivacypolicy.oopy.io/',
                                   javascriptMode: JavascriptMode.unrestricted,
                                   onPageFinished: (finish) {
                                     setState(() {});

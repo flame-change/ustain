@@ -1,4 +1,3 @@
-import 'package:aroundus_app/modules/mypage/settings/view/settings_screen.dart';
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,15 +34,7 @@ class _MyPageScreen extends State<MyPageScreen> {
                     style: Theme.of(context)
                         .textTheme
                         .headline4!
-                        .copyWith(color: Colors.white)),
-                actions: [
-                  GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                          context, SettingsScreen.routeName),
-                      child: Padding(
-                          padding: EdgeInsets.only(right: sizeWidth(5)),
-                          child: Icon(Icons.settings, color: Colors.white)))
-                ]),
+                        .copyWith(color: Colors.white))),
             body: SingleChildScrollView(child: MyPage())));
   }
 }

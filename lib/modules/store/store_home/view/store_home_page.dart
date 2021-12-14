@@ -100,66 +100,64 @@ class _StorePageState extends State<StorePage>
                     } else {
                       return SingleChildScrollView(
                           padding: basePadding(),
-                          child: Column(children: [
-                            Container(
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                  Text("PRODUCT",
-                                      style: theme.textTheme.headline4!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w900)),
-                                  Text("인기순 필터")
-                                ])),
-                            // 서브 카테고리
-                            Container(
-                                height: 30,
-                                margin: EdgeInsets.symmetric(vertical: 15),
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                          onTap: () => setState(() {
-                                                _selectedCollection = state
-                                                    .subCollections![index];
-                                                _storeCubit
-                                                    .getProductsByCollection(
-                                                        _selectedCollection,
-                                                        "price.sale");
-                                              }),
-                                          child: Container(
-                                              color: _selectedCollection ==
-                                                      state.subCollections![
-                                                          index]
-                                                  ? Colors.black
-                                                  : Colors.grey[300],
-                                              alignment: Alignment.center,
-                                              padding: EdgeInsets.all(5),
-                                              margin:
-                                                  EdgeInsets.only(right: 10),
-                                              child: Text(
-                                                  "${state.subCollections![index].name}",
-                                                  style: TextStyle(
-                                                      color: _selectedCollection ==
-                                                              state.subCollections![
-                                                                  index]
-                                                          ? Colors.white
-                                                          : Colors.black))));
-                                    },
-                                    itemCount: state.subCollections!.length)),
-                            GridView.count(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 15,
-                                childAspectRatio: (4 / 7),
-                                children: List.generate(
-                                    state.products!.length,
-                                    (index) => storeProduct(
-                                        context, state.products![index])))
-                          ]));
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    child: Text("PRODUCT",
+                                        style: theme.textTheme.headline4!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w900))),
+                                // 서브 카테고리
+                                Container(
+                                    height: 30,
+                                    margin: EdgeInsets.symmetric(vertical: 15),
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                              onTap: () => setState(() {
+                                                    _selectedCollection = state
+                                                        .subCollections![index];
+                                                    _storeCubit
+                                                        .getProductsByCollection(
+                                                            _selectedCollection,
+                                                            "price.sale");
+                                                  }),
+                                              child: Container(
+                                                  color: _selectedCollection ==
+                                                          state.subCollections![
+                                                              index]
+                                                      ? Colors.black
+                                                      : Colors.grey[300],
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(5),
+                                                  margin: EdgeInsets.only(
+                                                      right: 10),
+                                                  child: Text(
+                                                      "${state.subCollections![index].name}",
+                                                      style: TextStyle(
+                                                          color: _selectedCollection ==
+                                                                  state.subCollections![
+                                                                      index]
+                                                              ? Colors.white
+                                                              : Colors
+                                                                  .black))));
+                                        },
+                                        itemCount:
+                                            state.subCollections!.length)),
+                                GridView.count(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: (4 / 7),
+                                    children: List.generate(
+                                        state.products!.length,
+                                        (index) => storeProduct(
+                                            context, state.products![index])))
+                              ]));
                     }
                   } else {
                     return Center(child: CircularProgressIndicator());

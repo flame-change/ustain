@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
+import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -47,18 +48,20 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
           title: mainLogo(),
         ),
         bottomNavigationBar: PlainButton(
-          onPressed: () {
-            if(selectedCategory.length==0) {
-              showTopSnackBar(context, CustomSnackBar.error(message: "관심사를 선택해주세요."));
-            } else {
-              _signupCubit.updateUserProfile(
-                  nickName: _signupCubit.state.nickName.value.toString(),
-                  categories: selectedCategory);
-            }
-          },
-          text: "설정 완료",
-          height: 10,
-        ),
+            onPressed: () {
+              if (selectedCategory.length == 0) {
+                showTopSnackBar(
+                    context, CustomSnackBar.error(message: "관심사를 선택해주세요."));
+              } else {
+                _signupCubit.updateUserProfile(
+                    nickName: _signupCubit.state.nickName.value.toString(),
+                    categories: selectedCategory);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, MainScreen.routeName, (route) => false);
+              }
+            },
+            text: "설정 완료",
+            height: 10),
         body: SingleChildScrollView(
             child: Column(children: [
           Container(

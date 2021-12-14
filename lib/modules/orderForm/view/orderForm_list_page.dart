@@ -1,14 +1,14 @@
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'orderForm_page.dart';
 
 class OrderFormListPage extends StatefulWidget {
@@ -62,20 +62,23 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                                   state.orderForm![index].itemsInfo!.length,
                                   (i) => orderTileWidget(
                                       context, state, index, i))),
-                          GestureDetector(
-                              onTap: () {
-                                showTopSnackBar(
-                                    context,
-                                    CustomSnackBar.info(
-                                        message: "주문이 확정되었습니다."));
-                                _orderFormCubit.getOrderForm();
-                              },
-                              child: Container(
-                                  child: Center(child: Text('주문 확정')),
-                                  height: Adaptive.h(5),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Colors.black)))),
+                          if (state.orderForm![index].itemsInfo![0].status !=
+                              '주문 확정')
+                            GestureDetector(
+                                onTap: () {
+                                  showTopSnackBar(
+                                      context,
+                                      CustomSnackBar.info(
+                                          message: "주문이 확정되었습니다."));
+                                  _orderFormCubit.approveOrder(
+                                      state.orderForm![index].Id!);
+                                },
+                                child: Container(
+                                    child: Center(child: Text('주문 확정')),
+                                    height: Adaptive.h(5),
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.black)))),
                           Blank()
                         ])),
                 itemCount: state.orderForm!.length);
@@ -123,84 +126,10 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      "${state.orderForm![index].itemsInfo![i].status}",
-                                      style: theme.textTheme.headline5!
-                                          .copyWith(color: theme.accentColor)),
-                                  InkWell(
-                                      onTap: () {
-                                        if (state
-                                                .orderForm![index]
-                                                .itemsInfo![i]
-                                                .tracking!['url'] !=
-                                            null)
-                                          showDialog(
-                                              useRootNavigator: false,
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                    title: Text("배송 정보"),
-                                                    actions: [
-                                                      MaterialButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context),
-                                                          child: Text("확인"))
-                                                    ],
-                                                    content: DataTable(
-                                                        columns: const <
-                                                            DataColumn>[
-                                                          DataColumn(
-                                                              label: Text('구분',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w900))),
-                                                          DataColumn(
-                                                              label: Text('설명',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w900)))
-                                                        ],
-                                                        rows: [
-                                                          DataRow(cells: <
-                                                              DataCell>[
-                                                            DataCell(
-                                                                Text('배송업체')),
-                                                            DataCell(Text(state
-                                                                    .orderForm![
-                                                                        index]
-                                                                    .itemsInfo![i]
-                                                                    .tracking![
-                                                                'company']))
-                                                          ]),
-                                                          DataRow(cells: <
-                                                              DataCell>[
-                                                            DataCell(
-                                                                Text('운송장 장보')),
-                                                            DataCell(Text(state
-                                                                    .orderForm![
-                                                                        index]
-                                                                    .itemsInfo![i]
-                                                                    .tracking![
-                                                                'uid']))
-                                                          ])
-                                                        ]));
-                                              });
-                                      },
-                                      child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 3, vertical: 2),
-                                          child: Center(child: Text('배송 확인')),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black))))
-                                ]),
+                            Text(
+                                "${state.orderForm![index].itemsInfo![i].status}",
+                                style: theme.textTheme.headline5!
+                                    .copyWith(color: theme.accentColor)),
                             Text(
                                 "${state.orderForm![index].itemsInfo![i].productName}",
                                 style: theme.textTheme.headline5),
@@ -220,7 +149,7 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                               style: theme.textTheme.headline5))
                     ]))
               ])),
-          SizedBox(height: 10),
+          SizedBox(height: 10)
         ]));
   }
 }
