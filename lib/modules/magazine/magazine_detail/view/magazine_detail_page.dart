@@ -93,10 +93,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                       child: Container(
                           width: sizeWidth(100),
                           padding: EdgeInsets.only(
-                            left: sizeWidth(5),
-                            right: sizeWidth(5),
-                            top: 15,
-                          ),
+                              left: sizeWidth(5), right: sizeWidth(5), top: 15),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -109,8 +106,10 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                                               loadingWidget: () => Container(
                                                   color: Colors.white))
                                     }),
-                                Divider(),
-                                state.magazineDetail!.products != null
+                                state.magazineDetail!.products!.length != 0
+                                    ? Divider()
+                                    : SizedBox(height: 0),
+                                state.magazineDetail!.products!.length != 0
                                     ? productCard(context,
                                         state.magazineDetail!.products!)
                                     : SizedBox(height: 0)

@@ -1,11 +1,9 @@
-import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
-import 'package:aroundus_app/support/networks/api_result.dart';
+import 'package:aroundus_app/repositories/cart_repository/models/cart_temp.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
-import 'package:equatable/equatable.dart';
+import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart';
-
+import 'package:equatable/equatable.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {

@@ -24,8 +24,7 @@ class Product extends Equatable {
       this.hashtags,
       this.totalReviews,
       this.options,
-      this.variants,
-      this.notices});
+      this.variants});
 
   final String? Id;
   final String? name;
@@ -43,7 +42,6 @@ class Product extends Equatable {
   final int? totalReviews;
   final List<Option>? options;
   final List<Variants>? variants;
-  final Map? notices;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -68,7 +66,6 @@ class Product extends Equatable {
         totalReviews,
         options,
         variants,
-        notices,
       ];
 
   Product copyWith(
@@ -87,8 +84,7 @@ class Product extends Equatable {
       List<String>? hashtags,
       int? totalReviews,
       List<Option>? options,
-      List<Variants>? variants,
-      Map? notices}) {
+      List<Variants>? variants}) {
     return Product(
       Id: Id ?? this.Id,
       name: name ?? this.name,
@@ -105,7 +101,6 @@ class Product extends Equatable {
       brand: brand ?? this.brand,
       options: options ?? this.options,
       variants: variants ?? this.variants,
-      notices: notices ?? this.notices,
     );
   }
 }

@@ -76,34 +76,33 @@ class _MyPageState extends State<MyPage> {
           helpcenterWire2(context),
           SizedBox(height: sizeWidth(5)),
           PageWire(
-            child: Container(
-                child: Column(children: [
-              menuWidget("ETC."),
-              Container(
-                  width: sizeWidth(100),
-                  padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
-                  decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(width: 1))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('버전 정보',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Adaptive.dp(15))),
-                        Text(_packageInfo.version,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Adaptive.dp(15)))
-                      ]))
-            ])),
-          ),
+              child: Container(
+                  child: Column(children: [
+            menuWidget("ETC."),
+            Container(
+                width: sizeWidth(100),
+                padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
+                decoration:
+                    BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('버전 정보',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: Adaptive.dp(15))),
+                      Text(_packageInfo.version,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: Adaptive.dp(15)))
+                    ]))
+          ]))),
           SizedBox(height: Adaptive.h(5)),
           if (is_authenticated) logOutMethod(context),
           if (is_authenticated) SizedBox(height: Adaptive.h(5)),

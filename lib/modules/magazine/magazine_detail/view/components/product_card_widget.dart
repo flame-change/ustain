@@ -14,7 +14,6 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
       .map((p) => Product(
           Id: p["Id"],
           name: p["name"],
-          summary: p["summary"],
           description: p["description"],
           rating: p["rating"],
           originalPrice: p["originalPrice"],
@@ -23,106 +22,88 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
           thumbnail: p["thumbnail"]))
       .toList();
   return Wrap(
-    runSpacing: 20,
-    children: <Widget>[
-          Text("연관상품", style: Theme.of(context).textTheme.headline5)
-        ] +
-        List.generate(
-          products.length,
-          (index) => GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => BlocProvider<ProductCubit>(
-                            create: (_) => ProductCubit(
-                                RepositoryProvider.of<ProductRepository>(
-                                    context)),
-                            child: ProductDetailPage(products[index].Id!),
-                          )));
-            },
-            child: Column(
-              children: [
-                Container(
-                  width: sizeWidth(100),
-                  height: Adaptive.h(10),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Container(
-                          height: Adaptive.h(10),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      products[index].thumbnail!))),
-                        ),
-                      ),
-                      Flexible(
-                          flex: 3,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(color: Colors.black),
+      runSpacing: 20,
+      children: <Widget>[
+            Text("연관상품", style: Theme.of(context).textTheme.headline5)
+          ] +
+          List.generate(
+              products.length,
+              (index) => GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => BlocProvider<ProductCubit>(
+                                  create: (_) => ProductCubit(
+                                      RepositoryProvider.of<ProductRepository>(
+                                          context)),
+                                  child: ProductDetailPage(products[index].Id!),
+                                )));
+                  },
+                  child: Column(children: [
+                    Container(
+                        width: sizeWidth(100),
+                        height: Adaptive.h(10),
+                        child: Row(children: [
+                          Flexible(
+                              child: Container(
+                                  height: Adaptive.h(10),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              products[index].thumbnail!))))),
+                          Flexible(
+                              flex: 3,
+                              child: Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        TextSpan(
-                                            text: "${products[index].name}\n",
+                                        Text("${products[index].name}",
                                             style: TextStyle(
-                                                fontSize: Adaptive.sp(14),
+                                                fontSize: Adaptive.sp(16),
                                                 fontWeight: FontWeight.bold)),
-                                        TextSpan(
-                                          text: "${products[index].summary}",
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ]),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(color: Colors.black),
-                                          children: [
-                                            TextSpan(
-                                                text:
-                                                    "${products[index].discountRate}%   ",
-                                                style: TextStyle(
-                                                    fontSize: Adaptive.sp(15),
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                              text:
-                                                  "${currencyFromString(products[index].originalPrice.toString())}",
-                                              style: TextStyle(
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            ),
-                                          ]),
-                                    ),
-                                    Text(
-                                      "${currencyFromString(products[index].discountPrice.toString())}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: Adaptive.sp(20)),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ))
-                    ],
-                  ),
-                ),
-                Divider(),
-              ],
-            ),
-          ),
-        ),
-  );
+                                        SizedBox(height: 10),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              RichText(
+                                                  text: TextSpan(
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      children: [
+                                                    TextSpan(
+                                                        text:
+                                                            "${products[index].discountRate}%   ",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                Adaptive.sp(16),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                    TextSpan(
+                                                        text:
+                                                            "${currencyFromString(products[index].originalPrice.toString())}",
+                                                        style: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough))
+                                                  ])),
+                                              Text(
+                                                  "${currencyFromString(products[index].discountPrice.toString())}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize:
+                                                          Adaptive.sp(14)))
+                                            ])
+                                      ])))
+                        ])),
+                    Divider()
+                  ]))));
 }

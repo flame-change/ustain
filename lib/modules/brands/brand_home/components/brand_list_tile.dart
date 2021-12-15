@@ -31,13 +31,19 @@ class BrandListTile extends StatelessWidget {
             onTap: () => Navigator.pushNamed(
                 context, BrandDetailScreen.routeName,
                 arguments: {'Id': this.Id}),
-            leading: CircleAvatar(
-                backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(this.logo!),
-                radius: sizeWidth(8)),
+            leading: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey)),
+              child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  backgroundImage: NetworkImage(this.logo!),
+                  radius: sizeWidth(8)),
+            ),
             title:
                 Text(this.name!, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(this.description!),
+            subtitle: Text(this.description!,
+                maxLines: 2, overflow: TextOverflow.ellipsis),
             isThreeLine: true));
   }
 }

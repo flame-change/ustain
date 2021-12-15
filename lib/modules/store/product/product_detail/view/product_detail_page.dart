@@ -79,21 +79,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       child: Row(children: [
                         InkWell(
                             onTap: () => setState(() => _selectedIndex = 0),
-                            child: _detailTab(context, 0, "SPECS", 33)),
+                            child: _detailTab(context, 0, "SPECS", 50)),
                         InkWell(
                             onTap: () => setState(() => _selectedIndex = 1),
-                            child: _detailTab(context, 1, "REVIEWS", 34)),
-                        InkWell(
-                            onTap: () => setState(() => _selectedIndex = 2),
-                            child: _detailTab(context, 2, "INFO", 33))
+                            child: _detailTab(context, 1, "REVIEWS", 50))
                       ]))),
               SliverToBoxAdapter(
                   child: _selectedIndex == 0
                       ? Padding(padding: EdgeInsets.all(20), child: firstPage())
-                      : _selectedIndex == 1
-                          ? Center(child: Text('아직 리뷰가 없습니다.'))
-                          : Padding(
-                              padding: EdgeInsets.all(20), child: thirdPage()))
+                      : Padding(
+                          padding: EdgeInsets.only(top: Adaptive.h(5)),
+                          child: Center(child: Text('아직 리뷰가 없습니다.'))))
             ]);
           } else {
             return Container();
@@ -158,26 +154,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         networkSourceMatcher(): networkImageRender(
             loadingWidget: () => Container(color: Colors.white))
       })
-    ]);
-  }
-
-  Wrap thirdPage() {
-    return Wrap(children: [
-      Text("${product.notices!['title']}",
-          style: Theme.of(context).textTheme.bodyText1),
-      SizedBox(height: Adaptive.h(5)),
-      DataTable(columns: const <DataColumn>[
-        DataColumn(
-            label: Text('구분', style: TextStyle(fontWeight: FontWeight.w900))),
-        DataColumn(
-            label: Text('상세 설명', style: TextStyle(fontWeight: FontWeight.w900)))
-      ], rows: [
-        for (var notice in product.notices!['items'])
-          DataRow(cells: <DataCell>[
-            DataCell(Text(notice['title'])),
-            DataCell(Text(notice['description']))
-          ])
-      ])
     ]);
   }
 }

@@ -1,12 +1,12 @@
-import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
 import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
+import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -68,97 +68,75 @@ class _StorePageState extends State<StorePage>
                                 curve: Curves.easeOut),
                             child: Icon(Icons.menu, color: Colors.black)),
                         GestureDetector(
-                            onTap: () => setState(() => isOpen = !isOpen),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("${_selectedMenu.name}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                  Icon(
-                                      isOpen
-                                          ? Icons.keyboard_arrow_up_sharp
-                                          : Icons.keyboard_arrow_down_sharp,
-                                      color: Colors.black)
-                                ])),
-                        Row(children: [
-                          GestureDetector(
-                              onTap: () => user_status ==
-                                      AuthenticationStatus.authenticated
-                                  ? Navigator.pushNamed(
-                                      context, CartScreen.routeName)
-                                  : showLoginNeededDialog(context),
-                              child: SvgPicture.asset("assets/icons/cart.svg"))
-                        ])
+                            onTap: () => user_status ==
+                                    AuthenticationStatus.authenticated
+                                ? Navigator.pushNamed(
+                                    context, CartScreen.routeName)
+                                : showLoginNeededDialog(context),
+                            child: SvgPicture.asset("assets/icons/cart.svg"))
                       ])),
               body: Stack(children: [
                 BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
                   if (state.products != null) {
-                    if (state.products!.isEmpty) {
-                      return Center(child: Text("등록된 상품이 없습니다."));
-                    } else {
-                      return SingleChildScrollView(
-                          padding: basePadding(),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    child: Text("PRODUCT",
-                                        style: theme.textTheme.headline4!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w900))),
-                                // 서브 카테고리
-                                Container(
-                                    height: 30,
-                                    margin: EdgeInsets.symmetric(vertical: 15),
-                                    child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                              onTap: () => setState(() {
-                                                    _selectedCollection = state
-                                                        .subCollections![index];
-                                                    _storeCubit
-                                                        .getProductsByCollection(
-                                                            _selectedCollection,
-                                                            "price.sale");
-                                                  }),
-                                              child: Container(
-                                                  color: _selectedCollection ==
-                                                          state.subCollections![
-                                                              index]
-                                                      ? Colors.black
-                                                      : Colors.grey[300],
-                                                  alignment: Alignment.center,
-                                                  padding: EdgeInsets.all(5),
-                                                  margin: EdgeInsets.only(
-                                                      right: 10),
-                                                  child: Text(
-                                                      "${state.subCollections![index].name}",
-                                                      style: TextStyle(
-                                                          color: _selectedCollection ==
-                                                                  state.subCollections![
-                                                                      index]
-                                                              ? Colors.white
-                                                              : Colors
-                                                                  .black))));
-                                        },
-                                        itemCount:
-                                            state.subCollections!.length)),
-                                GridView.count(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 15,
-                                    childAspectRatio: (4 / 7),
-                                    children: List.generate(
-                                        state.products!.length,
-                                        (index) => storeProduct(
-                                            context, state.products![index])))
-                              ]));
-                    }
+                    return SingleChildScrollView(
+                        padding: basePadding(),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 서브 카테고리
+                              Container(
+                                  height: 30,
+                                  margin: EdgeInsets.symmetric(vertical: 15),
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                            onTap: () => setState(() {
+                                                  _selectedCollection = state
+                                                      .subCollections![index];
+                                                  _storeCubit
+                                                      .getProductsByCollection(
+                                                          _selectedCollection,
+                                                          "price.sale");
+                                                }),
+                                            child: Container(
+                                                color: _selectedCollection ==
+                                                        state.subCollections![
+                                                            index]
+                                                    ? Colors.black
+                                                    : Colors.grey[300],
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.all(5),
+                                                margin:
+                                                    EdgeInsets.only(right: 10),
+                                                child: Text(
+                                                    "${state.subCollections![index].name}",
+                                                    style: TextStyle(
+                                                        color: _selectedCollection ==
+                                                                state.subCollections![
+                                                                    index]
+                                                            ? Colors.white
+                                                            : Colors.black))));
+                                      },
+                                      itemCount: state.subCollections!.length)),
+                              state.products!.isNotEmpty
+                                  ? GridView.count(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 15,
+                                      childAspectRatio: (4 / 7),
+                                      children: List.generate(
+                                          state.products!.length,
+                                          (index) => storeProduct(
+                                              context, state.products![index])))
+                                  : Container(
+                                      padding:
+                                          EdgeInsets.only(top: Adaptive.h(30)),
+                                      child:
+                                          Center(child: Text("등록된 상품이 없습니다.")))
+                            ]));
                   } else {
                     return Center(child: CircularProgressIndicator());
                   }
