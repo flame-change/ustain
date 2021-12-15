@@ -42,7 +42,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: mainLogo(),
@@ -65,6 +65,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
+              color: Colors.black,
               alignment: Alignment.centerLeft,
               padding: basePadding(vertical: Adaptive.h(5)),
               child: RichText(
@@ -82,7 +83,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
           Container(
               padding: basePadding(vertical: sizeWidth(5)),
               width: sizeWidth(100),
-              color: Colors.white,
+              color: Colors.grey.shade100,
               child: Wrap(runSpacing: 15, children: [
                 Text("PREFERENCES",
                     style: theme.textTheme.headline2!
@@ -114,42 +115,27 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                               });
                             },
                             child: Container(
-                                height: Adaptive.h(10),
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: sizeWidth(5),
+                                    vertical: Adaptive.h(2)),
                                 decoration: BoxDecoration(
                                     color: selectedCategory.contains(
                                             user.categories![index].mid)
-                                        ? theme.accentColor
+                                        ? Colors.grey
                                         : Colors.white,
-                                    border: Border.all(
-                                        color: Colors.black, width: 1)),
-                                child: Row(children: [
-                                  Image.network(
-                                    "${user.categories![index].snapshotImage}",
-                                    width: Adaptive.h(10),
-                                    height: Adaptive.h(10),
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return Image.network(
-                                          'https://via.placeholder.com/150/000000/FFFFFF/?text=Image');
-                                    },
-                                  ),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: sizeWidth(5)),
-                                      child: RichText(
-                                          text: TextSpan(
-                                              style: theme.textTheme.headline4!,
-                                              children: [
-                                            TextSpan(
-                                                text:
-                                                    "${user.categories![index].mid}\n"),
-                                            TextSpan(
-                                                text:
-                                                    "${user.categories![index].title}")
-                                          ])))
-                                ])))))
+                                    border: Border(
+                                        left: BorderSide(
+                                            color: Colors.black, width: 10)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 1,
+                                          blurRadius: 1,
+                                          offset: Offset(0, 0.5))
+                                    ]),
+                                child: Text(user.categories![index].title!,
+                                    style: theme.textTheme.headline6)))))
               ]))
         ])));
   }
