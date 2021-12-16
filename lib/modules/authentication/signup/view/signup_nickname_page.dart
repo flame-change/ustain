@@ -3,6 +3,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,6 +28,8 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
@@ -55,12 +58,11 @@ class _SignupNicknamePageState extends State<SignupNicknamePage> {
                                 style: theme.textTheme.headline2!
                                     .copyWith(color: Colors.white, height: 1.5),
                                 children: [
-                              TextSpan(text: "안녕하세요!"),
+                              TextSpan(text: "가입완료!"),
                               TextSpan(
                                   text: ":)\n",
                                   style: TextStyle(color: theme.accentColor)),
-                              TextSpan(text: "저희가 어떻게\n"),
-                              TextSpan(text: "불러드리면 좋을까요?")
+                              TextSpan(text: "이제부터 당신의 이름은.."),
                             ])),
                         SizedBox(width: double.infinity, height: Adaptive.h(5))
                       ])),

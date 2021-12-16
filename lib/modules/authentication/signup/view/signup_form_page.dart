@@ -3,6 +3,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,27 +35,13 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(title: mainLogo(), backgroundColor: Colors.black),
         body: BlocListener<SignupCubit, SignupState>(
-            listener: (context, state) async {
-              // if (state.status.isSubmissionFailure) {
-              //   Scaffold.of(context)
-              //     ..hideCurrentSnackBar()
-              //     ..showSnackBar(
-              //       SnackBar(content: Text('${state.errorMessage}')),
-              //     );
-              // }
-              // if (state.isDupCheckedSnsId != null && state.errorMessage != null) {
-              //   Scaffold.of(context)
-              //     ..hideCurrentSnackBar()
-              //     ..showSnackBar(
-              //       SnackBar(content: Text('${state.errorMessage}')),
-              //     );
-              //   context.read<SignupCubit>().errorMessageInit();
-              // }
-            },
+            listener: (context, state) async {},
             child: SingleChildScrollView(
                 child: Column(children: [
               Container(
@@ -66,7 +53,7 @@ class _SignupFormState extends State<SignupForm> {
                         style: theme.textTheme.headline2!
                             .copyWith(color: Colors.white, height: 1.5),
                         children: [
-                          TextSpan(text: "마지막 단계!\n"),
+                          TextSpan(text: "벌써 마지막 단계.\n"),
                           TextSpan(text: "조금만 더 힘내세요!"),
                         ]),
                   )),

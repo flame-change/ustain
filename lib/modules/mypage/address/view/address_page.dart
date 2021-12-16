@@ -7,6 +7,7 @@ import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,6 +38,8 @@ class _AddressPage extends State<AddressPage>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return BlocBuilder<AddressCubit, AddressState>(builder: (context, state) {
       if (state.isLoaded) {
         return BlocSelector<AddressCubit, AddressState, List<Address?>>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../login_home.dart';
 
@@ -20,6 +21,8 @@ class LoginHomeScreen extends StatefulWidget {
 class _LoginHomeScreen extends State<LoginHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(backgroundColor: Colors.black, body: LoginHomePage()));

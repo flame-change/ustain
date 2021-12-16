@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/orderForm/view/orderForm_page.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,6 +30,7 @@ class OrderResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSuccessed = getIsSuccessed(result);
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return Scaffold(
       appBar: AppBar(

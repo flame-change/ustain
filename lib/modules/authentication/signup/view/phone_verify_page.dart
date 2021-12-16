@@ -34,6 +34,8 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

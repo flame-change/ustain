@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_page.
 import 'package:aroundus_app/repositories/brand_repository/src/brand_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BrandDetailScreen extends StatefulWidget {
   static String routeName = '/brand_detail_screen';
@@ -15,6 +16,7 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return MultiBlocProvider(
         providers: [
@@ -26,13 +28,7 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
             appBar: AppBar(
                 backgroundColor: Colors.white,
                 elevation: 0,
-                iconTheme: IconThemeData(color: Colors.black),
-                actions: [
-                  GestureDetector(
-                      child: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Icon(Icons.search, color: Colors.black)))
-                ]),
+                iconTheme: IconThemeData(color: Colors.black)),
             body: BrandDetailPage(Id: arguments['Id'])));
   }
 }

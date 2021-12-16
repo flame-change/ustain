@@ -4,10 +4,12 @@ import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_scree
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
+import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -26,16 +28,22 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with SingleTickerProviderStateMixin {
   String get _productId => this.widget.productId;
+  late AuthenticationRepository _authenticationRepository;
+  late User user;
+  late bool is_authenticated;
 
   late Product product;
   late ProductCubit _productCubit;
-  late AuthenticationStatus user_status;
   late int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    user_status = context.read<AuthenticationBloc>().state.status;
+    _authenticationRepository =
+        RepositoryProvider.of<AuthenticationRepository>(context);
+    user = context.read<AuthenticationBloc>().state.user;
+    is_authenticated = context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated;
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _productCubit.getProductDetail(_productId);
   }
@@ -43,7 +51,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: productSaleBottomNavigator(context, _productCubit),
+        bottomNavigationBar: productSaleBottomNavigator(
+            context, _productCubit, is_authenticated),
         body:
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded == true) {
@@ -62,14 +71,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     Image.network(product.thumbnail!,
                         fit: BoxFit.cover,
                         height: Adaptive.h(55),
-                        width: sizeWidth(100)),
+                        width: sizeWidth(100))
                   ])),
                   actions: [
                     GestureDetector(
-                        onTap: () =>
-                            user_status == AuthenticationStatus.authenticated
-                                ? Navigator.pushNamed(context, '/cart_screen')
-                                : showLoginNeededDialog(context),
+                        onTap: () => is_authenticated == true
+                            ? Navigator.pushNamed(context, '/cart_screen')
+                            : showLoginNeededDialog(context),
                         child: Padding(
                             padding: EdgeInsets.only(right: 10),
                             child: SvgPicture.asset("assets/icons/cart.svg")))

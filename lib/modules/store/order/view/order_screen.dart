@@ -6,6 +6,7 @@ import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
 import 'package:aroundus_app/repositories/coupon_repository/coupon_repository.dart';
 import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'order_page.dart';
@@ -31,14 +32,18 @@ class _OrderScreen extends State<OrderScreen>
   void initState() {
     super.initState();
     _orderCubit = OrderCubit(RepositoryProvider.of<OrderRepository>(context));
-    _addressCubit = AddressCubit(RepositoryProvider.of<AddressRepository>(context));
-    _couponCubit = CouponCubit(RepositoryProvider.of<CouponRepository>(context));
+    _addressCubit =
+        AddressCubit(RepositoryProvider.of<AddressRepository>(context));
+    _couponCubit =
+        CouponCubit(RepositoryProvider.of<CouponRepository>(context));
 
     _orderCubit.createOrder(carts);
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

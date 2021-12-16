@@ -128,11 +128,10 @@ class _MyPageState extends State<MyPage> {
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     color: Colors.grey, decoration: TextDecoration.underline))),
         Container(
-          height: 12,
-          width: 1,
-          color: Colors.black,
-          margin: EdgeInsets.symmetric(horizontal: 30),
-        ),
+            height: 12,
+            width: 1,
+            color: Colors.black,
+            margin: EdgeInsets.symmetric(horizontal: 30)),
         GestureDetector(
             onTap: () {
               showDialog(
@@ -142,8 +141,8 @@ class _MyPageState extends State<MyPage> {
                       MaterialButton(
                           onPressed: () {
                             _authenticationRepository.signOut();
-                            Navigator.pushNamed(
-                                context, LoginHomeScreen.routeName);
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                LoginHomeScreen.routeName, (route) => false);
                           },
                           child: Text("확인"))
                     ]);

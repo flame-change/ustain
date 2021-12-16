@@ -64,50 +64,39 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
                 selector: (state) => state.comments,
                 builder: (context, comments) {
                   if (comments != null) {
-                    return Column(
-                      children: [
-                        Container(
-                            height: 50,
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.black38))),
-                            child: Text("댓글",
-                                style: theme.textTheme.bodyText1!
-                                    .copyWith(fontWeight: FontWeight.w600))),
-                        Flexible(
-                            flex: 9,
-                            child: comments.isNotEmpty
-                                ? ListView.builder(
-                                    controller: _scrollController,
-                                    itemCount: comments.length,
-                                    itemBuilder: (context, index) =>
-                                        Column(children: [
-                                          commentTile(comments[index]),
-                                          comments[index].reply != null
-                                              ? Column(
-                                                  children: List.generate(
-                                                      comments[index]
-                                                          .reply!
-                                                          .length,
-                                                      (i) => Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left:
-                                                                      sizeWidth(
-                                                                          5)),
-                                                          child: commentTile(
-                                                              comments[index]
-                                                                  .reply![i]))))
-                                              : SizedBox(height: 0)
-                                        ]))
-                                : Center(
-                                    heightFactor: Adaptive.h(100),
-                                    child: Text("댓글이 없습니다."))),
-                        Flexible(child: messageWidget())
-                      ],
-                    );
+                    return Column(children: [
+                      SizedBox(height: sizeWidth(5)),
+                      Flexible(child: messageWidget()),
+                      SizedBox(height: sizeWidth(5)),
+                      Flexible(
+                          flex: 9,
+                          child: comments.isNotEmpty
+                              ? ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: comments.length,
+                                  itemBuilder: (context, index) =>
+                                      Column(children: [
+                                        commentTile(comments[index]),
+                                        comments[index].reply != null
+                                            ? Column(
+                                                children: List.generate(
+                                                    comments[index]
+                                                        .reply!
+                                                        .length,
+                                                    (i) => Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: sizeWidth(
+                                                                    5)),
+                                                        child: commentTile(
+                                                            comments[index]
+                                                                .reply![i]))))
+                                            : SizedBox(height: 0)
+                                      ]))
+                              : Center(
+                                  heightFactor: Adaptive.h(100),
+                                  child: Text("댓글이 없습니다.")))
+                    ]);
                   } else {
                     return Center(child: Text("잠시만 기다려주세요."));
                   }
@@ -179,7 +168,7 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
             focusNode: focusNode,
             controller: _messageController,
             decoration: InputDecoration(
-                hintText: "메시지를 입력하세요.",
+                hintText: "모든 이야기가 존중받는 공간입니다.",
                 prefixText:
                     editComment != null ? "@" + editComment!.name! + " " : "",
                 suffixIcon: MaterialButton(

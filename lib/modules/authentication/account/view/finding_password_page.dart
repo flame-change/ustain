@@ -1,4 +1,5 @@
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -35,6 +36,8 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
