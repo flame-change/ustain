@@ -115,13 +115,16 @@ class _CartPageState extends State<CartPage> {
                       child: MaterialButton(
                         onPressed: () {
                           print("결제하기");
-                          List<Cart> checkedCart = carts
-                              .fold(<Cart>[], (pre, cart) => cart.isChecked! ? pre + [cart] : pre + []);
+                          List<Cart> checkedCart = carts.fold(
+                              <Cart>[],
+                              (pre, cart) =>
+                                  cart.isChecked! ? pre + [cart] : pre + []);
 
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OrderScreen(checkedCart)));
+                                  builder: (context) =>
+                                      OrderScreen(checkedCart)));
                         },
                         color: Colors.black,
                         minWidth: sizeWidth(100),
@@ -136,10 +139,10 @@ class _CartPageState extends State<CartPage> {
                 );
               } else {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                       Container(
                         child: SvgPicture.asset(
                           'assets/images/empty_cart.svg',
@@ -147,19 +150,13 @@ class _CartPageState extends State<CartPage> {
                           color: theme.accentColor,
                         ),
                       ),
-                      Text(
-                        "아무것도 없어요!",
-                        style: theme.textTheme.headline2!.copyWith(height: 2),
-                      ),
-                    ],
-                  ),
-                );
+                      Text("아직 담은 상품이 없어요!",
+                          style: theme.textTheme.headline3!.copyWith(height: 2))
+                    ]));
               }
             });
       } else {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return Center(child: CircularProgressIndicator());
       }
     });
   }

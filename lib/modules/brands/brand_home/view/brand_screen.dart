@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/brands/brand_home/cubit/brand_cubit.dart';
 import 'package:aroundus_app/modules/brands/brand_home/view/brand_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BrandScreen extends StatefulWidget {
   static String routeName = 'brand_screen';
@@ -19,6 +20,8 @@ class _BrandScreenState extends State<BrandScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(

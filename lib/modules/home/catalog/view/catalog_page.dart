@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
@@ -100,11 +101,15 @@ class productGridTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => BlocProvider<ProductCubit>(
-                        create: (_) => ProductCubit(
-                            RepositoryProvider.of<ProductRepository>(context)),
-                        child: ProductDetailPage(product['Id']),
-                      )));
+                  builder: (_) => MultiBlocProvider(providers: [
+                        BlocProvider<AuthenticationBloc>(
+                            create: (context) =>
+                                BlocProvider.of<AuthenticationBloc>(context)),
+                        BlocProvider<ProductCubit>(
+                            create: (_) => ProductCubit(
+                                RepositoryProvider.of<ProductRepository>(
+                                    context)))
+                      ], child: ProductDetailPage(product['Id']))));
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(

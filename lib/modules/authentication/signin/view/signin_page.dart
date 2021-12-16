@@ -6,6 +6,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -40,6 +41,8 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
@@ -53,24 +56,24 @@ class _SignInPageState extends State<SignInPage> {
               }
             },
             child: SingleChildScrollView(
-              child: Column(children: [
-                Container(
-                    color: Colors.black,
-                    alignment: Alignment.centerLeft,
-                    padding: basePadding(vertical: Adaptive.h(10)),
-                    child: RichText(
-                        text: TextSpan(
-                            style: theme.textTheme.headline3!
-                                .copyWith(color: Colors.white, height: 1.5),
-                            children: [
-                          TextSpan(text: "다시 만나서\n"),
-                          TextSpan(text: "반가워요!"),
-                          TextSpan(
-                              text: ":)",
-                              style: theme.textTheme.headline2!
-                                  .copyWith(color: theme.accentColor))
-                        ]))),
-                Container(
+                child: Column(children: [
+              Container(
+                  color: Colors.black,
+                  alignment: Alignment.centerLeft,
+                  padding: basePadding(vertical: Adaptive.h(10)),
+                  child: RichText(
+                      text: TextSpan(
+                          style: theme.textTheme.headline3!
+                              .copyWith(color: Colors.white, height: 1.5),
+                          children: [
+                        TextSpan(text: "다시 만나서\n"),
+                        TextSpan(text: "반가워요!"),
+                        TextSpan(
+                            text: ":)",
+                            style: theme.textTheme.headline2!
+                                .copyWith(color: theme.accentColor))
+                      ]))),
+              Container(
                   color: Colors.black,
                   child: Container(
                       padding: basePadding(vertical: sizeWidth(5)),
@@ -101,15 +104,15 @@ class _SignInPageState extends State<SignInPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        BlocProvider<FindingAccountCubit>(
-                                      create: (context) => FindingAccountCubit(
-                                        RepositoryProvider.of<
-                                            AuthenticationRepository>(context),
-                                      ),
-                                      child: FindingPasswordPage(),
-                                    ),
-                                  ));
+                                      builder: (_) =>
+                                          BlocProvider<FindingAccountCubit>(
+                                              create: (context) =>
+                                                  FindingAccountCubit(
+                                                    RepositoryProvider.of<
+                                                            AuthenticationRepository>(
+                                                        context),
+                                                  ),
+                                              child: FindingPasswordPage())));
                             },
                             child: Center(
                                 child: Text("비밀번호 찾기",
@@ -117,10 +120,8 @@ class _SignInPageState extends State<SignInPage> {
                                         fontWeight: FontWeight.w400,
                                         decoration: TextDecoration.underline,
                                         color: Color(0xFFB7B7B7)))))
-                      ])),
-                )
-              ]),
-            )));
+                      ])))
+            ]))));
   }
 
   Widget _phoneNumberInput() {

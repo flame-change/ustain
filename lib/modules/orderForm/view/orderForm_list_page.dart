@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
+import 'package:flutter/services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -39,6 +40,8 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return BlocBuilder<OrderFormCubit, OrderFormState>(
         builder: (context, state) {
       return PageWire(child: BlocBuilder<OrderFormCubit, OrderFormState>(

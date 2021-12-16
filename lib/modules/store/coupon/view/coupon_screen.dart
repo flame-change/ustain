@@ -1,6 +1,7 @@
 import 'package:aroundus_app/modules/store/coupon/cubit/coupon_cubit.dart';
 import 'package:aroundus_app/repositories/coupon_repository/src/coupon_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'coupon_page.dart';
@@ -22,6 +23,8 @@ class CouponScreen extends StatefulWidget {
 class _CouponScreen extends State<CouponScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

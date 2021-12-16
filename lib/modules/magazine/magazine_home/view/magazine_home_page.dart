@@ -154,7 +154,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                                     user.categories![index]
                                 ? Colors.black
                                 : Colors.grey)),
-                    child: Text(user.categories![index].title!,
+                    child: Text(user.categories![index].mid!,
                         style: TextStyle(
                             color: _magazineCubit.state.magazineCategory ==
                                     user.categories![index]

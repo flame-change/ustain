@@ -59,7 +59,9 @@ class _BrandPageState extends State<BrandPage> {
                         logo: brand.logo)
                 ]);
               }
-              return Center(child: CircularProgressIndicator());
+              return Padding(
+                  padding: EdgeInsets.only(top: Adaptive.h(30)),
+                  child: Center(child: CircularProgressIndicator()));
             })
           ])),
       SizedBox(height: Adaptive.h(5)),

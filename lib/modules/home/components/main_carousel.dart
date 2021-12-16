@@ -29,15 +29,18 @@ class _BannerMagazinesState extends State<BannerMagazines> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MultiBlocProvider(providers: [
-                      BlocProvider<AuthenticationBloc>(
-                          create: (context) =>
-                              BlocProvider.of<AuthenticationBloc>(context)),
-                      BlocProvider(
-                          create: (context) => MagazineDetailCubit(
-                              RepositoryProvider.of<MagazineRepository>(
-                                  context)))
-                    ], child: MagazineDetailPage(_bannerMagazines[index].id!))),
+                builder: (context) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider<AuthenticationBloc>(
+                              create: (context) =>
+                                  BlocProvider.of<AuthenticationBloc>(context)),
+                          BlocProvider(
+                              create: (context) => MagazineDetailCubit(
+                                  RepositoryProvider.of<MagazineRepository>(
+                                      context)))
+                        ],
+                        child: MagazineDetailPage(
+                            id: _bannerMagazines[index].id, isNotice: true))),
           );
         },
         itemCount: _bannerMagazines.length,

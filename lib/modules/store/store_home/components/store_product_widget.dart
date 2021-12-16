@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
@@ -15,10 +16,15 @@ Widget storeProduct(BuildContext context, Product product) {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => BlocProvider<ProductCubit>(
-                    create: (_) => ProductCubit(
-                        RepositoryProvider.of<ProductRepository>(context)),
-                    child: ProductDetailPage(product.Id!))));
+                builder: (_) => MultiBlocProvider(providers: [
+                      BlocProvider<AuthenticationBloc>(
+                          create: (context) =>
+                              BlocProvider.of<AuthenticationBloc>(context)),
+                      BlocProvider<ProductCubit>(
+                          create: (_) => ProductCubit(
+                              RepositoryProvider.of<ProductRepository>(
+                                  context)))
+                    ], child: ProductDetailPage(product.Id!))));
       },
       child: GridTile(
           child: Container(),

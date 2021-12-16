@@ -7,6 +7,7 @@ import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,8 @@ class _StorePageState extends State<StorePage>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
       return state.collections != null
           ? Scaffold(
