@@ -18,7 +18,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
                   create: (context) => MagazineDetailCubit(
                       RepositoryProvider.of<MagazineRepository>(context)),
                 )
-              ], child: MagazineDetailPage(magazine.id!)),
+              ], child: MagazineDetailPage(id: magazine.id!)),
             ));
       },
       child: Card(

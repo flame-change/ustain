@@ -2,6 +2,7 @@ import 'package:aroundus_app/repositories/mypage_repository/src/mypage_repositor
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/mypage/user_info/view/user_info_page.dart';
 import 'package:aroundus_app/modules/mypage/cubit/mypage_cubit.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,8 @@ class UserInfoScreen extends StatefulWidget {
 class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(

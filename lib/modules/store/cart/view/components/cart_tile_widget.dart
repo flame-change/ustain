@@ -37,23 +37,10 @@ Widget cartTile(CartCubit cartCubit, Cart cart) {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: CircleAvatar(
-                                radius: 10,
-                                // Todo 브랜드 이미지 삽입
-                                backgroundColor: theme.accentColor,
-                              ),
-                            ),
-                            Text("${cart.brand}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Adaptive.sp(14))),
-                          ],
-                        ),
+                        Text("  ${cart.brand}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Adaptive.sp(14))),
                         GestureDetector(
                           onTap: () {
                             cartCubit.deleteCart([cart]);

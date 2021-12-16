@@ -5,6 +5,7 @@ import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -12,9 +13,10 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'components/product_card_widget.dart';
 
 class MagazineDetailPage extends StatefulWidget {
-  final int id;
+  final int? id;
+  final bool isNotice;
 
-  MagazineDetailPage(this.id);
+  MagazineDetailPage({this.id, this.isNotice = false});
 
   @override
   _MagazineDetailPageState createState() => _MagazineDetailPageState();
@@ -22,7 +24,7 @@ class MagazineDetailPage extends StatefulWidget {
 
 class _MagazineDetailPageState extends State<MagazineDetailPage>
     with SingleTickerProviderStateMixin {
-  int get _id => this.widget.id;
+  int get _id => this.widget.id!;
   late MagazineDetailCubit _magazineDetailCubit;
   late User user;
 
@@ -41,11 +43,16 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return BlocBuilder<MagazineDetailCubit, MagazineDetailState>(
         builder: (context, state) {
       if (state.magazineDetail != null) {
         return Scaffold(
-            bottomNavigationBar: magazineBottomNavigator(id: _id),
+            resizeToAvoidBottomInset: true,
+            bottomNavigationBar: widget.isNotice == false
+                ? magazineBottomNavigator(id: _id)
+                : null,
             body: CustomScrollView(slivers: <Widget>[
               SliverAppBar(
                   backgroundColor: Colors.transparent,

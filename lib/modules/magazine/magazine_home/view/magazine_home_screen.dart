@@ -5,6 +5,7 @@ import 'package:aroundus_app/repositories/magazine_repository/magazine_repositor
 import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,8 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return MainScreenWire(
         page1Title: Text('매거진'),
         page2Ttile: Text('스크랩'),

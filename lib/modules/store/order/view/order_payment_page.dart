@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/plain_button.dart';
+import 'package:flutter/services.dart';
 import 'package:iamport_flutter/model/payment_data.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,6 +55,8 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
       if (state.isLoaded) {
         return SafeArea(

@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dar
 import 'package:aroundus_app/modules/brands/brand_home/view/brand_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
 import 'package:aroundus_app/modules/home/view/home_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:aroundus_app/modules/home/home.dart';
@@ -53,6 +54,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(

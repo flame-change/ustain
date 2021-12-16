@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'mypage_page.dart';
@@ -18,6 +19,8 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreen extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(

@@ -5,6 +5,7 @@ import 'package:aroundus_app/repositories/store_repository/models/collection.dar
 import 'package:aroundus_app/repositories/store_repository/src/store_repository.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StoreHomeScreen extends StatefulWidget {
@@ -48,6 +49,8 @@ class _StoreHomeScreen extends State<StoreHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Scaffold(
         body: PageView(controller: _pageController, children: [
       BlocProvider.value(

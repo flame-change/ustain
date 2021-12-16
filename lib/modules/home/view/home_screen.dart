@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dar
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/repositories/magazine_repository/src/magazine_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../home.dart';
@@ -32,6 +33,8 @@ class _HomeScreen extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(

@@ -4,7 +4,6 @@ import 'package:aroundus_app/modules/store/store_home/components/store_product_w
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/repositories/product_repository/models/brand.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
-import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
