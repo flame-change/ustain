@@ -73,9 +73,32 @@ class _CompanyInfoState extends State<CompanyInfo> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     decoration: TextDecoration.underline)))),
-                    TextSpan(text: '\n사업장 소재지: 서울시 마포구 성지길 25-11 지층 5호\n'),
-                    // TextSpan(text: '통신판매업: 아직 안바꿔씀\n'),
-                    TextSpan(text: '개인정보 관리 책임자: 김은지\n\n'),
+                    TextSpan(text: '\n사업장 주소: 서울시 마포구 성지길 25-11 지층 5호\n'),
+                    WidgetSpan(
+                        child: GestureDetector(
+                      onTap: () => isWebRouter(
+                          context, 'https://aroundusprivacypolicy.oopy.io/'),
+                      child: Text('개인정보 처리방침',
+                          style: TextStyle(
+                              color: Colors.white,
+                              height: 1.5,
+                              decoration: TextDecoration.underline)),
+                    )),
+                    WidgetSpan(
+                        child:
+                            Text(' 및 ', style: TextStyle(color: Colors.white))),
+                    WidgetSpan(
+                        child: GestureDetector(
+                      onTap: () =>
+                          isWebRouter(context, 'https://arounduspp2.oopy.io/'),
+                      child: Text('서비스 이용약관',
+                          style: TextStyle(
+                              color: Colors.white,
+                              height: 1.5,
+                              decoration: TextDecoration.underline)),
+                    )),
+                    TextSpan(text: '\n개인정보 관리 책임자: 김은지\n'),
+                    TextSpan(text: '대표 : 노종혁\n\n'),
                     TextSpan(
                         text:
                             '어라운드어스는 통신판매 중개자로서 통신 판매의 당사자가 아니므로 개별 판매자가 등록한 상품 정보에 대해서 책임을 지지 않습니다.',

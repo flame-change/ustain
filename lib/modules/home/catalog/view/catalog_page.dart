@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/store/product/product_detail/view/product_d
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -127,7 +128,9 @@ class productGridTile extends StatelessWidget {
                 text: '${product['brand']!}\n',
                 style: theme.textTheme.bodyText2!.copyWith(color: Colors.grey)),
             TextSpan(text: '${product['name']!}\n'),
-            TextSpan(text: '${product['discountPrice']!} 원')
+            TextSpan(
+                text: currencyFromString(product['discountPrice']!.toString()),
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold))
           ]))
         ]));
   }
