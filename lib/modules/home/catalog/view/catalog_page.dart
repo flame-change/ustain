@@ -114,24 +114,29 @@ class productGridTile extends StatelessWidget {
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-            height: Adaptive.h(20),
-            decoration: BoxDecoration(
-                color: Colors.red,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(product['thumbnail']!))),
-          ),
+              height: Adaptive.w(40),
+              decoration: BoxDecoration(
+                  color: Colors.red,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(product['thumbnail']!)))),
           SizedBox(height: Adaptive.h(0.5)),
-          RichText(
-              text: TextSpan(style: theme.textTheme.bodyText1!, children: [
-            TextSpan(
-                text: '${product['brand']!}\n',
-                style: theme.textTheme.bodyText2!.copyWith(color: Colors.grey)),
-            TextSpan(text: '${product['name']!}\n'),
-            TextSpan(
-                text: currencyFromString(product['discountPrice']!.toString()),
-                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold))
-          ]))
+          SizedBox(
+              child: Text('${product['brand']!}',
+                  style:
+                      theme.textTheme.bodyText2!.copyWith(color: Colors.grey))),
+          SizedBox(
+              child: Text('${product['name']!}',
+                  style: theme.textTheme.bodyText1!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis)),
+          SizedBox(
+              child: Text(
+                  '${currencyFromString(product['discountPrice']!.toString())}',
+                  style: theme.textTheme.bodyText1!.copyWith(
+                      height: 1.5,
+                      fontSize: Adaptive.dp(12),
+                      fontWeight: FontWeight.bold)))
         ]));
   }
 }

@@ -46,10 +46,7 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
 
     return Scaffold(
         backgroundColor: Colors.grey.shade100,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: mainLogo(),
-        ),
+        appBar: AppBar(backgroundColor: Colors.black, title: mainLogo()),
         bottomNavigationBar: PlainButton(
             onPressed: () {
               if (selectedCategory.length == 0) {
@@ -59,8 +56,8 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                 _signupCubit.updateUserProfile(
                     nickName: _signupCubit.state.nickName.value.toString(),
                     categories: selectedCategory);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, MainScreen.routeName, (route) => false);
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, MainScreen.routeName, (route) => false);
               }
             },
             text: "설정 완료",

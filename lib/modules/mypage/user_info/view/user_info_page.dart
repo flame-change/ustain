@@ -78,31 +78,28 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     SizedBox(height: Adaptive.h(3)),
                     AchievementTile(
                         name: '구매 확정',
-                        child: Container(
-                            width: Adaptive.w(10),
-                            height: Adaptive.w(10),
-                            child: SvgPicture.asset('assets/icons/success.svg',
-                                color: Colors.black)),
+                        child: SizedBox(
+                            height: double.maxFinite,
+                            child: Icon(Icons.check_circle_sharp,
+                                color: Colors.black, size: Adaptive.w(8))),
                         value: state.orderDone,
                         description: '지난 달에 구매확정된 상품 수 입니다.'),
                     Divider(),
                     AchievementTile(
                         name: '매거진 댓글 수',
-                        child: Container(
-                            width: Adaptive.w(10),
-                            height: Adaptive.w(10),
-                            child: SvgPicture.asset('assets/icons/bookmark.svg',
-                                color: Colors.black)),
+                        child: SizedBox(
+                            height: double.maxFinite,
+                            child: Icon(Icons.book,
+                                size: Adaptive.w(8), color: Colors.black)),
                         value: state.magReviews,
                         description: '매거진에 남기신 댓글 수 입니다.'),
                     Divider(),
                     AchievementTile(
                         name: '상품 리뷰 수',
-                        child: Container(
-                            width: Adaptive.w(10),
-                            height: Adaptive.w(10),
-                            child: SvgPicture.asset('assets/icons/cart.svg',
-                                color: Colors.black)),
+                        child: SizedBox(
+                            height: double.maxFinite,
+                            child: Icon(Icons.shopping_bag,
+                                size: Adaptive.w(9), color: Colors.black)),
                         value: state.orderReviews,
                         description: '작성해주신 상품 리뷰 수 입니다.')
                   ])));

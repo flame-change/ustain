@@ -1,9 +1,9 @@
-import 'package:aroundus_app/modules/orderForm/orderForm.dart';
-import 'package:aroundus_app/modules/orderForm/view/orderForm_list_page.dart';
 import 'package:aroundus_app/repositories/order_repository/order_repository.dart';
+import 'package:aroundus_app/modules/orderForm/view/orderForm_list_page.dart';
+import 'package:aroundus_app/modules/orderForm/orderForm.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderFormListScreen extends StatefulWidget {
   @override
@@ -16,16 +16,13 @@ class _OrderFormListScreenState extends State<OrderFormListScreen> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
-      body: BlocProvider(
-        create: (_) =>
-            OrderFormCubit(RepositoryProvider.of<OrderRepository>(context)),
-        child: OrderFormListPage(),
-      ),
-    );
+        appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.black)),
+        body: BlocProvider(
+            create: (_) =>
+                OrderFormCubit(RepositoryProvider.of<OrderRepository>(context)),
+            child: OrderFormListPage()));
   }
 }

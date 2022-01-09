@@ -44,8 +44,6 @@ class _MyPageState extends State<MyPage> {
     _authenticationRepository =
         RepositoryProvider.of<AuthenticationRepository>(context);
     user = context.read<AuthenticationBloc>().state.user;
-    if (context.read<AuthenticationBloc>().state.status ==
-        AuthenticationStatus.authenticated) {}
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
     _initPackageInfo();
