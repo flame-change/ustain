@@ -17,15 +17,12 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class _UserInfoPageState extends State<UserInfoPage> {
-  late AuthenticationRepository _authenticationRepository;
   late User user;
   late MypageCubit _mypageCubit;
 
   @override
   void initState() {
     super.initState();
-    _authenticationRepository =
-        RepositoryProvider.of<AuthenticationRepository>(context);
     _mypageCubit = BlocProvider.of<MypageCubit>(context);
     user = context.read<AuthenticationBloc>().state.user;
     _mypageCubit.getMypageInfo();
@@ -54,7 +51,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         .headline4!
                         .copyWith(color: Colors.white)),
                 SizedBox(height: Adaptive.h(1)),
-                userCategories()
+                userCategories(),
+                SizedBox(height: Adaptive.h(2))
               ]))),
       BlocBuilder<MypageCubit, MypageState>(builder: (context, state) {
         if (state.isLoaded == true) {
@@ -118,19 +116,22 @@ class _UserInfoPageState extends State<UserInfoPage> {
               vertical: Adaptive.h(3), horizontal: sizeWidth(3)),
           child: RichText(
               textAlign: TextAlign.center,
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(
-                    text: '유의사항\n\n',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Colors.grey)),
-                TextSpan(text: '해당 수치는 객월 고객님의 활동을 근거로 반영합니다.\n'),
-                TextSpan(
-                    text:
-                        '서비스 이용약관에 기술되어 있듯, 구매 후 3주가 지난 이후 취소, 환불 요청이 없는 경우에는 자동적으로 구매확정 처리됩니다.\n'),
-                TextSpan(text: '구매확정 시기는 물품을 구입한 시기와 상이합니다.')
-              ])))
+              text: TextSpan(
+                  style:
+                      TextStyle(color: Colors.grey, fontSize: Adaptive.dp(10)),
+                  children: [
+                    TextSpan(
+                        text: '유의사항\n\n',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: Colors.grey)),
+                    TextSpan(text: '해당 수치는 객월 고객님의 활동을 근거로 반영합니다.\n'),
+                    TextSpan(
+                        text:
+                            '서비스 이용약관에 기술되어 있듯, 구매 후 3주가 지난 이후 취소, 환불 요청이 없는 경우에는 자동적으로 구매확정 처리됩니다.\n'),
+                    TextSpan(text: '구매확정 시기는 물품을 구입한 시기와 상이합니다.')
+                  ])))
     ]));
   }
 

@@ -201,7 +201,7 @@ class _PasswordInput extends StatelessWidget {
                   labelText: '비밀번호',
                   helperText: '',
                   errorText: state.password.invalid
-                      ? '영소문자, 특수문자 포함 8글자이상 입력해주세요.'
+                      ? '영소문자, 숫자, 특수문자를 모두 포함 8글자이상 입력해주세요.'
                       : null));
         });
   }

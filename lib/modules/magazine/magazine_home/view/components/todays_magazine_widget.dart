@@ -30,11 +30,11 @@ class _TodaysMagazineState extends State<TodaysMagazine>
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (widget.isMain == true)
         Padding(
-            padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
+            padding: EdgeInsets.only(bottom: sizeWidth(5)),
             child: TitleWithUnderline(
                 title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
       Container(
-          height: Adaptive.h(40),
+          height: Adaptive.w(90),
           margin: EdgeInsets.only(bottom: Adaptive.h(3)),
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,

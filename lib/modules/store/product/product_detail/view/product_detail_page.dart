@@ -4,12 +4,10 @@ import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_scree
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
-import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -28,20 +26,16 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with SingleTickerProviderStateMixin {
   String get _productId => this.widget.productId;
-  late AuthenticationRepository _authenticationRepository;
-  late User user;
-  late bool is_authenticated;
 
-  late Product product;
+  int _selectedIndex = 0;
+
   late ProductCubit _productCubit;
-  late int _selectedIndex = 0;
+  late bool is_authenticated;
+  late Product product;
 
   @override
   void initState() {
     super.initState();
-    _authenticationRepository =
-        RepositoryProvider.of<AuthenticationRepository>(context);
-    user = context.read<AuthenticationBloc>().state.user;
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
     _productCubit = BlocProvider.of<ProductCubit>(context);
@@ -90,7 +84,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             child: _detailTab(context, 0, "SPECS", 50)),
                         InkWell(
                             onTap: () => setState(() => _selectedIndex = 1),
-                            child: _detailTab(context, 1, "REVIEWS", 50))
+                            child: _detailTab(context, 1, "MAGS", 50))
                       ]))),
               SliverToBoxAdapter(
                   child: _selectedIndex == 0
@@ -109,9 +103,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       BuildContext context, int index, String title, int Width) {
     return Container(
         decoration: BoxDecoration(
-          color: _selectedIndex == index ? Colors.black : Colors.white,
-          border: Border.all(color: Colors.black),
-        ),
+            color: _selectedIndex == index ? Colors.black : Colors.white,
+            border: Border.all(color: Colors.black)),
         width: sizeWidth(Width),
         height: Adaptive.h(5.5),
         child: Center(
@@ -140,8 +133,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           ])),
       SizedBox(height: sizeWidth(3)),
       Text("${product.name}", style: theme.textTheme.headline4),
-      SizedBox(height: sizeWidth(3)),
-      Text("${product.summary}"),
+      if (product.summary != '') SizedBox(height: sizeWidth(3)),
+      if (product.summary != '') Text("${product.summary}"),
       Divider(),
       RichText(
           text: TextSpan(style: theme.textTheme.headline4, children: [

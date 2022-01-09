@@ -1,12 +1,10 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:aroundus_app/repositories/store_repository/src/store_repository.dart';
+import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/modules/store/store_home/view/view.dart';
-import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
-import 'package:aroundus_app/repositories/store_repository/src/store_repository.dart';
-import 'package:aroundus_app/repositories/user_repository/models/user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StoreHomeScreen extends StatefulWidget {
   static String routeName = '/store_home_screen';

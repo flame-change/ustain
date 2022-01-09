@@ -1,8 +1,7 @@
-import 'package:aroundus_app/modules/mypage/external_link/external_link.dart';
 import 'package:aroundus_app/modules/mypage/view/components/menu_widgets.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CompanyInfo extends StatefulWidget {
@@ -37,7 +36,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     SizedBox(width: sizeWidth(3)),
                     GestureDetector(
                         onTap: () =>
-                            isWebRouter(context, 'https://ustain.oopy.io'),
+                            isWebRouter(context, 'https://app.ustain.be/'),
                         child: SvgPicture.asset('assets/icons/website.svg',
                             height: Adaptive.dp(13)))
                   ])

@@ -253,21 +253,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                               );
                             });
                       } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text("상품을 선택해주세요."),
-                                actions: [
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("확인"),
-                                  ),
-                                ],
-                              );
-                            });
+                        chooseProduct(context);
                       }
                     },
                     child: Container(
@@ -281,21 +267,27 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      List<Cart> carts = cartTempList.map((c) => Cart(
-                        brand: _product.brand!.name,
-                        productId: _product.Id,
-                        productName: _product.name,
-                        productThumbnail: _product.thumbnail,
-                        variantId: c.variants!.Id!,
-                        variantName: c.variants!.variantName,
-                        salePrice: c.variants!.discountPrice,
-                        quantity: c.quantity,
-                      )).toList();
+                      List<Cart> carts = cartTempList
+                          .map((c) => Cart(
+                                brand: _product.brand!.name,
+                                productId: _product.Id,
+                                productName: _product.name,
+                                productThumbnail: _product.thumbnail,
+                                variantId: c.variants!.Id!,
+                                variantName: c.variants!.variantName,
+                                salePrice: c.variants!.discountPrice,
+                                quantity: c.quantity,
+                              ))
+                          .toList();
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OrderScreen(carts)));
+                      if (cartTempList.length > 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OrderScreen(carts)));
+                      } else {
+                        chooseProduct(context);
+                      }
                     },
                     child: Container(
                         color: Colors.black,
@@ -314,6 +306,24 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
         ),
       );
     });
+  }
+
+  void chooseProduct(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("상품을 선택해주세요."),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("확인"),
+              ),
+            ],
+          );
+        });
   }
 
   List<Widget> optionPurchase(List<Option> options) {
@@ -360,10 +370,12 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                   style: TextStyle(color: Colors.grey)),
                           onTap: () {
                             // 선택 옵션 추가
-                            if(available) {
+                            if (available) {
                               setState(() {
-                                selectedOptions[i] = selectedOptions[i].copyWith(
-                                    variation: options[i].variations![index]);
+                                selectedOptions[i] = selectedOptions[i]
+                                    .copyWith(
+                                        variation:
+                                            options[i].variations![index]);
                                 selected = selected + 1;
                               });
 
@@ -385,16 +397,16 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                 bool generated = false;
                                 // 이미 생성되어 있는 경우
                                 cartTempList.forEach((element) {
-                                  if (listEquals(
-                                      element.variants!.types, selectedOptions)) {
+                                  if (listEquals(element.variants!.types,
+                                      selectedOptions)) {
                                     index = cartTempList.indexOf(element);
                                     setState(() {
                                       generated = true;
                                       cartTempList[index] = cartTempList[index]
                                           .copyWith(
-                                          quantity:
-                                          cartTempList[index].quantity! +
-                                              1);
+                                              quantity: cartTempList[index]
+                                                      .quantity! +
+                                                  1);
                                     });
                                   }
                                 });
@@ -402,8 +414,8 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                 if (!generated) {
                                   setState(() {
                                     selected = 0;
-                                    cartTempList.add(
-                                        CartTemp(variants: variant, quantity: 1));
+                                    cartTempList.add(CartTemp(
+                                        variants: variant, quantity: 1));
                                   });
                                 }
                               }

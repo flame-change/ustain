@@ -3,7 +3,6 @@ import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.da
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -13,20 +12,19 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => MultiBlocProvider(providers: [
-                BlocProvider<MagazineDetailCubit>(
-                  create: (context) => MagazineDetailCubit(
-                      RepositoryProvider.of<MagazineRepository>(context)),
-                )
-              ], child: MagazineDetailPage(id: magazine.id!)),
-            ));
+                builder: (_) => MultiBlocProvider(providers: [
+                      BlocProvider<MagazineDetailCubit>(
+                        create: (context) => MagazineDetailCubit(
+                            RepositoryProvider.of<MagazineRepository>(context)),
+                      )
+                    ], child: MagazineDetailPage(id: magazine.id!))));
       },
       child: Card(
           elevation: 4,
           child: Column(children: [
             Container(
                 width: sizeWidth(100),
-                height: Adaptive.h(20),
+                height: sizeWidth(50),
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,

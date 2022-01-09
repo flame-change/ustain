@@ -1,7 +1,6 @@
 import 'package:aroundus_app/repositories/magazine_repository/models/catalog.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
 
@@ -15,12 +14,8 @@ class CatalogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Stack(alignment: Alignment.bottomLeft, children: [
-        Image.network(
-          catalog!.bannerImage!,
-          height: Adaptive.h(30),
-          width: sizeWidth(100),
-          fit: BoxFit.cover,
-        ),
+        Image.network(catalog!.bannerImage!,
+            height: Adaptive.h(30), width: sizeWidth(100), fit: BoxFit.cover),
         Container(
             margin: EdgeInsets.only(top: Adaptive.h(10)),
             height: Adaptive.h(20),
@@ -37,11 +32,10 @@ class CatalogCard extends StatelessWidget {
                 height: sizeWidth(8),
                 color: Colors.black,
                 child: Center(
-                    child: Text(
-                  '$index',
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: theme.accentColor, fontWeight: FontWeight.w900),
-                )))),
+                    child: Text('$index',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900))))),
         Padding(
             padding: EdgeInsets.all(sizeWidth(5)),
             child:

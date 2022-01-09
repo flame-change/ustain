@@ -70,6 +70,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                     leading: IconButton(
                         onPressed: () {
                           showDialog(
+                              useRootNavigator: false,
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -80,7 +81,8 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                                             _orderCubit.cancelOrder(
                                                 state.order!.merchantUid,
                                                 '...');
-                                            Navigator.pushNamed(context, '');
+                                            // Navigator.pushNamed(context, '');
+                                            Navigator.of(context).pop();
                                           },
                                           child: Text("확인")),
                                       MaterialButton(

@@ -25,13 +25,12 @@ class _SearchScreenState extends State<SearchScreen> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-            child: PageWire(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-              TitleWithUnderline(
-                  title: 'SEARCH', subtitle: '상품 명, 브랜드 명을 검색해 주세요.'),
-              SearchPage()
-            ]))));
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          LeftPageWire(
+              child: TitleWithUnderline(
+                  title: 'SEARCH', subtitle: '상품 명, 브랜드 명을 검색해 주세요.')),
+          PageWire(child: SearchPage())
+        ])));
   }
 }

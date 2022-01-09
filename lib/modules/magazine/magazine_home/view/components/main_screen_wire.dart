@@ -47,9 +47,7 @@ class MainScreenWire extends StatelessWidget {
                                   child: page2Ttile)
                             ],
                             indicator: UnderlineTabIndicator(
-                                borderSide: BorderSide(
-                                    width: indicatorWidth,
-                                    color: theme.accentColor),
+                                borderSide: BorderSide(width: indicatorWidth),
                                 insets: EdgeInsets.only(bottom: -6)),
                             labelStyle: theme.textTheme.button!
                                 .copyWith(fontSize: Adaptive.dp(20)),

@@ -42,28 +42,27 @@ class _BrandPageState extends State<BrandPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(children: [
-      PageWire(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-            TitleWithUnderline(
-                title: 'TRENDING BRANDS', subtitle: '인기 브랜드의 진솔한 뒷이야기.'),
-            BlocBuilder<BrandCubit, BrandListState>(builder: (context, state) {
-              if (state.isLoaded == true) {
-                return Column(children: [
-                  for (var brand in state.brands!)
-                    BrandListTile(
-                        Id: brand.Id,
-                        name: brand.name,
-                        description: brand.description,
-                        logo: brand.logo)
-                ]);
-              }
-              return Padding(
-                  padding: EdgeInsets.only(top: Adaptive.h(30)),
-                  child: Center(child: CircularProgressIndicator()));
-            })
-          ])),
+      LeftPageWire(
+          child: TitleWithUnderline(
+              color: Colors.grey.shade100,
+              title: 'TRENDING BRANDS',
+              subtitle: '인기 브랜드의 진솔한 뒷이야기.')),
+      PageWire(child:
+          BlocBuilder<BrandCubit, BrandListState>(builder: (context, state) {
+        if (state.isLoaded == true) {
+          return Column(children: [
+            for (var brand in state.brands!)
+              BrandListTile(
+                  Id: brand.Id,
+                  name: brand.name,
+                  description: brand.description,
+                  logo: brand.logo)
+          ]);
+        }
+        return Padding(
+            padding: EdgeInsets.only(top: Adaptive.h(30)),
+            child: Center(child: CircularProgressIndicator()));
+      })),
       SizedBox(height: Adaptive.h(5)),
       CompanyInfo()
     ]));

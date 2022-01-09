@@ -3,13 +3,12 @@ import 'package:aroundus_app/modules/store/store_home/components/store_product_w
 import 'package:aroundus_app/repositories/store_repository/models/collection.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 export 'package:sizer/sizer.dart';
@@ -29,25 +28,39 @@ class _StorePageState extends State<StorePage>
 
   late AuthenticationStatus user_status;
   late StoreCubit _storeCubit;
-  late Collection _selectedMenu;
-  bool isOpen = false;
-  late int collPath;
-  Collection _selectedCollection = Collection("", "전체보기");
+  late Collection _selectedCollection;
+
+  final _scrollController = ScrollController();
+
+  int page = 1;
 
   @override
   void initState() {
     super.initState();
     _storeCubit = BlocProvider.of<StoreCubit>(context);
     user_status = context.read<AuthenticationBloc>().state.status;
-    _storeCubit.getCollections();
     _storeCubit.getSubCollection();
-    _selectedMenu = _storeCubit.state.selectedMenu!;
-    _storeCubit.state.collections!.forEach((menu) {
-      if (menu.collection.contains(_selectedMenu)) {
-        collPath = _storeCubit.state.collections!.indexOf(menu);
-      }
-    });
-    _storeCubit.getProductsByCollection(_selectedMenu, "price.sale");
+    _selectedCollection =
+        Collection(_storeCubit.state.selectedMenu!.Id, '전체보기');
+    _storeCubit.getProductsByCollection(
+        _storeCubit.state.selectedMenu!, "price.sale", page);
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll == 0 && _storeCubit.state.maxIndex == false) {
+      page += 1;
+      _storeCubit.getProductsByCollection(
+          _selectedCollection, "price.sale", page);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -70,6 +83,10 @@ class _StorePageState extends State<StorePage>
                                 duration: Duration(milliseconds: 400),
                                 curve: Curves.easeOut),
                             child: Icon(Icons.menu, color: Colors.black)),
+                        Text('${_selectedCollection.name}',
+                            style: TextStyle(
+                                fontSize: Adaptive.dp(12),
+                                color: Colors.black)),
                         GestureDetector(
                             onTap: () => user_status ==
                                     AuthenticationStatus.authenticated
@@ -82,6 +99,7 @@ class _StorePageState extends State<StorePage>
                 BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
                   if (state.products != null) {
                     return SingleChildScrollView(
+                        controller: _scrollController,
                         padding: basePadding(),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +107,7 @@ class _StorePageState extends State<StorePage>
                               // 서브 카테고리
                               Container(
                                   height: 30,
-                                  margin: EdgeInsets.symmetric(vertical: 15),
+                                  margin: EdgeInsets.only(bottom: 15),
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
@@ -97,10 +115,12 @@ class _StorePageState extends State<StorePage>
                                             onTap: () => setState(() {
                                                   _selectedCollection = state
                                                       .subCollections![index];
+                                                  page = 1;
                                                   _storeCubit
                                                       .getProductsByCollection(
                                                           _selectedCollection,
-                                                          "price.sale");
+                                                          "price.sale",
+                                                          page);
                                                 }),
                                             child: Container(
                                                 color: _selectedCollection ==
@@ -143,50 +163,7 @@ class _StorePageState extends State<StorePage>
                   } else {
                     return Center(child: CircularProgressIndicator());
                   }
-                }),
-                IndexedStack(index: 1, children: [
-                  AnimatedOpacity(
-                      opacity: isOpen ? 0.3 : 0,
-                      duration: Duration(milliseconds: 700),
-                      child: GestureDetector(
-                          onTap: () => setState(() {
-                                isOpen = !isOpen;
-                              }),
-                          child: Container(
-                              height: Adaptive.h(100), color: Colors.black))),
-                  AnimatedContainer(
-                      color: Colors.white,
-                      height: isOpen
-                          ? _storeCubit.state.collections![collPath].collection
-                                  .length *
-                              50
-                          : 0,
-                      duration: Duration(milliseconds: 700),
-                      curve: Curves.fastOutSlowIn,
-                      child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                                onTap: () => setState(() {
-                                      isOpen = !isOpen;
-                                      _selectedMenu = _storeCubit
-                                          .state
-                                          .collections![collPath]
-                                          .collection[index];
-                                      _storeCubit.getProductsByCollection(
-                                          _selectedMenu, "price.sale");
-                                    }),
-                                title: Text(
-                                    "${_storeCubit.state.collections![collPath].collection[index].name}",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(fontSize: Adaptive.dp(12))));
-                          },
-                          itemCount: _storeCubit
-                              .state.collections![collPath].collection.length,
-                          itemExtent: 50))
-                ])
+                })
               ]))
           : Center(child: CircularProgressIndicator());
     });

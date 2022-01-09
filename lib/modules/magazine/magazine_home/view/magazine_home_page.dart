@@ -21,8 +21,9 @@ class MagazineHomePage extends StatefulWidget {
 
 class _MagazineHomePageState extends State<MagazineHomePage> {
   late MagazineCubit _magazineCubit;
-  final _scrollController = ScrollController();
   late User user;
+
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -106,7 +107,6 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
     return <Widget>[
           GestureDetector(
               onTap: () {
-                print("전체보기");
                 _magazineCubit.getMagazinesByCategory(
                     magazineCategory: MagazineCategory.empty);
               },

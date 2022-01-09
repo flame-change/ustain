@@ -1,15 +1,15 @@
-import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
-import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/modules/authentication/signup/view/phone_verify_page.dart';
-import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/authentication/signup/view/phone_verify_page.dart';
+import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.dart';
+import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
+import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 class LoginHomePage extends StatefulWidget {
   static String routeName = '/login_home_page';
@@ -46,11 +46,11 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "WE\nARE\nSELFISH",
-                            style: theme.textTheme.headline1!
-                                .copyWith(color: Colors.white, height: 1.2),
-                          )
+                          Text("WE\nARE\nSELFISH",
+                              style: theme.textTheme.headline1!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.2))
                         ]))
               ]))),
       Container(
@@ -72,12 +72,11 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => BlocProvider(
-                                        create: (_) => SignInCubit(
-                                            RepositoryProvider.of<
-                                                    AuthenticationRepository>(
-                                                context)),
-                                        child: SignInPage(),
-                                      )));
+                                      create: (_) => SignInCubit(
+                                          RepositoryProvider.of<
+                                                  AuthenticationRepository>(
+                                              context)),
+                                      child: SignInPage())));
                         },
                         height: 7),
                     PlainButton(
@@ -95,7 +94,7 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                         },
                         height: 7,
                         color: Colors.white,
-                        borderColor: theme.accentColor),
+                        borderColor: Colors.black),
                     GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, MainScreen.routeName);

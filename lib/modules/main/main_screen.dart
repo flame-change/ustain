@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
                                 size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
                             label: "${MenuState.values[index].nickName}")),
                     onTap: _onItemTapped,
-                    selectedItemColor: theme.accentColor,
+                    selectedItemColor: Colors.black,
                     unselectedItemColor: Color(0xFF8C8C8C),
                     unselectedLabelStyle: TextStyle(
                       fontFamily: 'Pretendard',
