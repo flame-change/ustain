@@ -1,4 +1,6 @@
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
+import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
+import 'package:aroundus_app/repositories/brand_repository/src/brand_repository.dart';
 import 'package:aroundus_app/repositories/product_repository/product_repository.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
@@ -23,7 +25,10 @@ Widget storeProduct(BuildContext context, Product product) {
                       BlocProvider<ProductCubit>(
                           create: (_) => ProductCubit(
                               RepositoryProvider.of<ProductRepository>(
-                                  context)))
+                                  context))),
+                      BlocProvider<BrandDetailCubit>(
+                          create: (_) => BrandDetailCubit(
+                              RepositoryProvider.of<BrandRepository>(context)))
                     ], child: ProductDetailPage(product.Id!))));
       },
       child: GridTile(

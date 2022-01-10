@@ -1,7 +1,11 @@
 import 'package:aroundus_app/modules/store/product/product_detail/components/product_sale_bottom_navigator.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/view/components/magazine_card_widget.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
+import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
@@ -30,6 +34,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   int _selectedIndex = 0;
 
   late ProductCubit _productCubit;
+  late BrandDetailCubit _brandDetailCubit;
+  late List<Magazine> magazineList;
+
   late bool is_authenticated;
   late Product product;
 
@@ -39,7 +46,28 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
     _productCubit = BlocProvider.of<ProductCubit>(context);
-    _productCubit.getProductDetail(_productId);
+    _brandDetailCubit = BlocProvider.of<BrandDetailCubit>(context);
+
+    magazineList = [];
+
+    _productCubit.getProductDetail(_productId).whenComplete(() {
+      product = _productCubit.state.products!.first;
+      _brandDetailCubit
+          .getBrandMagazines(product.brand!.Id!)
+          .whenComplete(() => setState(() {
+                var magazines = _brandDetailCubit.state.magazines as List;
+                magazineList = List<Magazine>.from(magazines.map((model) =>
+                    Magazine(
+                        model['id'],
+                        model['title'],
+                        model['subtitle'],
+                        model['bannerImage'],
+                        (model['categories'] as List)
+                            .map((item) => item as String)
+                            .toList(),
+                        model['content'])));
+              }));
+    });
   }
 
   @override
@@ -50,7 +78,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         body:
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state.isLoaded == true) {
-            product = state.products!.first;
             return CustomScrollView(slivers: [
               SliverAppBar(
                   backgroundColor: Colors.white,
@@ -89,9 +116,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               SliverToBoxAdapter(
                   child: _selectedIndex == 0
                       ? Padding(padding: EdgeInsets.all(20), child: firstPage())
-                      : Padding(
-                          padding: EdgeInsets.only(top: Adaptive.h(5)),
-                          child: Center(child: Text('아직 리뷰가 없습니다.'))))
+                      : secondPage(context))
             ]);
           } else {
             return Container();
@@ -156,5 +181,19 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             loadingWidget: () => Container(color: Colors.white))
       })
     ]);
+  }
+
+  Padding secondPage(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(20),
+        child: magazineList != []
+            ? Column(children: [
+                for (var magazine in magazineList)
+                  magazineCard(context, magazine),
+              ])
+            : Text(
+                '안녕하셍',
+                style: Theme.of(context).textTheme.headline1,
+              ));
   }
 }

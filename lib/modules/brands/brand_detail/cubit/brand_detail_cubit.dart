@@ -1,6 +1,4 @@
 import 'package:aroundus_app/repositories/brand_repository/src/brand_repository.dart';
-import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
-import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
 import 'package:aroundus_app/support/networks/api_result.dart';
@@ -15,6 +13,8 @@ class BrandDetailCubit extends Cubit<BrandDetailState> {
   final BrandRepository _brandDetailRepository;
 
   Future<void> getBrandDetail(String id) async {
+    emit(state.copyWith(isLoading: true, isLoaded: false));
+
     ApiResult<Map> mapResponse = await _brandDetailRepository.getBrand(id);
 
     mapResponse.when(success: (Map? mapResponse) {
@@ -25,6 +25,26 @@ class BrandDetailCubit extends Cubit<BrandDetailState> {
           logo: mapResponse['logo'],
           magazines: mapResponse['magazines'],
           products: mapResponse['products'],
+          isLoading: false,
+          isLoaded: true));
+    }, failure: (NetworkExceptions? error) {
+      logger.w("error $error!");
+      emit(state.copyWith(error: error));
+    });
+  }
+
+  Future<void> getBrandMagazines(String id) async {
+    ApiResult<Map> mapResponse =
+        await _brandDetailRepository.getBrandMagazines(id);
+
+    mapResponse.when(success: (Map? mapResponse) {
+      emit(state.copyWith(
+          Id: '',
+          name: '',
+          description: '',
+          logo: '',
+          magazines: mapResponse!['magazines'],
+          products: [],
           isLoading: false,
           isLoaded: true));
     }, failure: (NetworkExceptions? error) {

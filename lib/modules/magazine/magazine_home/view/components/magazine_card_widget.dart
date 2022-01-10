@@ -12,12 +12,13 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => MultiBlocProvider(providers: [
-                      BlocProvider<MagazineDetailCubit>(
-                        create: (context) => MagazineDetailCubit(
-                            RepositoryProvider.of<MagazineRepository>(context)),
-                      )
-                    ], child: MagazineDetailPage(id: magazine.id!))));
+              builder: (_) => MultiBlocProvider(providers: [
+                BlocProvider<MagazineDetailCubit>(
+                  create: (context) => MagazineDetailCubit(
+                      RepositoryProvider.of<MagazineRepository>(context)),
+                )
+              ], child: MagazineDetailPage(id: magazine.id)),
+            ));
       },
       child: Card(
           elevation: 4,
@@ -37,17 +38,12 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        magazine.title!,
-                        maxLines: 2,
-                        style: theme.textTheme.headline4,
-                      ),
-                      Text(
-                        magazine.subtitle!,
-                        maxLines: 2,
-                        style: theme.textTheme.bodyText2!
-                            .copyWith(fontWeight: FontWeight.w400),
-                      )
+                      Text(magazine.title!,
+                          maxLines: 2, style: theme.textTheme.headline4),
+                      Text(magazine.subtitle!,
+                          maxLines: 2,
+                          style: theme.textTheme.bodyText2!
+                              .copyWith(fontWeight: FontWeight.w400))
                     ]))
           ])));
 }

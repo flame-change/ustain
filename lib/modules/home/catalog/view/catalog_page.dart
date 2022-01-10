@@ -1,6 +1,8 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
+import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
+import 'package:aroundus_app/repositories/brand_repository/src/brand_repository.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
@@ -109,6 +111,10 @@ class productGridTile extends StatelessWidget {
                         BlocProvider<ProductCubit>(
                             create: (_) => ProductCubit(
                                 RepositoryProvider.of<ProductRepository>(
+                                    context))),
+                        BlocProvider<BrandDetailCubit>(
+                            create: (_) => BrandDetailCubit(
+                                RepositoryProvider.of<BrandRepository>(
                                     context)))
                       ], child: ProductDetailPage(product['Id']))));
         },
