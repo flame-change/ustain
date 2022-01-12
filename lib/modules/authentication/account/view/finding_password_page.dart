@@ -18,15 +18,8 @@ class FindingPasswordPage extends StatefulWidget {
 }
 
 class _FindingPasswordPageState extends State<FindingPasswordPage> {
-  late FindingAccountCubit _findingAccountCubit;
   String _text = '재설정 링크 전송';
   TextEditingController _textEditingController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _findingAccountCubit = BlocProvider.of<FindingAccountCubit>(context);
-  }
 
   @override
   void dispose() {
@@ -82,7 +75,7 @@ class _FindingPasswordPageState extends State<FindingPasswordPage> {
                   PlainButton(
                       text: _text,
                       onPressed: () {
-                        _findingAccountCubit
+                        BlocProvider.of<FindingAccountCubit>(context)
                             .findingPhoneNumberVerifyRequest(
                                 _textEditingController.text)
                             .whenComplete(() => {

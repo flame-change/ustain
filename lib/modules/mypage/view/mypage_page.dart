@@ -28,7 +28,6 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  late AuthenticationRepository _authenticationRepository;
   late User user;
   late bool is_authenticated;
   PackageInfo _packageInfo = PackageInfo(
@@ -41,8 +40,6 @@ class _MyPageState extends State<MyPage> {
   @override
   void initState() {
     super.initState();
-    _authenticationRepository =
-        RepositoryProvider.of<AuthenticationRepository>(context);
     user = context.read<AuthenticationBloc>().state.user;
     is_authenticated = context.read<AuthenticationBloc>().state.status ==
         AuthenticationStatus.authenticated;
@@ -109,48 +106,50 @@ class _MyPageState extends State<MyPage> {
   }
 
   Row logOutMethod(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-            onTap: () => showDialog(
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      GestureDetector(
+          onTap: () => showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
+                  MaterialButton(
+                      onPressed: () =>
+                          RepositoryProvider.of<AuthenticationRepository>(
+                                  context)
+                              .logOut(),
+                      child: Text("확인"))
+                ]);
+              }),
+          child: Text('로그아웃',
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: Colors.grey, decoration: TextDecoration.underline))),
+      Container(
+          height: 12,
+          width: 1,
+          color: Colors.black,
+          margin: EdgeInsets.symmetric(horizontal: 30)),
+      GestureDetector(
+          onTap: () {
+            showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
+                  return AlertDialog(title: Text("회원 탈퇴 하시겠습니까?"), actions: [
                     MaterialButton(
-                        onPressed: () => _authenticationRepository.logOut(),
+                        onPressed: () {
+                          RepositoryProvider.of<AuthenticationRepository>(
+                                  context)
+                              .signOut();
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              LoginHomeScreen.routeName, (route) => false);
+                        },
                         child: Text("확인"))
                   ]);
-                }),
-            child: Text('로그아웃',
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: Colors.grey, decoration: TextDecoration.underline))),
-        Container(
-            height: 12,
-            width: 1,
-            color: Colors.black,
-            margin: EdgeInsets.symmetric(horizontal: 30)),
-        GestureDetector(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(title: Text("회원 탈퇴 하시겠습니까?"), actions: [
-                      MaterialButton(
-                          onPressed: () {
-                            _authenticationRepository.signOut();
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                LoginHomeScreen.routeName, (route) => false);
-                          },
-                          child: Text("확인"))
-                    ]);
-                  });
-            },
-            child: Text('회원탈퇴',
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: Colors.grey, decoration: TextDecoration.underline)))
-      ],
-    );
+                });
+          },
+          child: Text('회원탈퇴',
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: Colors.grey, decoration: TextDecoration.underline)))
+    ]);
   }
 
   PageWire helpcenterWire(BuildContext context) {

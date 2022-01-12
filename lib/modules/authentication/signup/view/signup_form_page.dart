@@ -21,17 +21,10 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  late SignupCubit _signupCubit;
   bool _isAdult = false;
   bool _agreeUsage = false;
   bool _personalInfo = false;
   bool _agreeAll = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _signupCubit = BlocProvider.of<SignupCubit>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +60,12 @@ class _SignupFormState extends State<SignupForm> {
                             style: theme.textTheme.headline2!
                                 .copyWith(fontSize: Adaptive.dp(20))),
                         TextFormField(
-                          decoration: InputDecoration(labelText: '휴대폰 번호'),
-                          readOnly: true,
-                          initialValue: _signupCubit.state.phoneNumber.value,
-                        ),
+                            decoration: InputDecoration(labelText: '휴대폰 번호'),
+                            readOnly: true,
+                            initialValue: BlocProvider.of<SignupCubit>(context)
+                                .state
+                                .phoneNumber
+                                .value),
                         _PasswordInput(),
                         _ConfirmPasswordInput(),
                         _agreementWidget(context),

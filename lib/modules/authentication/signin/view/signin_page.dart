@@ -21,16 +21,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  late SignInCubit _signInCubit;
-
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _signInCubit = BlocProvider.of<SignInCubit>(context);
-  }
 
   @override
   void dispose() {
@@ -91,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                         _passwordInput(),
                         PlainButton(
                             onPressed: () {
-                              _signInCubit.signIn(
+                              BlocProvider.of<SignInCubit>(context).signIn(
                                   phoneNumber: _phoneNumberController.text
                                       .trim()
                                       .replaceAll("-", ""),
@@ -104,15 +96,13 @@ class _SignInPageState extends State<SignInPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) =>
-                                          BlocProvider<FindingAccountCubit>(
-                                              create: (context) =>
-                                                  FindingAccountCubit(
-                                                    RepositoryProvider.of<
-                                                            AuthenticationRepository>(
-                                                        context),
-                                                  ),
-                                              child: FindingPasswordPage())));
+                                      builder: (_) => BlocProvider<
+                                              FindingAccountCubit>(
+                                          create: (context) => FindingAccountCubit(
+                                              RepositoryProvider.of<
+                                                      AuthenticationRepository>(
+                                                  context)),
+                                          child: FindingPasswordPage())));
                             },
                             child: Center(
                                 child: Text("비밀번호 찾기",

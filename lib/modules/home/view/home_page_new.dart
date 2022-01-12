@@ -4,6 +4,7 @@ import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/home/components/catalog_list.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -48,15 +49,17 @@ class _HomePageNewState extends State<HomePageNew> {
                 delegate: SliverChildBuilderDelegate(
                     (context, index) => GestureDetector(
                         onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CatalogScreen(
-                                      id: state.catalogMagazines![index].id!)),
-                            ),
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CatalogScreen(
+                                    id: state.catalogMagazines![index].id!))),
                         child: CatalogCard(
                             state.catalogMagazines![index], index + 1)),
                     childCount: state.catalogMagazines!.length))
-            : SliverToBoxAdapter(child: Container()),
+            : SliverToBoxAdapter(
+                child: Container(
+                    padding: EdgeInsets.only(top: Adaptive.h(30)),
+                    child: Center(child: CircularProgressIndicator()))),
         SliverToBoxAdapter(
             child: MediaQuery.removePadding(
                 context: context, removeTop: true, child: CompanyInfo()))

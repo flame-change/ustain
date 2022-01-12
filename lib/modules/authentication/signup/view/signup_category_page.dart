@@ -1,6 +1,5 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
-import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
@@ -22,7 +21,6 @@ class SignupCategoryPage extends StatefulWidget {
 class _SignupCategoryPageState extends State<SignupCategoryPage> {
   final TextEditingController _nicknameController = TextEditingController();
 
-  late SignupCubit _signupCubit;
   List? categories;
   late User user;
   List<String> selectedCategory = [];
@@ -30,7 +28,6 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
   @override
   void initState() {
     super.initState();
-    _signupCubit = BlocProvider.of<SignupCubit>(context);
     user = BlocProvider.of<AuthenticationBloc>(context).state.user;
   }
 
@@ -53,11 +50,13 @@ class _SignupCategoryPageState extends State<SignupCategoryPage> {
                 showTopSnackBar(
                     context, CustomSnackBar.error(message: "관심사를 선택해주세요."));
               } else {
-                _signupCubit.updateUserProfile(
-                    nickName: _signupCubit.state.nickName.value.toString(),
+                BlocProvider.of<SignupCubit>(context).updateUserProfile(
+                    nickName: BlocProvider.of<SignupCubit>(context)
+                        .state
+                        .nickName
+                        .value
+                        .toString(),
                     categories: selectedCategory);
-                // Navigator.pushNamedAndRemoveUntil(
-                //     context, MainScreen.routeName, (route) => false);
               }
             },
             text: "설정 완료",

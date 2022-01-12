@@ -19,15 +19,6 @@ class LoginHomePage extends StatefulWidget {
 }
 
 class _LoginHomePagePageState extends State<LoginHomePage> {
-  late AuthenticationRepository _authenticationRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    _authenticationRepository =
-        RepositoryProvider.of<AuthenticationRepository>(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -98,7 +89,9 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                     GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, MainScreen.routeName);
-                          _authenticationRepository.travel();
+                          RepositoryProvider.of<AuthenticationRepository>(
+                                  context)
+                              .travel();
                         },
                         child: Text("둘러보기",
                             style: theme.textTheme.subtitle1!.copyWith(

@@ -23,14 +23,7 @@ class PhoneVerifyPage extends StatefulWidget {
 }
 
 class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
-  late SignupCubit _signupCubit;
   VerifyStatus phoneNumberVerifyStatus = VerifyStatus.init;
-
-  @override
-  void initState() {
-    super.initState();
-    _signupCubit = BlocProvider.of<SignupCubit>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +48,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                 }
                 setState(() {
                   phoneNumberVerifyStatus = state.phoneNumberVerifyStatus;
-                  _signupCubit.republishAuthInit();
+                  BlocProvider.of<SignupCubit>(context).republishAuthInit();
                 });
               }
               if (state.phoneNumberVerifyStatus == VerifyStatus.expiered &&
@@ -63,7 +56,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                 showTopSnackBar(
                     context, CustomSnackBar.error(message: "입력 시간이 만료되었습니다."));
                 setState(() {
-                  _signupCubit.expiredFlagFalse();
+                  BlocProvider.of<SignupCubit>(context).expiredFlagFalse();
                 });
               }
               if (state.phoneNumberVerifyStatus == VerifyStatus.unverified &&
@@ -71,11 +64,11 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                 showTopSnackBar(
                     context, CustomSnackBar.error(message: "인증번호가 일치하지 않습니다."));
                 setState(() {
-                  _signupCubit.unverifiedFlagFalse();
+                  BlocProvider.of<SignupCubit>(context).unverifiedFlagFalse();
                 });
               }
               if (state.phoneNumberVerifyStatus == VerifyStatus.verified) {
-                _signupCubit.completeVerify();
+                BlocProvider.of<SignupCubit>(context).completeVerify();
 
                 Navigator.push(
                     context,
