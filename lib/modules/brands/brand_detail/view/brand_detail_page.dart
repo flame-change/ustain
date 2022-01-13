@@ -112,7 +112,7 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
                   ]))
         ]));
       }
-      return Center(child: CircularProgressIndicator());
+      return Center(child: Image.asset('assets/images/indicator.gif'));
     });
   }
 }

@@ -40,7 +40,8 @@ class _CatalogPageState extends State<CatalogPage> {
           ? CustomScrollView(slivers: [
               SliverAppBar(
                   leading: IconButton(
-                      icon: Icon(Icons.arrow_back_ios_outlined),
+                      icon: Icon(Icons.arrow_back_ios_outlined,
+                          color: Colors.black),
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,

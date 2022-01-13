@@ -58,8 +58,13 @@ class _HomePageNewState extends State<HomePageNew> {
                     childCount: state.catalogMagazines!.length))
             : SliverToBoxAdapter(
                 child: Container(
-                    padding: EdgeInsets.only(top: Adaptive.h(30)),
-                    child: Center(child: CircularProgressIndicator()))),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.only(
+                        top: Adaptive.h(10), bottom: Adaptive.h(25)),
+                    child: Center(
+                        child: Image.asset('assets/images/indicator.gif')))),
         SliverToBoxAdapter(
             child: MediaQuery.removePadding(
                 context: context, removeTop: true, child: CompanyInfo()))

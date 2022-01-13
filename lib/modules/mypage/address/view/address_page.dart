@@ -167,7 +167,7 @@ class _AddressPage extends State<AddressPage>
               }
             });
       } else {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Image.asset('assets/images/indicator.gif'));
       }
     });
   }

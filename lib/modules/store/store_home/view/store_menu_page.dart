@@ -75,7 +75,7 @@ class _StoreMenuPage extends State<StoreMenuPage>
                                           mediumCategoryLogic(i))
                                 ]))))));
       } else {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Image.asset('assets/images/indicator.gif'));
       }
     });
   }

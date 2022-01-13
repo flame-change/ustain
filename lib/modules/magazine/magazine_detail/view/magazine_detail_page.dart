@@ -123,7 +123,8 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                               ]))))
             ]));
       } else {
-        return Scaffold(body: Center(child: CircularProgressIndicator()));
+        return Scaffold(
+            body: Center(child: Image.asset('assets/images/indicator.gif')));
       }
     });
   }

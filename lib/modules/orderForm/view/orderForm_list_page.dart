@@ -1,7 +1,6 @@
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
-import 'package:flutter/services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'orderForm_page.dart';
 
 class OrderFormListPage extends StatefulWidget {
@@ -89,7 +89,7 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
             return Center(child: Text("주문상품이 없습니다."));
           }
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Image.asset('assets/images/indicator.gif'));
         }
       }));
     });

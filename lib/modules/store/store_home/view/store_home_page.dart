@@ -161,11 +161,12 @@ class _StorePageState extends State<StorePage>
                                           Center(child: Text("등록된 상품이 없습니다.")))
                             ]));
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                        child: Image.asset('assets/images/indicator.gif'));
                   }
                 })
               ]))
-          : Center(child: CircularProgressIndicator());
+          : Center(child: Image.asset('assets/images/indicator.gif'));
     });
   }
 }

@@ -157,7 +157,7 @@ class _OrderPageState extends State<OrderPage> {
               ]);
             });
       } else {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Image.asset('assets/images/indicator.gif'));
       }
     });
   }

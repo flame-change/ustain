@@ -57,47 +57,50 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
           ),
           if (context.read<AuthenticationBloc>().state.status ==
               AuthenticationStatus.authenticated)
-            PageWire(
-              child: BlocBuilder<MagazineScrappedCubit, MagazineScrappedState>(
-                  builder: (context, state) {
-                if (state.isLoaded == true &&
-                    state.scrappedMagazines!.length != 0) {
-                  return Column(children: [
-                    ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: List.generate(
-                            _magazineScrappedCubit
-                                .state.scrappedMagazines!.length,
-                            (index) => magazineCard(
-                                context,
-                                _magazineScrappedCubit
-                                    .state.scrappedMagazines![index])))
-                  ]);
-                } else if (state.isLoaded == true &&
-                    state.scrappedMagazines!.length == 0) {
-                  return Container(
-                      margin: EdgeInsets.only(top: Adaptive.h(3)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.grey[200]),
-                      height: Adaptive.w(35),
-                      width: double.infinity,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.info_outline),
-                            SizedBox(height: Adaptive.h(1)),
-                            Text('스크랩한 매거진이 없습니다.',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: Adaptive.h(1))
-                          ]));
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              }),
-            )
+            PageWire(child:
+                BlocBuilder<MagazineScrappedCubit, MagazineScrappedState>(
+                    builder: (context, state) {
+              if (state.isLoaded == true &&
+                  state.scrappedMagazines!.length != 0) {
+                return Column(children: [
+                  ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: List.generate(
+                          _magazineScrappedCubit
+                              .state.scrappedMagazines!.length,
+                          (index) => magazineCard(
+                              context,
+                              _magazineScrappedCubit
+                                  .state.scrappedMagazines![index])))
+                ]);
+              } else if (state.isLoaded == true &&
+                  state.scrappedMagazines!.length == 0) {
+                return Container(
+                    margin: EdgeInsets.only(top: Adaptive.h(3)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.grey[200]),
+                    height: Adaptive.w(35),
+                    width: double.infinity,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.info_outline),
+                          SizedBox(height: Adaptive.h(1)),
+                          Text('스크랩한 매거진이 없습니다.',
+                              style: Theme.of(context).textTheme.bodyText2),
+                          SizedBox(height: Adaptive.h(1))
+                        ]));
+              } else {
+                return Container(
+                    padding: EdgeInsets.only(top: Adaptive.h(15)),
+                    color: Colors.white,
+                    child: Center(
+                        child: Image.asset('assets/images/indicator.gif')));
+              }
+            }))
           else
             PageWire(child: LoginNeeded())
         ]));

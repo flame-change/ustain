@@ -29,7 +29,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             state.bannerMagazines != null
                 ? BannerMagazines(state.bannerMagazines!)
-                : Container(color: Colors.grey)
+                : Container(
+                    color: Colors.white,
+                    child: Center(
+                        child: Image.asset('assets/images/indicator.gif')))
           ]);
     });
   }

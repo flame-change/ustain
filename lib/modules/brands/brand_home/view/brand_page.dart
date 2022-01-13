@@ -61,7 +61,7 @@ class _BrandPageState extends State<BrandPage> {
         }
         return Padding(
             padding: EdgeInsets.only(top: Adaptive.h(30)),
-            child: Center(child: CircularProgressIndicator()));
+            child: Center(child: Image.asset('assets/images/indicator.gif')));
       })),
       SizedBox(height: Adaptive.h(5)),
       CompanyInfo()

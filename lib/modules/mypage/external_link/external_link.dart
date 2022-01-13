@@ -29,7 +29,9 @@ class _ExternalLinkState extends State<ExternalLink> {
               onPageFinished: (finish) {
                 setState(() => isLoading = false);
               }),
-          isLoading ? Center(child: CircularProgressIndicator()) : Stack()
+          isLoading
+              ? Center(child: Image.asset('assets/images/indicator.gif'))
+              : Stack()
         ])));
   }
 }

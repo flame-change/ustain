@@ -95,8 +95,10 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                 ]);
               } else {
                 return Container(
-                    height: Adaptive.h(100),
-                    child: Center(child: CircularProgressIndicator()));
+                    padding: EdgeInsets.only(top: Adaptive.h(20)),
+                    color: Colors.white,
+                    child: Center(
+                        child: Image.asset('assets/images/indicator.gif')));
               }
             })));
   }

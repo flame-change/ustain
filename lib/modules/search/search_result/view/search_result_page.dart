@@ -98,7 +98,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         return Container(
             color: Colors.white,
             height: 300,
-            child: Center(child: CircularProgressIndicator()));
+            child: Center(child: Image.asset('assets/images/indicator.gif')));
       }
 
       return Column(

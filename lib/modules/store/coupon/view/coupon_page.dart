@@ -97,7 +97,7 @@ class _CouponPage extends State<CouponPage> {
               }
             });
       } else {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Image.asset('assets/images/indicator.gif'));
       }
     });
   }

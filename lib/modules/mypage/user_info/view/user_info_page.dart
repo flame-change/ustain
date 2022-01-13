@@ -104,7 +104,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         description: '작성해주신 상품 리뷰 수 입니다.')
                   ])));
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Image.asset('assets/images/indicator.gif'));
         }
       }),
       Container(
