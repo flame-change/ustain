@@ -88,7 +88,7 @@ class OrderResultPage extends StatelessWidget {
                                 Navigator.pushNamedAndRemoveUntil(
                                     context, 'cart_screen', (route) => false);
                               },
-                              text: '장바구니로 돌아가'),
+                              text: '장바구니로 돌아가기'),
                       PlainButton(
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(

@@ -1,5 +1,7 @@
+import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
+import 'package:aroundus_app/modules/store/order/view/order_cancel_page.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/base_component/plain_button.dart';
 import 'package:flutter/services.dart';
@@ -81,8 +83,10 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                                             _orderCubit.cancelOrder(
                                                 state.order!.merchantUid,
                                                 '...');
-                                            // Navigator.pushNamed(context, '');
-                                            Navigator.of(context).pop();
+                                            Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                OrderCancelPage.routeName,
+                                                (route) => false);
                                           },
                                           child: Text("확인")),
                                       MaterialButton(
@@ -108,11 +112,11 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
 
                 /* [필수입력] 결제 데이터 */
                 data: PaymentData(
-                  pg: 'toss',
+                  pg: 'uplus',
                   // PG사
-                  payMethod: 'card',
+                  payMethod: 'card, trans, vbank, phone',
                   // 결제수단
-                  name: '아임포트 결제데이터 분석',
+                  name: '${state.order!.name}',
                   // 주문명
                   merchantUid: '${state.order!.merchantUid}',
                   // 주문번호
@@ -145,28 +149,32 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                 }));
       } else {
         if (state.errorMessage != null) {
-          return Scaffold(
-              body: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    child: Text("${state.errorMessage}",
-                        style: theme.textTheme.headline4)),
-                PlainButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "", (route) => false);
-                    },
-                    text: "홈 화면으로 이동",
-                    width: 50)
-              ])));
+          return buildScaffold(state, context);
         } else {
           return Center(child: Image.asset('assets/images/indicator.gif'));
         }
       }
     });
+  }
+
+  Scaffold buildScaffold(PaymentState state, BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+          Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text("${state.errorMessage}",
+                  style: theme.textTheme.headline4)),
+          PlainButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "", (route) => false);
+              },
+              text: "홈 화면으로 이동",
+              width: 50)
+        ])));
   }
 }

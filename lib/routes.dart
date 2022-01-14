@@ -2,6 +2,7 @@ import 'package:aroundus_app/modules/search/search_result/view/search_result_scr
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/magazine_home.dart';
+import 'package:aroundus_app/modules/store/order/view/order_cancel_page.dart';
 import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
 import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
@@ -27,6 +28,7 @@ final Map<String, WidgetBuilder> routes = {
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SearchScreen.routeName: (context) => SearchScreen(),
   UserInfoScreen.routeName: (context) => UserInfoScreen(),
+  OrderCancelPage.routeName: (context) => OrderCancelPage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   LoginHomeScreen.routeName: (context) => LoginHomeScreen(),
   PhoneVerifyPage.routeName: (context) => PhoneVerifyPage(),
