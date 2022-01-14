@@ -9,6 +9,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class MagazineCommentSheet extends StatefulWidget {
   final int id;
@@ -110,7 +111,8 @@ class _MagazineCommentSheetState extends State<MagazineCommentSheet>
         // leading: Text("${comment.id}"),
         leading: CircleAvatar(
             backgroundColor: HexColor("${user!.group![0]['hexCode']}"),
-            backgroundImage: AssetImage('assets/images/ut-face.png')),
+            backgroundImage: Svg('assets/icons/bottomNavigationBar/my_page.svg',
+                color: Colors.black)),
         title: Text("${comment.name}",
             style: theme.textTheme.subtitle2!
                 .copyWith(fontWeight: FontWeight.bold)),

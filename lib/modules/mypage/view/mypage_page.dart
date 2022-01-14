@@ -12,7 +12,6 @@ import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -58,10 +57,7 @@ class _MyPageState extends State<MyPage> {
         color: Colors.white,
         child: Column(children: [
           if (is_authenticated)
-            Container(
-                height: Adaptive.h(15),
-                color: Colors.black,
-                child: myPageInfo())
+            Container(color: Colors.black, child: myPageInfo())
           else
             PageWire(child: LoginNeeded()),
           SizedBox(height: sizeWidth(5)),
@@ -238,47 +234,38 @@ class _MyPageState extends State<MyPage> {
     return GestureDetector(
         onTap: () => Navigator.pushNamed(context, UserInfoScreen.routeName),
         child: PageWire(
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-              width: sizeWidth(13),
-              height: sizeWidth(13),
-              margin: EdgeInsets.only(right: sizeWidth(5)),
-              child: CircleAvatar(
-                  backgroundColor: HexColor("${user.group![0]['hexCode']}"),
-                  backgroundImage: Svg.asset(
-                      'assets/icons/bottomNavigationBar/my_page.svg')),
-              decoration: BoxDecoration(shape: BoxShape.circle)),
-          Flexible(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                Row(children: [
-                  Text("Lv.${user.group![0]['level']} ${user.name}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(color: Colors.white)),
-                  SizedBox(
-                      height: Adaptive.dp(18),
-                      width: Adaptive.dp(10),
-                      child: IconButton(
-                          padding: EdgeInsets.only(
-                              left: Adaptive.dp(3), bottom: Adaptive.dp(10)),
-                          onPressed: () => showTopSnackBar(
-                              context,
-                              CustomSnackBar.info(
-                                  message:
-                                      "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
-                          iconSize: Adaptive.dp(10),
-                          icon: Icon(Icons.info),
-                          color: Colors.grey))
-                ]),
-                SizedBox(height: Adaptive.h(1)),
-                userCategories()
-              ]))
-        ])));
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              Row(children: [
+                Text("Lv.${user.group![0]['level']} ${user.name}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white)),
+                SizedBox(
+                    height: Adaptive.dp(30),
+                    width: Adaptive.dp(20),
+                    child: IconButton(
+                        padding: EdgeInsets.only(
+                            left: Adaptive.dp(2), bottom: Adaptive.dp(20)),
+                        onPressed: () => showTopSnackBar(
+                            context,
+                            CustomSnackBar.info(
+                                message:
+                                    "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
+                        iconSize: Adaptive.dp(15),
+                        icon: Icon(Icons.info),
+                        color: Colors.grey))
+              ]),
+              Container(
+                  height: 3,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  color: HexColor("${user.group![0]['hexCode']}")),
+              userCategories(),
+              SizedBox(height: Adaptive.w(5))
+            ])));
   }
 
   RichText userCategories() {
