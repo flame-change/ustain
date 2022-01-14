@@ -78,11 +78,6 @@ class _OrderPageState extends State<OrderPage> {
                             Row(children: [
                               payMethodContainer(context, '카드 결제', 'card'),
                               payMethodContainer(context, '계좌 이체', 'trans')
-                            ]),
-                            SizedBox(height: Adaptive.w(5)),
-                            Row(children: [
-                              payMethodContainer(context, '무통장 입금', 'vbank'),
-                              payMethodContainer(context, '휴대폰 소액 결제', 'phone')
                             ])
                           ])),
                       Column(children: [

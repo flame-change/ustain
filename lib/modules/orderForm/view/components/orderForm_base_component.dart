@@ -8,11 +8,12 @@ Widget orderFormBaseComponent(
       child: Container(
           decoration:
               BoxDecoration(border: Border(bottom: BorderSide(width: 4))),
-          child: ExpansionTile(
-              title: Text("$title", style: theme.textTheme.headline5),
-              // Blank(height: 6, color: Colors.black),
-              children: children!,
-              childrenPadding: EdgeInsets.only(bottom: 10),
-              tilePadding: EdgeInsets.zero,
-              initiallyExpanded: isExpansion!)));
+          child: ListTileTheme(
+              dense: true,
+              child: ExpansionTile(
+                  title: Text("$title", style: theme.textTheme.headline5),
+                  children: children!,
+                  childrenPadding: EdgeInsets.zero,
+                  tilePadding: EdgeInsets.zero,
+                  initiallyExpanded: isExpansion!))));
 }

@@ -1,5 +1,6 @@
-import 'package:aroundus_app/modules/authentication/login_home/view/login_home_screen.dart';
+import 'package:aroundus_app/repositories/authentication_repository/src/authentication_repository.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +30,10 @@ class LoginNeeded extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: Adaptive.h(2)),
                       child: Text('로그인', style: TextStyle(color: Colors.white)),
                       color: Colors.black,
-                      onPressed: () => Navigator.pushNamed(
-                          context, LoginHomeScreen.routeName)))
+                      onPressed: () =>
+                          RepositoryProvider.of<AuthenticationRepository>(
+                                  context)
+                              .logOut()))
             ]));
   }
 }

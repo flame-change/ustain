@@ -52,7 +52,7 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                       height: Adaptive.h(100) -
                           MediaQuery.of(context).viewInsets.bottom,
                       width: sizeWidth(100),
-                      color: Colors.white,
+                      color: Colors.black.withOpacity(0.15),
                       colorBlendMode: BlendMode.multiply,
                       fit: BoxFit.cover)),
               Padding(
@@ -66,18 +66,22 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline3!
-                                .copyWith(color: Colors.black)),
-                        SizedBox(height: Adaptive.h(1)),
+                                .copyWith(color: Colors.white)),
+                        Container(
+                            margin: EdgeInsets.symmetric(vertical: 20),
+                            width: 30,
+                            height: 5,
+                            color: Colors.white),
                         Text(_bannerMagazines[index].subtitle!,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1!
-                                .copyWith(color: Colors.black))
+                                .copyWith(color: Colors.white))
                       ]))
             ]),
         pagination: SwiperPagination(
             alignment: Alignment.centerLeft,
             builder: new DotSwiperPaginationBuilder(
-                color: Colors.grey, activeColor: Colors.black)));
+                color: Colors.grey, activeColor: Colors.white)));
   }
 }

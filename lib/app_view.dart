@@ -26,37 +26,31 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return FlutterSizer(builder: (context, orientation, deviceType) {
-      return FlutterWebFrame(
-          builder: (context) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: theme,
-              navigatorKey: _navigatorKey,
-              builder: (context, child) {
-                DioClient.authenticationBloc =
-                    BlocProvider.of<AuthenticationBloc>(context);
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        navigatorKey: _navigatorKey,
+        builder: (context, child) {
+          DioClient.authenticationBloc =
+              BlocProvider.of<AuthenticationBloc>(context);
 
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  //set desired text scale factor here
-                  child: buildMultiBlocListener(child!),
-                );
-              },
-              localizationsDelegates: [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: [
-                const Locale('ko', 'KR'),
-                const Locale('en', 'US'),
-              ],
-              initialRoute: SplashPage.routeName,
-              routes: routes,
-            );
-          },
-          maximumSize: Size(475.0, 812.0),
-          enabled: kIsWeb,
-          backgroundColor: Colors.grey);
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            //set desired text scale factor here
+            child: buildMultiBlocListener(child!),
+          );
+        },
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('ko', 'KR'),
+          const Locale('en', 'US'),
+        ],
+        initialRoute: SplashPage.routeName,
+        routes: routes,
+      );
     });
   }
 

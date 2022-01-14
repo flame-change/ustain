@@ -19,7 +19,6 @@ class OrderFormListPage extends StatefulWidget {
 
 class _OrderFormListPageState extends State<OrderFormListPage> {
   late OrderFormCubit _orderFormCubit;
-
   final _scrollController = ScrollController();
 
   @override
@@ -106,12 +105,10 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                       value: _orderFormCubit,
                       child:
                           OrderFormPage(state.orderForm![index].Id!, true))));
-          // _orderFormCubit.getOrderForm();
         },
         child: Column(children: [
           Container(
               width: sizeWidth(100),
-              height: Adaptive.h(10),
               child: Row(children: [
                 Container(
                     width: 85,

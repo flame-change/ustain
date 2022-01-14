@@ -27,48 +27,80 @@ class _HomePageNewState extends State<HomePageNew> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
-      return CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-        // 카탈로그 시작 전
-        SliverToBoxAdapter(
-            child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.only(
-                        left: sizeWidth(5),
-                        top: AppBar().preferredSize.height,
-                        bottom: sizeWidth(5)),
-                    child: TitleWithUnderline(
-                        title: "MD's PICK",
-                        subtitle: '어스테인 MD의 추천 상품을 모아봤어요.')))),
-        // 카탈로그 카드 들어갈 곳
-        state.catalogMagazines != null
-            ? SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) => GestureDetector(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CatalogScreen(
-                                    id: state.catalogMagazines![index].id!))),
-                        child: CatalogCard(
-                            state.catalogMagazines![index], index + 1)),
-                    childCount: state.catalogMagazines!.length))
-            : SliverToBoxAdapter(
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    padding: EdgeInsets.only(
-                        top: Adaptive.h(10), bottom: Adaptive.h(25)),
-                    child: Center(
-                        child: Image.asset('assets/images/indicator.gif')))),
-        SliverToBoxAdapter(
-            child: MediaQuery.removePadding(
-                context: context, removeTop: true, child: CompanyInfo()))
-      ]);
-    });
+    return Container(
+      color: Colors.white,
+      child:
+          BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
+        return CustomScrollView(shrinkWrap: true, slivers: <Widget>[
+          // 카탈로그 시작 전
+          SliverToBoxAdapter(
+              child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: Container(
+                      color: Colors.black,
+                      padding: EdgeInsets.only(
+                          left: sizeWidth(5),
+                          top: AppBar().preferredSize.height,
+                          bottom: sizeWidth(5)),
+                      child: Container(
+                          color: Colors.black,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(children: [
+                                  Container(
+                                      margin:
+                                          EdgeInsets.only(top: Adaptive.dp(10)),
+                                      height: 5,
+                                      color: Colors.white,
+                                      width: double.maxFinite),
+                                  Container(
+                                      color: Colors.black,
+                                      child: Text("MD's PICK ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.white)))
+                                ]),
+                                SizedBox(height: Adaptive.h(0.3)),
+                                Container(
+                                    color: Colors.black,
+                                    child: Text('어스테인 MD의 추천 상품을 모아봤어요.',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(color: Colors.white)))
+                              ]))))),
+          // 카탈로그 카드 들어갈 곳
+          state.catalogMagazines != null
+              ? SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (context, index) => GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CatalogScreen(
+                                      id: state.catalogMagazines![index].id!))),
+                          child: CatalogCard(
+                              state.catalogMagazines![index], index + 1)),
+                      childCount: state.catalogMagazines!.length))
+              : SliverToBoxAdapter(
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.only(
+                          top: Adaptive.h(10), bottom: Adaptive.h(25)),
+                      child: Center(
+                          child: Image.asset('assets/images/indicator.gif')))),
+          SliverToBoxAdapter(
+              child: MediaQuery.removePadding(
+                  context: context, removeTop: true, child: CompanyInfo()))
+        ]);
+      }),
+    );
   }
 }

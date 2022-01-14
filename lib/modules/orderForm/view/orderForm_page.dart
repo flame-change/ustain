@@ -77,7 +77,11 @@ class _OrderFormPageState extends State<OrderFormPage>
                       "주문번호 ${orderForm.Id}",
                       style: TextStyle(color: Color(0xFF606060)),
                     ),
-                    Blank()
+                    Container(
+                        height: 1,
+                        width: double.maxFinite,
+                        color: Colors.black,
+                        margin: EdgeInsets.only(top: 5))
                   ])),
               orderFormOrderItemsWidget(orderForm.itemsInfo!),
               orderFormPaymentsWidget(orderForm.paymentInfo!),

@@ -67,6 +67,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             .toList(),
                         model['content'])));
               }));
+      print(magazineList);
+      print('----------------');
     });
   }
 
@@ -186,14 +188,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   Padding secondPage(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(20),
-        child: magazineList != []
+        child: magazineList.isNotEmpty
             ? Column(children: [
                 for (var magazine in magazineList)
                   magazineCard(context, magazine),
               ])
-            : Text(
-                '안녕하셍',
-                style: Theme.of(context).textTheme.headline1,
+            : Center(
+                child: Text('아직 매거진을 준비중이에요 :)',
+                    style: Theme.of(context).textTheme.headline5),
               ));
   }
 }
