@@ -19,6 +19,10 @@ import 'order_result_page.dart';
 // import 'package:iamport_flutter/model/payment_data.dart' as \;
 
 class OrderPaymentPage extends StatefulWidget {
+  OrderPaymentPage({@required this.method});
+
+  final String? method;
+
   @override
   State<StatefulWidget> createState() => _OrderPaymentPageState();
 }
@@ -114,7 +118,7 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                 data: PaymentData(
                   pg: 'uplus',
                   // PG사
-                  payMethod: 'card, trans, vbank, phone',
+                  payMethod: widget.method!,
                   // 결제수단
                   name: '${state.order!.name}',
                   // 주문명
@@ -135,9 +139,6 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                       '${_orderCubit.state.orderTemp!.address!.postalCode}',
                   // 구매자 우편번호
                   appScheme: 'aroundus', // 앱 URL scheme
-                  // display : {
-                  //   'cardQuota' : [2,3]                                            //결제창 UI 내 할부개월수 제한
-                  // }
                 ),
                 /* [필수입력] 콜백 함수 */
                 callback: (Map<String, String> result) {

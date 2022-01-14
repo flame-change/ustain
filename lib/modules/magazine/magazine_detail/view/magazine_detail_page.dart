@@ -1,16 +1,15 @@
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
+import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-
 import 'components/product_card_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MagazineDetailPage extends StatefulWidget {
   final int? id;
@@ -34,10 +33,12 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
     user = context.read<AuthenticationBloc>().state.user;
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
-    if (context.read<AuthenticationBloc>().state.status ==
-        AuthenticationStatus.authenticated) {
-      _magazineDetailCubit.getIsLike(_id);
-      _magazineDetailCubit.getIsScrapped(_id);
+    if (widget.isNotice == false) {
+      if (context.read<AuthenticationBloc>().state.status ==
+          AuthenticationStatus.authenticated) {
+        _magazineDetailCubit.getIsLike(_id);
+        _magazineDetailCubit.getIsScrapped(_id);
+      }
     }
   }
 
@@ -91,7 +92,8 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                                       .headline5!
                                       .copyWith(color: Colors.white)),
                               SizedBox(height: 10),
-                              getCategories(state.magazineDetail!.categories!)
+                              if (widget.isNotice == false)
+                                getCategories(state.magazineDetail!.categories!)
                             ]))
                   ]))),
               SliverToBoxAdapter(

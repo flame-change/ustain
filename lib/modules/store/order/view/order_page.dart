@@ -1,20 +1,19 @@
+import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
+import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart';
+import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/modules/mypage/address/cubit/address_cubit.dart';
 import 'package:aroundus_app/modules/store/coupon/cubit/coupon_cubit.dart';
-import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
-import 'package:aroundus_app/repositories/order_repository/models/models.dart';
-import 'package:aroundus_app/repositories/order_repository/models/order_temp.dart';
-import 'package:aroundus_app/repositories/order_repository/src/order_repository.dart';
+import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
 import 'views.dart';
 
 class OrderPage extends StatefulWidget {
@@ -26,6 +25,8 @@ class _OrderPageState extends State<OrderPage> {
   late OrderCubit _orderCubit;
   late AddressCubit _addressCubit;
   late CouponCubit _couponCubit;
+
+  String payMethod = 'card';
 
   @override
   void initState() {
@@ -71,6 +72,19 @@ class _OrderPageState extends State<OrderPage> {
                           title: "결제 정보",
                           child: orderPayment(
                               context, orderTemp.products!, _orderCubit)),
+                      orderCompose(
+                          title: "결제 방식",
+                          child: Column(children: [
+                            Row(children: [
+                              payMethodContainer(context, '카드 결제', 'card'),
+                              payMethodContainer(context, '계좌 이체', 'trans')
+                            ]),
+                            SizedBox(height: Adaptive.w(5)),
+                            Row(children: [
+                              payMethodContainer(context, '무통장 입금', 'vbank'),
+                              payMethodContainer(context, '휴대폰 소액 결제', 'phone')
+                            ])
+                          ])),
                       Column(children: [
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +114,8 @@ class _OrderPageState extends State<OrderPage> {
                                   title: '결제대행 서비스 이용 약관',
                                   url:
                                       'https://pages.tosspayments.com/terms/onboarding')
-                            ]))
+                            ])),
+                        SizedBox(height: Adaptive.h(5))
                       ])
                     ]))),
                 Align(
@@ -118,16 +133,18 @@ class _OrderPageState extends State<OrderPage> {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) =>
-                                        MultiBlocProvider(providers: [
-                                          BlocProvider<OrderCubit>.value(
-                                              value: _orderCubit),
-                                          BlocProvider(
-                                              create: (_) => PaymentCubit(
-                                                  RepositoryProvider.of<
-                                                          OrderRepository>(
-                                                      context)))
-                                        ], child: OrderPaymentPage())),
+                                    builder: (_) => MultiBlocProvider(
+                                            providers: [
+                                              BlocProvider<OrderCubit>.value(
+                                                  value: _orderCubit),
+                                              BlocProvider(
+                                                  create: (_) => PaymentCubit(
+                                                      RepositoryProvider.of<
+                                                              OrderRepository>(
+                                                          context)))
+                                            ],
+                                            child: OrderPaymentPage(
+                                                method: payMethod))),
                                 (route) => false);
                             // OrderResultPage
                           } else {
@@ -160,6 +177,27 @@ class _OrderPageState extends State<OrderPage> {
         return Center(child: Image.asset('assets/images/indicator.gif'));
       }
     });
+  }
+
+  GestureDetector payMethodContainer(context, String title, String method) {
+    return GestureDetector(
+        onTap: () {
+          setState(() {
+            payMethod = method;
+          });
+        },
+        child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                color: method == payMethod ? Colors.black : Colors.white),
+            width: Adaptive.w(45),
+            height: Adaptive.w(15),
+            child: Center(
+                child: Text(title,
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: method == payMethod
+                            ? Colors.white
+                            : Colors.black)))));
   }
 }
 

@@ -12,6 +12,7 @@ import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -245,7 +246,8 @@ class _MyPageState extends State<MyPage> {
               margin: EdgeInsets.only(right: sizeWidth(5)),
               child: CircleAvatar(
                   backgroundColor: HexColor("${user.group![0]['hexCode']}"),
-                  backgroundImage: AssetImage('assets/images/ut-face.png')),
+                  backgroundImage: Svg.asset(
+                      'assets/icons/bottomNavigationBar/my_page.svg')),
               decoration: BoxDecoration(shape: BoxShape.circle)),
           Flexible(
               child: Column(

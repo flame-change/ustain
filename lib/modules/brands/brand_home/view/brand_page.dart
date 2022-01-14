@@ -60,7 +60,7 @@ class _BrandPageState extends State<BrandPage> {
           ]);
         }
         return Padding(
-            padding: EdgeInsets.only(top: Adaptive.h(30)),
+            padding: EdgeInsets.only(top: Adaptive.h(20)),
             child: Center(child: Image.asset('assets/images/indicator.gif')));
       })),
       SizedBox(height: Adaptive.h(5)),

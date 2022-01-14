@@ -1,15 +1,15 @@
-import 'package:aroundus_app/modules/brands/brand_home/components/brand_list_tile.dart';
-import 'package:aroundus_app/modules/search/search_result/cubit/search_result_cubit.dart';
 import 'package:aroundus_app/modules/store/store_home/components/store_product_widget.dart';
+import 'package:aroundus_app/modules/search/search_result/cubit/search_result_cubit.dart';
+import 'package:aroundus_app/modules/brands/brand_home/components/brand_list_tile.dart';
 import 'package:aroundus_app/repositories/brand_repository/models/brand_list.dart';
-import 'package:aroundus_app/repositories/product_repository/models/brand.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
+import 'package:aroundus_app/repositories/product_repository/models/brand.dart';
 import 'package:aroundus_app/support/base_component/title_with_underline.dart';
+import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 
 class SearchResultPage extends StatefulWidget {
   SearchResultPage({required this.keyword});
@@ -33,7 +33,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: PageWire(child:
+    return SingleChildScrollView(child:
         BlocBuilder<SearchResultCubit, SearchResultState>(
             builder: (context, state) {
       if (state.isLoaded == true) {
@@ -55,27 +55,35 @@ class _SearchResultPageState extends State<SearchResultPage> {
             BrandList(model['Id'], model['name'], model['description'],
                 model['logo'])));
 
-        return Column(
-          children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TitleWithUnderline(title: 'BRANDS', subtitle: '검색하신 브랜드 목록입니다.'),
-              SizedBox(height: sizeWidth(5)),
-              if (brandList.length != 0)
-                for (var brand in brandList)
-                  BrandListTile(
-                      Id: brand.Id,
-                      name: brand.name,
-                      description: brand.description,
-                      logo: brand.logo),
-              if (brandList.length == 0)
-                Container(
-                    color: Colors.white,
-                    height: Adaptive.h(20),
-                    child: Center(child: Text('검색된 브랜드가 없습니다.')))
-            ]),
-            SizedBox(height: 30),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TitleWithUnderline(title: 'PRODUCTS', subtitle: '검색하신 상품 목록입니다.'),
+        return Column(children: [
+          LeftPageWire(
+              child: TitleWithUnderline(
+                  title: 'BRANDS', subtitle: '검색하신 브랜드 목록입니다.')),
+          PageWire(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                SizedBox(height: sizeWidth(5)),
+                if (brandList.length != 0)
+                  for (var brand in brandList)
+                    BrandListTile(
+                        Id: brand.Id,
+                        name: brand.name,
+                        description: brand.description,
+                        logo: brand.logo),
+                if (brandList.length == 0)
+                  Container(
+                      color: Colors.white,
+                      height: Adaptive.h(20),
+                      child: Center(child: Text('검색된 브랜드가 없습니다.')))
+              ])),
+          SizedBox(height: 30),
+          LeftPageWire(
+              child: TitleWithUnderline(
+                  title: 'PRODUCTS', subtitle: '검색하신 상품 목록입니다.')),
+          PageWire(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: sizeWidth(5)),
               productList.length != 0
                   ? GridView.count(
@@ -91,19 +99,15 @@ class _SearchResultPageState extends State<SearchResultPage> {
                       color: Colors.white,
                       height: Adaptive.h(20),
                       child: Center(child: Text('검색된 상품이 없습니다.')))
-            ])
-          ],
-        );
+            ]),
+          )
+        ]);
       } else {
         return Container(
+            padding: EdgeInsets.only(top: Adaptive.h(20)),
             color: Colors.white,
-            height: 300,
             child: Center(child: Image.asset('assets/images/indicator.gif')));
       }
-
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text('준비중입니다.')]);
-    })));
+    }));
   }
 }

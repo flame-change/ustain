@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/repositories/order_repository/order_repository.dart';
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/modules/orderForm/view/orderForm_page.dart';
@@ -33,80 +34,56 @@ class OrderResultPage extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
-      body: PageWire(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: Adaptive.h(25)),
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    isSuccessed
-                        ? 'assets/icons/success.svg'
-                        : 'assets/icons/error.svg',
-                    color: theme.accentColor,
-                    width: sizeWidth(35),
-                  ),
-                  Text(isSuccessed ? '주문 완료!' : '주문 실패!',
-                      style: theme.textTheme.headline1!.copyWith(height: 1.5)),
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Wrap(
-                    runSpacing: 10,
-                    children: [
-                      isSuccessed
-                          ? PlainButton(
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            BlocProvider<OrderFormCubit>(
-                                              create: (_) => OrderFormCubit(
-                                                  RepositoryProvider.of<
-                                                          OrderRepository>(
-                                                      context)),
-                                              child: OrderFormPage(
-                                                  result['merchant_uid']!,
-                                                  false),
-                                            )),
-                                    (route) => false);
-                              },
-                              text: '주문내역 확인')
-                          : PlainButton(
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, 'cart_screen', (route) => false);
-                              },
-                              text: '장바구니로 돌아가기'),
-                      PlainButton(
-                        onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '', (route) => false);
-                        },
-                        text: '더 둘러보기',
-                        textColor: theme.accentColor,
-                        color: Colors.white,
-                        borderColor: theme.accentColor,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
+        appBar: AppBar(
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
         ),
-      ),
-    );
+        body: PageWire(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+              Container(
+                  margin: EdgeInsets.only(top: Adaptive.h(25)),
+                  child: Column(children: [
+                    SvgPicture.asset(
+                      isSuccessed
+                          ? 'assets/icons/success.svg'
+                          : 'assets/icons/error.svg',
+                      color: theme.accentColor,
+                      width: sizeWidth(35),
+                    ),
+                    Text(isSuccessed ? '주문 완료!' : '주문 실패!',
+                        style: theme.textTheme.headline1!.copyWith(height: 1.5))
+                  ])),
+              Container(
+                  child: Column(children: <Widget>[
+                Wrap(runSpacing: 10, children: [
+                  if (isSuccessed)
+                    PlainButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BlocProvider<OrderFormCubit>(
+                                      create: (_) => OrderFormCubit(
+                                          RepositoryProvider.of<
+                                              OrderRepository>(context)),
+                                      child: OrderFormPage(
+                                          result['merchant_uid']!, false))),
+                              (route) => false);
+                        },
+                        text: '주문내역 확인'),
+                  PlainButton(
+                      onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                          context, '', (route) => false),
+                      text: '더 둘러보기',
+                      textColor: theme.accentColor,
+                      color: Colors.white,
+                      borderColor: theme.accentColor),
+                  SizedBox(height: Adaptive.h(10))
+                ])
+              ]))
+            ])));
   }
 }
