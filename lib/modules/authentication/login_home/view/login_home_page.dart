@@ -88,7 +88,6 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                         borderColor: Colors.black),
                     GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, MainScreen.routeName);
                           RepositoryProvider.of<AuthenticationRepository>(
                                   context)
                               .travel();
