@@ -59,7 +59,7 @@ Widget storeProduct(BuildContext context, Product product) {
                           child: Text("${product.name}",
                               style: theme.textTheme.bodyText2!.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: Adaptive.dp(15)),
+                                  fontSize: Adaptive.dp(12)),
                               maxLines: 2))
                     ])),
                     SizedBox(height: Adaptive.dp(5)),
