@@ -36,7 +36,8 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.black, statusBarBrightness: Brightness.dark));
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.light));
 
     return MultiBlocProvider(
         providers: [
@@ -45,11 +46,9 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                   RepositoryProvider.of<MagazineRepository>(context)))
         ],
         child: Stack(alignment: Alignment.topCenter, children: <Widget>[
-          TabBarView(controller: _tabController, children: [
-            HomePage(),
-            Container(
-                color: Colors.black, child: SafeArea(child: HomePageNew()))
-          ]),
+          TabBarView(
+              controller: _tabController,
+              children: [HomePage(), SafeArea(child: HomePageNew())]),
           Container(
               padding: EdgeInsets.only(top: 13, left: 16),
               width: double.maxFinite,
@@ -63,21 +62,19 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                     tabs: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(right: 20),
-                          child:
-                              Text('홈', style: TextStyle(color: Colors.white))),
+                          child: Text('홈')),
                       Padding(
                           padding: EdgeInsets.only(right: 20),
-                          child: Text('카탈로그',
-                              style: TextStyle(color: Colors.white)))
+                          child: Text('카탈로그'))
                     ],
                     indicator: UnderlineTabIndicator(
-                        borderSide: BorderSide(width: 4.0, color: Colors.white),
+                        borderSide: BorderSide(width: 4.0),
                         insets: EdgeInsets.only(bottom: -6)),
                     labelStyle: Theme.of(context)
                         .textTheme
                         .button!
                         .copyWith(fontSize: Adaptive.dp(20)),
-                    labelColor: Colors.white,
+                    labelColor: Colors.black,
                     labelPadding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.only(right: 20)),
               )))
