@@ -80,12 +80,12 @@ class _MainScreenState extends State<MainScreen> {
                     selectedItemColor: Colors.black,
                     unselectedItemColor: Color(0xFF8C8C8C),
                     unselectedLabelStyle: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: 'Poppins',
                       fontSize: Adaptive.dp(8),
                       fontWeight: FontWeight.w900,
                     ),
                     selectedLabelStyle: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: 'Poppins',
                       fontSize: Adaptive.dp(8),
                       fontWeight: FontWeight.w900,
                     ),
