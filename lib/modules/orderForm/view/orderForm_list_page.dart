@@ -106,10 +106,11 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                       child:
                           OrderFormPage(state.orderForm![index].Id!, true))));
         },
-        child: Column(children: [
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
               width: sizeWidth(100),
-              child: Row(children: [
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Container(
                     width: 85,
                     height: 85,
@@ -128,11 +129,11 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                           children: [
                             Text(
                                 "${state.orderForm![index].itemsInfo![i].status}",
-                                style: theme.textTheme.headline5!
+                                style: theme.textTheme.headline6!
                                     .copyWith(color: theme.accentColor)),
                             Text(
                                 "${state.orderForm![index].itemsInfo![i].productName}",
-                                style: theme.textTheme.headline5),
+                                style: theme.textTheme.headline6),
                             Text(
                                 "${state.orderForm![index].itemsInfo![i].variantName}",
                                 style: theme.textTheme.subtitle2!
@@ -146,7 +147,7 @@ class _OrderFormListPageState extends State<OrderFormListPage> {
                           alignment: Alignment.bottomRight,
                           child: Text(
                               "${currencyFromString(state.orderForm![index].itemsInfo![i].salePrice.toString())}",
-                              style: theme.textTheme.headline5))
+                              style: theme.textTheme.headline6))
                     ]))
               ])),
           SizedBox(height: 10)

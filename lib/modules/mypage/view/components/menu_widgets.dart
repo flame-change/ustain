@@ -21,7 +21,7 @@ Widget subMenuWidget({String? title, Function()? tapped}) {
       onTap: tapped,
       child: Container(
           width: sizeWidth(100),
-          padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
+          padding: EdgeInsets.symmetric(vertical: 5),
           decoration:
               BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
           child: Text("$title",

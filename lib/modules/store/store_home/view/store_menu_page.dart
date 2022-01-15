@@ -73,7 +73,8 @@ class _StoreMenuPage extends State<StoreMenuPage>
                                       shrinkWrap: true,
                                       children:
                                           // 카테고리 두번째 거 로직
-                                          mediumCategoryLogic(i))
+                                          mediumCategoryLogic(i)),
+                                  SizedBox(height: 10)
                                 ]))))));
       } else {
         return Center(child: Image.asset('assets/images/indicator.gif'));
@@ -109,7 +110,7 @@ class BigCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: 15, bottom: 5),
+        padding: EdgeInsets.only(bottom: 10),
         child: Stack(children: [
           Container(
               margin: EdgeInsets.only(top: Adaptive.dp(10)),
