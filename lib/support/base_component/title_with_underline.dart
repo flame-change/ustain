@@ -24,7 +24,7 @@ class TitleWithUnderline extends StatelessWidget {
                 width: double.maxFinite),
             Container(
                 color: color,
-                child: Text("${title} ",
+                child: Text("${title} ".toLowerCase(),
                     style: theme.textTheme.headline4!
                         .copyWith(fontWeight: FontWeight.w900)))
           ]),

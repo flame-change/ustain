@@ -43,6 +43,7 @@ class _BrandPageState extends State<BrandPage> {
     return SingleChildScrollView(
         child: Column(children: [
       LeftPageWire(
+          color: Colors.grey.shade100,
           child: TitleWithUnderline(
               color: Colors.grey.shade100,
               title: 'TRENDING BRANDS',

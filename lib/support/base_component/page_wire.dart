@@ -16,15 +16,16 @@ class PageWire extends StatelessWidget {
 }
 
 class LeftPageWire extends StatelessWidget {
-  LeftPageWire({required this.child});
+  LeftPageWire({required this.child, this.color = Colors.white});
 
   final Widget child;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Container(
-            color: Colors.white,
+            color: color,
             padding: EdgeInsets.only(left: sizeWidth(5)),
             child: child));
   }

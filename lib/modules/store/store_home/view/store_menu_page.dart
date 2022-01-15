@@ -45,8 +45,9 @@ class _StoreMenuPage extends State<StoreMenuPage>
                 title: Container(
                     width: sizeWidth(100),
                     child: Text("카테고리",
-                        style: theme.textTheme.headline3!
-                            .copyWith(fontSize: Adaptive.dp(20)))),
+                        style: theme.textTheme.headline3!.copyWith(
+                            fontSize: Adaptive.dp(20),
+                            fontWeight: FontWeight.w700))),
                 actions: [
                   GestureDetector(
                       child: Padding(
@@ -118,9 +119,9 @@ class BigCategory extends StatelessWidget {
           Container(
               color: Colors.white,
               child: Text(
-                  "${_storeCubit.state.collections![index].name.toUpperCase()} ",
+                  "${_storeCubit.state.collections![index].name.toLowerCase()} ",
                   style: theme.textTheme.headline4!
-                      .copyWith(fontWeight: FontWeight.w700)))
+                      .copyWith(fontWeight: FontWeight.w900)))
         ]));
   }
 }
@@ -161,7 +162,7 @@ class mediumCategory extends StatelessWidget {
                                       .collection[index2]
                               ? theme.accentColor
                               : Colors.black,
-                          fontWeight: FontWeight.w500))))
+                          fontWeight: FontWeight.w700))))
         ]));
   }
 }
