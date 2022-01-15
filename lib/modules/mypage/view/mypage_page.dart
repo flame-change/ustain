@@ -165,9 +165,9 @@ class _MyPageState extends State<MyPage> {
                                 context)),
                         child: FindingPasswordPage())));
           }),
-      subMenuWidget(
-          title: "1:1 문의하기",
-          tapped: () => isWebRouter(context, 'https://ed83p.channel.io/'))
+      // subMenuWidget(
+      //     title: "1:1 문의하기",
+      //     tapped: () => isWebRouter(context, 'https://ed83p.channel.io/'))
     ]));
   }
 
