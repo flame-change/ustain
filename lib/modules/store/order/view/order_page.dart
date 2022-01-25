@@ -159,7 +159,7 @@ class _OrderPageState extends State<OrderPage> {
                           }
                         },
                         child: Container(
-                            height: Adaptive.h(10),
+                            height: 80,
                             width: sizeWidth(100),
                             color: Colors.black,
                             alignment: Alignment.center,

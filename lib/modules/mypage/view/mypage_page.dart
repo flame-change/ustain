@@ -73,26 +73,20 @@ class _MyPageState extends State<MyPage> {
             menuWidget("ETC."),
             Container(
                 width: sizeWidth(100),
-                padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
+                padding: EdgeInsets.symmetric(vertical: 5),
                 decoration:
                     BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('버전 정보',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Adaptive.dp(15))),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: Adaptive.dp(14))),
                       Text(_packageInfo.version,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Adaptive.dp(15)))
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: Adaptive.dp(14)))
                     ]))
           ]))),
           SizedBox(height: Adaptive.h(5)),
@@ -165,9 +159,9 @@ class _MyPageState extends State<MyPage> {
                                 context)),
                         child: FindingPasswordPage())));
           }),
-      // subMenuWidget(
-      //     title: "1:1 문의하기",
-      //     tapped: () => isWebRouter(context, 'https://ed83p.channel.io/'))
+      subMenuWidget(
+          title: "1:1 문의하기",
+          tapped: () => isWebRouter(context, 'https://ed83p.channel.io/'))
     ]));
   }
 
@@ -261,10 +255,10 @@ class _MyPageState extends State<MyPage> {
               ]),
               Container(
                   height: 3,
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.only(top: 10, bottom: 15),
                   color: HexColor("${user.group![0]['hexCode']}")),
               userCategories(),
-              SizedBox(height: Adaptive.w(5))
+              SizedBox(height: 15)
             ])));
   }
 

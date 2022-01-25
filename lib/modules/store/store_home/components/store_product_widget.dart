@@ -60,7 +60,8 @@ Widget storeProduct(BuildContext context, Product product) {
                               style: theme.textTheme.bodyText2!.copyWith(
                                   fontWeight: FontWeight.w600,
                                   fontSize: Adaptive.dp(12)),
-                              maxLines: 2))
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis))
                     ])),
                     SizedBox(height: Adaptive.dp(5)),
                     RichText(

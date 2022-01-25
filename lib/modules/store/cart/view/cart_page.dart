@@ -41,102 +41,97 @@ class _CartPageState extends State<CartPage> {
                     .map((cart) => cart.isChecked)
                     .toList()
                     .contains(false));
-                return Stack(
-                  children: [
-                    PageWire(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.only(bottom: Adaptive.h(12)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(children: [
-                              // 전체선택 컴포넌트
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            GestureDetector(
-                                                onTap: () {
-                                                  _cartCubit.allSelectedCart(
-                                                      !allCheckBox);
-                                                },
-                                                child: allCheckBox
-                                                    ? Icon(
-                                                        Icons.check_box_rounded)
-                                                    : Icon(Icons
-                                                        .check_box_outline_blank_rounded)),
-                                            Text("전체선택")
-                                          ],
+                return Stack(children: [
+                  PageWire(
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.only(bottom: Adaptive.h(12)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(children: [
+                            // 전체선택 컴포넌트
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          GestureDetector(
+                                              onTap: () {
+                                                _cartCubit.allSelectedCart(
+                                                    !allCheckBox);
+                                              },
+                                              child: allCheckBox
+                                                  ? Icon(
+                                                      Icons.check_box_rounded)
+                                                  : Icon(Icons
+                                                      .check_box_outline_blank_rounded)),
+                                          Text("전체선택")
+                                        ],
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          List<Cart> deleteCarts = state.carts!
+                                              .fold(
+                                                  <Cart>[],
+                                                  (pre, cart) => cart.isChecked!
+                                                      ? pre + [cart]
+                                                      : pre + []);
+                                          _cartCubit.deleteCart(deleteCarts);
+                                        },
+                                        child: Text(
+                                          "선택삭제",
+                                          style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline),
                                         ),
-                                        InkWell(
-                                          onTap: () {
-                                            List<Cart> deleteCarts =
-                                                state.carts!.fold(
-                                                    <Cart>[],
-                                                    (pre, cart) =>
-                                                        cart.isChecked!
-                                                            ? pre + [cart]
-                                                            : pre + []);
-                                            _cartCubit.deleteCart(deleteCarts);
-                                          },
-                                          child: Text(
-                                            "선택삭제",
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Blank(height: 5, color: Colors.black),
-                                  ],
-                                ),
+                                      )
+                                    ],
+                                  ),
+                                  Blank(height: 5, color: Colors.black),
+                                ],
                               ),
-                              Column(
-                                children: List.generate(
-                                    carts.length,
-                                    (index) =>
-                                        cartTile(_cartCubit, carts[index])),
-                              ),
-                            ]),
-                            cartSummary(carts),
-                          ],
-                        ),
+                            ),
+                            Column(
+                              children: List.generate(
+                                  carts.length,
+                                  (index) =>
+                                      cartTile(_cartCubit, carts[index])),
+                            ),
+                          ]),
+                          cartSummary(carts),
+                        ],
                       ),
                     ),
-                    Align(
+                  ),
+                  Align(
                       alignment: Alignment.bottomCenter,
                       child: MaterialButton(
-                        onPressed: () {
-                          print("결제하기");
-                          List<Cart> checkedCart = carts.fold(
-                              <Cart>[],
-                              (pre, cart) =>
-                                  cart.isChecked! ? pre + [cart] : pre + []);
+                          onPressed: () {
+                            print("결제하기");
+                            List<Cart> checkedCart = carts.fold(
+                                <Cart>[],
+                                (pre, cart) =>
+                                    cart.isChecked! ? pre + [cart] : pre + []);
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      OrderScreen(checkedCart)));
-                        },
-                        color: Colors.black,
-                        minWidth: sizeWidth(100),
-                        height: Adaptive.h(10),
-                        child: Text(
-                          "결제하기",
-                          style: TextStyle(color: theme.accentColor),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OrderScreen(checkedCart)));
+                          },
+                          color: Colors.black,
+                          minWidth: sizeWidth(100),
+                          height: 80,
+                          child: Text(
+                            "결제하기",
+                            style: TextStyle(color: Colors.white),
+                          )))
+                ]);
               } else {
                 return Center(
                     child: Column(
@@ -144,12 +139,10 @@ class _CartPageState extends State<CartPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                       Container(
-                        child: SvgPicture.asset(
-                          'assets/images/empty_cart.svg',
-                          height: 80,
-                          color: theme.accentColor,
-                        ),
-                      ),
+                          child: SvgPicture.asset(
+                              'assets/images/empty_cart.svg',
+                              height: 80,
+                              color: theme.accentColor)),
                       Text("아직 담은 상품이 없어요!",
                           style: theme.textTheme.headline3!.copyWith(height: 2))
                     ]));

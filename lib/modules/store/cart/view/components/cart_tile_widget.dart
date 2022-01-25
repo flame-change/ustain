@@ -10,100 +10,86 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 Widget cartTile(CartCubit cartCubit, Cart cart) {
-  return Column(
-    children: [
-      Card(
+  return Column(children: [
+    Card(
         color: Colors.transparent,
         shadowColor: Colors.transparent,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flexible(
-                child: // Icon(Icons.check_box_rounded)
-                    GestureDetector(
-                        onTap: () {
-                          cartCubit.selectedCart(cart);
-                        },
-                        child: cart.isChecked!
-                            ? Icon(Icons.check_box_rounded)
-                            : Icon(Icons.check_box_outline_blank_rounded))),
-            // 브랜드 정보
-            Flexible(
-                flex: 8,
-                child: Wrap(
-                  runSpacing: Adaptive.h(1),
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("  ${cart.brand}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Adaptive.sp(14))),
-                        GestureDetector(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Flexible(
+              child: // Icon(Icons.check_box_rounded)
+                  GestureDetector(
+                      onTap: () {
+                        cartCubit.selectedCart(cart);
+                      },
+                      child: cart.isChecked!
+                          ? Icon(Icons.check_box_rounded)
+                          : Icon(Icons.check_box_outline_blank_rounded))),
+          // 브랜드 정보
+          Flexible(
+              flex: 8,
+              child: Wrap(runSpacing: Adaptive.h(1), children: [
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("  ${cart.brand}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Adaptive.sp(14))),
+                      GestureDetector(
                           onTap: () {
                             cartCubit.deleteCart([cart]);
                           },
-                          child: Icon(Icons.clear),
-                        )
-                      ],
-                    ),
-                    // 상품 정보
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
+                          child: Icon(Icons.clear))
+                    ]),
+                // 상품 정보
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
                           margin: EdgeInsets.only(
                               right: Adaptive.h(1), bottom: Adaptive.h(1)),
-                          child: Image.network(
-                            "${cart.productThumbnail}",
-                            height: sizeWidth(20),
-                            width: sizeWidth(20),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Flexible(
+                          child: Image.network("${cart.productThumbnail}",
+                              height: sizeWidth(20),
+                              width: sizeWidth(20),
+                              fit: BoxFit.cover)),
+                      Flexible(
                           child: Container(
-                            height: sizeWidth(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("${cart.productName}"),
-                                Text("${cart.variantName}"),
-                                Container(
-                                  alignment: Alignment.bottomRight,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "수량 : ${cart.quantity}개",
-                                        style: theme.textTheme.subtitle2,
-                                      ),
-                                      Text(
-                                        "${currencyFromString((cart.salePrice! * cart.quantity!).toString())}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Adaptive.sp(14)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ))
-          ],
-        ),
-      ),
-      Blank(height: 1),
-    ],
-  );
+                              height: sizeWidth(20),
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("${cart.productName}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis),
+                                    Text("${cart.variantName}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis),
+                                    Container(
+                                        alignment: Alignment.bottomRight,
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("수량 : ${cart.quantity}개",
+                                                  style: theme
+                                                      .textTheme.subtitle2),
+                                              Text(
+                                                  "${currencyFromString((cart.salePrice! * cart.quantity!).toString())}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize:
+                                                          Adaptive.sp(14)))
+                                            ]))
+                                  ])))
+                    ])
+              ]))
+        ])),
+    Blank(height: 1)
+  ]);
 }

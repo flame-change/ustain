@@ -130,20 +130,19 @@ class productGridTile extends StatelessWidget {
           SizedBox(height: Adaptive.h(0.5)),
           SizedBox(
               child: Text('${product['brand']!}',
-                  style:
-                      theme.textTheme.bodyText2!.copyWith(color: Colors.grey))),
+                  style: TextStyle(
+                      fontSize: Adaptive.dp(10), color: Colors.grey))),
           SizedBox(
               child: Text('${product['name']!}',
-                  style: theme.textTheme.bodyText1!,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: Adaptive.dp(12)),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis)),
           SizedBox(
               child: Text(
                   '${currencyFromString(product['discountPrice']!.toString())}',
-                  style: theme.textTheme.bodyText1!.copyWith(
-                      height: 1.5,
-                      fontSize: Adaptive.dp(12),
-                      fontWeight: FontWeight.bold)))
+                  style: theme.textTheme.bodyText1!
+                      .copyWith(height: 1.5, fontSize: Adaptive.dp(12))))
         ]));
   }
 }

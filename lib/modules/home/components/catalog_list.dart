@@ -18,12 +18,12 @@ class CatalogCard extends StatelessWidget {
             height: Adaptive.h(30), width: sizeWidth(100), fit: BoxFit.cover),
         Container(
             margin: EdgeInsets.only(top: Adaptive.h(10)),
-            height: Adaptive.h(20),
+            height: Adaptive.h(20.5),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,
                     end: FractionalOffset.bottomCenter,
-                    colors: [Colors.transparent, Colors.white]))),
+                    colors: [Colors.white.withOpacity(0), Colors.white]))),
         Positioned(
             top: sizeWidth(5),
             left: sizeWidth(5),

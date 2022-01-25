@@ -21,10 +21,10 @@ Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
           Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin: EdgeInsets.only(
-                        right: Adaptive.h(1), bottom: Adaptive.h(1)),
+                    margin: EdgeInsets.only(right: 5, bottom: 5),
                     child: Image.network("${orderItem.productThumbnail}",
                         height: sizeWidth(20),
                         width: sizeWidth(20),
@@ -36,8 +36,10 @@ Widget orderItemTile(OrderCubit orderCubit, OrderItem orderItem) {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${orderItem.productName}"),
-                              Text("${orderItem.variantName}"),
+                              Text("${orderItem.productName}",
+                                  maxLines: 1, overflow: TextOverflow.ellipsis),
+                              Text("${orderItem.variantName}",
+                                  maxLines: 1, overflow: TextOverflow.ellipsis),
                               Container(
                                   alignment: Alignment.bottomRight,
                                   child: Row(

@@ -41,7 +41,7 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: Adaptive.h(10),
+        height: 80,
         width: sizeWidth(100),
         padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
         decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
                               ? Icon(Icons.bookmark)
                               : Icon(Icons.bookmark_outline_rounded),
                       color: theme.accentColor),
-              Container(width: 1, height: Adaptive.h(6), color: Colors.black38),
+              Container(width: 1, height: 60, color: Colors.black38),
               MaterialButton(
                   onPressed: () => user_status ==
                           AuthenticationStatus.authenticated
@@ -108,7 +108,7 @@ class _magazineBottomNavigatorState extends State<magazineBottomNavigator> {
                   child: Text("댓글 달기", style: TextStyle(color: Colors.white)),
                   color: Colors.black,
                   padding: EdgeInsets.symmetric(
-                      vertical: Adaptive.h(2), horizontal: sizeWidth(8)))
+                      vertical: 15, horizontal: sizeWidth(8)))
             ]));
   }
 }

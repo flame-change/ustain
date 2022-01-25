@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 Widget menuWidget(title) {
   return Container(
       width: sizeWidth(100),
-      padding: EdgeInsets.only(bottom: Adaptive.h(1)),
+      padding: EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 3))),
       child: Text("$title",
           style:
@@ -26,7 +26,7 @@ Widget subMenuWidget({String? title, Function()? tapped}) {
               BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
           child: Text("$title",
               style: theme.textTheme.subtitle1!.copyWith(
-                  fontWeight: FontWeight.w400, fontSize: Adaptive.dp(15)))));
+                  fontWeight: FontWeight.w400, fontSize: Adaptive.dp(14)))));
 }
 
 Future<dynamic> isWebRouter(BuildContext context, String url) {

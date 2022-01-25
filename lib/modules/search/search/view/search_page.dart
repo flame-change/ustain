@@ -1,7 +1,7 @@
 import 'package:aroundus_app/modules/search/search_result/view/search_result_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -20,8 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
         decoration: BoxDecoration(
             color: Colors.black38.withAlpha(10),
             borderRadius: BorderRadius.all(Radius.circular(20))),

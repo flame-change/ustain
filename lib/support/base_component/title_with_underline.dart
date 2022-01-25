@@ -18,7 +18,7 @@ class TitleWithUnderline extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Stack(children: [
             Container(
-                margin: EdgeInsets.only(top: Adaptive.dp(10)),
+                margin: EdgeInsets.only(top: Adaptive.dp(13)),
                 height: 5,
                 color: Colors.black,
                 width: double.maxFinite),
@@ -28,7 +28,7 @@ class TitleWithUnderline extends StatelessWidget {
                     style: theme.textTheme.headline4!
                         .copyWith(fontWeight: FontWeight.w900)))
           ]),
-          SizedBox(height: Adaptive.h(0.3)),
+          SizedBox(height: 3),
           Container(
               color: color,
               child: Text('${subtitle}', style: theme.textTheme.subtitle2))

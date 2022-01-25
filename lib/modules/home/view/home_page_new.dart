@@ -58,9 +58,7 @@ class _HomePageNewState extends State<HomePageNew> {
                     childCount: state.catalogMagazines!.length))
             : SliverToBoxAdapter(
                 child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
+                    decoration: BoxDecoration(color: Colors.white),
                     padding: EdgeInsets.only(
                         top: Adaptive.h(10), bottom: Adaptive.h(25)),
                     child: Center(

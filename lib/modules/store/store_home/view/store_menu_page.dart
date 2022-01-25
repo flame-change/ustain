@@ -66,7 +66,6 @@ class _StoreMenuPage extends State<StoreMenuPage>
                                   // 카테고리 제일 큰 거
                                   BigCategory(
                                       storeCubit: _storeCubit, index: i),
-
                                   // 카테고리 두번째 거
                                   ListView(
                                       physics: NeverScrollableScrollPhysics(),
@@ -113,7 +112,7 @@ class BigCategory extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 10),
         child: Stack(children: [
           Container(
-              margin: EdgeInsets.only(top: Adaptive.dp(10)),
+              margin: EdgeInsets.only(top: Adaptive.dp(13)),
               height: 5,
               color: Colors.black,
               width: double.maxFinite),

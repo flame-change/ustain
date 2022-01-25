@@ -25,7 +25,7 @@ Widget productSaleBottomNavigator(
         }
       },
       child: Container(
-          height: Adaptive.h(10),
+          height: 80,
           width: sizeWidth(100),
           decoration: BoxDecoration(
               color: Colors.black, border: Border.all(color: Colors.black)),
