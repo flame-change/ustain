@@ -45,7 +45,7 @@ class _CatalogPageState extends State<CatalogPage> {
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,
-                  expandedHeight: Adaptive.h(40),
+                  expandedHeight: Adaptive.w(100),
                   floating: false,
                   pinned: false,
                   snap: false,
@@ -65,28 +65,34 @@ class _CatalogPageState extends State<CatalogPage> {
                             Text('${state.catalogMagazineDetail!.description}')
                           ]))),
               SliverToBoxAdapter(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Divider(height: 3, color: Colors.grey),
-                            SizedBox(height: Adaptive.h(2)),
-                            Text('PRODUCTS',
-                                style: Theme.of(context).textTheme.headline5),
-                            GridView.count(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: sizeWidth(5),
-                                mainAxisSpacing: sizeWidth(0),
-                                childAspectRatio: 0.6,
-                                children: [
-                                  for (var product
-                                      in state.catalogMagazineDetail!.products!)
-                                    productGridTile(product: product)
-                                ])
-                          ]))),
+                  child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: sizeWidth(5)),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Divider(height: 3, color: Colors.grey),
+                                SizedBox(height: 12),
+                                Text('PRODUCTS',
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
+                                SizedBox(height: 12),
+                                GridView.count(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: sizeWidth(5),
+                                    mainAxisSpacing: sizeWidth(0),
+                                    childAspectRatio: 0.6,
+                                    children: [
+                                      for (var product in state
+                                          .catalogMagazineDetail!.products!)
+                                        productGridTile(product: product)
+                                    ])
+                              ]))))
             ])
           : Container();
     }));
@@ -105,29 +111,28 @@ class productGridTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => MultiBlocProvider(providers: [
-                        BlocProvider<AuthenticationBloc>(
-                            create: (context) =>
-                                BlocProvider.of<AuthenticationBloc>(context)),
-                        BlocProvider<ProductCubit>(
-                            create: (_) => ProductCubit(
-                                RepositoryProvider.of<ProductRepository>(
-                                    context))),
-                        BlocProvider<BrandDetailCubit>(
-                            create: (_) => BrandDetailCubit(
-                                RepositoryProvider.of<BrandRepository>(
-                                    context)))
-                      ], child: ProductDetailPage(product['Id']))));
+                  builder: (_) => BlocProvider.value(
+                        value: BlocProvider.of<AuthenticationBloc>(context),
+                        child: MultiBlocProvider(providers: [
+                          BlocProvider<ProductCubit>(
+                              create: (_) => ProductCubit(
+                                  RepositoryProvider.of<ProductRepository>(
+                                      context))),
+                          BlocProvider<BrandDetailCubit>(
+                              create: (_) => BrandDetailCubit(
+                                  RepositoryProvider.of<BrandRepository>(
+                                      context)))
+                        ], child: ProductDetailPage(product['Id'])),
+                      )));
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
               height: Adaptive.w(40),
               decoration: BoxDecoration(
-                  color: Colors.red,
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(product['thumbnail']!)))),
-          SizedBox(height: Adaptive.h(0.5)),
+          SizedBox(height: 5),
           SizedBox(
               child: Text('${product['brand']!}',
                   style: TextStyle(

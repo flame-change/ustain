@@ -40,11 +40,15 @@ class AuthenticationRepository {
 
   void logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove("clayful");
-    await prefs.remove("refresh");
-    await prefs.remove("access").whenComplete(() {
+    if (prefs.containsKey('access')) {
+      await prefs.remove("clayful");
+      await prefs.remove("refresh");
+      await prefs.remove("access").whenComplete(() {
+        _controller.add(AuthenticationStatus.unauthenticated);
+      });
+    } else {
       _controller.add(AuthenticationStatus.unauthenticated);
-    });
+    }
   }
 
   void signOut() async {

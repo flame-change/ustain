@@ -18,22 +18,34 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (context) =>
-                  BlocProvider.of<AuthenticationBloc>(context)),
-          BlocProvider(
-              create: (_) =>
-                  MypageCubit(RepositoryProvider.of<MypageRepository>(context)))
-        ],
-        child: Scaffold(
-            backgroundColor: Colors.grey.shade100,
-            appBar: AppBar(
-                automaticallyImplyLeading: true,
-                elevation: 0,
-                backgroundColor: Colors.black,
-                centerTitle: false),
-            body: SingleChildScrollView(child: UserInfoPage())));
+    return BlocProvider.value(
+      value: BlocProvider.of<AuthenticationBloc>(context),
+      child: BlocProvider<MypageCubit>(
+          create: (_) =>
+              MypageCubit(RepositoryProvider.of<MypageRepository>(context)),
+          child: Scaffold(
+              backgroundColor: Colors.grey.shade100,
+              appBar: AppBar(
+                  automaticallyImplyLeading: true,
+                  elevation: 0,
+                  backgroundColor: Colors.black,
+                  centerTitle: false),
+              body: SingleChildScrollView(child: UserInfoPage()))),
+    );
+    // return MultiBlocProvider(
+    //     providers: [
+    //       BlocProvider.value : BlocProvider.of<AuthenticationBloc>(context),
+    //       BlocProvider(
+    //           create: (_) =>
+    //               MypageCubit(RepositoryProvider.of<MypageRepository>(context)))
+    //     ],
+    //     child: Scaffold(
+    //         backgroundColor: Colors.grey.shade100,
+    //         appBar: AppBar(
+    //             automaticallyImplyLeading: true,
+    //             elevation: 0,
+    //             backgroundColor: Colors.black,
+    //             centerTitle: false),
+    //         body: SingleChildScrollView(child: UserInfoPage())));
   }
 }

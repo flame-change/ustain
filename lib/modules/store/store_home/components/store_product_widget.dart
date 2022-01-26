@@ -18,18 +18,19 @@ Widget storeProduct(BuildContext context, Product product) {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => MultiBlocProvider(providers: [
-                      BlocProvider<AuthenticationBloc>(
-                          create: (context) =>
-                              BlocProvider.of<AuthenticationBloc>(context)),
-                      BlocProvider<ProductCubit>(
-                          create: (_) => ProductCubit(
-                              RepositoryProvider.of<ProductRepository>(
-                                  context))),
-                      BlocProvider<BrandDetailCubit>(
-                          create: (_) => BrandDetailCubit(
-                              RepositoryProvider.of<BrandRepository>(context)))
-                    ], child: ProductDetailPage(product.Id!))));
+                builder: (_) => BlocProvider.value(
+                      value: BlocProvider.of<AuthenticationBloc>(context),
+                      child: MultiBlocProvider(providers: [
+                        BlocProvider<ProductCubit>(
+                            create: (_) => ProductCubit(
+                                RepositoryProvider.of<ProductRepository>(
+                                    context))),
+                        BlocProvider<BrandDetailCubit>(
+                            create: (_) => BrandDetailCubit(
+                                RepositoryProvider.of<BrandRepository>(
+                                    context)))
+                      ], child: ProductDetailPage(product.Id!)),
+                    )));
       },
       child: GridTile(
           child: Container(),

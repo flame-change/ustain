@@ -15,10 +15,10 @@ class CatalogCard extends StatelessWidget {
     return Column(children: [
       Stack(alignment: Alignment.bottomLeft, children: [
         Image.network(catalog!.bannerImage!,
-            height: Adaptive.h(30), width: sizeWidth(100), fit: BoxFit.cover),
+            height: sizeWidth(60), width: sizeWidth(100), fit: BoxFit.cover),
         Container(
-            margin: EdgeInsets.only(top: Adaptive.h(10)),
-            height: Adaptive.h(20.5),
+            margin: EdgeInsets.only(top: sizeWidth(40)),
+            height: sizeWidth(20) + 1,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,
@@ -42,7 +42,7 @@ class CatalogCard extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('#${catalog!.title!}',
                   style: Theme.of(context).textTheme.headline4),
-              SizedBox(height: Adaptive.h(1)),
+              SizedBox(height: 5),
               Text(catalog!.description!,
                   style: Theme.of(context).textTheme.bodyText2)
             ]))

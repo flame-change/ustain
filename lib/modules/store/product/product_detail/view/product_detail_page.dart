@@ -3,9 +3,9 @@ import 'package:aroundus_app/modules/magazine/magazine_home/view/components/maga
 import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/view/brand_detail_screen.dart';
-import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/magazine.dart';
+import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/product_repository/models/product.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
@@ -84,7 +84,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               SliverAppBar(
                   backgroundColor: Colors.white,
                   automaticallyImplyLeading: true,
-                  floating: true,
+                  floating: false,
                   pinned: true,
                   snap: false,
                   iconTheme: IconThemeData(color: Colors.black),

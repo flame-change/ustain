@@ -62,7 +62,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                       onTap: () => Navigator.pop(context)),
                   pinned: false,
                   snap: false,
-                  floating: true,
+                  floating: false,
                   expandedHeight:
                       Adaptive.h(50) - AppBar().preferredSize.height,
                   flexibleSpace: FlexibleSpaceBar(

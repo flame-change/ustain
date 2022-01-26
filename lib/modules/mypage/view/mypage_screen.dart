@@ -21,11 +21,8 @@ class _MyPageScreen extends State<MyPageScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (context) => BlocProvider.of<AuthenticationBloc>(context))
-        ],
+    return BlocProvider.value(
+        value: BlocProvider.of<AuthenticationBloc>(context),
         child: Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
