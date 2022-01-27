@@ -18,8 +18,6 @@ class CatalogScreen extends StatefulWidget {
 class _CatalogScreen extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return MultiBlocProvider(providers: [
       BlocProvider(
           create: (_) =>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1097012875305",
+    "project_id": "ustain-bafc6",
+    "storage_bucket": "ustain-bafc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097012875305:android:f6fe305ed3f482019bcc38",
+        "android_client_info": {
+          "package_name": "be.ustain.flutter.ustain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097012875305-jsaug4rk0voiar99ahndqifobnipjj5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkjaSm4jvdhHRZCRhW823PsjNvsRGCJ2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097012875305-jsaug4rk0voiar99ahndqifobnipjj5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

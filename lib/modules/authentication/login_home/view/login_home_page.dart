@@ -4,7 +4,6 @@ import 'package:aroundus_app/modules/authentication/signin/cubit/signin_cubit.da
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signin/view/signin_page.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';

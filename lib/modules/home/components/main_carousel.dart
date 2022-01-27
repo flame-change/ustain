@@ -53,19 +53,18 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                       width: sizeWidth(100),
                       fit: BoxFit.cover)),
               Positioned(
-                height: 250,
-                width: sizeWidth(100),
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-                child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: FractionalOffset.topCenter,
-                            end: FractionalOffset.bottomCenter,
-                            colors: [
-                      Colors.white.withOpacity(0),
-                      Colors.white.withOpacity(0.8)
-                    ]))),
-              ),
+                  height: 250,
+                  width: sizeWidth(100),
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                  child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: FractionalOffset.topCenter,
+                              end: FractionalOffset.bottomCenter,
+                              colors: [
+                        Colors.white.withOpacity(0),
+                        Colors.white.withOpacity(0.8)
+                      ])))),
               Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: sizeWidth(5), vertical: sizeWidth(8)),
@@ -77,7 +76,7 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                             style: Theme.of(context).textTheme.headline3),
                         Container(
                             margin: EdgeInsets.symmetric(vertical: 20),
-                            width: 30,
+                            width: sizeWidth(10),
                             height: 5,
                             color: Colors.black),
                         Text(_bannerMagazines[index].subtitle!,
@@ -87,6 +86,6 @@ class _BannerMagazinesState extends State<BannerMagazines> {
         pagination: SwiperPagination(
             alignment: Alignment.centerLeft,
             builder: new DotSwiperPaginationBuilder(
-                color: Colors.grey, activeColor: Colors.black)));
+                color: Colors.black54, activeColor: Colors.white)));
   }
 }

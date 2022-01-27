@@ -11,6 +11,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CatalogPage extends StatefulWidget {
   CatalogPage({required this.id});
@@ -39,20 +40,32 @@ class _CatalogPageState extends State<CatalogPage> {
       return state.catalogMagazineDetail != null
           ? CustomScrollView(slivers: [
               SliverAppBar(
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   leading: IconButton(
                       icon: Icon(Icons.arrow_back_ios_outlined,
                           color: Colors.black),
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
                   expandedHeight: Adaptive.w(100),
                   floating: false,
                   pinned: false,
                   snap: false,
                   flexibleSpace: FlexibleSpaceBar(
-                      background: Image.network(
-                          state.catalogMagazineDetail!.bannerImage!,
-                          fit: BoxFit.cover))),
+                      background: Stack(children: [
+                    Image.network(state.catalogMagazineDetail!.bannerImage!,
+                        fit: BoxFit.cover,
+                        height: sizeWidth(100) + AppBar().preferredSize.height),
+                    Container(
+                        height: sizeWidth(30),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: FractionalOffset.topCenter,
+                                end: FractionalOffset.bottomCenter,
+                                colors: [
+                              Colors.white.withOpacity(0.8),
+                              Colors.white.withOpacity(0)
+                            ])))
+                  ]))),
               SliverToBoxAdapter(
                   child: Padding(
                       padding: EdgeInsets.all(sizeWidth(5)),
@@ -112,18 +125,17 @@ class productGridTile extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (_) => BlocProvider.value(
-                        value: BlocProvider.of<AuthenticationBloc>(context),
-                        child: MultiBlocProvider(providers: [
-                          BlocProvider<ProductCubit>(
-                              create: (_) => ProductCubit(
-                                  RepositoryProvider.of<ProductRepository>(
-                                      context))),
-                          BlocProvider<BrandDetailCubit>(
-                              create: (_) => BrandDetailCubit(
-                                  RepositoryProvider.of<BrandRepository>(
-                                      context)))
-                        ], child: ProductDetailPage(product['Id'])),
-                      )));
+                      value: BlocProvider.of<AuthenticationBloc>(context),
+                      child: MultiBlocProvider(providers: [
+                        BlocProvider<ProductCubit>(
+                            create: (_) => ProductCubit(
+                                RepositoryProvider.of<ProductRepository>(
+                                    context))),
+                        BlocProvider<BrandDetailCubit>(
+                            create: (_) => BrandDetailCubit(
+                                RepositoryProvider.of<BrandRepository>(
+                                    context)))
+                      ], child: ProductDetailPage(product['Id'])))));
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(

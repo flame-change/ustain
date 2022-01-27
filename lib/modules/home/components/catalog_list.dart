@@ -15,10 +15,10 @@ class CatalogCard extends StatelessWidget {
     return Column(children: [
       Stack(alignment: Alignment.bottomLeft, children: [
         Image.network(catalog!.bannerImage!,
-            height: sizeWidth(60), width: sizeWidth(100), fit: BoxFit.cover),
+            height: sizeWidth(70), width: sizeWidth(100), fit: BoxFit.cover),
         Container(
-            margin: EdgeInsets.only(top: sizeWidth(40)),
-            height: sizeWidth(20) + 1,
+            margin: EdgeInsets.only(top: sizeWidth(35)),
+            height: sizeWidth(35) + 1,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,

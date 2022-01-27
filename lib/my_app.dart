@@ -1,4 +1,3 @@
-import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/repositories/address_repository/src/address_repository.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/repositories/mypage_repository/src/mypage_repository.dart';
@@ -16,12 +15,9 @@ import 'package:flutter/cupertino.dart';
 import 'repositories/repositories.dart';
 import 'app_view.dart';
 
-
-class App extends StatelessWidget {
-  const App({
-    required this.authenticationRepository,
-    required this.dioClient,
-  });
+class MyApp extends StatelessWidget {
+  const MyApp(
+      {required this.authenticationRepository, required this.dioClient});
 
   final AuthenticationRepository authenticationRepository;
   final DioClient dioClient;
@@ -36,8 +32,7 @@ class App extends StatelessWidget {
               create: (context) => authenticationRepository),
           RepositoryProvider(
               create: (context) => MagazineRepository(dioClient)),
-          RepositoryProvider(
-              create: (context) => UserRepository(dioClient)),
+          RepositoryProvider(create: (context) => UserRepository(dioClient)),
           RepositoryProvider(create: (context) => ProductRepository(dioClient)),
           RepositoryProvider(create: (context) => StoreRepository(dioClient)),
           RepositoryProvider(create: (context) => CartRepository(dioClient)),

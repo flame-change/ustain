@@ -3,6 +3,7 @@ import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:aroundus_app/support/networks/dio_client.dart';
 import 'modules/authentication/bloc/authentication_bloc.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aroundus_app/routes.dart';
@@ -18,6 +19,9 @@ class AppView extends StatefulWidget {
 
 class _AppViewState extends State<AppView> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   NavigatorState? get _navigator => _navigatorKey.currentState;
 
@@ -25,30 +29,28 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return FlutterSizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        navigatorKey: _navigatorKey,
-        builder: (context, child) {
-          DioClient.authenticationBloc =
-              BlocProvider.of<AuthenticationBloc>(context);
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          navigatorKey: _navigatorKey,
+          builder: (context, child) {
+            DioClient.authenticationBloc =
+                BlocProvider.of<AuthenticationBloc>(context);
 
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            //set desired text scale factor here
-            child: buildMultiBlocListener(child!),
-          );
-        },
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('ko', 'KR'),
-          const Locale('en', 'US'),
-        ],
-        initialRoute: SplashPage.routeName,
-        routes: routes,
-      );
+            return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: buildMultiBlocListener(child!));
+          },
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          supportedLocales: [
+            const Locale('ko', 'KR'),
+            const Locale('en', 'US')
+          ],
+          initialRoute: SplashPage.routeName,
+          routes: routes,
+          navigatorObservers: <NavigatorObserver>[observer]);
     });
   }
 
