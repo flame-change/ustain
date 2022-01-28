@@ -161,7 +161,7 @@ class _MyPageState extends State<MyPage> {
           }),
       subMenuWidget(
           title: "1:1 문의하기",
-          tapped: () => isWebRouter(context, 'ed83p.channel.io'))
+          tapped: () => isWebRouter(context, 'https://ed83p.channel.io'))
     ]));
   }
 

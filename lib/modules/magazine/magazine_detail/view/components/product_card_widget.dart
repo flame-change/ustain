@@ -1,3 +1,4 @@
+import 'package:aroundus_app/main.dart';
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
 import 'package:aroundus_app/repositories/brand_repository/src/brand_repository.dart';
@@ -29,116 +30,97 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
             Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child:
-                    Text("연관상품", style: Theme.of(context).textTheme.headline5)),
+                    Text("연관상품", style: Theme.of(context).textTheme.headline5))
           ] +
           List.generate(
               products.length,
               (index) => GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => BlocProvider.value(
-                                  value: BlocProvider.of<AuthenticationBloc>(
-                                      context),
-                                  child: MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider<ProductCubit>(
-                                            create: (_) => ProductCubit(
-                                                RepositoryProvider.of<
-                                                        ProductRepository>(
-                                                    context))),
-                                        BlocProvider<BrandDetailCubit>(
-                                            create: (_) => BrandDetailCubit(
-                                                RepositoryProvider.of<
-                                                    BrandRepository>(context)))
-                                      ],
-                                      child: ProductDetailPage(
-                                          products[index].Id!)),
-                                )));
+                    moveToProductDetail(context, products, index);
                   },
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                            width: sizeWidth(100),
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                      flex: 3,
-                                      child: Container(
-                                          height: sizeWidth(27),
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                      products[index]
-                                                          .thumbnail!))))),
-                                  Flexible(
-                                      flex: 7,
-                                      child: Container(
-                                          padding: EdgeInsets.only(left: 15),
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text("${products[index].name}",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            Adaptive.dp(14),
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis),
-                                                SizedBox(height: 10),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      RichText(
-                                                          text: TextSpan(
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                              children: [
-                                                            TextSpan(
-                                                                text:
-                                                                    "${products[index].discountRate}%   ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        Adaptive.dp(
-                                                                            14),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                            TextSpan(
-                                                                text:
-                                                                    "${currencyFromString(products[index].originalPrice.toString())}",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        Adaptive.dp(
-                                                                            12),
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .lineThrough))
-                                                          ])),
-                                                      Text(
-                                                          "${currencyFromString(products[index].discountPrice.toString())}",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize:
-                                                                  Adaptive.sp(
-                                                                      14)))
-                                                    ])
-                                              ])))
+                  child: productWidget(products: products, index: index))));
+}
+
+class productWidget extends StatelessWidget {
+  const productWidget({required this.products, required this.index});
+
+  final List<Product> products;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Container(
+            height: sizeWidth(25),
+            width: sizeWidth(25),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(products[index].thumbnail!)))),
+        SizedBox(width: 10),
+        Expanded(
+            child: Container(
+                constraints: BoxConstraints(minHeight: sizeWidth(25)),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("${products[index].name}",
+                          style: TextStyle(
+                              fontSize: Adaptive.dp(14),
+                              fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis),
+                      SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(color: Colors.black),
+                                    children: [
+                                  TextSpan(
+                                      text:
+                                          "${products[index].discountRate}%   ",
+                                      style: TextStyle(
+                                          fontSize: Adaptive.dp(14),
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text:
+                                          "${currencyFromString(products[index].originalPrice.toString())}",
+                                      style: TextStyle(
+                                          fontSize: Adaptive.dp(10),
+                                          decoration:
+                                              TextDecoration.lineThrough))
                                 ])),
-                        Divider()
-                      ]))));
+                            Text(
+                                "${currencyFromString(products[index].discountPrice.toString())}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Adaptive.sp(14)))
+                          ])
+                    ])))
+      ]),
+      Divider()
+    ]);
+  }
+}
+
+Future<dynamic> moveToProductDetail(
+    BuildContext context, List<Product> products, int index) {
+  return Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+                value: BlocProvider.of<AuthenticationBloc>(context),
+                child: MultiBlocProvider(providers: [
+                  BlocProvider<ProductCubit>(
+                      create: (_) => ProductCubit(
+                          RepositoryProvider.of<ProductRepository>(context))),
+                  BlocProvider<BrandDetailCubit>(
+                      create: (_) => BrandDetailCubit(
+                          RepositoryProvider.of<BrandRepository>(context)))
+                ], child: ProductDetailPage(products[index].Id!)),
+              )));
 }
