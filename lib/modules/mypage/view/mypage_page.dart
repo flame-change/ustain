@@ -130,8 +130,6 @@ class _MyPageState extends State<MyPage> {
                           RepositoryProvider.of<AuthenticationRepository>(
                                   context)
                               .signOut();
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              LoginHomeScreen.routeName, (route) => false);
                         },
                         child: Text("확인"))
                   ]);
@@ -150,14 +148,17 @@ class _MyPageState extends State<MyPage> {
       subMenuWidget(
           title: "비밀번호 수정",
           tapped: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => BlocProvider<FindingAccountCubit>(
-                        create: (context) => FindingAccountCubit(
-                            RepositoryProvider.of<AuthenticationRepository>(
-                                context)),
-                        child: FindingPasswordPage())));
+            is_authenticated == true
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => BlocProvider<FindingAccountCubit>(
+                            create: (context) => FindingAccountCubit(
+                                RepositoryProvider.of<AuthenticationRepository>(
+                                    context)),
+                            child: FindingPasswordPage())))
+                : showLoginNeededDialog(context);
+            ;
           }),
       subMenuWidget(
           title: "1:1 문의하기",

@@ -11,23 +11,23 @@ class LoginNeeded extends StatelessWidget {
         margin: EdgeInsets.only(top: Adaptive.h(3)),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.grey[200]),
-        height: Adaptive.h(20),
+        height: 175,
         width: double.infinity,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.info_outline),
-              SizedBox(height: Adaptive.h(1)),
+              SizedBox(height: 10),
               Text('로그인이 필요한 서비스입니다.',
                   style: Theme.of(context).textTheme.bodyText2),
-              SizedBox(height: Adaptive.h(1)),
+              SizedBox(height: 10),
               Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: sizeWidth(5), vertical: Adaptive.h(1)),
+                      horizontal: sizeWidth(5), vertical: 10),
                   child: MaterialButton(
                       minWidth: sizeWidth(90),
-                      padding: EdgeInsets.symmetric(vertical: Adaptive.h(2)),
+                      padding: EdgeInsets.symmetric(vertical: 15),
                       child: Text('로그인', style: TextStyle(color: Colors.white)),
                       color: Colors.black,
                       onPressed: () =>
@@ -39,14 +39,35 @@ class LoginNeeded extends StatelessWidget {
 }
 
 void showLoginNeededDialog(context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      // return object of type Dialog
-      return AlertDialog(content: LoginNeeded(), actions: <Widget>[
-        FlatButton(
-            child: new Text("닫기"), onPressed: () => Navigator.pop(context))
-      ]);
-    },
-  );
+  showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+      builder: (context) => Container(
+          height: 250,
+          padding: EdgeInsets.all(sizeWidth(5)),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('Login / Register',
+                style: Theme.of(context).textTheme.headline4),
+            SizedBox(height: 15),
+            Text('로그인이 필요한 서비스입니다.'),
+            Text('1분만에 회원가입!'),
+            SizedBox(height: 15),
+            GestureDetector(
+                onTap: () =>
+                    RepositoryProvider.of<AuthenticationRepository>(context)
+                        .logOut(),
+                child: Container(
+                    color: Colors.black,
+                    height: 60,
+                    child: Center(
+                        child: Text('로그인 / 회원가입',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5!
+                                .copyWith(color: Colors.white))))),
+          ])),
+      isScrollControlled: true);
 }
