@@ -1,6 +1,6 @@
 const bool isProduction = bool.fromEnvironment('dart.vm.product');
 
-const devConfig = {'baseUrl': 'http://127.0.0.1:8000/'};
-const productionConfig = {'baseUrl': 'http://127.0.0.1:8000/'};
+const devConfig = {'baseUrl': 'https://api.ustain.be/'};
+const productionConfig = {'baseUrl': 'https://api.ustain.be/'};
 
 final environment = isProduction ? productionConfig : devConfig;
