@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aroundus_app/modules/store/product/product_detail/view/product_detail_page.dart';
 import 'package:aroundus_app/repositories/product_repository/src/product_repository.dart';
 import 'package:aroundus_app/modules/brands/brand_detail/cubit/brand_detail_cubit.dart';
@@ -42,7 +44,10 @@ class _CatalogPageState extends State<CatalogPage> {
               SliverAppBar(
                   systemOverlayStyle: SystemUiOverlayStyle.dark,
                   leading: IconButton(
-                      icon: Icon(Icons.arrow_back_ios_outlined,
+                      icon: Icon(
+                          Platform.isAndroid
+                              ? Icons.arrow_back
+                              : Icons.arrow_back_ios_outlined,
                           color: Colors.black),
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,

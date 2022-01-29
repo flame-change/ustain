@@ -18,7 +18,7 @@ class CatalogCard extends StatelessWidget {
             height: sizeWidth(70), width: sizeWidth(100), fit: BoxFit.cover),
         Container(
             margin: EdgeInsets.only(top: sizeWidth(35)),
-            height: sizeWidth(35) + 1,
+            height: sizeWidth(35),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,

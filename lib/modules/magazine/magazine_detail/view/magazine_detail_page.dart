@@ -2,15 +2,12 @@ import 'package:aroundus_app/repositories/authentication_repository/authenticati
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'components/product_card_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert';
+import 'dart:io';
 
 class MagazineDetailPage extends StatefulWidget {
   final int? id;
@@ -27,15 +24,16 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   int get _id => this.widget.id!;
   late MagazineDetailCubit _magazineDetailCubit;
   late User user;
-  late WebViewController _webViewController;
+  // late WebViewController _webViewController;
   bool isLoading = true;
-  late double webHeight;
+  // late double webHeight;
 
   @override
   void initState() {
     super.initState();
-    webHeight = Adaptive.h(50);
+    // webHeight = Adaptive.h(50);
     user = context.read<AuthenticationBloc>().state.user;
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
     if (widget.isNotice == false) {
@@ -55,79 +53,22 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
         builder: (context, state) {
       if (state.magazineDetail != null) {
         return Scaffold(
-            resizeToAvoidBottomInset: true,
-            bottomNavigationBar: widget.isNotice == false
-                ? magazineBottomNavigator(id: _id)
-                : null,
-            body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-              SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  leading: GestureDetector(
-                      child: Icon(Icons.arrow_back_ios_outlined),
-                      onTap: () => Navigator.pop(context)),
-                  pinned: false,
-                  snap: false,
-                  floating: false,
-                  expandedHeight:
-                      Adaptive.h(50) - AppBar().preferredSize.height,
-                  flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(fit: StackFit.expand, children: [
-                    Image.network(state.magazineDetail!.bannerImage!,
-                        color: Colors.black12,
-                        colorBlendMode: BlendMode.multiply,
-                        fit: BoxFit.cover,
-                        width: sizeWidth(100),
-                        height: Adaptive.h(50)),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("${state.magazineDetail!.title}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(color: Colors.white)),
-                              SizedBox(height: 10),
-                              Text("${state.magazineDetail!.subtitle}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(color: Colors.white)),
-                              SizedBox(height: 10),
-                              if (widget.isNotice == false)
-                                getCategories(state.magazineDetail!.categories!)
-                            ]))
-                  ]))),
-              SliverToBoxAdapter(
-                  child: Container(
-                      height: webHeight,
-                      child: WebView(
-                          onPageFinished: (_) async {
-                            double height = double.parse(
-                                await _webViewController.evaluateJavascript(
-                                    "document.documentElement.scrollHeight;"));
-                            setState(() {
-                              webHeight = height;
-                            });
-                          },
-                          onWebViewCreated: (_controller) {
-                            _webViewController = _controller;
-                          },
-                          initialUrl: state.magazineDetail!.magazineUrl,
-                          javascriptMode: JavascriptMode.unrestricted))),
-              SliverToBoxAdapter(
-                  child: Column(children: [
-                state.magazineDetail!.products!.length != 0
-                    ? Divider()
-                    : SizedBox(height: 0),
-                state.magazineDetail!.products!.length != 0
-                    ? productCard(context, state.magazineDetail!.products!)
-                    : SizedBox(height: 0)
-              ]))
-            ]));
+            body: SafeArea(
+                child: Stack(children: <Widget>[
+          WebView(
+              initialUrl: state.magazineDetail!.magazineUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: (finish) {
+                setState(() => isLoading = false);
+              }),
+          IconButton(
+              icon: Icon(Platform.isAndroid
+                  ? Icons.arrow_back
+                  : Icons.arrow_back_ios_outlined),
+              onPressed: () => Navigator.pop(context)),
+          if (isLoading)
+            Center(child: Image.asset('assets/images/indicator.gif'))
+        ])));
       } else {
         return Scaffold(
             body: Center(child: Image.asset('assets/images/indicator.gif')));

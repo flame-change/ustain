@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/modules/store/order/cubit/payment_cubit.dart';
 import 'package:aroundus_app/modules/store/order/cubit/order_cubit.dart';
@@ -100,7 +102,9 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
                                     ]);
                               });
                         },
-                        icon: Icon(Icons.arrow_back_ios_rounded))),
+                        icon: Icon(Platform.isAndroid
+                            ? Icons.arrow_back
+                            : Icons.arrow_back_ios))),
                 initialChild: Container(
                     child: Center(
                         child: Column(

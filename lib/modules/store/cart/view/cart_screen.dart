@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aroundus_app/modules/store/cart/cubit/cart_cubit.dart';
 import 'package:aroundus_app/repositories/cart_repository/src/cart_repository.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,11 @@ class _CartScreen extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios_outlined, color: Colors.black),
+            child: Icon(
+                Platform.isAndroid
+                    ? Icons.arrow_back
+                    : Icons.arrow_back_ios_outlined,
+                color: Colors.black),
             onTap: () => Navigator.pop(context)),
         backgroundColor: Colors.white,
         elevation: 0,

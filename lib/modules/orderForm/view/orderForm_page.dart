@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aroundus_app/repositories/order_repository/models/models.dart';
 import 'package:aroundus_app/modules/orderForm/cubit/orderForm_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -54,7 +56,10 @@ class _OrderFormPageState extends State<OrderFormPage>
                 elevation: 0,
                 centerTitle: false,
                 title: GestureDetector(
-                    child: Icon(Icons.arrow_back_ios_outlined,
+                    child: Icon(
+                        Platform.isAndroid
+                            ? Icons.arrow_back
+                            : Icons.arrow_back_ios_outlined,
                         color: Colors.black),
                     onTap: () {
                       Navigator.pushNamed(context, '');
