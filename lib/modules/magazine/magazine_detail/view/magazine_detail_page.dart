@@ -6,10 +6,11 @@ import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'components/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class MagazineDetailPage extends StatefulWidget {
   final int? id;
@@ -26,10 +27,14 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   int get _id => this.widget.id!;
   late MagazineDetailCubit _magazineDetailCubit;
   late User user;
+  late WebViewController _webViewController;
+  bool isLoading = true;
+  late double webHeight;
 
   @override
   void initState() {
     super.initState();
+    webHeight = Adaptive.h(50);
     user = context.read<AuthenticationBloc>().state.user;
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
@@ -54,7 +59,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
             bottomNavigationBar: widget.isNotice == false
                 ? magazineBottomNavigator(id: _id)
                 : null,
-            body: CustomScrollView(slivers: <Widget>[
+            body: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
               SliverAppBar(
                   backgroundColor: Colors.transparent,
                   leading: GestureDetector(
@@ -97,32 +102,31 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                             ]))
                   ]))),
               SliverToBoxAdapter(
-                  child: SafeArea(
-                      top: false,
-                      child: Container(
-                          width: sizeWidth(100),
-                          padding: EdgeInsets.only(
-                              left: sizeWidth(5), right: sizeWidth(5), top: 15),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Html(
-                                    data: state.magazineDetail!.content,
-                                    shrinkWrap: true,
-                                    customImageRenders: {
-                                      networkSourceMatcher():
-                                          networkImageRender(
-                                              loadingWidget: () => Container(
-                                                  color: Colors.white))
-                                    }),
-                                state.magazineDetail!.products!.length != 0
-                                    ? Divider()
-                                    : SizedBox(height: 0),
-                                state.magazineDetail!.products!.length != 0
-                                    ? productCard(context,
-                                        state.magazineDetail!.products!)
-                                    : SizedBox(height: 0)
-                              ]))))
+                  child: Container(
+                      height: webHeight,
+                      child: WebView(
+                          onPageFinished: (_) async {
+                            double height = double.parse(
+                                await _webViewController.evaluateJavascript(
+                                    "document.documentElement.scrollHeight;"));
+                            setState(() {
+                              webHeight = height;
+                            });
+                          },
+                          onWebViewCreated: (_controller) {
+                            _webViewController = _controller;
+                          },
+                          initialUrl: state.magazineDetail!.magazineUrl,
+                          javascriptMode: JavascriptMode.unrestricted))),
+              SliverToBoxAdapter(
+                  child: Column(children: [
+                state.magazineDetail!.products!.length != 0
+                    ? Divider()
+                    : SizedBox(height: 0),
+                state.magazineDetail!.products!.length != 0
+                    ? productCard(context, state.magazineDetail!.products!)
+                    : SizedBox(height: 0)
+              ]))
             ]));
       } else {
         return Scaffold(

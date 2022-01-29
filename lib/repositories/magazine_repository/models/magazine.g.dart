@@ -13,7 +13,7 @@ Magazine _$MagazineFromJson(Map<String, dynamic> json) {
     json['subtitle'] as String?,
     json['bannerImage'] as String?,
     (json['categories'] as List<dynamic>?)?.map((e) => e as String).toList(),
-    json['content'] as String?,
+    json['magazineUrl'] as String?,
   );
 }
 
@@ -23,5 +23,5 @@ Map<String, dynamic> _$MagazineToJson(Magazine instance) => <String, dynamic>{
       'subtitle': instance.subtitle,
       'categories': instance.categories,
       'bannerImage': instance.bannerImage,
-      'content': instance.content,
+      'magazineUrl': instance.magazineUrl,
     };

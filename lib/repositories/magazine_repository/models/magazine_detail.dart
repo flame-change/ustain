@@ -10,7 +10,7 @@ class MagazineDetail extends Equatable {
     this.categories,
     this.bannerImage,
     this.id,
-    this.content,
+    this.magazineUrl,
     this.title,
     this.subtitle,
     this.hit,
@@ -25,7 +25,7 @@ class MagazineDetail extends Equatable {
   final List<String>? categories;
   final String? bannerImage;
   final int? id;
-  final String? content;
+  final String? magazineUrl;
   final String? title;
   final String? subtitle;
   final int? hit;
@@ -46,7 +46,7 @@ class MagazineDetail extends Equatable {
         categories,
         bannerImage,
         id,
-        content,
+        magazineUrl,
         title,
         hit,
         createdAt,
@@ -61,7 +61,7 @@ class MagazineDetail extends Equatable {
       {List<String>? categories,
       String? bannerImage,
       int? id,
-      String? content,
+      String? magazineUrl,
       String? title,
       int? hit,
       String? createdAt,
@@ -74,7 +74,7 @@ class MagazineDetail extends Equatable {
       categories: categories ?? this.categories,
       bannerImage: bannerImage ?? this.bannerImage,
       id: id ?? this.id,
-      content: content ?? this.content,
+      magazineUrl: magazineUrl ?? this.magazineUrl,
       title: title ?? this.title,
       hit: hit ?? this.hit,
       createdAt: createdAt ?? this.createdAt,
