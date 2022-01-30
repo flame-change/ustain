@@ -3,12 +3,11 @@ import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dar
 import 'package:aroundus_app/modules/brands/brand_home/view/brand_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
 import 'package:aroundus_app/modules/home/view/home_screen.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:aroundus_app/modules/home/home.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum MenuState { home, magazine, store, brands, my_page }
 
@@ -56,43 +55,41 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-            body: PageView(
-                children: pageList,
-                controller: pageController,
-                onPageChanged: _onPageChanged,
-                physics: NeverScrollableScrollPhysics()),
-            bottomNavigationBar: Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(color: Colors.black, width: 1.0))),
-                child: BottomNavigationBar(
-                    items: List.generate(
-                        MenuState.values.length,
-                        (index) => BottomNavigationBarItem(
-                            icon: ImageIcon(Svg(
-                                "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
-                                size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
-                            label: "${MenuState.values[index].nickName}")),
-                    onTap: _onItemTapped,
-                    selectedItemColor: Colors.black,
-                    unselectedItemColor: Color(0xFF8C8C8C),
-                    unselectedLabelStyle: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: Adaptive.dp(8),
-                      fontWeight: FontWeight.w900,
-                    ),
-                    selectedLabelStyle: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: Adaptive.dp(8),
-                      fontWeight: FontWeight.w900,
-                    ),
-                    currentIndex: pageIndex,
-                    selectedFontSize: 12,
-                    type: BottomNavigationBarType.fixed,
-                    backgroundColor: Colors.white,
-                    elevation: 0))));
+    return Scaffold(
+        body: PageView(
+            children: pageList,
+            controller: pageController,
+            onPageChanged: _onPageChanged,
+            physics: NeverScrollableScrollPhysics()),
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+                border:
+                    Border(top: BorderSide(color: Colors.black, width: 1.0))),
+            child: BottomNavigationBar(
+                items: List.generate(
+                    MenuState.values.length,
+                    (index) => BottomNavigationBarItem(
+                        icon: ImageIcon(Svg(
+                            "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
+                            size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
+                        label: "${MenuState.values[index].nickName}")),
+                onTap: _onItemTapped,
+                selectedItemColor: Colors.black,
+                unselectedItemColor: Color(0xFF8C8C8C),
+                unselectedLabelStyle: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: Adaptive.dp(8),
+                  fontWeight: FontWeight.w900,
+                ),
+                selectedLabelStyle: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: Adaptive.dp(8),
+                  fontWeight: FontWeight.w900,
+                ),
+                currentIndex: pageIndex,
+                selectedFontSize: 12,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.white,
+                elevation: 0)));
   }
 }

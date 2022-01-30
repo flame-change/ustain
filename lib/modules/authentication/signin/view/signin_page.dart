@@ -83,6 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                         _passwordInput(),
                         PlainButton(
                             onPressed: () {
+                              _onLoading();
                               BlocProvider.of<SignInCubit>(context).signIn(
                                   phoneNumber: _phoneNumberController.text
                                       .trim()
@@ -143,5 +144,20 @@ class _SignInPageState extends State<SignInPage> {
             filled: true,
             fillColor: Colors.white.withOpacity(0.4),
             labelText: "비밀번호"));
+  }
+
+  void _onLoading() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+              backgroundColor: Colors.black54.withOpacity(0.01),
+              child: Container(
+                  height: Adaptive.h(100),
+                  width: Adaptive.w(100),
+                  child: Center(
+                      child: Image.asset('assets/images/indicator.gif'))));
+        });
   }
 }

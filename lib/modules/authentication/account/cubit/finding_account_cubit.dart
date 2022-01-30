@@ -1,13 +1,11 @@
+import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
 import 'package:aroundus_app/modules/authentication/signup/cubit/signup_cubit.dart';
 import 'package:aroundus_app/modules/authentication/signup/models/models.dart';
-import 'package:aroundus_app/repositories/authentication_repository/authentication_repository.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:aroundus_app/support/networks/network_exceptions.dart';
-import 'package:equatable/equatable.dart';
+import 'package:aroundus_app/support/networks/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-
 part 'finding_account_state.dart';
 
 class FindingAccountCubit extends Cubit<FindingAccountState> {

@@ -98,8 +98,9 @@ class _MyPageState extends State<MyPage> {
 
   Row logOutMethod(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      GestureDetector(
-          onTap: () => showDialog(
+      MaterialButton(
+          padding: EdgeInsets.all(10),
+          onPressed: () => showDialog(
               context: context,
               builder: (context) {
                 return AlertDialog(title: Text("로그아웃 하시겠습니까?"), actions: [
@@ -119,8 +120,9 @@ class _MyPageState extends State<MyPage> {
           width: 1,
           color: Colors.black,
           margin: EdgeInsets.symmetric(horizontal: 30)),
-      GestureDetector(
-          onTap: () {
+      MaterialButton(
+          padding: EdgeInsets.all(10),
+          onPressed: () {
             showDialog(
                 context: context,
                 builder: (context) {

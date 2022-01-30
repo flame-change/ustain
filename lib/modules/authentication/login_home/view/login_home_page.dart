@@ -85,8 +85,10 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                         height: 7,
                         color: Colors.white,
                         borderColor: Colors.black),
-                    GestureDetector(
-                        onTap: () {
+                    MaterialButton(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        onPressed: () {
+                          _onLoading();
                           RepositoryProvider.of<AuthenticationRepository>(
                                   context)
                               .travel();
@@ -96,5 +98,20 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                                 decoration: TextDecoration.underline)))
                   ])))
     ]);
+  }
+
+  void _onLoading() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+              backgroundColor: Colors.black54.withOpacity(0.01),
+              child: Container(
+                  height: Adaptive.h(100),
+                  width: Adaptive.w(100),
+                  child: Center(
+                      child: Image.asset('assets/images/indicator.gif'))));
+        });
   }
 }

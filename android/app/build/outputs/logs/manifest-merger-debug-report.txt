@@ -1,0 +1,545 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+MERGED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+MERGED from [:video_player] /Users/nohjonghyeok/flutter_projects/ustain/build/video_player/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:wakelock] /Users/nohjonghyeok/flutter_projects/ustain/build/wakelock/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:geocoding] /Users/nohjonghyeok/flutter_projects/ustain/build/geocoding/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:iamport_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:iamport_webview_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:amplitude_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/amplitude_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-19:12
+MERGED from [:webview_flutter_android] /Users/nohjonghyeok/flutter_projects/ustain/build/webview_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-29:12
+MERGED from [:shared_preferences] /Users/nohjonghyeok/flutter_projects/ustain/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:package_info_plus] /Users/nohjonghyeok/flutter_projects/ustain/build/package_info_plus/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:uni_links] /Users/nohjonghyeok/flutter_projects/ustain/build/uni_links/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8697516992645f011f72edd9220bfe55/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:2:1-17:12
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:2:1-21:12
+MERGED from [com.google.firebase:firebase-analytics:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/79aaa527388dbc50b050915aa52e5700/jetified-firebase-analytics-20.0.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:17:1-36:12
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:2:1-24:12
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:15:1-40:12
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9c25304d0d3db0e274182dcc739c1985/jetified-exoplayer-hls-2.14.1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/876999bdf58489de8c73505f2365d718/jetified-exoplayer-dash-2.14.1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ea7c42ab845eaaacae45c102316f80cd/jetified-exoplayer-smoothstreaming-2.14.1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b9c42ed619620c740784f00f7609dd22/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.webkit:webkit:1.4.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/82f6105bfb8095d3956f4d5a14ecb1d1/webkit-1.4.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.browser:browser:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/83ac371961f36cec63176f446723b039/browser-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/814b68b5bf25f80461bbf324ee77f7ab/appcompat-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1bac41018fe1788ac7e0e04cb74d1b9b/swiperefreshlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08f26165e1bb5161921912fdc6857858/jetified-firebase-components-17.0.0/AndroidManifest.xml:15:1-23:12
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:17:1-46:12
+MERGED from [com.google.android.gms:play-services-measurement-sdk:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c5395cd9fea59ccb617099aaf6f4166a/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:17:1-31:12
+MERGED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.gms:play-services-measurement-base:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ef4b6076fbde8561069275bd0637a883/jetified-play-services-measurement-base-20.0.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/374d89f5b538e418214800b544def520/jetified-play-services-stats-17.0.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:firebase-installations-interop:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/aab9e06cf42d2be923d4f45d1582e5b8/jetified-firebase-installations-interop-17.0.0/AndroidManifest.xml:15:1-23:12
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/2913c037e8609b29b35452d79631716d/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8089594770738d9f5677b10556a95f49/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/86f5cdb1101405c0e9159692688351c1/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7e5b923f43835a62835eb63bf94ec129/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1a6474eb7826a8d9be871e9ba32f8aa8/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/713a04fd9b13a225d6c719d59c10529f/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7dc3326da03f3c5573d290f2bf12a9f0/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08db2373c3da56e910569e4cdd3ad76b/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b1bb396744317b102d265357e457fee1/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/092306256cb6d4c410bea594a6e38c08/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7da77440c90bc938e6d04a26e065c9ae/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9aecd563a10edc03f22dad0a8429f62f/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ad5950906fa5304f89e097209797713e/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b710203a71e7399c2eccdc19a60edd16/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/70b3c7a166fe7247893dabca5313e709/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9b6d57c03e580eea72592a615a91c94e/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6b803db29735f00859dc1f7aa9fbde20/jetified-exoplayer-extractor-2.14.1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853271103e050d9999525a7f9974725/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/12deb6a9808ad5094045dfa4582168e8/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/bc303e142b7653d61c64541e2fe23482/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dd73b6d568a82a5831c7b08d2f45ea71/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dc518934481a124b42b0bd8a5d8d5a8a/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d215551513707362126fea4299eac179/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853dd32769a4014f2c509578145b5a6/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8aab3833b5748000aea1c80c75d3daef/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ab733d0f234f3597e2b7a9668e660dc4/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.amplitude:android-sdk:2.34.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9841b76ba61e3af6b20ce8d196ee2e53/jetified-android-sdk-2.34.0/AndroidManifest.xml:2:1-11:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+	package
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:2:5-39
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:1-37:12
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:4:5-67
+MERGED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:4:5-67
+MERGED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:4:5-67
+MERGED from [:amplitude_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/amplitude_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-67
+MERGED from [:amplitude_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/amplitude_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-67
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-67
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-67
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:22:5-67
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:11:5-67
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:23:5-67
+MERGED from [com.amplitude:android-sdk:2.34.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9841b76ba61e3af6b20ce8d196ee2e53/jetified-android-sdk-2.34.0/AndroidManifest.xml:9:5-67
+MERGED from [com.amplitude:android-sdk:2.34.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9841b76ba61e3af6b20ce8d196ee2e53/jetified-android-sdk-2.34.0/AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:5:5-79
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:10:5-79
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b9c42ed619620c740784f00f7609dd22/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b9c42ed619620c740784f00f7609dd22/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853271103e050d9999525a7f9974725/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853271103e050d9999525a7f9974725/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:5:22-76
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:6:5-68
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-68
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:25:5-68
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:6:22-65
+application
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:8:5-36:19
+MERGED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-17:19
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-17:19
+MERGED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-27:19
+MERGED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-27:19
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:7:5-15:19
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:7:5-15:19
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:11:5-19:19
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:11:5-19:19
+MERGED from [com.google.firebase:firebase-analytics:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/79aaa527388dbc50b050915aa52e5700/jetified-firebase-analytics-20.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.firebase:firebase-analytics:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/79aaa527388dbc50b050915aa52e5700/jetified-firebase-analytics-20.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:26:5-34:19
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:26:5-34:19
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:14:5-22:19
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:14:5-22:19
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:25:5-38:19
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:25:5-38:19
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:28:5-44:19
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:28:5-44:19
+MERGED from [com.google.android.gms:play-services-measurement-sdk:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c5395cd9fea59ccb617099aaf6f4166a/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-measurement-sdk:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c5395cd9fea59ccb617099aaf6f4166a/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:28:5-29:19
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:28:5-29:19
+MERGED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:25:5-20
+MERGED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:25:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ef4b6076fbde8561069275bd0637a883/jetified-play-services-measurement-base-20.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ef4b6076fbde8561069275bd0637a883/jetified-play-services-measurement-base-20.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/374d89f5b538e418214800b544def520/jetified-play-services-stats-17.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/374d89f5b538e418214800b544def520/jetified-play-services-stats-17.0.2/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/2913c037e8609b29b35452d79631716d/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/2913c037e8609b29b35452d79631716d/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8089594770738d9f5677b10556a95f49/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8089594770738d9f5677b10556a95f49/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:20:5-24:19
+MERGED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/12deb6a9808ad5094045dfa4582168e8/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/12deb6a9808ad5094045dfa4582168e8/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:10:9-29
+	android:icon
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:9:9-43
+	android:usesCleartextTraffic
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:11:9-44
+activity#be.ustain.flutter.ustain.MainActivity
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:12:9-32:20
+	android:launchMode
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:16:13-43
+	android:hardwareAccelerated
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:15:13-47
+	android:windowSoftInputMode
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:18:13-55
+	android:configChanges
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:14:13-163
+	android:theme
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:17:13-47
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:13:13-41
+meta-data#io.flutter.embedding.android.NormalTheme
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:19:13-21:57
+	android:resource
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:21:17-54
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:20:17-72
+meta-data#io.flutter.embedding.android.SplashScreenDrawable
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:22:13-24:66
+	android:resource
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:24:17-63
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:23:17-81
+meta-data#com.google.firebase.messaging.default_notification_channel_id
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:25:13-27:41
+	android:value
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:27:17-39
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:26:17-93
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:28:13-31:29
+action#android.intent.action.MAIN
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:29:17-69
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:29:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:30:17-77
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:30:27-74
+meta-data#flutterEmbedding
+ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:33:9-35:33
+	android:value
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:35:13-30
+	android:name
+		ADDED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml:34:13-44
+uses-sdk
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+MERGED from [:video_player] /Users/nohjonghyeok/flutter_projects/ustain/build/video_player/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:video_player] /Users/nohjonghyeok/flutter_projects/ustain/build/video_player/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:wakelock] /Users/nohjonghyeok/flutter_projects/ustain/build/wakelock/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:wakelock] /Users/nohjonghyeok/flutter_projects/ustain/build/wakelock/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:geocoding] /Users/nohjonghyeok/flutter_projects/ustain/build/geocoding/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:geocoding] /Users/nohjonghyeok/flutter_projects/ustain/build/geocoding/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:iamport_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:iamport_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:iamport_webview_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:iamport_webview_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/iamport_webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:amplitude_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/amplitude_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:amplitude_flutter] /Users/nohjonghyeok/flutter_projects/ustain/build/amplitude_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter_android] /Users/nohjonghyeok/flutter_projects/ustain/build/webview_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter_android] /Users/nohjonghyeok/flutter_projects/ustain/build/webview_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /Users/nohjonghyeok/flutter_projects/ustain/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /Users/nohjonghyeok/flutter_projects/ustain/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:package_info_plus] /Users/nohjonghyeok/flutter_projects/ustain/build/package_info_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:package_info_plus] /Users/nohjonghyeok/flutter_projects/ustain/build/package_info_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:uni_links] /Users/nohjonghyeok/flutter_projects/ustain/build/uni_links/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:uni_links] /Users/nohjonghyeok/flutter_projects/ustain/build/uni_links/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8697516992645f011f72edd9220bfe55/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8697516992645f011f72edd9220bfe55/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.firebase:firebase-analytics:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/79aaa527388dbc50b050915aa52e5700/jetified-firebase-analytics-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-analytics:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/79aaa527388dbc50b050915aa52e5700/jetified-firebase-analytics-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9c25304d0d3db0e274182dcc739c1985/jetified-exoplayer-hls-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9c25304d0d3db0e274182dcc739c1985/jetified-exoplayer-hls-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/876999bdf58489de8c73505f2365d718/jetified-exoplayer-dash-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/876999bdf58489de8c73505f2365d718/jetified-exoplayer-dash-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ea7c42ab845eaaacae45c102316f80cd/jetified-exoplayer-smoothstreaming-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ea7c42ab845eaaacae45c102316f80cd/jetified-exoplayer-smoothstreaming-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b9c42ed619620c740784f00f7609dd22/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b9c42ed619620c740784f00f7609dd22/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.4.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/82f6105bfb8095d3956f4d5a14ecb1d1/webkit-1.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.4.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/82f6105bfb8095d3956f4d5a14ecb1d1/webkit-1.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/83ac371961f36cec63176f446723b039/browser-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/83ac371961f36cec63176f446723b039/browser-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/814b68b5bf25f80461bbf324ee77f7ab/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/814b68b5bf25f80461bbf324ee77f7ab/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1bac41018fe1788ac7e0e04cb74d1b9b/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1bac41018fe1788ac7e0e04cb74d1b9b/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08f26165e1bb5161921912fdc6857858/jetified-firebase-components-17.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08f26165e1bb5161921912fdc6857858/jetified-firebase-components-17.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c5395cd9fea59ccb617099aaf6f4166a/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c5395cd9fea59ccb617099aaf6f4166a/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1b783a9baf47f1786c03f30a4291b717/jetified-play-services-measurement-sdk-api-20.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ef4b6076fbde8561069275bd0637a883/jetified-play-services-measurement-base-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ef4b6076fbde8561069275bd0637a883/jetified-play-services-measurement-base-20.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/374d89f5b538e418214800b544def520/jetified-play-services-stats-17.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/374d89f5b538e418214800b544def520/jetified-play-services-stats-17.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-installations-interop:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/aab9e06cf42d2be923d4f45d1582e5b8/jetified-firebase-installations-interop-17.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.firebase:firebase-installations-interop:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/aab9e06cf42d2be923d4f45d1582e5b8/jetified-firebase-installations-interop-17.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/2913c037e8609b29b35452d79631716d/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/2913c037e8609b29b35452d79631716d/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8089594770738d9f5677b10556a95f49/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8089594770738d9f5677b10556a95f49/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/86f5cdb1101405c0e9159692688351c1/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/86f5cdb1101405c0e9159692688351c1/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7e5b923f43835a62835eb63bf94ec129/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7e5b923f43835a62835eb63bf94ec129/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1a6474eb7826a8d9be871e9ba32f8aa8/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/1a6474eb7826a8d9be871e9ba32f8aa8/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/713a04fd9b13a225d6c719d59c10529f/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/713a04fd9b13a225d6c719d59c10529f/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7dc3326da03f3c5573d290f2bf12a9f0/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7dc3326da03f3c5573d290f2bf12a9f0/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08db2373c3da56e910569e4cdd3ad76b/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/08db2373c3da56e910569e4cdd3ad76b/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b1bb396744317b102d265357e457fee1/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b1bb396744317b102d265357e457fee1/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/092306256cb6d4c410bea594a6e38c08/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/092306256cb6d4c410bea594a6e38c08/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7da77440c90bc938e6d04a26e065c9ae/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7da77440c90bc938e6d04a26e065c9ae/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9aecd563a10edc03f22dad0a8429f62f/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9aecd563a10edc03f22dad0a8429f62f/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.3.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/cc13824789c304fecc885d91f305ed32/core-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ad5950906fa5304f89e097209797713e/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ad5950906fa5304f89e097209797713e/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b710203a71e7399c2eccdc19a60edd16/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/b710203a71e7399c2eccdc19a60edd16/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/70b3c7a166fe7247893dabca5313e709/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/70b3c7a166fe7247893dabca5313e709/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9b6d57c03e580eea72592a615a91c94e/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9b6d57c03e580eea72592a615a91c94e/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6b803db29735f00859dc1f7aa9fbde20/jetified-exoplayer-extractor-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6b803db29735f00859dc1f7aa9fbde20/jetified-exoplayer-extractor-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853271103e050d9999525a7f9974725/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853271103e050d9999525a7f9974725/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/12deb6a9808ad5094045dfa4582168e8/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/12deb6a9808ad5094045dfa4582168e8/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/bc303e142b7653d61c64541e2fe23482/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/bc303e142b7653d61c64541e2fe23482/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dd73b6d568a82a5831c7b08d2f45ea71/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dd73b6d568a82a5831c7b08d2f45ea71/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dc518934481a124b42b0bd8a5d8d5a8a/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/dc518934481a124b42b0bd8a5d8d5a8a/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d215551513707362126fea4299eac179/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d215551513707362126fea4299eac179/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853dd32769a4014f2c509578145b5a6/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/7853dd32769a4014f2c509578145b5a6/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8aab3833b5748000aea1c80c75d3daef/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8aab3833b5748000aea1c80c75d3daef/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ab733d0f234f3597e2b7a9668e660dc4/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/ab733d0f234f3597e2b7a9668e660dc4/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.amplitude:android-sdk:2.34.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9841b76ba61e3af6b20ce8d196ee2e53/jetified-android-sdk-2.34.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.amplitude:android-sdk:2.34.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/9841b76ba61e3af6b20ce8d196ee2e53/jetified-android-sdk-2.34.0/AndroidManifest.xml:5:5-7:41
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nohjonghyeok/flutter_projects/ustain/android/app/src/debug/AndroidManifest.xml
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher_android] /Users/nohjonghyeok/flutter_projects/ustain/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-16:19
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:8:9-14:19
+MERGED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:8:9-14:19
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:12:9-18:19
+MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:12:9-18:19
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:27:9-33:19
+MERGED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:27:9-33:19
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:33:9-37:35
+MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:33:9-37:35
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:10:13-37
+	tools:targetApi
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:37:13-32
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:35:13-43
+	android:name
+		ADDED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:12:18-89
+meta-data#com.google.firebase.components:io.flutter.plugins.firebase.analytics.FlutterFirebaseAppRegistrar
+ADDED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:85
+	android:value
+		ADDED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-82
+	android:name
+		ADDED from [:firebase_analytics] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-128
+queries
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-11:15
+intent#action:name:android.support.customtabs.action.CustomTabsService
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-10:18
+action#android.support.customtabs.action.CustomTabsService
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-90
+	android:name
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:9:21-87
+activity#com.pichillilorenzo.flutter_inappwebview.in_app_browser.InAppBrowserActivity
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:14:9-17:47
+	android:configChanges
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:16:13-137
+	android:theme
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-44
+	android:name
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-104
+activity#com.pichillilorenzo.flutter_inappwebview.chrome_custom_tabs.ChromeCustomTabsActivity
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:18:9-20:55
+	android:theme
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-52
+	android:name
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-112
+receiver#com.pichillilorenzo.flutter_inappwebview.chrome_custom_tabs.ActionBroadcastReceiver
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:22:9-120
+	android:name
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:22:19-117
+meta-data#io.flutter.embedded_views_preview
+ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:24:9-26:36
+	android:value
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-33
+	android:name
+		ADDED from [:flutter_inappwebview] /Users/nohjonghyeok/flutter_projects/ustain/build/flutter_inappwebview/intermediates/library_manifest/debug/AndroidManifest.xml:25:13-61
+meta-data#com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar
+ADDED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
+	android:value
+		ADDED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
+	android:name
+		ADDED from [:firebase_core] /Users/nohjonghyeok/flutter_projects/ustain/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-124
+meta-data#com.google.firebase.components:com.google.firebase.analytics.ktx.FirebaseAnalyticsKtxRegistrar
+ADDED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:11:13-13:85
+	android:value
+		ADDED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:13:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics-ktx:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/106407f43fdfc55aaf7a6b7dc385e08a/jetified-firebase-analytics-ktx-20.0.2/AndroidManifest.xml:12:17-126
+meta-data#com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar
+ADDED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:15:13-17:85
+	android:value
+		ADDED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:17:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-common-ktx:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/6cb3e06eafda69e3a78363e25232ef70/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:16:17-113
+meta-data#com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar
+ADDED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:30:13-32:85
+	android:value
+		ADDED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:32:17-82
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement-api:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/61647cc6869772c05cc7b9c23ecf5854/jetified-play-services-measurement-api-20.0.2/AndroidManifest.xml:31:17-139
+meta-data#com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar
+ADDED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:18:13-20:85
+	android:value
+		ADDED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:20:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-installations:17.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/99123d064787e4899ed9cbbfd30bb7e3/jetified-firebase-installations-17.0.0/AndroidManifest.xml:19:17-127
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:26:9-31:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:28:13-72
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:30:13-37
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:29:13-43
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/8ce34f11010673fe992b2bac391f6824/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
+uses-permission#com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:26:5-110
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:26:5-110
+MERGED from [com.google.android.gms:play-services-measurement-impl:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/d37966f3a504000b0a5138e5cbf5d001/jetified-play-services-measurement-impl-20.0.2/AndroidManifest.xml:26:5-110
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:26:22-107
+receiver#com.google.android.gms.measurement.AppMeasurementReceiver
+ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:29:9-33:20
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:31:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:32:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:30:13-85
+service#com.google.android.gms.measurement.AppMeasurementService
+ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:35:9-38:40
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:38:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:36:13-84
+service#com.google.android.gms.measurement.AppMeasurementJobService
+ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:39:9-43:72
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:41:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:42:13-37
+	android:permission
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:43:13-69
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:20.0.2] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/67e3a178350110a53e9f0fa17de96b09/jetified-play-services-measurement-20.0.2/AndroidManifest.xml:40:13-87
+uses-permission#com.google.android.gms.permission.AD_ID
+ADDED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:23:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-ads-identifier:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/c20e79e9bfd0f38c2cc8a6d24db43180/jetified-play-services-ads-identifier-18.0.0/AndroidManifest.xml:23:22-76
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] /Users/nohjonghyeok/.gradle/caches/transforms-2/files-2.1/860d7c7c3044c15a9201e40bf7175878/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
