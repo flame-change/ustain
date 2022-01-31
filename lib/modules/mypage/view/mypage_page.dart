@@ -12,6 +12,7 @@ import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -164,7 +165,9 @@ class _MyPageState extends State<MyPage> {
           }),
       subMenuWidget(
           title: "1:1 문의하기",
-          tapped: () => isWebRouter(context, 'https://ed83p.channel.io'))
+          tapped: () {
+            requestCameraPermission(context);
+          })
     ]));
   }
 
@@ -282,5 +285,25 @@ class _MyPageState extends State<MyPage> {
                         .bodyText2!
                         .copyWith(color: Colors.white))))
     ]));
+  }
+
+  Future<bool> requestCameraPermission(BuildContext context) async {
+    PermissionStatus status = await Permission.camera.request();
+
+    if (!status.isGranted) {
+      // 허용이 안된 경우
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(content: Text("권한 설정을 확인해주세요."), actions: [
+              FlatButton(
+                  onPressed: () => openAppSettings(), child: Text('설정하기'))
+            ]);
+          });
+      return false;
+    } else {
+      isWebRouter(context, 'https://ed83p.channel.io');
+      return true;
+    }
   }
 }

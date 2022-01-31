@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +16,14 @@ class ExternalLink extends StatefulWidget {
 
 class _ExternalLinkState extends State<ExternalLink> {
   bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -99,5 +99,8 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>어스테인 Camera Usage</string>
 </dict>
 </plist>
+
