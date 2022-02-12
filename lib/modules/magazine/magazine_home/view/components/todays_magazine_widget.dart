@@ -1,6 +1,5 @@
 import 'package:aroundus_app/modules/magazine/magazine_detail/view/components/magazine_card_todays_widget.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
-import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/rendering.dart';
@@ -29,10 +28,16 @@ class _TodaysMagazineState extends State<TodaysMagazine>
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (widget.isMain == true)
-        Padding(
-            padding: EdgeInsets.only(bottom: sizeWidth(5)),
-            child: TitleWithUnderline(
-                title: "TRENDING NOW", subtitle: "좋아하실 만한 읽을거리를 가져왔어요.")),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+              padding: EdgeInsets.only(bottom: sizeWidth(5)),
+              child: Text('Trending now',
+                  style: Theme.of(context).textTheme.headline5)),
+          Padding(
+              padding: EdgeInsets.only(bottom: sizeWidth(5)),
+              child: Text('좋아하실만한 읽을거리를 준비했어요 :)',
+                  style: Theme.of(context).textTheme.bodyText2))
+        ]),
       Container(
           height: Adaptive.w(90),
           margin: EdgeInsets.only(bottom: Adaptive.h(3)),
@@ -47,8 +52,7 @@ class _TodaysMagazineState extends State<TodaysMagazine>
                               width: sizeWidth(60),
                               child: todaysMagazineCard(
                                   context, _todaysMagazines![index]))) +
-                      [Container()]))),
-      Divider(height: 0)
+                      [Container()])))
     ]);
   }
 }

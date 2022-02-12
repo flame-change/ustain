@@ -28,7 +28,7 @@ Widget productCard(BuildContext context, List<Map> mapProducts) {
   return Wrap(
       children: <Widget>[
             Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.symmetric(vertical: sizeWidth(5)),
                 child:
                     Text("연관상품", style: Theme.of(context).textTheme.headline5))
           ] +
@@ -55,6 +55,7 @@ class productWidget extends StatelessWidget {
             height: sizeWidth(25),
             width: sizeWidth(25),
             decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(products[index].thumbnail!)))),
@@ -67,9 +68,10 @@ class productWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("${products[index].name}",
-                          style: TextStyle(
-                              fontSize: Adaptive.dp(14),
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: Colors.white),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis),
                       SizedBox(height: 10),
@@ -83,26 +85,25 @@ class productWidget extends StatelessWidget {
                                   TextSpan(
                                       text:
                                           "${products[index].discountRate}%   ",
-                                      style: TextStyle(
-                                          fontSize: Adaptive.dp(14),
-                                          fontWeight: FontWeight.bold)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
                                   TextSpan(
                                       text:
                                           "${currencyFromString(products[index].originalPrice.toString())}",
                                       style: TextStyle(
+                                          color: Colors.grey,
                                           fontSize: Adaptive.dp(10),
                                           decoration:
                                               TextDecoration.lineThrough))
                                 ])),
                             Text(
                                 "${currencyFromString(products[index].discountPrice.toString())}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Adaptive.sp(14)))
+                                style: Theme.of(context).textTheme.bodyText1)
                           ])
                     ])))
       ]),
-      Divider()
+      SizedBox(height: 15)
     ]);
   }
 }

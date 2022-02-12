@@ -152,7 +152,9 @@ class _OrderPaymentPageState extends State<OrderPaymentPage> {
         if (state.errorMessage != null) {
           return buildScaffold(state, context);
         } else {
-          return Center(child: Image.asset('assets/images/indicator.gif'));
+          return Center(
+              child: Image.asset('assets/images/indicator.gif',
+                  width: 100, height: 100));
         }
       }
     });

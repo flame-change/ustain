@@ -1,12 +1,12 @@
-import 'package:aroundus_app/modules/magazine/magazine_home/view/components/main_screen_wire.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_scrapped_page.dart';
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_page.dart';
 import 'package:aroundus_app/repositories/magazine_repository/magazine_repository.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
-import 'package:flutter/services.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class MagazineHomeScreen extends StatefulWidget {
@@ -23,20 +23,117 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark));
 
-    return MainScreenWire(
-        page1Title: Text('매거진'),
-        page2Ttile: Text('스크랩'),
-        action: Container(),
-        indicatorWidth: 4.0,
-        firstPage: BlocProvider(
-            create: (_) => MagazineCubit(
-                RepositoryProvider.of<MagazineRepository>(context)),
-            child: MagazineHomePage()),
-        secondPage: BlocProvider(
-            create: (_) => MagazineScrappedCubit(
-                RepositoryProvider.of<MagazineRepository>(context)),
-            child: MagazineScrappedPage()));
+    return Material(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+            child: DefaultTabController(
+                length: 2,
+                child: NestedScrollView(
+                    headerSliverBuilder: (context, innerBoxIsScrolled) {
+                      return [
+                        SliverAppBar(
+                            centerTitle: false,
+                            pinned: false,
+                            floating: true,
+                            snap: false,
+                            toolbarHeight: 150,
+                            elevation: 0,
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            flexibleSpace: FlexibleSpaceBar(
+                                background: Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: Adaptive.w(5)),
+                                        child: RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Magazines\n',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2!
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                          WidgetSpan(
+                                              child: SizedBox(height: 30)),
+                                          TextSpan(text: '잠시 들렀다 가세요 :)\n'),
+                                          WidgetSpan(
+                                              child: SizedBox(height: 30))
+                                        ])))))),
+                        SliverOverlapAbsorber(
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                    context),
+                            sliver: SliverPersistentHeader(
+                                pinned: true, delegate: TabBarDelegate()))
+                      ];
+                    },
+                    body: Column(children: [
+                      SizedBox(height: 48),
+                      Expanded(
+                          child: TabBarView(children: [
+                        BlocProvider(
+                            create: (_) => MagazineCubit(
+                                RepositoryProvider.of<MagazineRepository>(
+                                    context)),
+                            child: MagazineHomePage()),
+                        BlocProvider(
+                            create: (_) => MagazineScrappedCubit(
+                                RepositoryProvider.of<MagazineRepository>(
+                                    context)),
+                            child: MagazineScrappedPage())
+                      ]))
+                    ])))));
+  }
+}
+
+class TabBarDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+                padding: EdgeInsets.only(left: sizeWidth(5)),
+                child: TabBar(
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey,
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(fontSize: Adaptive.dp(18)),
+                    isScrollable: true,
+                    tabs: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text('매거진')),
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text('스크랩'))
+                    ],
+                    indicator: UnderlineTabIndicator(
+                        borderSide: BorderSide(width: 2.0, color: Colors.white),
+                        insets: EdgeInsets.only(bottom: -6)),
+                    labelPadding: EdgeInsets.zero,
+                    indicatorPadding: EdgeInsets.only(right: 20)))));
+  }
+
+  @override
+  double get maxExtent => 48;
+
+  @override
+  double get minExtent => 48;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

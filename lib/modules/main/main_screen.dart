@@ -62,9 +62,6 @@ class _MainScreenState extends State<MainScreen> {
             onPageChanged: _onPageChanged,
             physics: NeverScrollableScrollPhysics()),
         bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-                border:
-                    Border(top: BorderSide(color: Colors.black, width: 1.0))),
             child: BottomNavigationBar(
                 items: List.generate(
                     MenuState.values.length,
@@ -74,22 +71,20 @@ class _MainScreenState extends State<MainScreen> {
                             size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
                         label: "${MenuState.values[index].nickName}")),
                 onTap: _onItemTapped,
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Color(0xFF8C8C8C),
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Color(0xFF979797),
                 unselectedLabelStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: Adaptive.dp(8),
-                  fontWeight: FontWeight.w900,
-                ),
+                    fontFamily: 'Poppins',
+                    fontSize: Adaptive.dp(8),
+                    fontWeight: FontWeight.w500),
                 selectedLabelStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: Adaptive.dp(8),
-                  fontWeight: FontWeight.w900,
-                ),
+                    fontFamily: 'Poppins',
+                    fontSize: Adaptive.dp(8),
+                    fontWeight: FontWeight.w700),
                 currentIndex: pageIndex,
                 selectedFontSize: 12,
                 type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0)));
   }
 }

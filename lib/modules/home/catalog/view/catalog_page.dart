@@ -40,10 +40,10 @@ class _CatalogPageState extends State<CatalogPage> {
       return state.catalogMagazineDetail != null
           ? CustomScrollView(slivers: [
               SliverAppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle.dark,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
                   leading: IconButton(
                       icon: Icon(Icons.arrow_back_ios_outlined,
-                          color: Colors.black),
+                          color: Colors.white),
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,
                   expandedHeight: Adaptive.w(100),
@@ -62,8 +62,10 @@ class _CatalogPageState extends State<CatalogPage> {
                                 begin: FractionalOffset.topCenter,
                                 end: FractionalOffset.bottomCenter,
                                 colors: [
-                              Colors.white.withOpacity(0.8),
-                              Colors.white.withOpacity(0)
+                              Theme.of(context).scaffoldBackgroundColor,
+                              Theme.of(context)
+                                  .scaffoldBackgroundColor
+                                  .withOpacity(0)
                             ])))
                   ]))),
               SliverToBoxAdapter(
@@ -151,15 +153,19 @@ class productGridTile extends StatelessWidget {
                       fontSize: Adaptive.dp(10), color: Colors.grey))),
           SizedBox(
               child: Text('${product['name']!}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: Adaptive.dp(12)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: Colors.white),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis)),
           SizedBox(
               child: Text(
                   '${currencyFromString(product['discountPrice']!.toString())}',
-                  style: theme.textTheme.bodyText1!
-                      .copyWith(height: 1.5, fontSize: Adaptive.dp(12))))
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: Colors.white)))
         ]));
   }
 }

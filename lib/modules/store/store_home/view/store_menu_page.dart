@@ -76,7 +76,9 @@ class _StoreMenuPage extends State<StoreMenuPage>
                                   SizedBox(height: 10)
                                 ]))))));
       } else {
-        return Center(child: Image.asset('assets/images/indicator.gif'));
+        return Center(
+            child: Image.asset('assets/images/indicator.gif',
+                width: 100, height: 100));
       }
     });
   }

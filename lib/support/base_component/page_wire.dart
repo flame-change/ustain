@@ -16,7 +16,7 @@ class PageWire extends StatelessWidget {
 }
 
 class LeftPageWire extends StatelessWidget {
-  LeftPageWire({required this.child, this.color = Colors.white});
+  LeftPageWire({required this.child, this.color = const Color(0xFF121212)});
 
   final Widget child;
   final Color color;

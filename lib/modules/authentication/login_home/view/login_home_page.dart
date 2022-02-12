@@ -111,7 +111,8 @@ class _LoginHomePagePageState extends State<LoginHomePage> {
                   height: Adaptive.h(100),
                   width: Adaptive.w(100),
                   child: Center(
-                      child: Image.asset('assets/images/indicator.gif'))));
+                      child: Image.asset('assets/images/indicator.gif',
+                          width: 100, height: 100))));
         });
   }
 }

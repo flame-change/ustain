@@ -5,7 +5,6 @@ import 'package:aroundus_app/repositories/magazine_repository/models/magazine.da
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -24,33 +23,29 @@ class _BannerMagazinesState extends State<BannerMagazines> {
   @override
   Widget build(BuildContext context) {
     return Swiper(
-        scrollDirection: Axis.vertical,
+        scrollDirection: Axis.horizontal,
         onTap: (int index) {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => BlocProvider.value(
-                        value: BlocProvider.of<AuthenticationBloc>(context),
-                        child: MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                  create: (context) => MagazineDetailCubit(
-                                      RepositoryProvider.of<MagazineRepository>(
-                                          context)))
-                            ],
-                            child: MagazineDetailPage(
-                                id: _bannerMagazines[index].id,
-                                isNotice: true)),
-                      )));
+                      value: BlocProvider.of<AuthenticationBloc>(context),
+                      child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                                create: (context) => MagazineDetailCubit(
+                                    RepositoryProvider.of<MagazineRepository>(
+                                        context)))
+                          ],
+                          child: MagazineDetailPage(
+                              id: _bannerMagazines[index].id,
+                              isNotice: true)))));
         },
         itemCount: _bannerMagazines.length,
         itemBuilder: (BuildContext context, int index) =>
             Stack(fit: StackFit.expand, children: [
               Positioned(
                   child: Image.network(_bannerMagazines[index].bannerImage!,
-                      height: Adaptive.h(100) -
-                          MediaQuery.of(context).viewInsets.bottom,
-                      width: sizeWidth(100),
                       fit: BoxFit.cover)),
               Positioned(
                   height: 250,
@@ -62,8 +57,10 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                               begin: FractionalOffset.topCenter,
                               end: FractionalOffset.bottomCenter,
                               colors: [
-                        Colors.white.withOpacity(0),
-                        Colors.white.withOpacity(0.8)
+                        Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0),
+                        Theme.of(context).scaffoldBackgroundColor.withOpacity(1)
                       ])))),
               Padding(
                   padding: EdgeInsets.symmetric(
@@ -73,19 +70,16 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(_bannerMagazines[index].title!,
-                            style: Theme.of(context).textTheme.headline3),
-                        Container(
-                            margin: EdgeInsets.symmetric(vertical: 20),
-                            width: sizeWidth(10),
-                            height: 5,
-                            color: Colors.black),
+                            style: Theme.of(context).textTheme.headline4),
+                        SizedBox(height: 10),
                         Text(_bannerMagazines[index].subtitle!,
-                            style: Theme.of(context).textTheme.bodyText1)
+                            style: Theme.of(context).textTheme.bodyText2!),
+                        SizedBox(height: 5),
                       ]))
             ]),
         pagination: SwiperPagination(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.bottomCenter,
             builder: new DotSwiperPaginationBuilder(
-                color: Colors.black54, activeColor: Colors.white)));
+                color: Colors.grey, activeColor: Colors.white)));
   }
 }

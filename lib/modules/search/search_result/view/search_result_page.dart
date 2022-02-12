@@ -106,7 +106,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
         return Container(
             padding: EdgeInsets.only(top: Adaptive.h(20)),
             color: Colors.white,
-            child: Center(child: Image.asset('assets/images/indicator.gif')));
+            child: Center(
+                child: Image.asset('assets/images/indicator.gif',
+                    width: 100, height: 100)));
       }
     }));
   }

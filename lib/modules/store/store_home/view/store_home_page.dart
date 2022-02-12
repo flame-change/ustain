@@ -162,11 +162,14 @@ class _StorePageState extends State<StorePage>
                             ]));
                   } else {
                     return Center(
-                        child: Image.asset('assets/images/indicator.gif'));
+                        child: Image.asset('assets/images/indicator.gif',
+                            width: 100, height: 100));
                   }
                 })
               ]))
-          : Center(child: Image.asset('assets/images/indicator.gif'));
+          : Center(
+              child: Image.asset('assets/images/indicator.gif',
+                  width: 100, height: 100));
     });
   }
 }

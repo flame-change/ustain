@@ -78,7 +78,8 @@ class _SignupFormState extends State<SignupForm> {
     return BlocBuilder<SignupCubit, SignupState>(builder: (context, state) {
       return state.status.isSubmissionInProgress
           ? Center(
-              child: Image.asset('assets/images/indicator.gif'),
+              child: Image.asset('assets/images/indicator.gif',
+                  width: 100, height: 100),
             )
           : PlainButton(
               onPressed: state.password.valid &&

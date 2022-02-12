@@ -2,8 +2,8 @@ import 'package:aroundus_app/repositories/authentication_repository/authenticati
 import 'package:aroundus_app/modules/magazine/magazine_detail/magazine_detail.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
+import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -26,17 +26,18 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   int get _id => this.widget.id!;
   late MagazineDetailCubit _magazineDetailCubit;
   late User user;
+  late AuthenticationStatus user_status;
 
   @override
   void initState() {
     super.initState();
     user = context.read<AuthenticationBloc>().state.user;
+    user_status = context.read<AuthenticationBloc>().state.status;
     _magazineDetailCubit = BlocProvider.of<MagazineDetailCubit>(context);
     _magazineDetailCubit.getMagazineDetail(_id);
     if (widget.isNotice == false) {
       if (context.read<AuthenticationBloc>().state.status ==
           AuthenticationStatus.authenticated) {
-        _magazineDetailCubit.getIsLike(_id);
         _magazineDetailCubit.getIsScrapped(_id);
       }
     }
@@ -51,9 +52,6 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
       if (state.magazineDetail != null) {
         return Scaffold(
             resizeToAvoidBottomInset: true,
-            bottomNavigationBar: widget.isNotice == false
-                ? magazineBottomNavigator(id: _id)
-                : null,
             body: CustomScrollView(slivers: <Widget>[
               SliverAppBar(
                   backgroundColor: Colors.transparent,
@@ -68,11 +66,24 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                   flexibleSpace: FlexibleSpaceBar(
                       background: Stack(fit: StackFit.expand, children: [
                     Image.network(state.magazineDetail!.bannerImage!,
-                        color: Colors.black12,
-                        colorBlendMode: BlendMode.multiply,
                         fit: BoxFit.cover,
                         width: sizeWidth(100),
                         height: Adaptive.h(50)),
+                    Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                            width: sizeWidth(100),
+                            height: 200,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: FractionalOffset.topCenter,
+                                    end: FractionalOffset.bottomCenter,
+                                    colors: [
+                                  Theme.of(context)
+                                      .scaffoldBackgroundColor
+                                      .withOpacity(0),
+                                  Theme.of(context).scaffoldBackgroundColor
+                                ])))),
                     Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -81,16 +92,10 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("${state.magazineDetail!.title}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(color: Colors.white)),
+                                  style: Theme.of(context).textTheme.headline4),
                               SizedBox(height: 10),
                               Text("${state.magazineDetail!.subtitle}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(color: Colors.white)),
+                                  style: Theme.of(context).textTheme.headline6),
                               SizedBox(height: 10),
                               if (widget.isNotice == false)
                                 getCategories(state.magazineDetail!.categories!)
@@ -113,20 +118,23 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
                                       networkSourceMatcher():
                                           networkImageRender(
                                               loadingWidget: () => Container(
-                                                  color: Colors.white))
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor))
                                     }),
-                                state.magazineDetail!.products!.length != 0
-                                    ? Divider()
-                                    : SizedBox(height: 0),
-                                state.magazineDetail!.products!.length != 0
-                                    ? productCard(context,
-                                        state.magazineDetail!.products!)
-                                    : SizedBox(height: 0)
+                                if (state.magazineDetail!.products!.length != 0)
+                                  Divider(),
+                                if (state.magazineDetail!.products!.length != 0)
+                                  productCard(
+                                      context, state.magazineDetail!.products!)
                               ]))))
-            ]));
+            ]),
+            floatingActionButton:
+                widget.isNotice == false ? scrapActionButton() : null);
       } else {
         return Scaffold(
-            body: Center(child: Image.asset('assets/images/indicator.gif')));
+            body: Center(
+                child: Image.asset('assets/images/indicator.gif',
+                    width: 100, height: 100)));
       }
     });
   }
@@ -138,10 +146,32 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
         children: List<Widget>.generate(
             categories.length,
             (index) => Container(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                decoration: BoxDecoration(color: Colors.black),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                decoration: BoxDecoration(
+                    color: Colors.black45,
+                    borderRadius: BorderRadius.circular(30)),
                 child: Text("${user.categoryTransfer(categories[index])}",
-                    style: theme.textTheme.bodyText2!
-                        .copyWith(color: Colors.white)))));
+                    style: TextStyle(
+                        color: Colors.white, fontSize: Adaptive.dp(10))))));
+  }
+
+  FloatingActionButton scrapActionButton() {
+    return FloatingActionButton(
+        onPressed: () {
+          if (user_status != AuthenticationStatus.authenticated) {
+            context.read<MagazineDetailCubit>().updateIsScrapped(widget.id!);
+            context.read<MagazineDetailCubit>().getMagazineDetail(widget.id!);
+          } else {
+            showLoginNeededDialog(context);
+          }
+        },
+        backgroundColor: Colors.black54,
+        child: Icon(
+            user_status != AuthenticationStatus.authenticated
+                ? context.read<MagazineDetailCubit>().state.isScrapped!
+                    ? Icons.bookmark
+                    : Icons.bookmark_outline_rounded
+                : Icons.bookmark_outline_rounded,
+            color: Colors.white));
   }
 }

@@ -2,10 +2,10 @@ import 'package:aroundus_app/modules/magazine/magazine_home/view/components/maga
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_scrapped_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/authentication/authentication.dart';
 import 'package:aroundus_app/support/base_component/login_needed.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
+import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -51,33 +51,38 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
     return SingleChildScrollView(
         controller: _scrollController,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          LeftPageWire(
-            child: TitleWithUnderline(
-                title: "MY MAGAZINES", subtitle: "친구들에게도 공유 해보세요!"),
-          ),
+          SizedBox(height: 15),
           if (context.read<AuthenticationBloc>().state.status ==
               AuthenticationStatus.authenticated)
-            PageWire(child:
+            LeftPageWire(child:
                 BlocBuilder<MagazineScrappedCubit, MagazineScrappedState>(
                     builder: (context, state) {
               if (state.isLoaded == true &&
                   state.scrappedMagazines!.length != 0) {
                 return Column(children: [
-                  ListView(
-                      shrinkWrap: true,
+                  GridView.count(
                       physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      childAspectRatio: 0.7,
                       children: List.generate(
                           _magazineScrappedCubit
                               .state.scrappedMagazines!.length,
-                          (index) => magazineCard(
-                              context,
-                              _magazineScrappedCubit
-                                  .state.scrappedMagazines![index])))
+                          (index) => Padding(
+                                padding: EdgeInsets.only(right: sizeWidth(5)),
+                                child: magazineCard(
+                                    context,
+                                    _magazineScrappedCubit
+                                        .state.scrappedMagazines![index]),
+                              )))
                 ]);
               } else if (state.isLoaded == true &&
                   state.scrappedMagazines!.length == 0) {
                 return Container(
                     margin: EdgeInsets.only(top: Adaptive.h(3)),
+                    padding: EdgeInsets.only(right: sizeWidth(5)),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.grey[200]),
@@ -96,9 +101,10 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
               } else {
                 return Container(
                     padding: EdgeInsets.only(top: Adaptive.h(15)),
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     child: Center(
-                        child: Image.asset('assets/images/indicator.gif')));
+                        child: Image.asset('assets/images/indicator.gif',
+                            width: 100, height: 100)));
               }
             }))
           else

@@ -149,7 +149,9 @@ class _CartPageState extends State<CartPage> {
               }
             });
       } else {
-        return Center(child: Image.asset('assets/images/indicator.gif'));
+        return Center(
+            child: Image.asset('assets/images/indicator.gif',
+                width: 100, height: 100));
       }
     });
   }

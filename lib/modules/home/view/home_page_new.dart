@@ -1,10 +1,10 @@
-import 'package:aroundus_app/support/base_component/title_with_underline.dart';
+import 'package:aroundus_app/modules/magazine/magazine_home/view/components/todays_magazine_widget.dart';
 import 'package:aroundus_app/modules/home/catalog/view/catalog_screen.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/home/components/catalog_list.dart';
 import 'package:aroundus_app/support/base_component/company_info.dart';
+import 'package:aroundus_app/support/base_component/page_wire.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -22,51 +22,42 @@ class _HomePageNewState extends State<HomePageNew> {
   void initState() {
     super.initState();
     _magazineCubit = BlocProvider.of<MagazineCubit>(context);
+    _magazineCubit.getMainMagazines();
     _magazineCubit.getCatalogMagazine();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
-      return CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-        // 카탈로그 시작 전
-        SliverToBoxAdapter(
-            child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.only(
-                        left: sizeWidth(5),
-                        top: AppBar().preferredSize.height,
-                        bottom: sizeWidth(5)),
-                    child: TitleWithUnderline(
-                        title: "MD's PICK",
-                        subtitle: '어스테인 MD의 추천 상품을 모아봤어요.')))),
-        // 카탈로그 카드 들어갈 곳
-        state.catalogMagazines != null
-            ? SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) => GestureDetector(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CatalogScreen(
-                                    id: state.catalogMagazines![index].id!))),
-                        child: CatalogCard(
-                            state.catalogMagazines![index], index + 1)),
-                    childCount: state.catalogMagazines!.length))
-            : SliverToBoxAdapter(
-                child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    padding: EdgeInsets.only(
-                        top: Adaptive.h(10), bottom: Adaptive.h(25)),
-                    child: Center(
-                        child: Image.asset('assets/images/indicator.gif')))),
-        SliverToBoxAdapter(
-            child: MediaQuery.removePadding(
-                context: context, removeTop: true, child: CompanyInfo()))
-      ]);
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (state.todaysMagazines != null)
+              LeftPageWire(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child:
+                      TodaysMagazine(todaysMagazines: state.todaysMagazines!)),
+            Padding(
+                child: Text('Catalog',
+                    style: Theme.of(context).textTheme.headline5),
+                padding: EdgeInsets.only(left: sizeWidth(5))),
+            Padding(
+                child: Text('당신에게 좋은 상품만 준비했어요.',
+                    style: Theme.of(context).textTheme.bodyText2),
+                padding: EdgeInsets.only(
+                    left: sizeWidth(5), top: sizeWidth(5), bottom: 10)),
+            SizedBox(height: 15),
+            if (state.catalogMagazines != null)
+              for (var i = 0; i < state.catalogMagazines!.length; i++)
+                GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CatalogScreen(
+                                id: state.catalogMagazines![i].id!))),
+                    child: CatalogCard(state.catalogMagazines![i], i + 1))
+          ]);
     });
   }
 }

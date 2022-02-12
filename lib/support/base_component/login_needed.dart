@@ -50,7 +50,10 @@ void showLoginNeededDialog(context) {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Login / Register',
-                style: Theme.of(context).textTheme.headline4),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: Colors.black)),
             SizedBox(height: 15),
             Text('로그인이 필요한 서비스입니다.'),
             Text('1분만에 회원가입!'),

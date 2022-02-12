@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +39,9 @@ class _ExternalLinkState extends State<ExternalLink> {
                 setState(() => isLoading = false);
               }),
           isLoading
-              ? Center(child: Image.asset('assets/images/indicator.gif'))
+              ? Center(
+                  child: Image.asset('assets/images/indicator.gif',
+                      width: 100, height: 100))
               : Stack()
         ])));
   }
