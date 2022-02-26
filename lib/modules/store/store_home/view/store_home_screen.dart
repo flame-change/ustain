@@ -4,7 +4,6 @@ import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/modules/store/store_home/view/view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class StoreHomeScreen extends StatefulWidget {
   static String routeName = '/store_home_screen';
@@ -47,14 +46,10 @@ class _StoreHomeScreen extends State<StoreHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return Scaffold(
         body: PageView(controller: _pageController, children: [
       BlocProvider.value(
-        value: _storeCubit,
-        child: StoreMenuPage(_pageController),
-      ),
+          value: _storeCubit, child: StoreMenuPage(_pageController)),
       BlocProvider.value(value: _storeCubit, child: StorePage(_pageController))
     ]));
   }

@@ -1,3 +1,4 @@
+import 'package:aroundus_app/modules/brands/brand_home/view/brand_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/cubit/store_cubit.dart';
 import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
@@ -5,7 +6,6 @@ import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class StoreMenuPage extends StatefulWidget {
@@ -32,55 +32,59 @@ class _StoreMenuPage extends State<StoreMenuPage>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
       if (state.collections != null) {
-        return Scaffold(
-            appBar: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                centerTitle: false,
-                title: Container(
-                    width: sizeWidth(100),
-                    child: Text("카테고리",
-                        style: theme.textTheme.headline3!.copyWith(
-                            fontSize: Adaptive.dp(20),
-                            fontWeight: FontWeight.w700))),
-                actions: [
-                  GestureDetector(
-                      child: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child:
-                              Icon(Icons.search_outlined, color: Colors.black)),
-                      onTap: () =>
-                          Navigator.pushNamed(context, SearchScreen.routeName))
-                ]),
-            body: PageWire(
-                child: SingleChildScrollView(
-                    child: Column(
-                        children: List.generate(
-                            _storeCubit.state.collections!.length,
-                            (i) => Column(children: [
-                                  // 카테고리 제일 큰 거
-                                  BigCategory(
-                                      storeCubit: _storeCubit, index: i),
-                                  // 카테고리 두번째 거
-                                  ListView(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children:
-                                          // 카테고리 두번째 거 로직
-                                          mediumCategoryLogic(i)),
-                                  SizedBox(height: 10)
-                                ]))))));
+        return Material(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: SafeArea(
+                child: DefaultTabController(
+                    length: 2,
+                    child: NestedScrollView(
+                        headerSliverBuilder: (context, innerBoxIsScrolled) {
+                          return [
+                            storeAppBarWidget(),
+                            SliverOverlapAbsorber(
+                                handle: NestedScrollView
+                                    .sliverOverlapAbsorberHandleFor(context),
+                                sliver: SliverPersistentHeader(
+                                    pinned: true, delegate: TabBarDelegate()))
+                          ];
+                        },
+                        body: storeMenuTabbarWidget()))));
       } else {
         return Center(
             child: Image.asset('assets/images/indicator.gif',
                 width: 100, height: 100));
       }
     });
+  }
+
+  // 카테고리, 브랜드 분기하는 탭바 부분
+  Column storeMenuTabbarWidget() {
+    return Column(children: [
+      SizedBox(height: 48),
+      Expanded(
+          child: TabBarView(children: [
+        PageWire(
+            child: SingleChildScrollView(
+                child: Column(
+                    children: List.generate(
+                        _storeCubit.state.collections!.length,
+                        (i) => Column(children: [
+                              // 카테고리 제일 큰 거
+                              BigCategory(storeCubit: _storeCubit, index: i),
+                              // 카테고리 두번째 거
+                              ListView(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children:
+                                      // 카테고리 두번째 거 로직
+                                      mediumCategoryLogic(i)),
+                              SizedBox(height: 10)
+                            ]))))),
+        PageWire(child: BrandScreen())
+      ]))
+    ]);
   }
 
   List<Widget> mediumCategoryLogic(int i) {
@@ -98,6 +102,49 @@ class _StoreMenuPage extends State<StoreMenuPage>
   }
 }
 
+// 스토어 최상단 부분 (store, 검색)
+class storeAppBarWidget extends StatelessWidget {
+  const storeAppBarWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+        brightness: Brightness.light,
+        centerTitle: false,
+        pinned: false,
+        floating: true,
+        snap: false,
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        flexibleSpace: FlexibleSpaceBar(
+            background: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Adaptive.w(5)),
+                    child: RichText(
+                        text: TextSpan(children: [
+                      WidgetSpan(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                            Text('Store',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline3!
+                                    .copyWith(fontWeight: FontWeight.w500)),
+                            GestureDetector(
+                                child: Icon(Icons.search_outlined,
+                                    color: Colors.black, size: Adaptive.dp(25)),
+                                onTap: () => Navigator.pushNamed(
+                                    context, SearchScreen.routeName))
+                          ]))
+                    ]))))));
+  }
+}
+
 // 제일 큰 카테고리 UI
 class BigCategory extends StatelessWidget {
   const BigCategory(
@@ -111,19 +158,19 @@ class BigCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(top: 20),
         child: Stack(children: [
           Container(
-              margin: EdgeInsets.only(top: Adaptive.dp(13)),
+              margin: EdgeInsets.only(top: Adaptive.dp(10)),
               height: 5,
               color: Colors.black,
               width: double.maxFinite),
           Container(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Text(
-                  "${_storeCubit.state.collections![index].name.toLowerCase()} ",
-                  style: theme.textTheme.headline4!
-                      .copyWith(fontWeight: FontWeight.w900)))
+                  "${_storeCubit.state.collections![index].name.toUpperCase()} ",
+                  style: theme.textTheme.headline5!
+                      .copyWith(fontWeight: FontWeight.w500)))
         ]));
   }
 }
@@ -145,26 +192,74 @@ class mediumCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: Adaptive.h(1)),
+        padding: EdgeInsets.only(top: 10),
         child: Stack(children: [
           Container(
-              margin: EdgeInsets.only(top: Adaptive.dp(10)),
+              margin: EdgeInsets.only(top: Adaptive.dp(12)),
               height: 1,
-              color: Colors.black,
+              color: _storeCubit.state.selectedMenu ==
+                      _storeCubit.state.collections![index1].collection[index2]
+                  ? Colors.black
+                  : Colors.grey,
               width: double.maxFinite),
           Align(
               alignment: Alignment.centerRight,
               child: Container(
-                  color: Colors.white,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Text(
                       "  ${_storeCubit.state.collections![index1].collection[index2].name}",
                       style: theme.textTheme.bodyText1!.copyWith(
                           color: _storeCubit.state.selectedMenu ==
                                   _storeCubit.state.collections![index1]
                                       .collection[index2]
-                              ? theme.accentColor
-                              : Colors.black,
-                          fontWeight: FontWeight.w700))))
+                              ? Colors.black
+                              : Colors.grey,
+                          fontWeight: _storeCubit.state.selectedMenu ==
+                                  _storeCubit.state.collections![index1]
+                                      .collection[index2]
+                              ? FontWeight.w700
+                              : FontWeight.w500))))
         ]));
+  }
+}
+
+class TabBarDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+                padding: EdgeInsets.only(left: sizeWidth(5)),
+                child: TabBar(
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
+                    labelStyle: Theme.of(context).textTheme.headline5,
+                    isScrollable: true,
+                    tabs: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text('카테고리')),
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text('브랜드'))
+                    ],
+                    indicator: UnderlineTabIndicator(
+                        borderSide: BorderSide(width: 2.0, color: Colors.black),
+                        insets: EdgeInsets.only(bottom: -6)),
+                    labelPadding: EdgeInsets.zero,
+                    indicatorPadding: EdgeInsets.only(right: 20)))));
+  }
+
+  @override
+  double get maxExtent => 48;
+
+  @override
+  double get minExtent => 48;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

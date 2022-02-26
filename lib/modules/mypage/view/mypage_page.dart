@@ -32,11 +32,10 @@ class _MyPageState extends State<MyPage> {
   late User user;
   late bool is_authenticated;
   PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
+      appName: 'Unknown',
+      packageName: 'Unknown',
+      version: 'Unknown',
+      buildNumber: 'Unknown');
 
   @override
   void initState() {
@@ -54,47 +53,29 @@ class _MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        child: Column(children: [
-          if (is_authenticated)
-            Container(color: Colors.black, child: myPageInfo())
-          else
-            PageWire(child: LoginNeeded()),
-          SizedBox(height: sizeWidth(5)),
-          shoppingWire(context),
-          SizedBox(height: sizeWidth(5)),
-          helpcenterWire(context),
-          SizedBox(height: sizeWidth(5)),
-          helpcenterWire2(context),
-          SizedBox(height: sizeWidth(5)),
-          PageWire(
-              child: Container(
-                  child: Column(children: [
-            menuWidget("ETC."),
-            Container(
-                width: sizeWidth(100),
-                padding: EdgeInsets.symmetric(vertical: 5),
-                decoration:
-                    BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('버전 정보',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: Adaptive.dp(14))),
-                      Text(_packageInfo.version,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: Adaptive.dp(14)))
-                    ]))
-          ]))),
-          SizedBox(height: Adaptive.h(5)),
-          if (is_authenticated) logOutMethod(context),
-          if (is_authenticated) SizedBox(height: Adaptive.h(5)),
-          CompanyInfo()
-        ]));
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      PageWire(
+          child: Text('My Page',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.w500))),
+      if (is_authenticated) myPageInfo() else loginNeededProfile(),
+      Container(
+          color: Colors.white,
+          child: Column(children: [
+            SizedBox(height: 20),
+            shoppingWire(context),
+            SizedBox(height: 20),
+            helpcenterWire(context),
+            SizedBox(height: 20),
+            helpcenterWire2(context),
+            SizedBox(height: Adaptive.h(5)),
+            if (is_authenticated) logOutMethod(context),
+            if (is_authenticated) SizedBox(height: Adaptive.h(5)),
+            CompanyInfo()
+          ]))
+    ]);
   }
 
   Row logOutMethod(BuildContext context) {
@@ -119,7 +100,7 @@ class _MyPageState extends State<MyPage> {
       Container(
           height: 12,
           width: 1,
-          color: Colors.black,
+          color: Colors.grey,
           margin: EdgeInsets.symmetric(horizontal: 30)),
       MaterialButton(
           padding: EdgeInsets.all(10),
@@ -146,35 +127,40 @@ class _MyPageState extends State<MyPage> {
 
   PageWire helpcenterWire(BuildContext context) {
     return PageWire(
-        child: Column(children: [
-      menuWidget("SERVICE"),
-      subMenuWidget(
-          title: "비밀번호 수정",
-          tapped: () {
-            is_authenticated == true
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => BlocProvider<FindingAccountCubit>(
-                            create: (context) => FindingAccountCubit(
-                                RepositoryProvider.of<AuthenticationRepository>(
-                                    context)),
-                            child: FindingPasswordPage())))
-                : showLoginNeededDialog(context);
-            ;
-          }),
-      subMenuWidget(
-          title: "1:1 문의하기",
-          tapped: () {
-            requestCameraPermission(context);
-          })
-    ]));
+        child: Container(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        menuWidget('Account'),
+        SizedBox(height: 10),
+        subMenuWidget(
+            title: "비밀번호 수정",
+            tapped: () {
+              is_authenticated == true
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => BlocProvider<FindingAccountCubit>(
+                              create: (context) => FindingAccountCubit(
+                                  RepositoryProvider.of<
+                                      AuthenticationRepository>(context)),
+                              child: FindingPasswordPage())))
+                  : showLoginNeededDialog(context);
+            }),
+        subMenuWidget(
+            title: "1:1 문의하기",
+            tapped: () {
+              requestCameraPermission(context);
+            })
+      ]),
+    ));
   }
 
   PageWire helpcenterWire2(BuildContext context) {
     return PageWire(
-        child: Column(children: [
-      menuWidget("ABOUT"),
+        child: Container(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      menuWidget('Service'),
+      SizedBox(height: 10),
       subMenuWidget(
           title: "개인정보 처리방침",
           tapped: () =>
@@ -186,86 +172,102 @@ class _MyPageState extends State<MyPage> {
           title: "개인정보 수집, 이용 방침",
           tapped: () =>
               isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
-    ]));
+      ListTile(
+          contentPadding: EdgeInsets.all(0),
+          dense: true,
+          leading: Text('버전 정보',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: Colors.black, fontSize: Adaptive.dp(14))),
+          trailing: Text('${_packageInfo.version}',
+              style: TextStyle(color: Colors.black)))
+    ])));
   }
 
   PageWire shoppingWire(BuildContext context) {
     return PageWire(
-        child: Column(children: [
-      menuWidget("SHOPPING"),
-      subMenuWidget(
-          title: "내 쿠폰",
-          tapped: () {
-            if (is_authenticated) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => CouponScreen(isMypage: true)));
-            } else {
-              showLoginNeededDialog(context);
-            }
-          }),
-      subMenuWidget(
-          title: "배송지 관리",
-          tapped: () {
-            if (is_authenticated) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => AddressScreen(isOrdering: false)));
-            } else {
-              showLoginNeededDialog(context);
-            }
-          }),
-      subMenuWidget(
-          title: "주문 내역",
-          tapped: () {
-            if (is_authenticated) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => OrderFormListScreen()));
-            } else {
-              showLoginNeededDialog(context);
-            }
-          })
-    ]));
+        child: Container(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        menuWidget('Shopping'),
+        SizedBox(height: 10),
+        subMenuWidget(
+            title: "내 쿠폰",
+            tapped: () {
+              if (is_authenticated) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => CouponScreen(isMypage: true)));
+              } else {
+                showLoginNeededDialog(context);
+              }
+            }),
+        subMenuWidget(
+            title: "배송지 관리",
+            tapped: () {
+              if (is_authenticated) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => AddressScreen(isOrdering: false)));
+              } else {
+                showLoginNeededDialog(context);
+              }
+            }),
+        subMenuWidget(
+            title: "주문 내역",
+            tapped: () {
+              if (is_authenticated) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => OrderFormListScreen()));
+              } else {
+                showLoginNeededDialog(context);
+              }
+            })
+      ]),
+    ));
   }
 
   Widget myPageInfo() {
-    return GestureDetector(
-        onTap: () => Navigator.pushNamed(context, UserInfoScreen.routeName),
-        child: PageWire(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-              Row(children: [
-                Text("Lv.${user.group![0]['level']} ${user.name}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Colors.white)),
-                SizedBox(
-                    height: Adaptive.dp(30),
-                    width: Adaptive.dp(20),
-                    child: IconButton(
-                        padding: EdgeInsets.only(
-                            left: Adaptive.dp(2), bottom: Adaptive.dp(20)),
-                        onPressed: () => showTopSnackBar(
-                            context,
-                            CustomSnackBar.info(
-                                message:
-                                    "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
-                        iconSize: Adaptive.dp(15),
-                        icon: Icon(Icons.info),
-                        color: Colors.grey))
-              ]),
-              Container(
-                  height: 3,
-                  margin: EdgeInsets.only(top: 10, bottom: 15),
-                  color: HexColor("${user.group![0]['hexCode']}")),
-              userCategories(),
-              SizedBox(height: 15)
-            ])));
+    return Container(
+      color: Colors.black,
+      child: GestureDetector(
+          onTap: () => Navigator.pushNamed(context, UserInfoScreen.routeName),
+          child: PageWire(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                SizedBox(height: 15),
+                Row(children: [
+                  Text("Lv.${user.group![0]['level']} ${user.name}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(color: Colors.white)),
+                  SizedBox(
+                      height: Adaptive.dp(30),
+                      width: Adaptive.dp(20),
+                      child: IconButton(
+                          padding: EdgeInsets.only(bottom: Adaptive.dp(12)),
+                          onPressed: () => showTopSnackBar(
+                              context,
+                              CustomSnackBar.info(
+                                  message:
+                                      "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
+                          iconSize: Adaptive.dp(12),
+                          icon: Icon(Icons.info),
+                          color: Colors.grey))
+                ]),
+                Container(
+                    height: 3,
+                    margin: EdgeInsets.only(top: 10, bottom: 15),
+                    color: HexColor("${user.group![0]['hexCode']}")),
+                userCategories(),
+                SizedBox(height: 15)
+              ]))),
+    );
   }
 
   RichText userCategories() {
@@ -305,5 +307,48 @@ class _MyPageState extends State<MyPage> {
       isWebRouter(context, 'https://ed83p.channel.io');
       return true;
     }
+  }
+}
+
+class loginNeededProfile extends StatelessWidget {
+  const loginNeededProfile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PageWire(
+        child: Container(
+            height: 175,
+            width: double.infinity,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.white),
+                  SizedBox(height: 10),
+                  Text('로그인이 필요한 서비스입니다.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: Colors.white)),
+                  SizedBox(height: 10),
+                  Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: sizeWidth(5), vertical: 10),
+                      child: MaterialButton(
+                          minWidth: sizeWidth(90),
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text('Login / Register',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: Colors.white)),
+                          color: Colors.black,
+                          onPressed: () =>
+                              RepositoryProvider.of<AuthenticationRepository>(
+                                      context)
+                                  .logOut()))
+                ])));
   }
 }

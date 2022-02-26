@@ -3,6 +3,7 @@ import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:wrapped_korean_text/wrapped_korean_text.dart';
 
 class CatalogCard extends StatelessWidget {
   const CatalogCard(this.catalog, this.index);
@@ -33,10 +34,13 @@ class CatalogCard extends StatelessWidget {
             child: Container(
                 width: sizeWidth(8),
                 height: sizeWidth(8),
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: Colors.black,
                 child: Center(
                     child: Text('$index',
-                        style: Theme.of(context).textTheme.headline5)))),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5!
+                            .copyWith(color: Colors.white))))),
         Padding(
             padding: EdgeInsets.all(sizeWidth(5)),
             child:
@@ -77,16 +81,12 @@ class CatalogProduct extends StatelessWidget {
                   width: sizeWidth(25),
                   height: sizeWidth(25))),
           SizedBox(height: 5),
-          // Text(_catalogProducts['brand'],
-          //     overflow: TextOverflow.ellipsis,
-          //     style: Theme.of(context).textTheme.bodyText2),
           Text(_catalogProducts['name'],
-              overflow: TextOverflow.ellipsis,
               maxLines: 2,
               style: Theme.of(context)
                   .textTheme
                   .bodyText2!
-                  .copyWith(color: Colors.white)),
+                  .copyWith(overflow: TextOverflow.ellipsis)),
           Align(
             alignment: Alignment.bottomRight,
             child: Text(

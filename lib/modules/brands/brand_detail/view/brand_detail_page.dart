@@ -98,9 +98,9 @@ class _BrandDetailPageState extends State<BrandDetailPage> {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             crossAxisCount: 2,
-                            crossAxisSpacing: 5,
+                            crossAxisSpacing: sizeWidth(5),
                             mainAxisSpacing: 15,
-                            childAspectRatio: (4 / 7),
+                            childAspectRatio: (4 / 7.5),
                             children: List.generate(
                                 state.products!.length,
                                 (index) =>

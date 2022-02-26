@@ -8,7 +8,6 @@ import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 export 'package:sizer/sizer.dart';
@@ -65,14 +64,12 @@ class _StorePageState extends State<StorePage>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
       return state.collections != null
           ? Scaffold(
               appBar: AppBar(
                   automaticallyImplyLeading: false,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   centerTitle: true,
                   elevation: 0,
                   title: Row(
@@ -84,16 +81,15 @@ class _StorePageState extends State<StorePage>
                                 curve: Curves.easeOut),
                             child: Icon(Icons.menu, color: Colors.black)),
                         Text('${_selectedCollection.name}',
-                            style: TextStyle(
-                                fontSize: Adaptive.dp(12),
-                                color: Colors.black)),
+                            style: Theme.of(context).textTheme.headline6),
                         GestureDetector(
                             onTap: () => user_status ==
                                     AuthenticationStatus.authenticated
                                 ? Navigator.pushNamed(
                                     context, CartScreen.routeName)
                                 : showLoginNeededDialog(context),
-                            child: SvgPicture.asset("assets/icons/cart.svg"))
+                            child: SvgPicture.asset("assets/icons/cart.svg",
+                                color: Colors.black))
                       ])),
               body: Stack(children: [
                 BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
@@ -105,51 +101,15 @@ class _StorePageState extends State<StorePage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // 서브 카테고리
-                              Container(
-                                  height: 30,
-                                  margin: EdgeInsets.only(bottom: 15),
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                            onTap: () => setState(() {
-                                                  _selectedCollection = state
-                                                      .subCollections![index];
-                                                  page = 1;
-                                                  _storeCubit
-                                                      .getProductsByCollection(
-                                                          _selectedCollection,
-                                                          "price.sale",
-                                                          page);
-                                                }),
-                                            child: Container(
-                                                color: _selectedCollection ==
-                                                        state.subCollections![
-                                                            index]
-                                                    ? Colors.black
-                                                    : Colors.grey[300],
-                                                alignment: Alignment.center,
-                                                padding: EdgeInsets.all(5),
-                                                margin:
-                                                    EdgeInsets.only(right: 10),
-                                                child: Text(
-                                                    "${state.subCollections![index].name}",
-                                                    style: TextStyle(
-                                                        color: _selectedCollection ==
-                                                                state.subCollections![
-                                                                    index]
-                                                            ? Colors.white
-                                                            : Colors.black))));
-                                      },
-                                      itemCount: state.subCollections!.length)),
+                              subCategoryWidget(state),
                               state.products!.isNotEmpty
                                   ? GridView.count(
                                       physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       crossAxisCount: 2,
-                                      crossAxisSpacing: 5,
+                                      crossAxisSpacing: sizeWidth(5),
                                       mainAxisSpacing: 15,
-                                      childAspectRatio: (4 / 7),
+                                      childAspectRatio: (4 / 7.5),
                                       children: List.generate(
                                           state.products!.length,
                                           (index) => storeProduct(
@@ -171,5 +131,39 @@ class _StorePageState extends State<StorePage>
               child: Image.asset('assets/images/indicator.gif',
                   width: 100, height: 100));
     });
+  }
+
+  Container subCategoryWidget(StoreState state) {
+    return Container(
+        height: 30,
+        margin: EdgeInsets.only(bottom: 15),
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                  onTap: () => setState(() {
+                        _selectedCollection = state.subCollections![index];
+                        page = 1;
+                        _storeCubit.getProductsByCollection(
+                            _selectedCollection, "price.sale", page);
+                      }),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                          color: _selectedCollection ==
+                                  state.subCollections![index]
+                              ? Colors.black
+                              : Theme.of(context).scaffoldBackgroundColor,
+                          alignment: Alignment.center,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Text("${state.subCollections![index].name}",
+                              style: TextStyle(
+                                  color: _selectedCollection ==
+                                          state.subCollections![index]
+                                      ? Colors.white
+                                      : Colors.grey)))));
+            },
+            itemCount: state.subCollections!.length));
   }
 }

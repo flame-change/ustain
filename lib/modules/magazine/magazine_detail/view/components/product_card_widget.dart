@@ -68,10 +68,7 @@ class productWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("${products[index].name}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodyText2,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis),
                       SizedBox(height: 10),

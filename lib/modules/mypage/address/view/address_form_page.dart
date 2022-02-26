@@ -30,8 +30,6 @@ class _AddressFormPage extends State<AddressFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

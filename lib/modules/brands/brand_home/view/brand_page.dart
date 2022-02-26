@@ -1,8 +1,5 @@
 import 'package:aroundus_app/modules/brands/brand_home/components/brand_list_tile.dart';
-import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/modules/brands/brand_home/cubit/brand_cubit.dart';
-import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -42,14 +39,7 @@ class _BrandPageState extends State<BrandPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(children: [
-      LeftPageWire(
-          color: Colors.grey.shade100,
-          child: TitleWithUnderline(
-              color: Colors.grey.shade100,
-              title: 'TRENDING BRANDS',
-              subtitle: '인기 브랜드의 진솔한 뒷이야기.')),
-      PageWire(child:
-          BlocBuilder<BrandCubit, BrandListState>(builder: (context, state) {
+      BlocBuilder<BrandCubit, BrandListState>(builder: (context, state) {
         if (state.isLoaded == true) {
           return Column(children: [
             for (var brand in state.brands!)
@@ -65,9 +55,8 @@ class _BrandPageState extends State<BrandPage> {
             child: Center(
                 child: Image.asset('assets/images/indicator.gif',
                     width: 100, height: 100)));
-      })),
-      SizedBox(height: Adaptive.h(5)),
-      CompanyInfo()
+      }),
+      SizedBox(height: Adaptive.h(5))
     ]));
   }
 }

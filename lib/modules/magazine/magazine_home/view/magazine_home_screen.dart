@@ -25,7 +25,7 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen>
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.dark));
+        statusBarBrightness: Brightness.light));
 
     return Material(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -40,33 +40,22 @@ class _MagazineHomeScreen extends State<MagazineHomeScreen>
                             pinned: false,
                             floating: true,
                             snap: false,
-                            toolbarHeight: 150,
                             elevation: 0,
                             backgroundColor:
                                 Theme.of(context).scaffoldBackgroundColor,
                             flexibleSpace: FlexibleSpaceBar(
                                 background: Align(
-                                    alignment: Alignment.bottomLeft,
+                                    alignment: Alignment.centerLeft,
                                     child: Padding(
                                         padding: EdgeInsets.only(
                                             left: Adaptive.w(5)),
-                                        child: RichText(
-                                            text: TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Magazines\n',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2!
-                                                  .copyWith(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                          WidgetSpan(
-                                              child: SizedBox(height: 30)),
-                                          TextSpan(text: '잠시 들렀다 가세요 :)\n'),
-                                          WidgetSpan(
-                                              child: SizedBox(height: 30))
-                                        ])))))),
+                                        child: Text('Magazines',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w500)))))),
                         SliverOverlapAbsorber(
                             handle:
                                 NestedScrollView.sliverOverlapAbsorberHandleFor(
@@ -104,12 +93,9 @@ class TabBarDelegate extends SliverPersistentHeaderDelegate {
             child: Container(
                 padding: EdgeInsets.only(left: sizeWidth(5)),
                 child: TabBar(
-                    labelColor: Colors.white,
+                    labelColor: Colors.black,
                     unselectedLabelColor: Colors.grey,
-                    labelStyle: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(fontSize: Adaptive.dp(18)),
+                    labelStyle: Theme.of(context).textTheme.headline5,
                     isScrollable: true,
                     tabs: <Widget>[
                       Padding(
@@ -120,7 +106,7 @@ class TabBarDelegate extends SliverPersistentHeaderDelegate {
                           child: Text('스크랩'))
                     ],
                     indicator: UnderlineTabIndicator(
-                        borderSide: BorderSide(width: 2.0, color: Colors.white),
+                        borderSide: BorderSide(width: 2.0, color: Colors.black),
                         insets: EdgeInsets.only(bottom: -6)),
                     labelPadding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.only(right: 20)))));

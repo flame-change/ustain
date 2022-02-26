@@ -34,11 +34,12 @@ Widget storeProduct(BuildContext context, Product product) {
       },
       child: GridTile(
           child: Container(),
-          header: Image.network(product.thumbnail!,
-              fit: BoxFit.cover, height: sizeWidth(45) - 2.5),
+          header: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(product.thumbnail!,
+                  fit: BoxFit.cover, height: sizeWidth(45) - 2.5)),
           footer: Container(
               height: sizeWidth(33),
-              color: Colors.white,
               padding:
                   EdgeInsets.symmetric(horizontal: sizeWidth(1), vertical: 5),
               child: Column(
@@ -58,9 +59,7 @@ Widget storeProduct(BuildContext context, Product product) {
                               .copyWith(fontSize: Adaptive.dp(10))),
                       WidgetSpan(
                           child: Text("${product.name}",
-                              style: theme.textTheme.bodyText2!.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: Adaptive.dp(12)),
+                              style: theme.textTheme.bodyText2,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis))
                     ])),
@@ -82,8 +81,7 @@ Widget storeProduct(BuildContext context, Product product) {
                                 "${currencyFromString(product.originalPrice.toString())}",
                                 style: theme.textTheme.bodyText2!.copyWith(
                                     decoration: TextDecoration.lineThrough,
-                                    fontSize: Adaptive.dp(8),
-                                    color: Color(0xFF767676)))
+                                    fontSize: Adaptive.dp(8)))
                           ]))
                     ]))
                   ]))));

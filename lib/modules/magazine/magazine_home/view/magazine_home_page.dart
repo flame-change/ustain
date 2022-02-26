@@ -2,7 +2,6 @@ import 'package:aroundus_app/repositories/magazine_repository/magazine_repositor
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/support/base_component/base_component.dart';
-import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/repositories/repositories.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -82,9 +81,7 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                               padding: EdgeInsets.only(right: sizeWidth(5)),
                               child: magazineCard(
                                   context, state.magazines![index]))))
-                ])),
-            SizedBox(height: Adaptive.h(5)),
-            CompanyInfo()
+                ]))
           ]);
         } else {
           return Container(
@@ -106,21 +103,21 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                     magazineCategory: MagazineCategory.empty);
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    color: _magazineCubit.state.magazineCategory ==
-                            MagazineCategory.empty
-                        ? Colors.grey
-                        : Theme.of(context).scaffoldBackgroundColor,
-                    child: Text("전체보기",
-                        style: TextStyle(
-                            color: _magazineCubit.state.magazineCategory ==
-                                    MagazineCategory.empty
-                                ? Colors.white
-                                : Colors.grey))),
-              ))
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                      alignment: Alignment.center,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      color: _magazineCubit.state.magazineCategory ==
+                              MagazineCategory.empty
+                          ? Colors.black
+                          : Theme.of(context).scaffoldBackgroundColor,
+                      child: Text("전체보기",
+                          style: TextStyle(
+                              color: _magazineCubit.state.magazineCategory ==
+                                      MagazineCategory.empty
+                                  ? Colors.white
+                                  : Colors.grey)))))
         ] +
         List<Widget>.generate(
             user.categories!.length,
@@ -128,21 +125,20 @@ class _MagazineHomePageState extends State<MagazineHomePage> {
                 onTap: () => _magazineCubit.getMagazinesByCategory(
                     magazineCategory: user.categories![index]),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                      alignment: Alignment.center,
-                      color: _magazineCubit.state.magazineCategory ==
-                              user.categories![index]
-                          ? Colors.grey
-                          : Theme.of(context).scaffoldBackgroundColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Text(user.categories![index].mid!,
-                          style: TextStyle(
-                              color: _magazineCubit.state.magazineCategory ==
-                                      user.categories![index]
-                                  ? Colors.white
-                                  : Colors.grey))),
-                )));
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                        alignment: Alignment.center,
+                        color: _magazineCubit.state.magazineCategory ==
+                                user.categories![index]
+                            ? Colors.black
+                            : Theme.of(context).scaffoldBackgroundColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Text(user.categories![index].mid!,
+                            style: TextStyle(
+                                color: _magazineCubit.state.magazineCategory ==
+                                        user.categories![index]
+                                    ? Colors.white
+                                    : Colors.grey))))));
   }
 }

@@ -15,35 +15,30 @@ class BrandListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: Adaptive.h(2)),
         padding: EdgeInsets.symmetric(vertical: Adaptive.h(0.5)),
         decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  offset: Offset(0, 0.5))
-            ],
-            borderRadius: BorderRadius.circular(sizeWidth(4))),
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(10)),
         child: ListTile(
+            contentPadding: EdgeInsets.zero,
             onTap: () => Navigator.pushNamed(
                 context, BrandDetailScreen.routeName,
                 arguments: {'Id': this.Id}),
             leading: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey)),
-              child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  backgroundImage: NetworkImage(this.logo!),
-                  radius: sizeWidth(8)),
-            ),
-            title:
-                Text(this.name!, style: TextStyle(fontWeight: FontWeight.bold)),
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(this.logo!),
+                    radius: sizeWidth(8))),
+            title: Text(this.name!,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontWeight: FontWeight.w700)),
             subtitle: Text(this.description!,
-                maxLines: 2, overflow: TextOverflow.ellipsis),
+                style: Theme.of(context).textTheme.bodyText2,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis),
             isThreeLine: true));
   }
 }

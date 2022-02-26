@@ -1,6 +1,5 @@
 import 'package:aroundus_app/modules/magazine/magazine_home/view/magazine_home_screen.dart';
 import 'package:aroundus_app/modules/store/store_home/view/store_home_screen.dart';
-import 'package:aroundus_app/modules/brands/brand_home/view/brand_screen.dart';
 import 'package:aroundus_app/modules/mypage/view/mypage_screen.dart';
 import 'package:aroundus_app/modules/home/view/home_screen.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -9,15 +8,15 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-enum MenuState { home, magazine, store, brands, my_page }
+enum MenuState { home, magazine, store, my_page }
 
 extension MenuStateToString on MenuState {
   String get name {
-    return ["home", "magazine", "store", "brands", "my_page"][this.index];
+    return ["home", "magazine", "store", "my_page"][this.index];
   }
 
   String get nickName {
-    return ["홈", "매거진", "스토어", "브랜드", "내 계정"][this.index];
+    return ["홈", "매거진", "스토어", "내 계정"][this.index];
   }
 }
 
@@ -41,19 +40,20 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     MagazineHomeScreen(),
     StoreHomeScreen(),
-    BrandScreen(),
     MyPageScreen()
   ];
 
   @override
   void dispose() {
-    super.dispose();
     pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.light));
 
     return Scaffold(
         body: PageView(
@@ -61,30 +61,29 @@ class _MainScreenState extends State<MainScreen> {
             controller: pageController,
             onPageChanged: _onPageChanged,
             physics: NeverScrollableScrollPhysics()),
-        bottomNavigationBar: Container(
-            child: BottomNavigationBar(
-                items: List.generate(
-                    MenuState.values.length,
-                    (index) => BottomNavigationBarItem(
-                        icon: ImageIcon(Svg(
-                            "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
-                            size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
-                        label: "${MenuState.values[index].nickName}")),
-                onTap: _onItemTapped,
-                selectedItemColor: Colors.white,
-                unselectedItemColor: Color(0xFF979797),
-                unselectedLabelStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: Adaptive.dp(8),
-                    fontWeight: FontWeight.w500),
-                selectedLabelStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: Adaptive.dp(8),
-                    fontWeight: FontWeight.w700),
-                currentIndex: pageIndex,
-                selectedFontSize: 12,
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                elevation: 0)));
+        bottomNavigationBar: BottomNavigationBar(
+            items: List.generate(
+                MenuState.values.length,
+                (index) => BottomNavigationBarItem(
+                    icon: ImageIcon(Svg(
+                        "assets/icons/bottomNavigationBar/${MenuState.values[index].name}.svg",
+                        size: Size(Adaptive.dp(18), Adaptive.dp(18)))),
+                    label: "${MenuState.values[index].nickName}")),
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Color(0xFF979797),
+            unselectedLabelStyle: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: Adaptive.dp(8),
+                fontWeight: FontWeight.w500),
+            selectedLabelStyle: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: Adaptive.dp(8),
+                fontWeight: FontWeight.w700),
+            currentIndex: pageIndex,
+            selectedFontSize: 12,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.black,
+            elevation: 0));
   }
 }

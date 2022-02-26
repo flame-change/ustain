@@ -18,15 +18,15 @@ class TitleWithUnderline extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Stack(children: [
             Container(
-                margin: EdgeInsets.only(top: Adaptive.dp(13)),
+                margin: EdgeInsets.only(top: Adaptive.dp(17)),
                 height: 5,
                 color: Colors.black,
                 width: double.maxFinite),
             Container(
                 color: color,
-                child: Text("${title} ".toLowerCase(),
-                    style: theme.textTheme.headline4!
-                        .copyWith(fontWeight: FontWeight.w900)))
+                child: Text("${title} ",
+                    style: theme.textTheme.headline3!
+                        .copyWith(fontWeight: FontWeight.w500)))
           ]),
           SizedBox(height: 3),
           Container(

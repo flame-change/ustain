@@ -7,7 +7,6 @@ import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/support/style/format_unit.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
-import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +39,10 @@ class _CatalogPageState extends State<CatalogPage> {
       return state.catalogMagazineDetail != null
           ? CustomScrollView(slivers: [
               SliverAppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle.light,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   leading: IconButton(
                       icon: Icon(Icons.arrow_back_ios_outlined,
-                          color: Colors.white),
+                          color: Colors.black),
                       onPressed: () => Navigator.of(context).pop()),
                   backgroundColor: Colors.white,
                   expandedHeight: Adaptive.w(100),
@@ -51,23 +50,11 @@ class _CatalogPageState extends State<CatalogPage> {
                   pinned: false,
                   snap: false,
                   flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(children: [
-                    Image.network(state.catalogMagazineDetail!.bannerImage!,
-                        fit: BoxFit.cover,
-                        height: sizeWidth(100) + AppBar().preferredSize.height),
-                    Container(
-                        height: sizeWidth(30),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [
-                              Theme.of(context).scaffoldBackgroundColor,
-                              Theme.of(context)
-                                  .scaffoldBackgroundColor
-                                  .withOpacity(0)
-                            ])))
-                  ]))),
+                      background: Image.network(
+                          state.catalogMagazineDetail!.bannerImage!,
+                          fit: BoxFit.cover,
+                          height:
+                              sizeWidth(100) + AppBar().preferredSize.height))),
               SliverToBoxAdapter(
                   child: Padding(
                       padding: EdgeInsets.all(sizeWidth(5)),
@@ -143,6 +130,7 @@ class productGridTile extends StatelessWidget {
           Container(
               height: Adaptive.w(40),
               decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(product['thumbnail']!)))),
@@ -153,19 +141,14 @@ class productGridTile extends StatelessWidget {
                       fontSize: Adaptive.dp(10), color: Colors.grey))),
           SizedBox(
               child: Text('${product['name']!}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyText2,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis)),
-          SizedBox(
+          Align(
+              alignment: Alignment.bottomRight,
               child: Text(
                   '${currencyFromString(product['discountPrice']!.toString())}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: Colors.white)))
+                  style: Theme.of(context).textTheme.bodyText2))
         ]));
   }
 }

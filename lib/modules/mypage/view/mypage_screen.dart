@@ -1,5 +1,4 @@
 import 'package:aroundus_app/modules/authentication/authentication.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -19,22 +18,14 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreen extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark));
 
     return BlocProvider.value(
         value: BlocProvider.of<AuthenticationBloc>(context),
         child: Scaffold(
             backgroundColor: Colors.black,
-            appBar: AppBar(
-                automaticallyImplyLeading: false,
-                brightness: Brightness.dark,
-                backgroundColor: Colors.black,
-                centerTitle: false,
-                title: Text('프로필',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: Colors.white))),
-            body: SingleChildScrollView(child: MyPage())));
+            body: SafeArea(child: SingleChildScrollView(child: MyPage()))));
   }
 }

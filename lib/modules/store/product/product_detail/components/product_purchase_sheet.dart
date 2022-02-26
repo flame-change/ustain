@@ -58,12 +58,11 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
           .contains(false);
 
       return Container(
-          height: Adaptive.h(65),
+          height: Adaptive.h(80),
           padding: EdgeInsets.only(top: Adaptive.h(5)),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-          ),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -87,10 +86,9 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 10),
                                 decoration: BoxDecoration(
-                                  border:
-                                      Border.all(width: 1, color: Colors.grey),
-                                  color: Colors.white,
-                                ),
+                                    border: Border.all(
+                                        width: 1, color: Colors.grey),
+                                    color: Colors.white),
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -327,111 +325,112 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
     return List.generate(
         options.length,
         (i) => Card(
-            child: ExpansionTile(
-                key: GlobalKey(),
-                title: RichText(
-                    text:
-                        TextSpan(style: theme.textTheme.bodyText1!, children: [
-                  TextSpan(text: "${options[i].name} "),
-                  TextSpan(
+              child: ExpansionTile(
+                  key: GlobalKey(),
+                  title: RichText(
                       text:
-                          "${selectedOptions[i].variation == null ? "" : selectedOptions[i].variation!.value}")
-                ])),
-                // maintainState: true,
-                initiallyExpanded: i == selected,
-                children: ListTile.divideTiles(
-                    color: Colors.grey[200],
-                    tiles:
-                        List.generate(options[i].variations!.length, (index) {
-                      bool available = true;
+                          TextSpan(style: theme.textTheme.bodyText2, children: [
+                    TextSpan(text: "${options[i].name} "),
+                    TextSpan(
+                        text:
+                            "${selectedOptions[i].variation == null ? "" : selectedOptions[i].variation!.value}")
+                  ])),
+                  // maintainState: true,
+                  initiallyExpanded: i == selected,
+                  children: ListTile.divideTiles(
+                      color: Colors.grey[200],
+                      tiles:
+                          List.generate(options[i].variations!.length, (index) {
+                        bool available = true;
 
-                      for (int k = 0; k < _product.variants!.length; k++) {
-                        _product.variants![k].types!.forEach((element) {
-                          if (element.variation!.Id ==
-                                  options[i].variations![index].Id &&
-                              _product.variants![k].available == false) {
-                            available = !available;
-                          }
-                        });
-                        if (available == false) {
-                          break;
-                        }
-                      }
-
-                      return ListTile(
-                          title: available
-                              ? Text("${options[i].variations![index].value}")
-                              : Text(
-                                  "${options[i].variations![index].value} (품절)",
-                                  style: TextStyle(color: Colors.grey)),
-                          onTap: () {
-                            // 선택 옵션 추가
-                            if (available) {
-                              setState(() {
-                                selectedOptions[i] = selectedOptions[i]
-                                    .copyWith(
-                                        variation:
-                                            options[i].variations![index]);
-                                selected = selected + 1;
-                              });
-
-                              if (!selectedOptions
-                                  .map((e) => e.variation != null)
-                                  .toList()
-                                  .contains(false)) {
-                                // cartTemp 생성
-
-                                Variants? variant;
-
-                                _product.variants!.forEach((element) {
-                                  if (listEquals(
-                                      element.types, selectedOptions)) {
-                                    variant = element;
-                                  }
-                                });
-
-                                bool generated = false;
-                                // 이미 생성되어 있는 경우
-                                cartTempList.forEach((element) {
-                                  if (listEquals(element.variants!.types,
-                                      selectedOptions)) {
-                                    index = cartTempList.indexOf(element);
-                                    setState(() {
-                                      generated = true;
-                                      cartTempList[index] = cartTempList[index]
-                                          .copyWith(
-                                              quantity: cartTempList[index]
-                                                      .quantity! +
-                                                  1);
-                                    });
-                                  }
-                                });
-
-                                if (!generated) {
-                                  setState(() {
-                                    selected = 0;
-                                    cartTempList.add(CartTemp(
-                                        variants: variant, quantity: 1));
-                                  });
-                                }
-                              }
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                        title: Text("품절된 옵션입니다."),
-                                        actions: [
-                                          MaterialButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text("확인"))
-                                        ]);
-                                  });
+                        for (int k = 0; k < _product.variants!.length; k++) {
+                          _product.variants![k].types!.forEach((element) {
+                            if (element.variation!.Id ==
+                                    options[i].variations![index].Id &&
+                                _product.variants![k].available == false) {
+                              available = !available;
                             }
                           });
-                    })).toList())));
+                          if (available == false) {
+                            break;
+                          }
+                        }
+
+                        return ListTile(
+                            title: available
+                                ? Text("${options[i].variations![index].value}")
+                                : Text(
+                                    "${options[i].variations![index].value} (품절)",
+                                    style: TextStyle(color: Colors.grey)),
+                            onTap: () {
+                              // 선택 옵션 추가
+                              if (available) {
+                                setState(() {
+                                  selectedOptions[i] = selectedOptions[i]
+                                      .copyWith(
+                                          variation:
+                                              options[i].variations![index]);
+                                  selected = selected + 1;
+                                });
+
+                                if (!selectedOptions
+                                    .map((e) => e.variation != null)
+                                    .toList()
+                                    .contains(false)) {
+                                  // cartTemp 생성
+
+                                  Variants? variant;
+
+                                  _product.variants!.forEach((element) {
+                                    if (listEquals(
+                                        element.types, selectedOptions)) {
+                                      variant = element;
+                                    }
+                                  });
+
+                                  bool generated = false;
+                                  // 이미 생성되어 있는 경우
+                                  cartTempList.forEach((element) {
+                                    if (listEquals(element.variants!.types,
+                                        selectedOptions)) {
+                                      index = cartTempList.indexOf(element);
+                                      setState(() {
+                                        generated = true;
+                                        cartTempList[index] =
+                                            cartTempList[index].copyWith(
+                                                quantity: cartTempList[index]
+                                                        .quantity! +
+                                                    1);
+                                      });
+                                    }
+                                  });
+
+                                  if (!generated) {
+                                    setState(() {
+                                      selected = 0;
+                                      cartTempList.add(CartTemp(
+                                          variants: variant, quantity: 1));
+                                    });
+                                  }
+                                }
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          title: Text("품절된 옵션입니다."),
+                                          actions: [
+                                            MaterialButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("확인"))
+                                          ]);
+                                    });
+                              }
+                            });
+                      })).toList()),
+            ));
   }
 
   Widget purchaseSummary() {

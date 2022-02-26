@@ -81,23 +81,22 @@ class _MagazineScrappedPageState extends State<MagazineScrappedPage> {
               } else if (state.isLoaded == true &&
                   state.scrappedMagazines!.length == 0) {
                 return Container(
-                    margin: EdgeInsets.only(top: Adaptive.h(3)),
                     padding: EdgeInsets.only(right: sizeWidth(5)),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey[200]),
-                    height: Adaptive.w(35),
+                    height: 200,
                     width: double.infinity,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.info_outline),
-                          SizedBox(height: Adaptive.h(1)),
-                          Text('스크랩한 매거진이 없습니다.',
+                    child: Center(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Icon(Icons.info_outline, color: Colors.black),
+                          SizedBox(height: 5),
+                          Text('관심 있는 분야를 읽어보고',
+                              style: Theme.of(context).textTheme.bodyText2),
+                          Text('스크랩에 보관해보세요.',
                               style: Theme.of(context).textTheme.bodyText2),
                           SizedBox(height: Adaptive.h(1))
-                        ]));
+                        ])));
               } else {
                 return Container(
                     padding: EdgeInsets.only(top: Adaptive.h(15)),

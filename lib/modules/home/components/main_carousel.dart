@@ -80,6 +80,6 @@ class _BannerMagazinesState extends State<BannerMagazines> {
         pagination: SwiperPagination(
             alignment: Alignment.bottomCenter,
             builder: new DotSwiperPaginationBuilder(
-                color: Colors.grey, activeColor: Colors.white)));
+                color: Colors.grey, activeColor: Colors.black)));
   }
 }

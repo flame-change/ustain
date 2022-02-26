@@ -16,8 +16,6 @@ class UserInfoScreen extends StatefulWidget {
 class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return BlocProvider.value(
       value: BlocProvider.of<AuthenticationBloc>(context),
       child: BlocProvider<MypageCubit>(

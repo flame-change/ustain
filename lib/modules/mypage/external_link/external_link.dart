@@ -26,8 +26,6 @@ class _ExternalLinkState extends State<ExternalLink> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return Scaffold(
         appBar: AppBar(backgroundColor: Colors.black),
         body: SafeArea(

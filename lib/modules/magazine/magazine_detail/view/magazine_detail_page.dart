@@ -45,8 +45,6 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return BlocBuilder<MagazineDetailCubit, MagazineDetailState>(
         builder: (context, state) {
       if (state.magazineDetail != null) {
@@ -55,6 +53,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
             body: CustomScrollView(slivers: <Widget>[
               SliverAppBar(
                   backgroundColor: Colors.transparent,
+                  brightness: Brightness.light,
                   leading: GestureDetector(
                       child: Icon(Icons.arrow_back_ios_outlined),
                       onTap: () => Navigator.pop(context)),
@@ -158,7 +157,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
   FloatingActionButton scrapActionButton() {
     return FloatingActionButton(
         onPressed: () {
-          if (user_status != AuthenticationStatus.authenticated) {
+          if (user_status == AuthenticationStatus.authenticated) {
             context.read<MagazineDetailCubit>().updateIsScrapped(widget.id!);
             context.read<MagazineDetailCubit>().getMagazineDetail(widget.id!);
           } else {
@@ -167,7 +166,7 @@ class _MagazineDetailPageState extends State<MagazineDetailPage>
         },
         backgroundColor: Colors.black54,
         child: Icon(
-            user_status != AuthenticationStatus.authenticated
+            user_status == AuthenticationStatus.authenticated
                 ? context.read<MagazineDetailCubit>().state.isScrapped!
                     ? Icons.bookmark
                     : Icons.bookmark_outline_rounded

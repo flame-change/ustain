@@ -9,8 +9,6 @@ class LoginNeeded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: Adaptive.h(3)),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.grey[200]),
         height: 175,
         width: double.infinity,
         child: Column(
@@ -28,7 +26,11 @@ class LoginNeeded extends StatelessWidget {
                   child: MaterialButton(
                       minWidth: sizeWidth(90),
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Text('로그인', style: TextStyle(color: Colors.white)),
+                      child: Text('로그인 / 회원가입',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(color: Colors.white)),
                       color: Colors.black,
                       onPressed: () =>
                           RepositoryProvider.of<AuthenticationRepository>(
@@ -52,7 +54,7 @@ void showLoginNeededDialog(context) {
             Text('Login / Register',
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headline5!
                     .copyWith(color: Colors.black)),
             SizedBox(height: 15),
             Text('로그인이 필요한 서비스입니다.'),
@@ -64,12 +66,12 @@ void showLoginNeededDialog(context) {
                         .logOut(),
                 child: Container(
                     color: Colors.black,
-                    height: 60,
+                    height: 50,
                     child: Center(
                         child: Text('로그인 / 회원가입',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline5!
+                                .headline6!
                                 .copyWith(color: Colors.white))))),
           ])),
       isScrollControlled: true);

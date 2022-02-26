@@ -26,8 +26,6 @@ class _AddressScreen extends State<AddressScreen>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

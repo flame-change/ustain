@@ -4,6 +4,7 @@ import 'package:aroundus_app/repositories/magazine_repository/models/models.dart
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:wrapped_korean_text/wrapped_korean_text.dart';
 
 Widget magazineCard(BuildContext context, Magazine magazine) {
   return GestureDetector(
@@ -29,11 +30,7 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
                     image: NetworkImage(magazine.bannerImage!)))),
         Padding(
             padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 5),
-            child: Text(magazine.title!,
-                maxLines: 2,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.white)))
+            child: WrappedKoreanText(magazine.title!,
+                maxLines: 2, style: Theme.of(context).textTheme.bodyText2))
       ]));
 }

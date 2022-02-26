@@ -63,8 +63,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                     SizedBox(height: Adaptive.h(3)),
-                    menuWidget("ACHIEVEMENTS"),
-                    SizedBox(height: Adaptive.h(2)),
                     RichText(
                         text: TextSpan(
                             style: Theme.of(context)

@@ -5,6 +5,7 @@ import 'package:aroundus_app/support/style/theme.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:wrapped_korean_text/wrapped_korean_text.dart';
 
 Widget todaysMagazineCard(BuildContext context, Magazine magazine) {
   return GestureDetector(
@@ -40,7 +41,7 @@ Widget todaysMagazineCard(BuildContext context, Magazine magazine) {
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.headline5),
                   SizedBox(height: Adaptive.h(1)),
-                  Text(magazine.subtitle!,
+                  WrappedKoreanText(magazine.subtitle!,
                       maxLines: 2, style: theme.textTheme.bodyText2)
                 ]))
       ]));

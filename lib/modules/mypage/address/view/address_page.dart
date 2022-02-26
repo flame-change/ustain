@@ -38,8 +38,6 @@ class _AddressPage extends State<AddressPage>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return BlocBuilder<AddressCubit, AddressState>(builder: (context, state) {
       if (state.isLoaded) {
         return BlocSelector<AddressCubit, AddressState, List<Address?>>(
