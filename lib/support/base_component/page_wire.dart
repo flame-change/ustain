@@ -9,6 +9,7 @@ class PageWire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        top: false,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: sizeWidth(5)),
             child: child));
@@ -24,6 +25,7 @@ class LeftPageWire extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        top: false,
         child: Container(
             color: color,
             padding: EdgeInsets.only(left: sizeWidth(5)),

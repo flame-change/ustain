@@ -2,9 +2,8 @@ import 'package:aroundus_app/modules/magazine/magazine_home/view/components/toda
 import 'package:aroundus_app/modules/home/catalog/view/catalog_screen.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
 import 'package:aroundus_app/modules/home/components/catalog_list.dart';
-import 'package:aroundus_app/support/base_component/company_info.dart';
 import 'package:aroundus_app/support/base_component/page_wire.dart';
-import 'package:aroundus_app/support/style/size_util.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -38,15 +37,27 @@ class _HomePageNewState extends State<HomePageNew> {
                   color: Theme.of(context).scaffoldBackgroundColor,
                   child:
                       TodaysMagazine(todaysMagazines: state.todaysMagazines!)),
-            Padding(
-                child: Text('Catalog',
-                    style: Theme.of(context).textTheme.headline5),
-                padding: EdgeInsets.only(left: sizeWidth(5))),
-            Padding(
-                child: Text('당신에게 좋은 상품만 준비했어요.',
-                    style: Theme.of(context).textTheme.bodyText2),
-                padding: EdgeInsets.only(
-                    left: sizeWidth(5), top: sizeWidth(5), bottom: 10)),
+            LeftPageWire(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(children: [
+                      Container(
+                          margin: EdgeInsets.only(top: Adaptive.dp(10)),
+                          height: 5,
+                          color: Colors.black,
+                          width: double.maxFinite),
+                      Container(
+                          color: Colors.white,
+                          child: Text('Catalog  ',
+                              style: Theme.of(context).textTheme.headline5))
+                    ]),
+                    SizedBox(height: 3),
+                    Text('당신에게 좋은 상품만 준비했어요.',
+                        style: Theme.of(context).textTheme.subtitle2),
+                    SizedBox(height: 20)
+                  ]),
+            ),
             SizedBox(height: 15),
             if (state.catalogMagazines != null)
               for (var i = 0; i < state.catalogMagazines!.length; i++)

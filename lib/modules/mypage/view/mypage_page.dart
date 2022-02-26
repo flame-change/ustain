@@ -2,7 +2,6 @@ import 'package:aroundus_app/repositories/authentication_repository/authenticati
 import 'package:aroundus_app/modules/authentication/account/cubit/finding_account_cubit.dart';
 import 'package:aroundus_app/modules/authentication/account/view/finding_password_page.dart';
 import 'package:aroundus_app/modules/authentication/bloc/authentication_bloc.dart';
-import 'package:aroundus_app/modules/mypage/user_info/view/user_info_screen.dart';
 import 'package:aroundus_app/modules/orderForm/view/orderForm_list_screen.dart';
 import 'package:aroundus_app/modules/mypage/address/view/address_screen.dart';
 import 'package:aroundus_app/repositories/user_repository/models/user.dart';
@@ -55,11 +54,11 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       PageWire(
-          child: Text('My Page',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.w500))),
+          child: Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Text('My Page',
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w500)))),
       if (is_authenticated) myPageInfo() else loginNeededProfile(),
       Container(
           color: Colors.white,
@@ -125,12 +124,12 @@ class _MyPageState extends State<MyPage> {
     ]);
   }
 
-  PageWire helpcenterWire(BuildContext context) {
-    return PageWire(
-        child: Container(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        menuWidget('Account'),
-        SizedBox(height: 10),
+  Column helpcenterWire(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      menuWidget('Account'),
+      SizedBox(height: 10),
+      PageWire(
+          child: Column(children: [
         subMenuWidget(
             title: "비밀번호 수정",
             tapped: () {
@@ -150,47 +149,47 @@ class _MyPageState extends State<MyPage> {
             tapped: () {
               requestCameraPermission(context);
             })
-      ]),
-    ));
+      ]))
+    ]);
   }
 
-  PageWire helpcenterWire2(BuildContext context) {
-    return PageWire(
-        child: Container(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Column helpcenterWire2(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       menuWidget('Service'),
       SizedBox(height: 10),
-      subMenuWidget(
-          title: "개인정보 처리방침",
-          tapped: () =>
-              isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
-      subMenuWidget(
-          title: "서비스 이용약관",
-          tapped: () => isWebRouter(context, 'https://arounduspp2.oopy.io/')),
-      subMenuWidget(
-          title: "개인정보 수집, 이용 방침",
-          tapped: () =>
-              isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
-      ListTile(
-          contentPadding: EdgeInsets.all(0),
-          dense: true,
-          leading: Text('버전 정보',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2!
-                  .copyWith(color: Colors.black, fontSize: Adaptive.dp(14))),
-          trailing: Text('${_packageInfo.version}',
-              style: TextStyle(color: Colors.black)))
-    ])));
+      PageWire(
+          child: Column(children: [
+        subMenuWidget(
+            title: "개인정보 처리방침",
+            tapped: () =>
+                isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
+        subMenuWidget(
+            title: "서비스 이용약관",
+            tapped: () => isWebRouter(context, 'https://arounduspp2.oopy.io/')),
+        subMenuWidget(
+            title: "개인정보 수집, 이용 방침",
+            tapped: () =>
+                isWebRouter(context, 'https://aroundusprivacypolicy.oopy.io/')),
+        ListTile(
+            contentPadding: EdgeInsets.all(0),
+            dense: true,
+            leading: Text('버전 정보',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(color: Colors.black, fontSize: Adaptive.dp(14))),
+            trailing: Text('${_packageInfo.version}',
+                style: TextStyle(color: Colors.black)))
+      ]))
+    ]);
   }
 
-  PageWire shoppingWire(BuildContext context) {
-    return PageWire(
-        child: Container(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        menuWidget('Shopping'),
-        SizedBox(height: 10),
+  Column shoppingWire(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      menuWidget('Shopping'),
+      SizedBox(height: 10),
+      PageWire(
+          child: Column(children: [
         subMenuWidget(
             title: "내 쿠폰",
             tapped: () {
@@ -225,49 +224,46 @@ class _MyPageState extends State<MyPage> {
                 showLoginNeededDialog(context);
               }
             })
-      ]),
-    ));
+      ]))
+    ]);
   }
 
   Widget myPageInfo() {
     return Container(
-      color: Colors.black,
-      child: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, UserInfoScreen.routeName),
-          child: PageWire(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                SizedBox(height: 15),
-                Row(children: [
-                  Text("Lv.${user.group![0]['level']} ${user.name}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(color: Colors.white)),
-                  SizedBox(
-                      height: Adaptive.dp(30),
-                      width: Adaptive.dp(20),
-                      child: IconButton(
-                          padding: EdgeInsets.only(bottom: Adaptive.dp(12)),
-                          onPressed: () => showTopSnackBar(
-                              context,
-                              CustomSnackBar.info(
-                                  message:
-                                      "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
-                          iconSize: Adaptive.dp(12),
-                          icon: Icon(Icons.info),
-                          color: Colors.grey))
-                ]),
-                Container(
-                    height: 3,
-                    margin: EdgeInsets.only(top: 10, bottom: 15),
-                    color: HexColor("${user.group![0]['hexCode']}")),
-                userCategories(),
-                SizedBox(height: 15)
-              ]))),
-    );
+        color: Colors.black,
+        child: PageWire(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              SizedBox(height: 15),
+              Row(children: [
+                Text("Lv.${user.group![0]['level']} ${user.name}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5!
+                        .copyWith(color: Colors.white)),
+                SizedBox(
+                    height: Adaptive.dp(30),
+                    width: Adaptive.dp(20),
+                    child: IconButton(
+                        padding: EdgeInsets.only(bottom: Adaptive.dp(12)),
+                        onPressed: () => showTopSnackBar(
+                            context,
+                            CustomSnackBar.info(
+                                message:
+                                    "회원 등급은 매월 1일, \n이전 달의 기록에 따라 정해집니다. :)")),
+                        iconSize: Adaptive.dp(12),
+                        icon: Icon(Icons.info),
+                        color: Colors.grey))
+              ]),
+              Container(
+                  height: 3,
+                  margin: EdgeInsets.only(top: 10, bottom: 15),
+                  color: HexColor("${user.group![0]['hexCode']}")),
+              userCategories(),
+              SizedBox(height: 15)
+            ])));
   }
 
   RichText userCategories() {

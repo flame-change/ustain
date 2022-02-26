@@ -29,14 +29,22 @@ class _TodaysMagazineState extends State<TodaysMagazine>
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (widget.isMain == true)
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-              padding: EdgeInsets.only(bottom: sizeWidth(5)),
-              child: Text('Trending now',
-                  style: Theme.of(context).textTheme.headline5)),
-          Padding(
-              padding: EdgeInsets.only(bottom: sizeWidth(5)),
-              child: Text('좋아하실만한 읽을거리를 준비했어요 :)',
-                  style: Theme.of(context).textTheme.bodyText2))
+          SizedBox(height: 20),
+          Stack(children: [
+            Container(
+                margin: EdgeInsets.only(top: Adaptive.dp(10)),
+                height: 5,
+                color: Colors.black,
+                width: double.maxFinite),
+            Container(
+                color: Colors.white,
+                child: Text('Trending now  ',
+                    style: Theme.of(context).textTheme.headline5))
+          ]),
+          SizedBox(height: 3),
+          Text('좋아하실만한 읽을거리를 준비했어요.',
+              style: Theme.of(context).textTheme.subtitle2),
+          SizedBox(height: 20),
         ]),
       Container(
           height: Adaptive.w(90),

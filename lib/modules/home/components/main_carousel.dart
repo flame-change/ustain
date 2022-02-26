@@ -77,9 +77,16 @@ class _BannerMagazinesState extends State<BannerMagazines> {
                         SizedBox(height: 5),
                       ]))
             ]),
-        pagination: SwiperPagination(
-            alignment: Alignment.bottomCenter,
-            builder: new DotSwiperPaginationBuilder(
-                color: Colors.grey, activeColor: Colors.black)));
+        pagination: new SwiperCustomPagination(
+            builder: (BuildContext context, SwiperPluginConfig config) {
+          return Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: sizeWidth(5), vertical: 10),
+                  child: LinearProgressIndicator(
+                      value: (config.activeIndex + 1) / config.itemCount,
+                      valueColor: AlwaysStoppedAnimation(Colors.black))));
+        }));
   }
 }

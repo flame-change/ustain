@@ -6,7 +6,6 @@ import 'package:aroundus_app/modules/store/order/view/order_cancel_page.dart';
 import 'package:aroundus_app/modules/search/search/view/search_screen.dart';
 import 'package:aroundus_app/modules/store/coupon/view/coupon_screen.dart';
 import 'package:aroundus_app/modules/store/cart/view/cart_screen.dart';
-import 'modules/mypage/user_info/view/user_info_screen.dart';
 import 'package:aroundus_app/modules/main/main_screen.dart';
 import 'modules/brands/brand_home/view/brand_screen.dart';
 import 'modules/authentication/login_home/view/view.dart';
@@ -27,7 +26,6 @@ final Map<String, WidgetBuilder> routes = {
   CouponScreen.routeName: (context) => CouponScreen(),
   MyPageScreen.routeName: (context) => MyPageScreen(),
   SearchScreen.routeName: (context) => SearchScreen(),
-  UserInfoScreen.routeName: (context) => UserInfoScreen(),
   OrderCancelPage.routeName: (context) => OrderCancelPage(),
   StoreHomeScreen.routeName: (context) => StoreHomeScreen(),
   LoginHomeScreen.routeName: (context) => LoginHomeScreen(),
