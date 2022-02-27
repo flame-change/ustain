@@ -145,22 +145,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   height: Adaptive.h(50),
                   width: sizeWidth(100)),
               Positioned(
-                  height: Adaptive.h(50),
+                  height: Adaptive.h(20),
                   width: sizeWidth(100),
-                  bottom: Adaptive.h(5.5),
+                  bottom: 47,
                   child: Container(
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                               begin: FractionalOffset.topCenter,
                               end: FractionalOffset.bottomCenter,
                               colors: [
-                        Theme.of(context)
-                            .scaffoldBackgroundColor
-                            .withOpacity(0.1),
-                        Theme.of(context)
-                            .scaffoldBackgroundColor
-                            .withOpacity(0.2),
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(1)
+                        Colors.white.withOpacity(0),
+                        Colors.white.withOpacity(1)
                       ])))),
               Positioned(
                   bottom: 0,

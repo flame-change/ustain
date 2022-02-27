@@ -44,9 +44,16 @@ Widget magazineCard(BuildContext context, Magazine magazine) {
         Positioned(
             bottom: 20,
             left: 20,
-            child: WrappedKoreanText(magazine.title!,
-                maxLines: 2,
-                style:
-                    theme.textTheme.headline5!.copyWith(color: Colors.white)))
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              WrappedKoreanText(magazine.title!,
+                  maxLines: 2,
+                  style:
+                      theme.textTheme.headline5!.copyWith(color: Colors.white)),
+              WrappedKoreanText(magazine.subtitle!,
+                  maxLines: 2,
+                  style:
+                      theme.textTheme.bodyText2!.copyWith(color: Colors.white))
+            ]))
       ]));
 }

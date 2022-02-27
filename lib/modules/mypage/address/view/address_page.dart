@@ -49,26 +49,24 @@ class _AddressPage extends State<AddressPage>
                     PageWire(
                         child: Column(children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("ADDRESS", style: theme.textTheme.headline4),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          BlocProvider<AddressCubit>.value(
-                                            value: _addressCubit,
-                                            child: AddressFormPage(),
-                                          )));
-                            },
-                            child: Text("배송지 추가",
-                                style: theme.textTheme.headline5!.copyWith(
-                                    decoration: TextDecoration.underline)),
-                          ),
-                        ],
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("ADDRESS", style: theme.textTheme.headline4),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              BlocProvider<AddressCubit>.value(
+                                                value: _addressCubit,
+                                                child: AddressFormPage(),
+                                              )));
+                                },
+                                child: Text("배송지 추가",
+                                    style: theme.textTheme.headline5!.copyWith(
+                                        decoration: TextDecoration.underline)))
+                          ]),
                       SingleChildScrollView(
                           padding: EdgeInsets.symmetric(vertical: 30),
                           child: Column(

@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/home/components/main_carousel.dart';
 import 'package:aroundus_app/modules/magazine/cubit/magazine_cubit.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -23,18 +24,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MagazineCubit, MagazineState>(builder: (context, state) {
-      return Stack(
-          alignment: Alignment.bottomLeft,
-          fit: StackFit.expand,
-          children: [
-            state.bannerMagazines != null
-                ? BannerMagazines(state.bannerMagazines!)
-                : Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Center(
-                        child: Image.asset('assets/images/indicator.gif',
-                            width: 100, height: 100)))
-          ]);
+      if (state.bannerMagazines != null) {
+        return Container(
+            height: Adaptive.h(50),
+            child: Stack(
+                alignment: Alignment.bottomLeft,
+                fit: StackFit.expand,
+                children: [BannerMagazines(state.bannerMagazines!)]));
+      } else {
+        return Container(
+            width: Adaptive.w(100),
+            height: Adaptive.h(100),
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Center(
+                child: Image.asset('assets/images/indicator.gif',
+                    width: 100, height: 100)));
+      }
     });
   }
 }
