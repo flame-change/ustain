@@ -27,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           LeftPageWire(
               child: TitleWithUnderline(
-                  title: 'Search', subtitle: '상품 명, 브랜드 명을 검색해 주세요.')),
+                  title: 'SEARCH', subtitle: '상품 명, 브랜드 명을 검색해 주세요.')),
           PageWire(child: SearchPage())
         ])));
   }

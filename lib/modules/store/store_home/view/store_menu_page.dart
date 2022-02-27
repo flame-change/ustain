@@ -169,8 +169,8 @@ class BigCategory extends StatelessWidget {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Text(
                   "${_storeCubit.state.collections![index].name.toUpperCase()} ",
-                  style: theme.textTheme.headline5!
-                      .copyWith(fontWeight: FontWeight.w500)))
+                  style:
+                      theme.textTheme.headline5!.copyWith(letterSpacing: -0.5)))
         ]));
   }
 }

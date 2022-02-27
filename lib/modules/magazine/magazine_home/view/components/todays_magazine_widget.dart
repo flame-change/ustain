@@ -1,5 +1,6 @@
 import 'package:aroundus_app/modules/magazine/magazine_detail/view/components/magazine_card_todays_widget.dart';
 import 'package:aroundus_app/repositories/magazine_repository/models/models.dart';
+import 'package:aroundus_app/support/base_component/title_with_underline.dart';
 import 'package:aroundus_app/support/style/size_util.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:flutter/rendering.dart';
@@ -29,22 +30,10 @@ class _TodaysMagazineState extends State<TodaysMagazine>
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (widget.isMain == true)
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: 20),
-          Stack(children: [
-            Container(
-                margin: EdgeInsets.only(top: Adaptive.dp(10)),
-                height: 5,
-                color: Colors.black,
-                width: double.maxFinite),
-            Container(
-                color: Colors.white,
-                child: Text('Trending now  ',
-                    style: Theme.of(context).textTheme.headline5))
-          ]),
-          SizedBox(height: 3),
-          Text('좋아하실만한 읽을거리를 준비했어요.',
-              style: Theme.of(context).textTheme.subtitle2),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
+          TitleWithUnderline(
+              title: "TODAY's MAGs", subtitle: '좋아하실만한 읽을거리를 준비했어요.'),
+          SizedBox(height: 20)
         ]),
       Container(
           height: Adaptive.w(90),

@@ -26,7 +26,7 @@ class LoginNeeded extends StatelessWidget {
                   child: MaterialButton(
                       minWidth: sizeWidth(90),
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Text('로그인 / 회원가입',
+                      child: Text('Login / Register',
                           style: Theme.of(context)
                               .textTheme
                               .headline6!

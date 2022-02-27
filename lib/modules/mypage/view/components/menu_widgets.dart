@@ -16,7 +16,8 @@ Widget menuWidget(title) {
           width: double.maxFinite),
       Container(
           color: Colors.white,
-          child: Text('${title}  ', style: theme.textTheme.headline5))
+          child: Text('${title}  '.toUpperCase(),
+              style: theme.textTheme.headline5!.copyWith(letterSpacing: -0.5)))
     ]),
   );
 }
