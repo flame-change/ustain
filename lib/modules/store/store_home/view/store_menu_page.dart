@@ -161,7 +161,9 @@ class BigCategory extends StatelessWidget {
         padding: EdgeInsets.only(top: 20),
         child: Stack(children: [
           Container(
-              margin: EdgeInsets.only(top: Adaptive.dp(10)),
+              margin: EdgeInsets.only(
+                  top: Theme.of(context).textTheme.headline5!.fontSize! / 2 +
+                      2.5),
               height: 5,
               color: Colors.black,
               width: double.maxFinite),
@@ -195,7 +197,8 @@ class mediumCategory extends StatelessWidget {
         padding: EdgeInsets.only(top: 10),
         child: Stack(children: [
           Container(
-              margin: EdgeInsets.only(top: Adaptive.dp(12)),
+              margin: EdgeInsets.only(
+                  top: theme.textTheme.bodyText1!.fontSize! / 2 + 5),
               height: 1,
               color: _storeCubit.state.selectedMenu ==
                       _storeCubit.state.collections![index1].collection[index2]

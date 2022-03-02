@@ -46,7 +46,7 @@ class _HomePageNewState extends State<HomePageNew> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                     TitleWithUnderline(
-                        title: 'CATALOG', subtitle: '당신에게 좋은 상품만 준비 했어요.'),
+                        title: "MD's PICK", subtitle: '당신에게 좋은 상품만 준비 했어요.'),
                     SizedBox(height: 20)
                   ])),
               SizedBox(height: 15),

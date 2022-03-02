@@ -10,7 +10,8 @@ Widget menuWidget(title) {
   return LeftPageWire(
     child: Stack(children: [
       Container(
-          margin: EdgeInsets.only(top: Adaptive.dp(10)),
+          margin: EdgeInsets.only(
+              top: theme.textTheme.headline5!.fontSize! / 2 + 2),
           height: 5,
           color: Colors.black,
           width: double.maxFinite),

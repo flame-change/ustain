@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aroundus_app/modules/store/order/view/order_screen.dart';
 import 'package:aroundus_app/modules/store/product/cubit/product_cubit.dart';
 import 'package:aroundus_app/repositories/cart_repository/models/cart.dart';
@@ -28,13 +30,17 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
     super.initState();
     _productCubit = BlocProvider.of<ProductCubit>(context);
     _product = _productCubit.state.products!.first;
-    modalHeight = _product.options!.length * 5 + 20;
+
+    // 각 옵션의 variant의 개수가 가장 많은 것을 기준으로 option expanded widget height 계산
+    var optionsVariantList =
+        _product.options!.map((e) => e.variations!.length.toInt()).toList();
+    var maxVariantsCount = optionsVariantList.reduce(max);
+    modalHeight = (maxVariantsCount) * 8 + 35;
   }
 
   /*
   selectedOptions : 사용자가 선택한 옵션
   - 옵션 조합마다 Id값이 유니크해서, type씩 맵핑해줘야함
-
   quantity : 구매할 옵션의 수량
   */
   late List<TypeGroup> selectedOptions = List.generate(
@@ -58,7 +64,7 @@ class _ProductPurchaseSheetState extends State<ProductPurchaseSheet> {
           .contains(false);
 
       return Container(
-          height: Adaptive.h(80),
+          height: Adaptive.h(modalHeight),
           padding: EdgeInsets.only(top: Adaptive.h(5)),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
