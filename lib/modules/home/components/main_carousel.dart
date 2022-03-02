@@ -82,9 +82,11 @@ class _BannerMagazinesState extends State<BannerMagazines> {
           return Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: sizeWidth(5), vertical: 10),
+                  margin: EdgeInsets.only(
+                      left: sizeWidth(5), bottom: 10, right: sizeWidth(75)),
                   child: LinearProgressIndicator(
+                      minHeight: 5,
+                      backgroundColor: Colors.black26,
                       value: (config.activeIndex + 1) / config.itemCount,
                       valueColor: AlwaysStoppedAnimation(Colors.black))));
         }));
